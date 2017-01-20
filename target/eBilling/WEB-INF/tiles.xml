@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="base.definition" template="/WEB-INF/pages/home.jsp">
+		<put-attribute name="header" value="/WEB-INF/pages/header.jsp" />
+		<put-attribute name="main" value="/WEB-INF/pages/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/pages/footer.jsp" />
+		
+	</definition>
+
+	<!-- Login -->
+	<definition name="purchaseInfoHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/purchaseInfo.jsp" />
+	</definition>
+	<definition name="newBill" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/newBill.jsp" />
+	</definition>
+	<definition name="productHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/product.jsp" />
+	</definition>
+	<definition name="regHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/userRegister.jsp" />
+	</definition>
+	<definition name="searchBill" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/user.jsp" />
+	</definition>
+	<definition name="loginHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/login.jsp" />
+	</definition>
+	<!-- <definition name="" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/billingDetails.jsp" />
+	</definition> -->
+		
+</tiles-definitions>
+
+
