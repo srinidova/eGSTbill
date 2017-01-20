@@ -40,7 +40,9 @@ $("#logout").click(function(){
 		<li> <a href="billInfoHome">Bill Info</a> </li>
 		<li> <a href="unBillCart">UnBillCart</a> </li>
 		<li> <a href="clientHome">ClientInfo</a> </li>
-		<li> <a href="uploadHome">uploadHome</a> </li>
+		<li> <a href="uploadHome">uploadPage</a> </li>
+		<li> <a href="damageHome">DamageProduct</a> </li>
+		<li> <a href="statusHome">StatusPage</a> </li>
         <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout">Logout</a></li>
         <% }%>
 		

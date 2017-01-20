@@ -137,7 +137,6 @@ public class BillingController {
 		try {
 			
 			sProductId = data.getString("productId");
-			 objSession.setAttribute("sProductId",sProductId );
 			lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
 			for(int i=0;i<lstProductstock.size();i++){
 				productStock=lstProductstock.get(i);
@@ -184,8 +183,13 @@ public class BillingController {
 						listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
 					}
 					
+					
 				}
+				//stockupdate
 				
+				int sNewStock = Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsCart.getQuantity());
+				 productStock.setStock(String.valueOf(sNewStock));
+				 productStockService.updateProductStock(productStock);
 				
 				billingInfoCart = objBillingDetatilsCartService.calculateTotal(listBillingDetails, billingInfoCart);
 				billingInfoCart.setListBillingInfoCart(listBillingDetails);
@@ -432,6 +436,9 @@ public class BillingController {
 		 List<PurchaserInfo> listPurchaseInfoModel;
 		 BillingInfoCart billingInfoCart = null;
 		 List<BillingDetailsCart> listBillingDetails = null;
+		 List<ProductStock> lstProductstock =null;
+		 ProductStock productStock=null;
+		 String sProductId ="";
 		try {
 			System.out.println("update---------updateBillDetailsCart====="+data);
 			product = new Product();
@@ -447,6 +454,18 @@ public class BillingController {
 
 			isUpdate = billingDetailsDao.updateBillDetails(billingdetailsCart);
 			
+			//update Stock
+				sProductId = data.getString("productId");
+				lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
+				for(int i=0;i<lstProductstock.size();i++){
+					productStock=lstProductstock.get(i);
+					
+				}
+						int sNewStock = Integer.parseInt(productStock.getStock()) + Integer.parseInt( billingdetailsCart.getQuantity());
+						System.out.println("sNewStock::::"+sNewStock);
+						 productStock.setStock(String.valueOf(sNewStock));
+						 productStockService.updateProductStock(productStock);
+				
 			sBillId = data.getString("billId");
 			System.out.println("billId==="+sBillId);
 			
@@ -508,6 +527,9 @@ public class BillingController {
 				 BillingInfoCart billingInfoCart = null;
 				 List<BillingDetailsCart> listBillingDetails = null;
 				 boolean isUpdate = false;
+				 List<ProductStock> lstProductstock =null;
+				 ProductStock productStock=null;
+				 String sProductId ="";
 		 
 		 try{
 				
@@ -515,6 +537,18 @@ public class BillingController {
 				System.out.println("sBillDetailsId==="+sBillDetailsId);
 				
 				isDelete = objBillingDetatilsCartService.deleteBillingDetailsCart(sBillDetailsId);
+				
+				//update Stock
+				sProductId = data.getString("productId");
+				lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
+				for(int i=0;i<lstProductstock.size();i++){
+					productStock=lstProductstock.get(i);
+					
+				}
+						int sNewStock = Integer.parseInt(productStock.getStock()) + Integer.parseInt(data.getString("quantity"));
+						System.out.println("sNewStock::::"+sNewStock);
+						 productStock.setStock(String.valueOf(sNewStock));
+						 productStockService.updateProductStock(productStock);
 				
 			 	sBillId =data.getString("billId");
 				System.out.println("billId==="+sBillId);

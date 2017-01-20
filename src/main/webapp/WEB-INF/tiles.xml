@@ -56,6 +56,12 @@
 	<definition name="stockHome" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/productStock.jsp" />
 	</definition>
+	<definition name="statusHome" extends="base.definition">
+  <put-attribute name="main" value="/WEB-INF/pages/status.jsp" />
+ </definition>
+<definition name="damageHome" extends="base.definition">
+  <put-attribute name="main" value="/WEB-INF/pages/damage.jsp" />
+ </definition>
 	<!-- <definition name="" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/billingDetails.jsp" />
 	</definition> -->

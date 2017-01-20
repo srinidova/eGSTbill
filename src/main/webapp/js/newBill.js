@@ -163,8 +163,10 @@ function infoDataClear(){
 		data = {};
 		data["billId"] =serviceUnitArray[id].billId;
 		data["billDetailsId"] = serviceUnitArray[id].billDetailsId;
-		alert('data["billId"]==='+data["billId"]);
-		alert('data["billDetailsId"]==='+data["billDetailsId"]);
+		data["productId"] = serviceUnitArray[id].productId;
+		data["quantity"] = serviceUnitArray[id].quantity;
+		alert('data["productId"]==='+data["productId"]);
+		alert('data["billDetailsId"]==='+data["quantity"]);
 		
 		$.ajax({
             type: "POST",

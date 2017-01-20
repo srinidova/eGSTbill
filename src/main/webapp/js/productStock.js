@@ -8,7 +8,7 @@ function showProductData(response){
 			serviceUnitArray[catObj.productId] = catObj;
 			
 				 var tblRow ="<ul class=''>"
-						+ "<li class='five-box'  title='"+catObj.productId+"'>"
+						+ "<li class='nine-box'  title='"+catObj.productId+"'>"
 						+ catObj.productId  
 						+ "<li class='nine-box'  title='"+catObj.stock+"' style='width:300%;'>"
 						+ catObj.stock
@@ -50,11 +50,12 @@ function poupulateProductStock(id){
 	
 }
 function editProductStock(id)
-{		 		alert("length"+serviceUnitArray[id].length)
-	var stock=serviceUnitArray[id].stock;
-	if(stock == null || stock ==""){
-		alert("hiiiiiiiiii");
-		stock=0;
+{		 		//alert("length"+serviceUnitArray[id].length)
+	//var stock=serviceUnitArray[id].stock;
+	if($("#productId ").val() == ''){
+		$('#stock').text("0");
+	}else if($('#stock').val( serviceUnitArray[id].stock)==null){
+		$('#stock').text("0");
 	}
 	var oldStock =serviceUnitArray[id].oldStock;
 	if(oldStock == null){

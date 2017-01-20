@@ -7,7 +7,15 @@
 <!DOCTYPE section PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">	
 <html><head>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style type="text/css">
+.your-class::-webkit-input-placeholder {
+	color: red;
+}
 
+.default-class::-webkit-input-placeholder {
+	color: red;
+}
+</style>
 </head><body>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -166,7 +174,24 @@
 		data["mrp"] = $("#mrp").val();
 		data["billId"] = $("#billId").val();
 		data["billDetailsId"] = $("#billDetailsId").val();
-		if($("#billDetailsId").val() != ""){
+		
+	    
+	     if($('#rate').val().length == 0 ) {
+		    $('#rate').css('color','red');
+		    $("#rate").css("border-color","red");
+		    $("#rate").attr("placeholder","Please enter rate");
+		    $('#rate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#quantity').val().length == 0 ) {
+		    $('#quantity').css('color','red');
+		    $("#quantity").css("border-color","red");
+		    $("#quantity").attr("placeholder","Please enter quantity");
+		    $('#quantity').addClass('your-class');
+		    return false;
+		    }
+		
+	    else if($("#billDetailsId").val() != ""){
 			updateBillProduct();
 		}else{
 			$("#btn-save").prop("disabled", true);
@@ -235,7 +260,137 @@
 		data["totalRate"] = $("#totalRate").val();
 		data["billDate"] = $("#billDate").val();
 		data["tinNo"] = $("#tinNo").val();
-
+		
+		if($('#billNo').val().length == 0 ) {
+		    $('#billNo').css('color','red');
+		    $("#billNo").css("border-color","red");
+		    $("#billNo").attr("placeholder","Please enter billNo");
+		    $('#billNo').addClass('your-class');
+		    return false;
+		    }
+	    
+	    else if($('#orderNo').val().length == 0 ) {
+		    $('#orderNo').css('color','red');
+		    $("#orderNo").css("border-color","red");
+		    $("#orderNo").attr("placeholder","Please enter orderNo");
+		    $('#orderNo').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#orderDate').val().length == 0 ) {
+		    $('#orderDate').css('color','red');
+		    $("#orderDate").css("border-color","red");
+		    $("#orderDate").attr("placeholder","Please enter orderDate");
+		    $('#orderDate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#payment').val().length == 0 ) {
+		    $('#payment').css('color','red');
+		    $("#payment").css("border-color","red");
+		    $("#payment").attr("placeholder","Please enter payment");
+		    $('#payment').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#totalAmount').val().length == 0 ) {
+		    $('#totalAmount').css('color','red');
+		    $("#totalAmount").css("border-color","red");
+		    $("#totalAmount").attr("placeholder","Please enter totalAmount");
+		    $('#totalAmount').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#name').val().length == 0 ) {
+		    $('#name').css('color','red');
+		    $("#name").css("border-color","red");
+		    $("#name").attr("placeholder","Please enter name");
+		    $('#name').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#phone').val().length == 0 ) {
+		    $('#phone').css('color','red');
+		    $("#phone").css("border-color","red");
+		    $("#phone").attr("placeholder","Please enter phone");
+		    $('#phone').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#address').val().length == 0 ) {
+		    $('#address').css('color','red');
+		    $("#address").css("border-color","red");
+		    $("#address").attr("placeholder","Please enter address");
+		    $('#address').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#lrNo').val().length == 0 ) {
+		    $('#lrNo').css('color','red');
+		    $("#lrNo").css("border-color","red");
+		    $("#lrNo").attr("placeholder","Please enter lrNo");
+		    $('#lrNo').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#lrDate').val().length == 0 ) {
+		    $('#lrDate').css('color','red');
+		    $("#lrDate").css("border-color","red");
+		    $("#lrDate").attr("placeholder","Please enter lrDate");
+		    $('#lrDate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#dispatchedBy').val().length == 0 ) {
+		    $('#dispatchedBy').css('color','red');
+		    $("#dispatchedBy").css("border-color","red");
+		    $("#dispatchedBy").attr("placeholder","Please enter dispatchedBy");
+		    $('#dispatchedBy').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#dispatchedDate').val().length == 0 ) {
+		    $('#dispatchedDate').css('color','red');
+		    $("#dispatchedDate").css("border-color","red");
+		    $("#dispatchedDate").attr("placeholder","Please enter dispatchedDate");
+		    $('#dispatchedDate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#orderBy').val().length == 0 ) {
+		    $('#orderBy').css('color','red');
+		    $("#orderBy").css("border-color","red");
+		    $("#orderBy").attr("placeholder","Please enter orderBy");
+		    $('#orderBy').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#noOfPacks').val().length == 0 ) {
+		    $('#noOfPacks').css('color','red');
+		    $("#noOfPacks").css("border-color","red");
+		    $("#noOfPacks").attr("placeholder","Please enter noOfPacks");
+		    $('#noOfPacks').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#packSlipNo').val().length == 0 ) {
+		    $('#packSlipNo').css('color','red');
+		    $("#packSlipNo").css("border-color","red");
+		    $("#packSlipNo").attr("placeholder","Please enter packSlipNo");
+		    $('#packSlipNo').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#termOfPayment').val().length == 0 ) {
+		    $('#termOfPayment').css('color','red');
+		    $("#termOfPayment").css("border-color","red");
+		    $("#termOfPayment").attr("placeholder","Please enter termOfPayment");
+		    $('#termOfPayment').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#terms').val().length == 0 ) {
+		    $('#terms').css('color','red');
+		    $("#terms").css("border-color","red");
+		    $("#terms").attr("placeholder","Please enter terms");
+		    $('#terms').addClass('your-class');
+		    return false;
+		    }
+	   
+	    else if($('#tinNo').val().length == 0 ) {
+		    $('#tinNo').css('color','red');
+		    $("#tinNo").css("border-color","red");
+		    $("#tinNo").attr("placeholder","Please enter tinNo");
+		    $('#tinNo').addClass('your-class');
+		    return false;
+		    }
+		
+		
 		$.ajax({
 	             type: "POST",
 	             url: "genarateBill.htm",
@@ -306,7 +461,134 @@ function saveInfoCart(){
 		data["totalRate"] = $("#totalRate").val();
 		data["billDate"] = $("#billDate").val();
 		data["tinNo"] = $("#tinNo").val();
-		
+		if($('#billNo').val().length == 0 ) {
+		    $('#billNo').css('color','red');
+		    $("#billNo").css("border-color","red");
+		    $("#billNo").attr("placeholder","Please enter billNo");
+		    $('#billNo').addClass('your-class');
+		    return false;
+		    }
+	    
+	    else if($('#orderNo').val().length == 0 ) {
+		    $('#orderNo').css('color','red');
+		    $("#orderNo").css("border-color","red");
+		    $("#orderNo").attr("placeholder","Please enter orderNo");
+		    $('#orderNo').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#orderDate').val().length == 0 ) {
+		    $('#orderDate').css('color','red');
+		    $("#orderDate").css("border-color","red");
+		    $("#orderDate").attr("placeholder","Please enter orderDate");
+		    $('#orderDate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#payment').val().length == 0 ) {
+		    $('#payment').css('color','red');
+		    $("#payment").css("border-color","red");
+		    $("#payment").attr("placeholder","Please enter payment");
+		    $('#payment').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#totalAmount').val().length == 0 ) {
+		    $('#totalAmount').css('color','red');
+		    $("#totalAmount").css("border-color","red");
+		    $("#totalAmount").attr("placeholder","Please enter totalAmount");
+		    $('#totalAmount').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#name').val().length == 0 ) {
+		    $('#name').css('color','red');
+		    $("#name").css("border-color","red");
+		    $("#name").attr("placeholder","Please enter name");
+		    $('#name').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#phone').val().length == 0 ) {
+		    $('#phone').css('color','red');
+		    $("#phone").css("border-color","red");
+		    $("#phone").attr("placeholder","Please enter phone");
+		    $('#phone').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#address').val().length == 0 ) {
+		    $('#address').css('color','red');
+		    $("#address").css("border-color","red");
+		    $("#address").attr("placeholder","Please enter address");
+		    $('#address').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#lrNo').val().length == 0 ) {
+		    $('#lrNo').css('color','red');
+		    $("#lrNo").css("border-color","red");
+		    $("#lrNo").attr("placeholder","Please enter lrNo");
+		    $('#lrNo').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#lrDate').val().length == 0 ) {
+		    $('#lrDate').css('color','red');
+		    $("#lrDate").css("border-color","red");
+		    $("#lrDate").attr("placeholder","Please enter lrDate");
+		    $('#lrDate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#dispatchedBy').val().length == 0 ) {
+		    $('#dispatchedBy').css('color','red');
+		    $("#dispatchedBy").css("border-color","red");
+		    $("#dispatchedBy").attr("placeholder","Please enter dispatchedBy");
+		    $('#dispatchedBy').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#dispatchedDate').val().length == 0 ) {
+		    $('#dispatchedDate').css('color','red');
+		    $("#dispatchedDate").css("border-color","red");
+		    $("#dispatchedDate").attr("placeholder","Please enter dispatchedDate");
+		    $('#dispatchedDate').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#orderBy').val().length == 0 ) {
+		    $('#orderBy').css('color','red');
+		    $("#orderBy").css("border-color","red");
+		    $("#orderBy").attr("placeholder","Please enter orderBy");
+		    $('#orderBy').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#noOfPacks').val().length == 0 ) {
+		    $('#noOfPacks').css('color','red');
+		    $("#noOfPacks").css("border-color","red");
+		    $("#noOfPacks").attr("placeholder","Please enter noOfPacks");
+		    $('#noOfPacks').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#packSlipNo').val().length == 0 ) {
+		    $('#packSlipNo').css('color','red');
+		    $("#packSlipNo").css("border-color","red");
+		    $("#packSlipNo").attr("placeholder","Please enter packSlipNo");
+		    $('#packSlipNo').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#termOfPayment').val().length == 0 ) {
+		    $('#termOfPayment').css('color','red');
+		    $("#termOfPayment").css("border-color","red");
+		    $("#termOfPayment").attr("placeholder","Please enter termOfPayment");
+		    $('#termOfPayment').addClass('your-class');
+		    return false;
+		    }
+	    else if($('#terms').val().length == 0 ) {
+		    $('#terms').css('color','red');
+		    $("#terms").css("border-color","red");
+		    $("#terms").attr("placeholder","Please enter terms");
+		    $('#terms').addClass('your-class');
+		    return false;
+		    }
+	    
+	    else if($('#tinNo').val().length == 0 ) {
+		    $('#tinNo').css('color','red');
+		    $("#tinNo").css("border-color","red");
+		    $("#tinNo").attr("placeholder","Please enter tinNo");
+		    $('#tinNo').addClass('your-class');
+		    return false;
+		    }
 		
 		
 
