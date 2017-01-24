@@ -846,7 +846,7 @@ function saveInfoCart(){
 					<aside class="block-footer-left"><exptotal></exptotal></aside>
 					<aside class="block-footer-right">
 					<input class="btn-cancel" name="" value="Cancel" type="button" onclick="infoDataClear()">
-						<input class="btn-save" name="" value="Save" type="button" onclick="saveInfoCart();">
+						<input class="btn-save" name="" value="Cart" type="button" onclick="saveInfoCart();">
 						<input class="btn-save" name="" value="Bill" id="printBill" type="submit" onclick="updateBillInfoCart();">
 					</aside>
 				</div>

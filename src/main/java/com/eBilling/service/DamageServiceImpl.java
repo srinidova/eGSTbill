@@ -14,6 +14,7 @@ import com.eBilling.dao.ProductStockDao;
 import com.eBilling.model.Damage;
 import com.eBilling.model.Product;
 import com.eBilling.model.ProductStock;
+import com.eBilling.util.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -194,5 +195,68 @@ public class DamageServiceImpl implements DamageService{
 			
 		}
 		return isUpdate;
+	}
+	@Override
+	public List<Damage> updateProductQuantity(Damage damage,
+			List<Damage> lstDamage) {
+		String sProductId = null;
+		try {
+			sProductId = damage.getProductId();
+			lstDamage=damageDao.getDamageProductByProductName(sProductId);
+			//lstProductModel = objPopulateService.getProductByName(sProductName);
+			//sNewProductId = billingdetailsCart.getProductId();
+			for (int i = 0; i < lstDamage.size(); i++) {
+				Damage existDamage = lstDamage.get(i);
+				if (existDamage.getProductId().equals(sProductId)) {
+					//System.out.println("in----------updateProductQuantity---------------sNewProductId=="+sNewProductId+"--------------existBillingDetailsCart.getProductId()==="+existBillingDetailsCart.getProductId());
+					int existQty = Integer.parseInt(existDamage.getQuantity());
+					int newQty = Integer.parseInt(damage.getQuantity());
+					//System.out.println("existQty=="+existQty+"--------------newQty==="+newQty);
+					damage.setQuantity(String.valueOf(existQty + newQty));
+					damage.setDamageId(existDamage.getDamageId());
+					damage.setProductId(existDamage.getProductId());
+					damage.setDescription(existDamage.getDescription());
+					damage.setUpdatedBy(CommonUtils.getDate());
+					damage.setUpdatedOn(CommonUtils.getDate());
+					damageDao.updateDamage(damage);
+					break;
+				}
+
+			}
+
+		} catch (Exception e) {
+
+			System.out.println("Exception in updateProductQuantity in  calculateTotal()");
+		}
+		return lstDamage;
+	}
+	
+	
+	@Override
+	public boolean checkInQuantity(Damage damage,
+			List<Damage> lstDamage) {
+		String sProductId = null;
+		boolean isExist = false;
+		Damage existdamage = null;
+		try {
+			sProductId = damage.getProductId();
+			 lstDamage=damageDao.getDamageProductByProductName(sProductId);
+			 for(int i=0;i<lstDamage.size();i++){
+				 existdamage= lstDamage.get(i);
+				 if(existdamage.getProductId().equals(sProductId)){
+					// System.out.println("in----------checkInCart---------------sNewProductId=="+sNewProductId+"--------------existBillingDetailsCart.getProductId()==="+existBillingDetailsCart.getProductId());
+					 isExist = true;
+					 break;
+				 }
+				 
+			 }
+			
+			
+		} catch (Exception e) {
+
+			System.out
+					.println("Exception in checkInCart()");
+		}
+		return isExist;
 	}
 }

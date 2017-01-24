@@ -87,16 +87,17 @@ public class DamageController {
 				damage.setDescription(data.getString("description"));
 				damage.setUpdatedBy(CommonUtils.getDate());
 				damage.setUpdatedOn(CommonUtils.getDate());
-				//product.setProductId(CommonUtils.getAutoGenId());
-                isInsert = damageServiceImpl.damageSave(damage);
+				boolean isExist = damageServiceImpl.checkInQuantity(damage, lstDamage);
+				if(isExist){
+					lstDamage = damageServiceImpl.updateProductQuantity(damage, lstDamage);
+				}else{
+					 isInsert = damageServiceImpl.damageSave(damage);
+				}
+               
+					sJson = damageServiceImpl.getAllDamage();
                 
                 damageServiceImpl.updatedStock(productStock, data, lstProductstock);
                 
-				if (isInsert) {
-					sJson = damageServiceImpl.getAllDamage();
-					//sJson = objPopulateService.populateProducts();
-				
-			}
 			System.out.println("after req attr ");
 		} catch (Exception e) {
 			System.out.println("Exception in Product Controller in productSave()");

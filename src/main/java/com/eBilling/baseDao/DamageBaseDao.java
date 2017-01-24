@@ -160,5 +160,18 @@ public class DamageBaseDao {
 
 		return retlist;
 	}
+	public List<Damage> getDamageProductByProductName(String sProductId) {
+		List<Damage> lstDamage = null;
+		try {
+			String sql = "SELECT * from damage where productId = ? ";
+			lstDamage = jdbcTemplate.query(sql, new Object[] {sProductId},ParameterizedBeanPropertyRowMapper.newInstance(Damage.class));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("getProductId=="+lstDamage);
+
+		return lstDamage;
+	}
 	
 }
