@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eBilling.model.Damage;
 import com.eBilling.model.Product;
+import com.eBilling.model.ProductStock;
 import com.eBilling.util.CommonUtils;
 import com.eBilling.util.GetAutoDate;
          
@@ -144,6 +145,20 @@ public class DamageBaseDao {
 		System.out.println("getProduct=="+lstDamage);
 
 		return lstDamage;
+	}
+	public List<Damage> getAllDamageProductsByProductId(String sProductId) {
+		List<Damage> retlist = null;
+		try {
+			String sql = "SELECT *from damage where productId = ?";
+			System.out.println("query for getAllProductStockByProductId===="+sql);
+			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<Damage>(Damage.class));
+			System.out.println("query for getAllProductStockByProductId===="+retlist.toString());
+		} catch (Exception e) {
+			//objLogger.error("Exception in BillingDetailsBaseDao in getAllBillDetailsByBillNo()" + e);
+			e.printStackTrace();
+		}
+
+		return retlist;
 	}
 	
 }

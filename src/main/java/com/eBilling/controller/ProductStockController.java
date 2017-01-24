@@ -57,7 +57,7 @@ public class ProductStockController {
 			sJson = objProductService.populateProducts();
 			objSession.setAttribute("allProducts", sJson);
 			getAllProductStock = productStockService.getAllProductStock();
-			objRequest.setAttribute("getAllStock", getAllProductStock);
+			objSession.setAttribute("getAllStock", getAllProductStock);
 			System.out.println("getAllProductStock==="+getAllProductStock);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,16 +119,31 @@ public class ProductStockController {
 			@RequestParam("jsondata") JSONObject data, HttpSession objSession, HttpServletRequest objRequest) {
 		boolean isupdate = false;
 		String sJson = "";
+		StockDetails stockDetails=null;
 		try {
 			productStock.setStockId(data.getString("stockId"));
-			productStock.setStock(data.getString("stock"));
-			productStock.setOldStock(data.getString("oldStock"));
 			productStock.setNewStock(data.getString("newStock"));
+			productStock.setOldStock(data.getString("stock"));
+			productStock.setNewStock(data.getString("newStock"));
+			int iOldStock=Integer.parseInt(productStock.getOldStock());
+			int iNewStock=Integer.parseInt(productStock.getNewStock());
+			int iStock=iOldStock+iNewStock;
+			productStock.setStock(String.valueOf(iStock));
 			isupdate = productStockService.updateProductStock(productStock);
 			// System.out.println("isupdate" + isupdate);
 			if (isupdate)
 				sJson = productStockService.getAllProductStock();
 			// System.out.println("update: " + sJson);
+			String sEntry="Entry";
+			stockDetails =new StockDetails();
+			stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
+			stockDetails.setProductId(data.getString("productId"));
+			stockDetails.setQuantity(productStock.getNewStock());
+			stockDetails.setTransactionId(productStock.getStockId());
+			stockDetails.setTransactionDate(CommonUtils.getDate());
+			stockDetails.setTransactionType(sEntry);
+			
+			stockDetailsService.saveStockDetails(stockDetails);
 		} catch (Exception ex) {
 			System.out.println("Exception in RegistraionController in  updatePurchaseInfo()");
 			ex.printStackTrace();

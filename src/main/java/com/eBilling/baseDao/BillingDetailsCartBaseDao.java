@@ -100,6 +100,16 @@ public class BillingDetailsCartBaseDao {
 
 		return retlist;
 	}
+	public List<BillingDetailsCart> getAllBillDetailsByProductId( String sProductId) {
+		List<BillingDetailsCart> retlist = null;
+		try {
+			String sql = "SELECT *from billingdetailscart WHERE productId=?";
+			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<BillingDetailsCart>(BillingDetailsCart.class));
+		} catch (Exception e) {
+			objLogger.error("Exception in BillingDetailsBaseDao in getAllBillDetailsByBillId()" + e);
+		}
 
+		return retlist;
+	}
 
 }

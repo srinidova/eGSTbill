@@ -2,8 +2,11 @@ package com.eBilling.service;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.eBilling.model.Damage;
 import com.eBilling.model.Product;
+import com.eBilling.model.ProductStock;
 
 
 public interface DamageService {
@@ -20,18 +23,11 @@ public interface DamageService {
 
 	List<Damage> getDamageById(String sDamageId);
 
-	//List<Product> getDamageById(String sDamageId);
+	boolean updateStock(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 
-	//boolean saveDamage(Damage damage);
-	/*public String populateProducts() ;
+	boolean updatedStock(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 
-	boolean deleteProduct(String sProductId);
+	boolean addDeletedStock(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 
-	boolean productSave(Product product);
-
-	boolean updateProduct(Product product);
-
-	List<Product> getProductByName(String sProductName);*/
-
-	//boolean damageSave(Damage damage);
+	
 }

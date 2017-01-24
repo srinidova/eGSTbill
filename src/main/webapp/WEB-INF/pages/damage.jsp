@@ -167,11 +167,15 @@ function editDamage(id)
 	$('#description').val( serviceUnitArray[id].description);
 }
 function deleteDamage(id) {
-	var count = 0;
+	
+	data = {};
+	data["productId"] =serviceUnitArray[id].productId;
+	data["damageId"] =serviceUnitArray[id].damageId;
+	data["quantity"] =serviceUnitArray[id].quantity;
 		$.ajax({
 					type : "POST",
 					url : "deleteDamage.json",
-					data : "id=" + id,
+					data : "jsondata= "+JSON.stringify(data),
 					success: function (response) {
 		                 if(response != null ){
 		                	 $("#unc").text("Delete Sucessfully");
@@ -225,7 +229,7 @@ function saveDamage(){
 	$.ajax({
              type: "POST",
              url: "damageSave.htm",
-             data: data,
+             data: "jsondata= "+JSON.stringify(data),
              success: function (response) {
                  $("#btn-save").prop("disabled", false);
                  resJSON = JSON.parse(response);

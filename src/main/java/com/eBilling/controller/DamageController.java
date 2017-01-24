@@ -61,11 +61,7 @@ public class DamageController {
 			objRequest.setAttribute("allDamages", sJson);
 			System.out.println("sJson::::::"+sJson);
 			objSession.setAttribute("allProducts", allprod);
-			/*sJson = objProductService.populateProducts();
-			objSession.setAttribute("allProducts", sJson);
-			getAllProductStock = productStockService.getAllProductStock();
-			objRequest.setAttribute("getAllStock", getAllProductStock);
-			System.out.println("getAllProductStock==="+getAllProductStock);*/
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -76,22 +72,26 @@ public class DamageController {
 	}
 
 	@RequestMapping(value = "/damageSave")
-	public @ResponseBody String damageSave(@ModelAttribute Damage damage, HttpSession objSession,
+	public @ResponseBody String damageSave(@ModelAttribute Damage damage, HttpSession objSession,@RequestParam("jsondata") JSONObject data,
 			HttpServletRequest objRequest) {
 		boolean isInsert = false;
 		String sJson = "";
 		List<Damage> lstDamage = null;
+		List<ProductStock> lstProductstock =null;
+		 ProductStock productStock=null;
 		try {
-			/*String sDamageId = damage.getProductId();
-			lstDamage = damageServiceImpl.getDamageById(sDamageId);
-			//String sProductName = product.getProductName();
-*/			//lstProductModel = objPopulateService.getProductByName(sProductName);
 
 				damage.setDamageId(CommonUtils.getAutoGenId());
+				damage.setProductId(data.getString("productId"));
+				damage.setQuantity(data.getString("quantity"));
+				damage.setDescription(data.getString("description"));
+				damage.setUpdatedBy(CommonUtils.getDate());
+				damage.setUpdatedOn(CommonUtils.getDate());
 				//product.setProductId(CommonUtils.getAutoGenId());
                 isInsert = damageServiceImpl.damageSave(damage);
-				//isInsert = objPopulateService.productSave(product);
-
+                
+                damageServiceImpl.updatedStock(productStock, data, lstProductstock);
+                
 				if (isInsert) {
 					sJson = damageServiceImpl.getAllDamage();
 					//sJson = objPopulateService.populateProducts();
@@ -110,6 +110,8 @@ public class DamageController {
 			@RequestParam("jsondata") JSONObject data, HttpSession objSession, HttpServletRequest objRequest) {
 		boolean isupdate = false;
 		String sJson = "";
+		List<ProductStock> lstProductstock =null;
+		 ProductStock productStock=null;
 		try {
 			damage.setDamageId(data.getString("damageId"));
 			damage.setProductId(data.getString("productId"));
@@ -117,13 +119,15 @@ public class DamageController {
 			damage.setDescription(data.getString("description"));
 			damage.setUpdatedBy(CommonUtils.getDate());
 			damage.setUpdatedOn(CommonUtils.getDate());
-			/*productStock.setStockId(data.getString("stockId"));
-			productStock.setStock(data.getString("stock"));
-			productStock.setOldStock(data.getString("oldStock"));
-			productStock.setNewStock(data.getString("newStock"));
-			isupdate = productStockService.updateProductStock(productStock);*/
+			
+
+			//updateStock
+			damageServiceImpl.updateStock(productStock, data, lstProductstock);
+			
 			isupdate = damageServiceImpl.updateDamage(damage);
 			// System.out.println("isupdate" + isupdate);
+			
+			
 			if (isupdate)
 				sJson = damageServiceImpl.getAllDamage();
 				//sJson = productStockService.getAllProductStock();
@@ -136,13 +140,17 @@ public class DamageController {
 	}
 
 	@RequestMapping(value = "/deleteDamage")
-	public @ResponseBody String deleteDamage(@RequestParam("id") String sDamageId, HttpSession objSession,
+	public @ResponseBody String deleteDamage( @RequestParam("jsondata") JSONObject data, HttpSession objSession,
 			HttpServletRequest objRequest) throws JsonGenerationException, JsonMappingException, IOException {
 		boolean isDelete = false;
 		String sJson = "";
+		List<ProductStock> lstProductstock =null;
+		 ProductStock productStock=null;
+		 
+		String sDamageId=data.getString("damageId");
 		isDelete = damageServiceImpl.deleteDamage(sDamageId);
-		//isDelete = productStockService.deleteProductStock(id);
-		// System.out.println("1111111111" + isDelete);
+		damageServiceImpl.addDeletedStock(productStock, data, lstProductstock);
+		
 		if (isDelete) {
 			sJson = damageServiceImpl.getAllDamage();
 			//sJson = productStockService.getAllProductStock();

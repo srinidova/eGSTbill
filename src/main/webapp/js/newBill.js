@@ -5,6 +5,7 @@ function showBillDetailsData(response){
 	$("#userData ul li").remove(); 
 	serviceUnitArray = {};
 	response = jQuery.parseJSON(response);
+	var i=0;
 	if(response != undefined && response.length > 0){
 		var productArr = response[0].listBillingInfoCart;
 		purchaseArr = response[0].listPurchase;
@@ -16,7 +17,7 @@ function showBillDetailsData(response){
 				serviceUnitArray[catObj.billDetailsId] = catObj;
 				 var tblRow ="<ul class=''>"
 					 	+ "<li class='five-box'  title='"+catObj.billDetailsId+"'>"
-						+ catObj.billDetailsId  
+						+ (i+1)  
 						+"</li>"
 						+ "<li class='bil-prod-box'  title='"+catObj.productName+"'>"
 						+ catObj.productName
@@ -165,8 +166,6 @@ function infoDataClear(){
 		data["billDetailsId"] = serviceUnitArray[id].billDetailsId;
 		data["productId"] = serviceUnitArray[id].productId;
 		data["quantity"] = serviceUnitArray[id].quantity;
-		alert('data["productId"]==='+data["productId"]);
-		alert('data["billDetailsId"]==='+data["quantity"]);
 		
 		$.ajax({
             type: "POST",
@@ -179,7 +178,11 @@ function infoDataClear(){
            		   $("#unc").show();
                       $("#unc").fadeOut(5000); 
                       showBillDetailsData(response);
-                     
+                      $('#totalMrpDisp').text("");
+                     	$('#totalQuantityDisp').text("");
+                     	$('#totalRateDisp').text("");
+                     	$('#totalAmountDisp').text("");
+                     	$('#totalAmount').val("");
                 }
                 
             },

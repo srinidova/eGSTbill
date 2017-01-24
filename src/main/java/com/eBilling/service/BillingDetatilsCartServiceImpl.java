@@ -168,6 +168,8 @@ public class BillingDetatilsCartServiceImpl implements BillingDetatilsCartServic
 					//System.out.println("existQty=="+existQty+"--------------newQty==="+newQty);
 					existBillingDetailsCart.setQuantity(String.valueOf(existQty + newQty));
 					existBillingDetailsCart.setAmount(String.valueOf(existAmount + newAmount));
+					
+					 billingDetailsDao.updateBillDetails(existBillingDetailsCart);
 					break;
 				}
 

@@ -3,11 +3,14 @@ package com.eBilling.service;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eBilling.baseModel.BillingDetailsCart;
 import com.eBilling.dao.DamageDao;
 import com.eBilling.dao.ProductDao;
+import com.eBilling.dao.ProductStockDao;
 import com.eBilling.model.Damage;
 import com.eBilling.model.Product;
 import com.eBilling.model.ProductStock;
@@ -16,7 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class DamageServiceImpl implements DamageService{
-	
+	@Autowired
+	ProductStockDao productStockDao;
 	@Autowired
 	DamageDao damageDao;
 	private Logger objLogger = Logger.getLogger(DamageServiceImpl.class);
@@ -110,5 +114,85 @@ public class DamageServiceImpl implements DamageService{
 			System.out.println("Exception getAllDamage()"+e);
 		}
 		return sJson;
+	}
+	
+	@Override
+	public boolean updateStock(ProductStock productStock,JSONObject data,List<ProductStock> lstProductstock) {
+		boolean isUpdate = false;
+		 String sProductId ="";
+		 List<Damage> lstDamageProduct =null;
+		 Damage existDamageStock =null;
+		try {
+			
+			sProductId = data.getString("productId");
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+			}
+			lstDamageProduct=damageDao.getAllDamageProductsByProductId(sProductId);
+			for(int i=0;i<lstDamageProduct.size();i++){
+				existDamageStock=lstDamageProduct.get(i);
+			}
+			if(existDamageStock.getProductId().equals(sProductId)){
+				int stock = Math.abs(Integer.parseInt(data.getString("quantity"))-Integer.parseInt(existDamageStock.getQuantity()));
+				
+				int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( String.valueOf(stock)));
+				 productStock.setStock(String.valueOf(sNewStock));
+				 productStockDao.updateProductStock(productStock);
+			}
+			
+		}catch(Exception e){
+			objLogger.error("Exception in RegistrationServiceImpl in updateProductStock() "+e);
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return isUpdate;
+	}
+	@Override
+	public boolean updatedStock(ProductStock productStock,JSONObject data,List<ProductStock> lstProductstock) {
+		boolean isUpdate = false;
+		 String sProductId ="";
+		try {
+			
+			sProductId = data.getString("productId");
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+				
+			}
+			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( data.getString("quantity")));
+			 productStock.setStock(String.valueOf(sNewStock));
+			 productStockDao.updateProductStock(productStock);
+		}catch(Exception e){
+			objLogger.error("Exception in RegistrationServiceImpl in updatedStock() "+e);
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return isUpdate;
+	}
+	@Override
+	public boolean addDeletedStock(ProductStock productStock,JSONObject data,List<ProductStock> lstProductstock) {
+		boolean isUpdate = false;
+		 String sProductId ="";
+		try {
+			
+			sProductId = data.getString("productId");
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+				
+			}
+			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) + Integer.parseInt( data.getString("quantity")));
+			 productStock.setStock(String.valueOf(sNewStock));
+			 productStockDao.updateProductStock(productStock);
+		}catch(Exception e){
+			objLogger.error("Exception in RegistrationServiceImpl in updatedStock() "+e);
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return isUpdate;
 	}
 }

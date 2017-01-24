@@ -122,9 +122,9 @@ public class ProductStockBaseDao {
 	public List<ProductStock> getAllProductStock() {
 		List<ProductStock> retlist = null;
 		try {
-			String sql = "SELECT * from productStock";
+			String sql = "SELECT ps.productId,stock,oldStock,newStock,p.productName,stockId from productStock ps,product p where ps.productId=p.productId";
 			retlist = jdbcTemplate.query(sql,ParameterizedBeanPropertyRowMapper.newInstance(ProductStock.class));
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

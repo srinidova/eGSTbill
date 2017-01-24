@@ -15,6 +15,14 @@ public class ProductStockBase {
 	protected String updatedOn;
 	protected String updatedBy;
 	protected String stockId;
+	protected String productName;
+	
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public String getStockId() {
 		return stockId;
 	}

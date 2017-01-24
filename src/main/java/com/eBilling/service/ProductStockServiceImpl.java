@@ -2,19 +2,14 @@ package com.eBilling.service;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
 import com.eBilling.baseModel.BillingDetailsCart;
-import com.eBilling.dao.ProductDao;
+import com.eBilling.dao.BillingDetailsCartDao;
 import com.eBilling.dao.ProductStockDao;
-import com.eBilling.model.ProductStock;
-import com.eBilling.model.Product;
-import com.eBilling.model.ProductStock;
 import com.eBilling.model.ProductStock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,6 +19,8 @@ public class ProductStockServiceImpl implements ProductStockService{
 	
 	@Autowired
 	ProductStockDao productStockDao;
+	@Autowired
+	BillingDetailsCartDao billingDetailsCartDao;
 	private Logger objLogger = Logger.getLogger(ProductStockServiceImpl.class);
 	
 	@Override
@@ -52,11 +49,21 @@ public class ProductStockServiceImpl implements ProductStockService{
 		}
 		return isUpdate;
 	}
-	/*@Override
-	public boolean updateNewProductStock(ProductStock objProductStock) {
+	@Override
+	public boolean updateStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
 		boolean isUpdate = false;
+		 String sProductId ="";
 		try {
-			isUpdate = productStockDao.updateProductStock(objProductStock);
+			
+			sProductId = data.getString("productId");
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+				
+			}
+			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( data.getString("quantity")));
+			 productStock.setStock(String.valueOf(sNewStock));
+			 productStockDao.updateProductStock(productStock);
 		}catch(Exception e){
 			objLogger.error("Exception in ProductStockServiceImpl in updateProductStock() "+e);
 			e.printStackTrace();
@@ -64,7 +71,65 @@ public class ProductStockServiceImpl implements ProductStockService{
 			
 		}
 		return isUpdate;
-	}*/
+	}
+	@Override
+	public boolean updatingStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
+		boolean isUpdate = false;
+		 String sProductId ="";
+		 BillingDetailsCart existBillingDetailsCart =null;
+		 List<BillingDetailsCart> listBillingDetails =null;
+		try {
+			
+			sProductId = data.getString("productId");
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+				
+			}
+			listBillingDetails = billingDetailsCartDao.getAllBillDetailsByProductId(sProductId);
+			for(int i=0;i<listBillingDetails.size();i++){
+				existBillingDetailsCart=listBillingDetails.get(i);
+				
+			}if(existBillingDetailsCart.getProductId().equals(sProductId)){
+				int stock =Math.abs(Integer.parseInt(existBillingDetailsCart.getQuantity())-Integer.parseInt(data.getString("quantity")));
+				int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( String.valueOf(stock)));
+				 productStock.setStock(String.valueOf(sNewStock));
+				 productStockDao.updateProductStock(productStock);
+			}
+			
+			
+		}catch(Exception e){
+			objLogger.error("Exception in ProductStockServiceImpl in updateProductStock() "+e);
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return isUpdate;
+	}
+	@Override
+	public boolean updatedStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
+		boolean isUpdate = false;
+		 String sProductId ="";
+		try {
+			
+			sProductId = data.getString("productId");
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+				
+			}
+					int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) + Integer.parseInt(  data.getString("quantity")));
+					System.out.println("sNewStock::::"+sNewStock);
+					 productStock.setStock(String.valueOf(sNewStock));
+			 productStockDao.updateProductStock(productStock);
+		}catch(Exception e){
+			objLogger.error("Exception in ProductStockServiceImpl in updateProductStock() "+e);
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return isUpdate;
+	}
 	@Override
 	public boolean deleteProductStock(String id) {
 		boolean isDelete = true;
@@ -108,35 +173,6 @@ public class ProductStockServiceImpl implements ProductStockService{
 		}
 		return productStocks;
 	}
-	/*@Override
-	public List<BillingDetailsCart> updateProductStock(BillingDetailsCart billingdetailsCart,
-			List<BillingDetailsCart> listBillingDetails) {
-		String sNewProductId = null;
-		try {
-			sNewProductId = billingdetailsCart.getProductId();
-			lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
-			for (int i = 0; i < listBillingDetails.size(); i++) {
-				
-				BillingDetailsCart existBillingDetailsCart = listBillingDetails.get(i);
-				if (existBillingDetailsCart.getProductId().equals(sNewProductId)) {
-					//System.out.println("in----------updateProductQuantity---------------sNewProductId=="+sNewProductId+"--------------existBillingDetailsCart.getProductId()==="+existBillingDetailsCart.getProductId());
-					int existQty = Integer.parseInt(existBillingDetailsCart.getQuantity());
-					int newQty = Integer.parseInt(billingdetailsCart.getQuantity());
-					int existAmount = Integer.parseInt(existBillingDetailsCart.getAmount());
-					int newAmount = Integer.parseInt(billingdetailsCart.getAmount());
-					//System.out.println("existQty=="+existQty+"--------------newQty==="+newQty);
-					existBillingDetailsCart.setQuantity(String.valueOf(existQty + newQty));
-					existBillingDetailsCart.setAmount(String.valueOf(existAmount + newAmount));
-					break;
-				}
-
-			}
-
-		} catch (Exception e) {
-
-			System.out.println("Exception in updateProductQuantity in  calculateTotal()");
-		}
-		return listBillingDetails;
-	}*/
+	
 
 }

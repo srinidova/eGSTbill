@@ -103,7 +103,7 @@
 		});
 		
 		function getAllProducts() {
-			var allProducts = '${sessionScope.allProducts}';
+			var allProducts = '${sessionScope.getAllStock}';
 			if(typeof allProducts != ''){
 				allProducts = JSON.parse(allProducts); 
 				if(allProducts != null && allProducts.length > 0){

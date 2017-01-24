@@ -76,6 +76,7 @@ public class BillingController {
 		ObjectMapper objMapper = null;
 		List<PurchaserInfo> listPurchaseInfoModel;
 		List<BillingInfoCart> listBillInfoCart = null;
+		String getAllProductStock=null;
 		try {
 			System.out.println("First time caling");
 			sJson = objProductService.populateProducts();
@@ -83,7 +84,10 @@ public class BillingController {
 				sBillId = (String)objSession.getAttribute("sessionBillId");
 				System.out.println("First time caling sBillId==" + sBillId);
 			objSession.setAttribute("sessionBillId", null);
+			getAllProductStock = productStockService.getAllProductStock();
+			objSession.setAttribute("getAllStock", getAllProductStock);
 			
+			System.out.println("First time caling getAllStock==" + getAllProductStock);
 			//listPurchaseInfoModel = objInfoService.getAllPurchaseInfo();
 			/*if(StringUtils.isNotEmpty(sBillId)){
 				listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
@@ -187,9 +191,10 @@ public class BillingController {
 				}
 				//stockupdate
 				
-				int sNewStock = Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsCart.getQuantity());
+					productStockService.updateStock(productStock, billingdetailsCart, lstProductstock,data);
+				/*int sNewStock = Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsCart.getQuantity());
 				 productStock.setStock(String.valueOf(sNewStock));
-				 productStockService.updateProductStock(productStock);
+				 productStockService.updateProductStock(productStock);*/
 				
 				billingInfoCart = objBillingDetatilsCartService.calculateTotal(listBillingDetails, billingInfoCart);
 				billingInfoCart.setListBillingInfoCart(listBillingDetails);
@@ -451,20 +456,14 @@ public class BillingController {
 			int iAmount = iRate * iQuantity;
 			billingdetailsCart.setAmount(String.valueOf(iAmount));
 			System.out.println("billingdetailsCart==="+billingdetailsCart);
+			
+			//update Stock
+			
+			productStockService.updatingStock(productStock, billingdetailsCart, lstProductstock, data);
 
 			isUpdate = billingDetailsDao.updateBillDetails(billingdetailsCart);
 			
-			//update Stock
-				sProductId = data.getString("productId");
-				lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
-				for(int i=0;i<lstProductstock.size();i++){
-					productStock=lstProductstock.get(i);
-					
-				}
-						int sNewStock = Integer.parseInt(productStock.getStock()) + Integer.parseInt( billingdetailsCart.getQuantity());
-						System.out.println("sNewStock::::"+sNewStock);
-						 productStock.setStock(String.valueOf(sNewStock));
-						 productStockService.updateProductStock(productStock);
+			
 				
 			sBillId = data.getString("billId");
 			System.out.println("billId==="+sBillId);
@@ -513,7 +512,7 @@ public class BillingController {
 	@RequestMapping(value = "/deleteBillingDetailsCart")
 	public @ResponseBody
 	String deleteBillingDetailsCart(@RequestParam("jsondata") JSONObject data, 
-			HttpSession session, HttpServletRequest objRequest)
+			HttpSession session, HttpServletRequest objRequest,BillingDetailsCart billingdetailsCart)
 			throws JsonGenerationException, JsonMappingException, IOException {
 			   	boolean isDelete = false;
 				String sJson = "";
@@ -539,16 +538,8 @@ public class BillingController {
 				isDelete = objBillingDetatilsCartService.deleteBillingDetailsCart(sBillDetailsId);
 				
 				//update Stock
-				sProductId = data.getString("productId");
-				lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
-				for(int i=0;i<lstProductstock.size();i++){
-					productStock=lstProductstock.get(i);
-					
-				}
-						int sNewStock = Integer.parseInt(productStock.getStock()) + Integer.parseInt(data.getString("quantity"));
-						System.out.println("sNewStock::::"+sNewStock);
-						 productStock.setStock(String.valueOf(sNewStock));
-						 productStockService.updateProductStock(productStock);
+				
+				productStockService.updatedStock(productStock,billingdetailsCart,lstProductstock, data);
 				
 			 	sBillId =data.getString("billId");
 				System.out.println("billId==="+sBillId);

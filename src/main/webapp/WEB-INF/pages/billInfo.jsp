@@ -24,7 +24,7 @@ $(document).ready(function() {
 	}
 	if(unBill != ""){
 		//alert(unBill);
-		showUnBillDetailsData(unBill);
+		showUnBillDetailsData(JSON.parse(unBill));
 		//showUnBIllPrintData(unBill);
 	}
 	/* var PrintBillDetails = '${sessionScope.PrintBillDetails}';
@@ -106,10 +106,9 @@ function showUnBillDetailsData(response){
 	$("#userData ul").remove();
 	$("#userData ul li").remove(); 
 	serviceUnitArray = {};
-	response = jQuery.parseJSON(response);
 	var i=0;
 	if(response != undefined && response.length > 0){
-		var resBillInfo = response[0].listBillingInfoCart;
+		var resBillInfo = response.listBillingInfoCart;
 		//purchaseArr = response[0].listPurchase;
 		if(resBillInfo != null){
 			$.each(resBillInfo,function(i, catObj) {
