@@ -130,7 +130,7 @@ function getAllProducts() {
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>              -->   
-						<li class="nine-box" style="width:300%;">StockId:
+						<li class="nine-box" style="width:300%;">ProductName:
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>

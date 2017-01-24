@@ -8,15 +8,15 @@ function showProductData(response){
 			serviceUnitArray[catObj.productId] = catObj;
 			
 				 var tblRow ="<ul class=''>"
-						+ "<li class='nine-box'  title='"+catObj.productName+"'>"
+						+ "<li class='nine-box' style='width:300%;' title='"+catObj.productName+"'>"
 						+ catObj.productName  
-						+ "<li class='five-box'  title='"+catObj.stock+"' style='width:300%;'>"
+						+ "<li class='five-box' style='width:140%;' title='"+catObj.stock+"' style='width:300%;'>"
 						+ catObj.stock
 						+ "</li>"
-						+ "<li class='five-box'  title='"+catObj.newStock+"' style='width:140%;'>"
+						+ "<li class='five-box' style='width:140%; title='"+catObj.newStock+"' style='width:140%;'>"
 						+ catObj.newStock
 						+ "</li>"
-						+ "<li class='five-box'  title='"+catObj.oldStock+"' style='width:140%;'>"
+						+ "<li class='five-box' style='width:140%;' title='"+catObj.oldStock+"' style='width:140%;'>"
 						+ catObj.oldStock
 						+ "</li>"
 						
@@ -61,11 +61,7 @@ function editProductStock(id)
 	if(oldStock == null){
 		oldStock=0;
 	}*/
-	var stock =$('#stock').val(id.stock);
 	$('#productId').val(id);
-	if(stock == null){
-		stock=0;
-	}
 	$('#stock').val( serviceUnitArray[id].stock)
 	// $("#stock").attr("disabled", "disabled"); 
 	//$('#stock').disabled =true;
@@ -118,7 +114,7 @@ function productStock() {
 			    }
 		   
 		else if($("#stockId").val() != "" ){
-			alert('aaaaaaaaaaa'+$("#stockId").val());
+			//alert('aaaaaaaaaaa'+$("#stockId").val());
 			updateProductStock();
 		}			   
 		else{
