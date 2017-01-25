@@ -112,7 +112,7 @@ function getAllProducts() {
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
 						<aside class="block-footer-right">
-							 <input class="btn-cancel" value="cancel"  name="Cancel" type="button" onclick="productDataClear();" >
+							 <input class="btn-cancel" value="cancel"  name="Cancel" type="button" onclick="ProductStockDataClear();" >
                     <input class="btn-save" value="Save" id="saveIds" type="button" onClick="productStock();">
 						</aside>
 					</div>

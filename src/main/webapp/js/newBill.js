@@ -121,34 +121,71 @@ function dataClear(){
 	 $('#productName').val("");
 	 $('#rate').val("");
 	 $('#quantity').val("");
+	 $("#userData").html("");
+	  $('#totalMrpDisp').text("");
+ 	$('#totalQuantityDisp').text("");
+ 	$('#totalRateDisp').text("");
+ 	$('#totalAmountDisp').text("");
+ 	$('#totalAmount').val("");
+	 $('#totalMrp').val("");
+	 $('#totalQuantity').val("");
+	 $('#totalRate').val("");
+	 
+	 $('#billId').val("");
+	 $('#name').val("");
+	 $('#discount').val("");
+	 $('#phone').val("");
+	 $('#address').val("");
+	 $('#lrNo').val("");
+	 $('#lrDate').val("");
+	 $('#orderNo').val("");
+	 $('#orderDate').val("");
+	 $('#dispatchedBy').val("");
+	 $('#dispatchedDate').val("");
+	 $('#noOfPacks').val("");
+	 $('#termOfPayment').val("");
+	 $('#terms').val("");
+	 $('#lrDate').val();
+	 $('#billNo').val("");
+	 $('#packSlipNo').val("");
+	 $('#orderBy').val("");
+	 $('#tinNo').val("");
+    
 	}
 function infoDataClear(){
 	
-	 $('#totalMrpDisp').text("");
-   	$('#totalQuantityDisp').text("");
-   	$('#totalRateDisp').text("");
-   	$('#totalAmountDisp').text("");
-   	$('#totalAmount').val("");
- 	 $('#totalMrp').val("");
-		 $('#totalQuantity').val("");
-		 $('#totalRate').val("");
-		 
-		 $('#billId').val("");
-		 $('#name').val("");
-		 $('#discount').val("");
-		 $('#phone').val("");
-		 $('#address').val("");
-		 $('#lrNo').val("");
-		 $('#lrDate').val("");
-		 $('#orderNo').val();
-		 $('#orderDate').val("");
-		 $('#dispatchedBy').val("");
-		 $('#dispatchedDate').val("");
-		 $('#noOfPages').val("");
-		 $('#termsOfPayment').val("");
-		 $('#terms').val("");
-		 $('#lrDate').val();
-		 $('#billNo').val("");
+	$('#productName').val("");
+	 $('#rate').val("");
+	 $('#quantity').val("");
+	 $("#userData").html("");
+	  $('#totalMrpDisp').text("");
+	$('#totalQuantityDisp').text("");
+	$('#totalRateDisp').text("");
+	$('#totalAmountDisp').text("");
+	$('#totalAmount').val("");
+	 $('#totalMrp').val("");
+	 $('#totalQuantity').val("");
+	 $('#totalRate').val("");
+	 
+	 $('#billId').val("");
+	 $('#name').val("");
+	 $('#discount').val("");
+	 $('#phone').val("");
+	 $('#address').val("");
+	 $('#lrNo').val("");
+	 $('#lrDate').val("");
+	 $('#orderNo').val("");
+	 $('#orderDate').val("");
+	 $('#dispatchedBy').val("");
+	 $('#dispatchedDate').val("");
+	 $('#noOfPacks').val("");
+	 $('#termOfPayment').val("");
+	 $('#terms').val("");
+	 $('#lrDate').val();
+	 $('#billNo').val("");
+	 $('#packSlipNo').val("");
+	 $('#orderBy').val("");
+	 $('#tinNo').val("");
 	
 	
 }
@@ -228,3 +265,494 @@ function infoDataClear(){
 	             
 		}); 
 	}
+	
+	
+	 	function poupulatePurchase() {
+	var name = $("#name").val();
+	var lstOrders =purchaseArr;
+	if(lstOrders != null && lstOrders.length > 0){
+		$.each(lstOrders,function(i, catObj) {
+			 if(name == catObj.name){
+				 $('#phone').val(catObj.mobileNo);
+				 $('#address').val(catObj.address);
+				 $('#name').val(catObj.name);
+				 return false;
+			} 
+		});
+	}
+			
+		} 
+function newBill() {
+	 data1 ={};
+	 data1["billId"]=$("#billId").val();
+	 data = {};
+	data["productId"] = $("#productId").val();
+	data["productName"] = $("#productName").val();
+	data["quantity"] = $("#quantity").val();
+	data["rate"] = $("#rate").val();
+	data["mrp"] = $("#mrp").val();
+	data["billId"] = $("#billId").val();
+	data["billDetailsId"] = $("#billDetailsId").val();
+	
+    
+     if($('#rate').val().length == 0 ) {
+	    $('#rate').css('color','red');
+	    $("#rate").css("border-color","red");
+	    $("#rate").attr("placeholder","Please enter rate");
+	    $('#rate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#quantity').val().length == 0 ) {
+	    $('#quantity').css('color','red');
+	    $("#quantity").css("border-color","red");
+	    $("#quantity").attr("placeholder","Please enter quantity");
+	    $('#quantity').addClass('your-class');
+	    return false;
+	    }
+	
+    else if($("#billDetailsId").val() != ""){
+		updateBillProduct();
+	}else{
+		$("#btn-save").prop("disabled", true);
+		saveBillProduct();
+	}
+	
+	
+
+}
+		
+
+
+	
+function updateBillProduct(){
+	
+	$.ajax({
+             type: "POST",
+             url: "updateBillDetailsCart.htm",
+             data: "jsondata= "+JSON.stringify(data),
+             success: function (response) {
+
+            	 if(response != 0){
+            		     $("#unc").text("Update Sucessfully");
+            		   $("#unc").show();
+                       $("#unc").fadeOut(5000); 
+                       showBillDetailsData(response);
+                      //showBillDetailsData(JSON.parse(response));
+            		 $("#productId").val("");
+  					$("#quantity").val("");
+  					$("#rate").val("");
+  					 stop = true;
+                 }
+                 
+             },
+             error: function (e) { 
+                 $("#btn-save").prop("disabled", false);
+             }
+
+	}); 
+}
+function updateBillInfoCart(){
+	
+	data = {};
+	data["billId"] = $("#billId").val();
+	data["billNo"] = $("#billNo").val();
+	data["orderNo"] = $("#orderNo").val();
+	data["orderDate"] = $("#orderDate").val();
+	
+	data["payment"] = $("#payment").val();
+	data["discount"] = $("#discount").val();
+	data["totalAmount"] = $("#totalAmount").val();
+	data["name"] = $("#name").val();
+	data["phone"] = $("#phone").val();
+	data["address"] = $("#address").val();
+	data["lrNo"] = $("#lrNo").val();
+	data["lrDate"] = $("#lrDate").val();
+	data["dispatchedBy"] = $("#dispatchedBy").val();
+	data["orderBy"] = $("#orderBy").val();
+	data["dispatchedDate"] = $("#dispatchedDate").val();
+	data["noOfPacks"] = $("#noOfPacks").val();
+	data["packSlipNo"] = $("#packSlipNo").val();
+	data["termOfPayment"] = $("#termOfPayment").val();
+	data["totalMrp"] = $("#totalMrp").val();
+	data["terms"] = $("#terms").val();
+	data["totalQuantity"] = $("#totalQuantity").val();
+	data["totalRate"] = $("#totalRate").val();
+	data["billDate"] = $("#billDate").val();
+	data["tinNo"] = $("#tinNo").val();
+	
+	if($('#billNo').val().length == 0 ) {
+	    $('#billNo').css('color','red');
+	    $("#billNo").css("border-color","red");
+	    $("#billNo").attr("placeholder","Please enter billNo");
+	    $('#billNo').addClass('your-class');
+	    return false;
+	    }
+    
+    else if($('#orderNo').val().length == 0 ) {
+	    $('#orderNo').css('color','red');
+	    $("#orderNo").css("border-color","red");
+	    $("#orderNo").attr("placeholder","Please enter orderNo");
+	    $('#orderNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#orderDate').val().length == 0 ) {
+	    $('#orderDate').css('color','red');
+	    $("#orderDate").css("border-color","red");
+	    $("#orderDate").attr("placeholder","Please enter orderDate");
+	    $('#orderDate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#payment').val().length == 0 ) {
+	    $('#payment').css('color','red');
+	    $("#payment").css("border-color","red");
+	    $("#payment").attr("placeholder","Please enter payment");
+	    $('#payment').addClass('your-class');
+	    return false;
+	    }
+    else if($('#totalAmount').val().length == 0 ) {
+	    $('#totalAmount').css('color','red');
+	    $("#totalAmount").css("border-color","red");
+	    $("#totalAmount").attr("placeholder","Please enter totalAmount");
+	    $('#totalAmount').addClass('your-class');
+	    return false;
+	    }
+    else if($('#name').val().length == 0 ) {
+	    $('#name').css('color','red');
+	    $("#name").css("border-color","red");
+	    $("#name").attr("placeholder","Please enter name");
+	    $('#name').addClass('your-class');
+	    return false;
+	    }
+    else if($('#phone').val().length == 0 ) {
+	    $('#phone').css('color','red');
+	    $("#phone").css("border-color","red");
+	    $("#phone").attr("placeholder","Please enter phone");
+	    $('#phone').addClass('your-class');
+	    return false;
+	    }
+    else if($('#address').val().length == 0 ) {
+	    $('#address').css('color','red');
+	    $("#address").css("border-color","red");
+	    $("#address").attr("placeholder","Please enter address");
+	    $('#address').addClass('your-class');
+	    return false;
+	    }
+    else if($('#lrNo').val().length == 0 ) {
+	    $('#lrNo').css('color','red');
+	    $("#lrNo").css("border-color","red");
+	    $("#lrNo").attr("placeholder","Please enter lrNo");
+	    $('#lrNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#lrDate').val().length == 0 ) {
+	    $('#lrDate').css('color','red');
+	    $("#lrDate").css("border-color","red");
+	    $("#lrDate").attr("placeholder","Please enter lrDate");
+	    $('#lrDate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#dispatchedBy').val().length == 0 ) {
+	    $('#dispatchedBy').css('color','red');
+	    $("#dispatchedBy").css("border-color","red");
+	    $("#dispatchedBy").attr("placeholder","Please enter dispatchedBy");
+	    $('#dispatchedBy').addClass('your-class');
+	    return false;
+	    }
+    else if($('#dispatchedDate').val().length == 0 ) {
+	    $('#dispatchedDate').css('color','red');
+	    $("#dispatchedDate").css("border-color","red");
+	    $("#dispatchedDate").attr("placeholder","Please enter dispatchedDate");
+	    $('#dispatchedDate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#orderBy').val().length == 0 ) {
+	    $('#orderBy').css('color','red');
+	    $("#orderBy").css("border-color","red");
+	    $("#orderBy").attr("placeholder","Please enter orderBy");
+	    $('#orderBy').addClass('your-class');
+	    return false;
+	    }
+    else if($('#noOfPacks').val().length == 0 ) {
+	    $('#noOfPacks').css('color','red');
+	    $("#noOfPacks").css("border-color","red");
+	    $("#noOfPacks").attr("placeholder","Please enter noOfPacks");
+	    $('#noOfPacks').addClass('your-class');
+	    return false;
+	    }
+    else if($('#packSlipNo').val().length == 0 ) {
+	    $('#packSlipNo').css('color','red');
+	    $("#packSlipNo").css("border-color","red");
+	    $("#packSlipNo").attr("placeholder","Please enter packSlipNo");
+	    $('#packSlipNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#termOfPayment').val().length == 0 ) {
+	    $('#termOfPayment').css('color','red');
+	    $("#termOfPayment").css("border-color","red");
+	    $("#termOfPayment").attr("placeholder","Please enter termOfPayment");
+	    $('#termOfPayment').addClass('your-class');
+	    return false;
+	    }
+    else if($('#terms').val().length == 0 ) {
+	    $('#terms').css('color','red');
+	    $("#terms").css("border-color","red");
+	    $("#terms").attr("placeholder","Please enter terms");
+	    $('#terms').addClass('your-class');
+	    return false;
+	    }
+   
+    else if($('#tinNo').val().length == 0 ) {
+	    $('#tinNo').css('color','red');
+	    $("#tinNo").css("border-color","red");
+	    $("#tinNo").attr("placeholder","Please enter tinNo");
+	    $('#tinNo').addClass('your-class');
+	    return false;
+	    }
+	
+	
+	$.ajax({
+             type: "POST",
+             url: "genarateBill.htm",
+             data:"jsondata= "+JSON.stringify(data),
+             success: function (response) {
+            	 $("#userData").html("");
+            	  $('#totalMrpDisp').text("");
+              	$('#totalQuantityDisp').text("");
+              	$('#totalRateDisp').text("");
+              	$('#totalAmountDisp').text("");
+              	$('#totalAmount').val("");
+            	 $('#totalMrp').val("");
+        		 $('#totalQuantity').val("");
+        		 $('#totalRate').val("");
+        		 
+        		 $('#billId').val("");
+        		 $('#name').val("");
+        		 $('#discount').val("");
+        		 $('#phone').val("");
+        		 $('#address').val("");
+        		 $('#lrNo').val("");
+        		 $('#lrDate').val("");
+        		 $('#orderNo').val("");
+        		 $('#orderDate').val("");
+        		 $('#dispatchedBy').val("");
+        		 $('#dispatchedDate').val("");
+        		 $('#noOfPacks').val("");
+        		 $('#termOfPayment').val("");
+        		 $('#terms').val("");
+        		 $('#lrDate').val();
+        		 $('#billNo').val("");
+        		 $('#packSlipNo').val("");
+        		 $('#orderBy').val("");
+        		 $('#tinNo').val("");
+              	window.location.href = "billInfoHome";
+                  
+            	
+                 },
+             error: function (e) { 
+                 $("#btn-save").prop("disabled", false);
+             }
+             
+             
+	}); 
+}
+function saveInfoCart(){
+	
+	data = {};
+	data["billId"] = $("#billId").val();
+	data["billNo"] = $("#billNo").val();
+	data["orderNo"] = $("#orderNo").val();
+	data["orderDate"] = $("#orderDate").val();
+	
+	data["payment"] = $("#payment").val();
+	data["discount"] = $("#discount").val();
+	data["totalAmount"] = $("#totalAmount").val();
+	data["name"] = $("#name").val();
+	data["phone"] = $("#phone").val();
+	data["address"] = $("#address").val();
+	data["lrNo"] = $("#lrNo").val();
+	data["lrDate"] = $("#lrDate").val();
+	data["dispatchedBy"] = $("#dispatchedBy").val();
+	data["orderBy"] = $("#orderBy").val();
+	data["dispatchedDate"] = $("#dispatchedDate").val();
+	data["noOfPacks"] = $("#noOfPacks").val();
+	data["packSlipNo"] = $("#packSlipNo").val();
+	data["termOfPayment"] = $("#termOfPayment").val();
+	data["totalMrp"] = $("#totalMrp").val();
+	data["terms"] = $("#terms").val();
+	data["totalQuantity"] = $("#totalQuantity").val();
+	data["totalRate"] = $("#totalRate").val();
+	data["billDate"] = $("#billDate").val();
+	data["tinNo"] = $("#tinNo").val();
+	if($('#billNo').val().length == 0 ) {
+	    $('#billNo').css('color','red');
+	    $("#billNo").css("border-color","red");
+	    $("#billNo").attr("placeholder","Please enter billNo");
+	    $('#billNo').addClass('your-class');
+	    return false;
+	    }
+    
+    else if($('#orderNo').val().length == 0 ) {
+	    $('#orderNo').css('color','red');
+	    $("#orderNo").css("border-color","red");
+	    $("#orderNo").attr("placeholder","Please enter orderNo");
+	    $('#orderNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#orderDate').val().length == 0 ) {
+	    $('#orderDate').css('color','red');
+	    $("#orderDate").css("border-color","red");
+	    $("#orderDate").attr("placeholder","Please enter orderDate");
+	    $('#orderDate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#payment').val().length == 0 ) {
+	    $('#payment').css('color','red');
+	    $("#payment").css("border-color","red");
+	    $("#payment").attr("placeholder","Please enter payment");
+	    $('#payment').addClass('your-class');
+	    return false;
+	    }
+    else if($('#totalAmount').val().length == 0 ) {
+	    $('#totalAmount').css('color','red');
+	    $("#totalAmount").css("border-color","red");
+	    $("#totalAmount").attr("placeholder","Please enter totalAmount");
+	    $('#totalAmount').addClass('your-class');
+	    return false;
+	    }
+    else if($('#name').val().length == 0 ) {
+	    $('#name').css('color','red');
+	    $("#name").css("border-color","red");
+	    $("#name").attr("placeholder","Please enter name");
+	    $('#name').addClass('your-class');
+	    return false;
+	    }
+    else if($('#phone').val().length == 0 ) {
+	    $('#phone').css('color','red');
+	    $("#phone").css("border-color","red");
+	    $("#phone").attr("placeholder","Please enter phone");
+	    $('#phone').addClass('your-class');
+	    return false;
+	    }
+    else if($('#address').val().length == 0 ) {
+	    $('#address').css('color','red');
+	    $("#address").css("border-color","red");
+	    $("#address").attr("placeholder","Please enter address");
+	    $('#address').addClass('your-class');
+	    return false;
+	    }
+    else if($('#lrNo').val().length == 0 ) {
+	    $('#lrNo').css('color','red');
+	    $("#lrNo").css("border-color","red");
+	    $("#lrNo").attr("placeholder","Please enter lrNo");
+	    $('#lrNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#lrDate').val().length == 0 ) {
+	    $('#lrDate').css('color','red');
+	    $("#lrDate").css("border-color","red");
+	    $("#lrDate").attr("placeholder","Please enter lrDate");
+	    $('#lrDate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#dispatchedBy').val().length == 0 ) {
+	    $('#dispatchedBy').css('color','red');
+	    $("#dispatchedBy").css("border-color","red");
+	    $("#dispatchedBy").attr("placeholder","Please enter dispatchedBy");
+	    $('#dispatchedBy').addClass('your-class');
+	    return false;
+	    }
+    else if($('#dispatchedDate').val().length == 0 ) {
+	    $('#dispatchedDate').css('color','red');
+	    $("#dispatchedDate").css("border-color","red");
+	    $("#dispatchedDate").attr("placeholder","Please enter dispatchedDate");
+	    $('#dispatchedDate').addClass('your-class');
+	    return false;
+	    }
+    else if($('#orderBy').val().length == 0 ) {
+	    $('#orderBy').css('color','red');
+	    $("#orderBy").css("border-color","red");
+	    $("#orderBy").attr("placeholder","Please enter orderBy");
+	    $('#orderBy').addClass('your-class');
+	    return false;
+	    }
+    else if($('#noOfPacks').val().length == 0 ) {
+	    $('#noOfPacks').css('color','red');
+	    $("#noOfPacks").css("border-color","red");
+	    $("#noOfPacks").attr("placeholder","Please enter noOfPacks");
+	    $('#noOfPacks').addClass('your-class');
+	    return false;
+	    }
+    else if($('#packSlipNo').val().length == 0 ) {
+	    $('#packSlipNo').css('color','red');
+	    $("#packSlipNo").css("border-color","red");
+	    $("#packSlipNo").attr("placeholder","Please enter packSlipNo");
+	    $('#packSlipNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#termOfPayment').val().length == 0 ) {
+	    $('#termOfPayment').css('color','red');
+	    $("#termOfPayment").css("border-color","red");
+	    $("#termOfPayment").attr("placeholder","Please enter termOfPayment");
+	    $('#termOfPayment').addClass('your-class');
+	    return false;
+	    }
+    else if($('#terms').val().length == 0 ) {
+	    $('#terms').css('color','red');
+	    $("#terms").css("border-color","red");
+	    $("#terms").attr("placeholder","Please enter terms");
+	    $('#terms').addClass('your-class');
+	    return false;
+	    }
+    
+    else if($('#tinNo').val().length == 0 ) {
+	    $('#tinNo').css('color','red');
+	    $("#tinNo").css("border-color","red");
+	    $("#tinNo").attr("placeholder","Please enter tinNo");
+	    $('#tinNo').addClass('your-class');
+	    return false;
+	    }
+	
+	
+
+	$.ajax({
+             type: "POST",
+             url: "saveCart.htm",
+             data:"jsondata= "+JSON.stringify(data),
+             success: function (response) {
+            	 $("#userData").html("");
+            	  $('#totalMrpDisp').text("");
+              	$('#totalQuantityDisp').text("");
+              	$('#totalRateDisp').text("");
+              	$('#totalAmountDisp').text("");
+              	$('#totalAmount').val("");
+            	 $('#totalMrp').val("");
+        		 $('#totalQuantity').val("");
+        		 $('#totalRate').val("");
+        		 
+        		 $('#billId').val("");
+        		 $('#name').val("");
+        		 $('#discount').val("");
+        		 $('#phone').val("");
+        		 $('#address').val("");
+        		 $('#lrNo').val("");
+        		 $('#lrDate').val("");
+        		 $('#orderNo').val("");
+        		 $('#orderDate').val("");
+        		 $('#dispatchedBy').val("");
+        		 $('#dispatchedDate').val("");
+        		 $('#noOfPacks').val("");
+        		 $('#termOfPayment').val("");
+        		 $('#terms').val("");
+        		 $('#lrDate').val();
+        		 $('#billNo').val("");
+        		 $('#packSlipNo').val("");
+        		 $('#orderBy').val("");
+        		 $('#tinNo').val("");
+                 },
+             error: function (e) { 
+                 $("#btn-save").prop("disabled", false);
+             }
+             
+             
+	}); 
+}

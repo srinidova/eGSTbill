@@ -31,31 +31,12 @@
 		    	 $("#unc").text(' min 3 characters reqiured');
 		        	$("#unc").show();
 		           	$("#unc").fadeOut(2000);
-		           //	$("#regName").focus();
-		         // Enable submit button
 		    } else {
 		    	
-		    	//return false;
-		         // Disable submit button
 		    }
 		}); 
 		
-		/* $('#regName').keypress(function (e) {
-	        var regex = new RegExp("^[a-zA-Z]+$");
-	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-	        if (regex.test(str)) {
-	            return true;
-	        }
-	        else
-	        {
-	        e.preventDefault();
-	        //alert('Please Enter Alphabate');
-	        $("#unc").text('Please Enter Alphabates');
-        	$("#unc").show();
-           	$("#unc").fadeOut(2000);
-	        return false;
-	        }
-	    }); */
+		
 	    $('#regName').keypress(function (e) {
 	        var regex = new RegExp("^[a-zA-Z]+$");
 	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -73,17 +54,6 @@
 	        }
 	    });
 		
-	    /* $.validator.addMethod('customphone', function (value, element) {
-	        return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
-	    }, "Please enter a valid phone number");
-
-	    $(document).ready(function () {
-	        $("#mobileNo").validate({
-	            rules: {
-	                field1: 'customphone'
-	            }
-	        });
-	    }); */
 		 $('#mobileNo').keypress(function (e) {
 	        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
 	        //var regex = new RegExp("/^(\+91-|\+91|0)?\d{10}$/");
@@ -103,56 +73,27 @@
 	        }
 	    });
 		
-		/*  $('#mobileNo').keyup(function() {
-			    $('span.error-keyup-1').hide();
-			    var inputVal = $(this).val();
-			    var numericReg = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
-			    if(!numericReg.test(inputVal)) {
-			       // $(this).after('<span class="error error-keyup-1" style="color:blue">Numeric characters only.</span>');
-			        return false;
-			    }
-			}); */
 		 $('#clientEmail').keyup(function() {
 			    $('span.error-keyup-7').remove();
 			    var inputVal = $(this).val();
 			    var clientEmailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 			    if(!clientEmailReg.test(inputVal)) {
-			    	 $('span.error-keyup-7').text("aaaaaaaaaaaaaa")
-			        $(this).after('<span class="error error-keyup-7" style="color:blue">Invalid Email Format.</span>');
+			    	 $("#unc").text('Invalid Email Format.');
+	        			$("#unc").show();
+	           			$("#unc").fadeOut(2000);
 			        return false;
 			    }
 			}); 
 		
 		
-		/*  $('#email').focusout(function(){
-
-             $('#email').filter(function(){
-                var emil=$('#email').val();
-           var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-         if( !emailReg.test( emil ) ) {
-             alert('Please enter valid email');
-             } else {
-             alert('Thank you for your valid email');
-             }
-             })
-         }); */
+		
 			
 			
 			
 	});
  
  
- /* $(function () {
-     $("#saveId").click(function () {
-         var password = $("#password").val();
-         var confirmPassword = $("#cPassword").val();
-         if (password != confirmPassword) {
-             alert("Passwords do not match.");
-             return false;
-         }
-         //return false;
-     });
- }); */
+ 
  </script>
 		<section class="container">
 			<div class="block">

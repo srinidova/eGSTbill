@@ -1,35 +1,45 @@
+var productId = 0;
+var serviceUnitArray ={};
+var data = {};
+
+
 function showProductData(response){
 	$("#userData ul").remove();
 	$("#userData ul li").remove();
 	serviceUnitArray = {};
 	if(response != undefined && response.length >0){
+	var protectType = null;
 	$.each(response,function(i, catObj) {
 		
 			serviceUnitArray[catObj.productId] = catObj;
-			
+			if(catObj.productType == 1){
+				protectType = "mts";		
+			}else{  
+				protectType = "Nos";
+			}
 				 var tblRow ="<ul class=''>"
-						+ "<li class='nine-box' style='width:300%;' title='"+catObj.productName+"'>"
-						+ catObj.productName  
-						+ "<li class='five-box' style='width:140%;' title='"+catObj.stock+"' style='width:300%;'>"
-						+ catObj.stock
+						 /* + "<li class='five-box'  title='"+catObj.productId+"'>"
+						+ catObj.productId  */
+						+ "<li class='nine-box'  title='"+catObj.productName+"' style='width:300%;'>"
+						+ catObj.productName
 						+ "</li>"
-						+ "<li class='five-box' style='width:140%; title='"+catObj.newStock+"' style='width:140%;'>"
-						+ catObj.newStock
+						+ "<li class='five-box'  title='"+protectType+"' style='width:140%;'>"
+						+ protectType
 						+ "</li>"
-						+ "<li class='five-box' style='width:140%;' title='"+catObj.oldStock+"' style='width:140%;'>"
-						+ catObj.oldStock
+						+ "<li class='five-box'  title='"+catObj.mrp+"' style='width:140%;'>"
+						+ catObj.mrp
 						+ "</li>"
 						
 						+ "<li class='ten-box' style='width:140%;'>"
 						+ "<a href='javascript:void(0)' id='"
 						+ catObj.productId
-						+ "' onclick='editProductStock(this.id)' id='editId class='ico del' href='#'>Edit</a>"
+						+ "' onclick='editProduct(this.id)' id='editId class='ico del' href='#'>Edit</a>"
 						+ '</li>'
 						
 						+ "<li class='ten-box' style='width:140%;'>"
 						+ "<a href='javascript:void(0)' id='"
-						+ catObj.stockId
-						+ "' onclick='deleteProductStock(this.id)' id='delId' class='delRec' href='#'>Delete</a>"
+						+ catObj.productId
+						+ "' onclick='deleteProduct(this.id)' id='delId' class='delRec' href='#'>Delete</a>"
 						+ '</li>'
 						+ "</li>"
 						+"</ul>";
@@ -38,47 +48,44 @@ function showProductData(response){
 	//paginationTable(3);
 	}
 }
+function productSearch() {
+	
+	$.ajax({
+		type : "POST",
+		url : "datebetweenSearch.json",
+		dataType : "json",
+		data : {
+			startdate : startdate,
+			enddate : enddate,
+		},
+		success : function(response) {
+			showProductData(JSON.parse(response));
+			if(response == null || response =="" ){
+				$("#itemContainer ul li").remove();
+				$("#itemContainer ul").remove();
+			}
+		
+		}
+	});
+	
+}
+function productDataClear(){
+ $('#productName').val("");
+ $('#mrp').val("");
+}
 
-function ProductStockDataClear(){
- $('#stock').val("");
- $('#oldStock').val("");
- $('#newStock').val("");
- $('#productId').val("");
-}
-function poupulateProductStock(id){
-	
-	var productId = $("#productId").val();
-	editProductStock(productId);
-	$('#newStock').val("");
-}
-function editProductStock(id)
-{	
+function editProduct(id)
+{		 		
 	$('#productId').val(id);
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
-	   $('#stock').val( serviceUnitArray[id].stock)
-	}
-	 else{
-		 $('#stock').val("0");
-		 $("#stock").attr("disabled", "disabled");
-	 }
-	
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].oldStock != undefined){
-		$('#oldStock').val(serviceUnitArray[id]. oldStock);
-	}
-	else{
-		$('#oldStock').val("0");
-		$("#oldStock").attr("disabled", "disabled");
-	}
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].newStock != undefined)
-	$('#newStock').val( serviceUnitArray[id].newStock);
-	else
-		$('#stock').val("0");
-	$('#stockId').val( serviceUnitArray[id].stockId);
+	$('#productName').val( serviceUnitArray[id].productName);
+	$('#productType').val( serviceUnitArray[id].productType);
+	$('#mrp').val( serviceUnitArray[id].mrp);
 }
-function deleteProductStock(id) {
+function deleteProduct(id) {
+	var count = 0;
 		$.ajax({
 					type : "POST",
-					url : "deleteProductStock.json",
+					url : "deleteProductData.json",
 					data : "id=" + id,
 					success: function (response) {
 		                 if(response != null ){
@@ -94,47 +101,45 @@ function deleteProductStock(id) {
 				});
 }
 
-function productStock() {
+function productRegister() {
 	 data = {};
 	data["productId"] = $("#productId").val();
-	data["stock"] = $("#stock").val();
-	data["oldStock"] = $("#oldStock").val();
-	data["newStock"] = $("#newStock").val();
-	data["stockId"]=$("#stockId").val();
+	data["productName"] = $("#productName").val();
+	data["mrp"] = $("#mrp").val();
+	data["productType"] = $("#productType").val();
+	var pId=$("#productId").val();
 	
 		    
-		    if($('#stock').val().length == 0 ) {
-			    $('#stock').css('color','red');
-			    $("#stock").css("border-color","red");
-			    $("#stock").attr("placeholder","Please enter stock");
-			    $('#stock').addClass('your-class');
+		    if($('#productName').val().length == 0 ) {
+			    $('#productName').css('color','red');
+			    $("#productName").css("border-color","red");
+			    $("#productName").attr("placeholder","Please enter ProductName");
+			    $('#productName').addClass('your-class');
 			    return false;
 			    }
 		    
-		    else if($('#oldStock').val().length == 0 ) {
-			    $('#oldStock').css('color','red');
-			    $("#oldStock").css("border-color","red");
-			    $("#oldStock").attr("placeholder","Please enter oldStock");
-			    $('#oldStock').addClass('your-class');
+		    else if($('#mrp').val().length == 0 ) {
+			    $('#mrp').css('color','red');
+			    $("#mrp").css("border-color","red");
+			    $("#mrp").attr("placeholder","Please enter mrp");
+			    $('#mrp').addClass('your-class');
 			    return false;
 			    }
 		   
-		else if($("#stockId").val() != "" ){
-			//alert('aaaaaaaaaaa'+$("#stockId").val());
-			updateProductStock();
+		else if(pId != "" ){
+			data["productId"] = pId;
+			updateProduct();
 		}			   
 		else{
-			saveProductStock();
+			saveProduct();
 	    }
 	
 }
 
-function saveProductStock(){
-	
-	
+function saveProduct(){
 	$.ajax({
              type: "POST",
-             url: "saveProductStock.htm",
+             url: "productSave.htm",
              data: data,
              success: function (response) {
                  $("#btn-save").prop("disabled", false);
@@ -142,7 +147,7 @@ function saveProductStock(){
                  if(response != null ){
                   if(resJSON.status == "ERROR"){
                 	  $("#unc").text('Name already exists. Please choose other Name');
-                	  $("#stock").val("");
+                	  $("#productName").val("");
                 	  $("#unc").show();
                       $("#unc").fadeOut(5000);
                   }else{
@@ -150,9 +155,9 @@ function saveProductStock(){
                 	 $("#unc").text('Save Sucessfully');
                	  	 $("#unc").show();
                      $("#unc").fadeOut(5000);
-  					 $("#stock").val("");
-  					 $("#newStock").val("");
-  					$("#oldStock").val("");
+  					 $("#productName").val("");
+  					 $("#productType").val("");
+  					$("#mrp").val("");
                   }
                 	
                  }
@@ -163,10 +168,10 @@ function saveProductStock(){
 
 	}); 
 }
-function updateProductStock(){
+function updateProduct(){
 	$.ajax({
              type: "POST",
-             url: "updateProductStock.htm",
+             url: "productUpdate.htm",
              data: "jsondata= "+JSON.stringify(data),
              time:1000,
              success: function (response) {
@@ -183,9 +188,9 @@ function updateProductStock(){
                    	 $("#unc").text('Updated Sucessfully');
                   	  	 $("#unc").show();
                         $("#unc").fadeOut(5000);
-     					 $("#stock").val("");
-     					 $("#newStock").val("");
-     					$("#oldStock").val("");
+     					 $("#productName").val("");
+     					 $("#productType").val("");
+     					$("#mrp").val("");
                      }
             	 }
                  

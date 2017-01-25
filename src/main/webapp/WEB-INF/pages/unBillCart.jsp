@@ -23,119 +23,15 @@
 <!-- <script type="text/javascript" src="js/jquery-1.7.min.js"></script> -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- <script type="text/javascript" src="/js/CustomPagenation.js"></script> -->
+<!-- <script type="text/javascript" src="/js/unBillCart.js"></script> --> 
+<script type="text/javascript" src="js/unBillCart.js"></script>
 <script type="text/javascript">
 
 
 </script>
 <script type="text/javascript">
-var billId = 0;
-var serviceUnitArray ={};
-var data = {};
+
 var allunBillCart = '${allunBillCart}';
-
-function unBillInfoCart(){
-	data = {};
-	var billno = $("#billNo").val();
-	data["billNo"] = $("#billNo").val();
-	data["name"] = $("#name").val();
-	data["phone"] = $("#phone").val();
-	$.ajax({   
-		type : "POST",
-		url : "unBillInfoCart.json?ts" + new Date(),
-		 data: "jsondata= "+JSON.stringify(data),
-		success : function(response) {
-			//alert(response);
-			showBillInfoData(response);
-		
-		}
-	});
-}
-
-function showBillInfoData(response){
-	serviceUnitArray = {};
-	$("#billData ul").remove();
-	$("#billData ul li").remove();
-	response = jQuery.parseJSON(response);
-	if(response != undefined && response.length >0){
-	$.each(response,function(i, catObj) {
-			serviceUnitArray[catObj.billId] = catObj;
-				var tblRow = "<ul class=''>"
-						+ "<li class='five-box' style='width:18%;'>"
-						+ catObj.billNo
-						+ "</li>"
-						+ "<li class='nine-box' style='width:94%;'>"
-						+ catObj.name
-						+ "</li>"
-						+ "<li class='five-box' style='width:34%;'>"
-						+ catObj.phone
-						+ "</li>"
-						+ "<li class='five-box' style='width:35%;'>"
-						+ catObj.billDate
-						+ "</li>"
-						+ "<li class='five-box' style='width:24%;'>"
-						+ catObj.totalAmount
-						+ "</li>"
-						+ "<li class='five-box' style='width:21%;'>"
-						+ catObj.discount
-						+ "</li>"
-						+ "<li class='five-box' style='width:25%;'>"
-						+ catObj.lrNo
-						+ "</li>"
-						+ "<li class='five-box' style='width:30%;'>"
-						+ catObj.lrDate
-						+ "</li>"
-						+ "<li class='five-box' style='width:25%;'>"
-						+ catObj.dispatchedBy
-						+ "</li>"
-						+ "<li class='five-box' style='width:25%;'>"
-						+ catObj.dispatchedDate
-						+ "</li>"
-						+ "<li class='ten-box' style='width:20%;'><a id='"+catObj.billId+"' onclick='unBillPrint(this.id);return false;'><img src='./images/icon2.jpg'></a>"
-						+"</li>"
-						+ "<li class='ten-box' style='width:18%;'><a href='#'><img src='./images/copy.png' width='12' height='12'></a>"
-						+"</li>"
-						+"</ul>"
-				$(tblRow).appendTo("#billData");
-			});
-	//paginationTable(7);
-	}
-}
- function unBillPrint(billno){
-	data = {};
-	data["billNo"] = billno;
-	$.ajax({   
-		type : "GET",
-		url : "unBillInfo",
-		 data: "billId="+billno,
-		success : function(response) {
-		//alert(response);
-		window.location.href = "billInfoHome";
-		}
-	});
-} 
-function dataClear(){
-	
- $('#sBillNo').val("")
- $('#sName').val("");
- $('#sMobileNo').val("");
- $('#sBillFromDate').val("");
- $('#sBillEndDate').val("");
- $('#sBillFromDate').removeClass('your-class default-class');
- /* $("#password").attr("placeholder",""); */
- document.getElementById("addsus").style.display = "none";
- document.getElementById("addfail").style.display = "none";
- document.getElementById("upsus").style.display = "none";
- document.getElementById("upfail").style.display = "none";
- document.getElementById("deleteMsgSus").style.display = "none";
- document.getElementById("deleteMsgFail").style.display = "none";
- document.getElementById("dupMessage").style.display = "none";
- 
- $('#saveIds').show();
-	$('#saveIds').removeAttr('disabled');
-	 
-}
-
 $(document).ready(function() {
 	
 		showBillInfoData(allunBillCart);
