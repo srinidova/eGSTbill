@@ -62,7 +62,10 @@ function editProductStock(id)
 		oldStock=0;
 	}*/
 	$('#productId').val(id);
-	$('#stock').val( serviceUnitArray[id].stock)
+	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined)
+	   $('#stock').val( serviceUnitArray[id].stock)
+	 else
+		 $('#stock').val("0");
 	// $("#stock").attr("disabled", "disabled"); 
 	//$('#stock').disabled =true;
 	$('#newStock').val( serviceUnitArray[id].newStock);
