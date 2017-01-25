@@ -11,6 +11,8 @@ import com.eBilling.baseModel.BillingDetailsCart;
 import com.eBilling.dao.BillingDetailsCartDao;
 import com.eBilling.dao.ProductStockDao;
 import com.eBilling.model.ProductStock;
+import com.eBilling.model.StockDetails;
+import com.eBilling.util.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -21,6 +23,8 @@ public class ProductStockServiceImpl implements ProductStockService{
 	ProductStockDao productStockDao;
 	@Autowired
 	BillingDetailsCartDao billingDetailsCartDao;
+	@Autowired
+	BillingDetatilsCartService objBillingDetatilsCartService;
 	private Logger objLogger = Logger.getLogger(ProductStockServiceImpl.class);
 	
 	@Override
@@ -49,29 +53,7 @@ public class ProductStockServiceImpl implements ProductStockService{
 		}
 		return isUpdate;
 	}
-	@Override
-	public boolean updateStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
-		boolean isUpdate = false;
-		 String sProductId ="";
-		try {
-			
-			sProductId = data.getString("productId");
-			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
-			for(int i=0;i<lstProductstock.size();i++){
-				productStock=lstProductstock.get(i);
-				
-			}
-			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( data.getString("quantity")));
-			 productStock.setStock(String.valueOf(sNewStock));
-			 productStockDao.updateProductStock(productStock);
-		}catch(Exception e){
-			objLogger.error("Exception in ProductStockServiceImpl in updateProductStock() "+e);
-			e.printStackTrace();
-		}finally{
-			
-		}
-		return isUpdate;
-	}
+	
 	@Override
 	public boolean updatingStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
 		boolean isUpdate = false;
@@ -110,18 +92,19 @@ public class ProductStockServiceImpl implements ProductStockService{
 	public boolean updatedStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
 		boolean isUpdate = false;
 		 String sProductId ="";
+		 String sBillId = "";
+		 List<BillingDetailsCart> listBillingDetails = null;
 		try {
-			
-			sProductId = data.getString("productId");
-			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
-			for(int i=0;i<lstProductstock.size();i++){
-				productStock=lstProductstock.get(i);
+			sBillId = data.getString("billId");
+			listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
+			for(BillingDetailsCart billingdetailsC :listBillingDetails){
+				lstProductstock = productStockDao.getAllProductStockByProductId(billingdetailsC.getProductId());
+				productStock=lstProductstock.get(0);
+						int sNewStock =Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsC.getQuantity()));
+						 productStock.setStock(String.valueOf(sNewStock));
+						 productStockDao.updateProductStock(productStock);
 				
 			}
-					int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) + Integer.parseInt(  data.getString("quantity")));
-					System.out.println("sNewStock::::"+sNewStock);
-					 productStock.setStock(String.valueOf(sNewStock));
-			 productStockDao.updateProductStock(productStock);
 		}catch(Exception e){
 			objLogger.error("Exception in ProductStockServiceImpl in updateProductStock() "+e);
 			e.printStackTrace();

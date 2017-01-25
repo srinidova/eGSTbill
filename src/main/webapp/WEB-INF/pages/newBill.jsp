@@ -413,15 +413,18 @@
 	        		 $('#address').val("");
 	        		 $('#lrNo').val("");
 	        		 $('#lrDate').val("");
-	        		 $('#orderNo').val();
+	        		 $('#orderNo').val("");
 	        		 $('#orderDate').val("");
 	        		 $('#dispatchedBy').val("");
 	        		 $('#dispatchedDate').val("");
-	        		 $('#noOfPages').val("");
-	        		 $('#termsOfPayment').val("");
+	        		 $('#noOfPacks').val("");
+	        		 $('#termOfPayment').val("");
 	        		 $('#terms').val("");
 	        		 $('#lrDate').val();
 	        		 $('#billNo').val("");
+	        		 $('#packSlipNo').val("");
+	        		 $('#orderBy').val("");
+	        		 $('#tinNo').val("");
 	              	window.location.href = "billInfoHome";
 	                  
 	            	
@@ -614,15 +617,18 @@ function saveInfoCart(){
 	        		 $('#address').val("");
 	        		 $('#lrNo').val("");
 	        		 $('#lrDate').val("");
-	        		 $('#orderNo').val();
+	        		 $('#orderNo').val("");
 	        		 $('#orderDate').val("");
 	        		 $('#dispatchedBy').val("");
 	        		 $('#dispatchedDate').val("");
-	        		 $('#noOfPages').val("");
-	        		 $('#termsOfPayment').val("");
+	        		 $('#noOfPacks').val("");
+	        		 $('#termOfPayment').val("");
 	        		 $('#terms').val("");
-	        		 $('#lrDate').val("");
+	        		 $('#lrDate').val();
 	        		 $('#billNo').val("");
+	        		 $('#packSlipNo').val("");
+	        		 $('#orderBy').val("");
+	        		 $('#tinNo').val("");
 	                 },
 	             error: function (e) { 
 	                 $("#btn-save").prop("disabled", false);

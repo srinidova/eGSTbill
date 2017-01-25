@@ -97,12 +97,12 @@ public class BillingInfoCartBaseDao {
 		try {
 			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
 			
-			String sql = "UPDATE billinginfocart  set billNo = ? ,billDate= ?, lrNo = ?,lrDate = ?,orderNo =?,orderDate=?,dispatchedBy=?,dispatchedDate=?,noOfPacks=?,termOfPayment=?,terms=?,name=?,phone=?,address=?,tinNo=?,totalAmount=?,discount=?,totalMrp=?,totalQuantity=?,totalRate=? where billId = ? ";
+			String sql = "UPDATE billinginfocart  set billNo = ? ,billDate= ?, lrNo = ?,lrDate = ?,orderNo =?,orderDate=?,dispatchedBy=?,dispatchedDate=?,noOfPacks=?,termOfPayment=?,terms=?,name=?,phone=?,address=?,tinNo=?,totalAmount=?,discount=?,totalMrp=?,totalQuantity=?,totalRate=?,orderBy=?,payment=?,packSlipNo=? where billId = ? ";
 
 			int update = jdbcTemplate.update(
 					sql,
 					new Object[] { 
-							billingInfoCart.getBillNo(),billingInfoCart.getBillDate(),billingInfoCart.getLrNo(),billingInfoCart.getLrDate(),billingInfoCart.getOrderNo(),billingInfoCart.getOrderDate(),billingInfoCart.getDispatchedBy(),billingInfoCart.getDispatchedDate(),billingInfoCart.getNoOfPacks(),billingInfoCart.getTermOfPayment(),billingInfoCart.getTerms(),billingInfoCart.getName(),billingInfoCart.getPhone(),billingInfoCart.getAddress(),billingInfoCart.getTinNo(),billingInfoCart.getTotalAmount(),billingInfoCart.getDiscount(),billingInfoCart.getTotalMrp(),billingInfoCart.getTotalQuantity(),billingInfoCart.getTotalRate(),billingInfoCart.getBillId()
+							billingInfoCart.getBillNo(),billingInfoCart.getBillDate(),billingInfoCart.getLrNo(),billingInfoCart.getLrDate(),billingInfoCart.getOrderNo(),billingInfoCart.getOrderDate(),billingInfoCart.getDispatchedBy(),billingInfoCart.getDispatchedDate(),billingInfoCart.getNoOfPacks(),billingInfoCart.getTermOfPayment(),billingInfoCart.getTerms(),billingInfoCart.getName(),billingInfoCart.getPhone(),billingInfoCart.getAddress(),billingInfoCart.getTinNo(),billingInfoCart.getTotalAmount(),billingInfoCart.getDiscount(),billingInfoCart.getTotalMrp(),billingInfoCart.getTotalQuantity(),billingInfoCart.getTotalRate(),billingInfoCart.getOrderBy(),billingInfoCart.getPayment(),billingInfoCart.getPackSlipNo(),billingInfoCart.getBillId()
 							 });
 			System.out.println(sql);
 			System.out.println(billingInfoCart.getBillId());

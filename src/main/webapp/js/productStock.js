@@ -62,14 +62,25 @@ function editProductStock(id)
 		oldStock=0;
 	}*/
 	$('#productId').val(id);
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined)
+	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
 	   $('#stock').val( serviceUnitArray[id].stock)
-	 else
+	}
+	 else{
 		 $('#stock').val("0");
-	// $("#stock").attr("disabled", "disabled"); 
-	//$('#stock').disabled =true;
+		 $("#stock").attr("disabled", "disabled");
+	 }
+	
+	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].oldStock != undefined){
+		$('#oldStock').val(serviceUnitArray[id]. oldStock);
+	}
+	else{
+		$('#oldStock').val("0");
+		$("#oldStock").attr("disabled", "disabled");
+	}
+	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].newStock != undefined)
 	$('#newStock').val( serviceUnitArray[id].newStock);
-	$('#oldStock').val(serviceUnitArray[id]. oldStock);
+	else
+		$('#stock').val("0");
 	$('#stockId').val( serviceUnitArray[id].stockId);
 }
 function deleteProductStock(id) {

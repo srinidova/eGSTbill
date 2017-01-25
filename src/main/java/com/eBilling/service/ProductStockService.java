@@ -26,8 +26,8 @@ public interface ProductStockService {
 	boolean updatedStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,
 			List<ProductStock> lstProductstock, JSONObject data);
 
-	boolean updateStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,
-			List<ProductStock> lstProductstock, JSONObject data);
+	/*boolean updateStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,
+			List<ProductStock> lstProductstock, JSONObject data);*/
 
 
 	boolean updatingStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,

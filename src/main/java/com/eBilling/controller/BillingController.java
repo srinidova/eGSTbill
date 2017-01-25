@@ -189,9 +189,9 @@ public class BillingController {
 					
 					
 				}
-				//stockupdate
+				/*//stockupdate
 				
-					productStockService.updateStock(productStock, billingdetailsCart, lstProductstock,data);
+					productStockService.updateStock(productStock, billingdetailsCart, lstProductstock,data);*/
 				/*int sNewStock = Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsCart.getQuantity());
 				 productStock.setStock(String.valueOf(sNewStock));
 				 productStockService.updateProductStock(productStock);*/
@@ -327,10 +327,13 @@ public class BillingController {
 					 
 					 
 				}
-				for(BillingDetailsCart billingdetailsC :listBillingDetails){
+				//updatedproductStock
+				productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
+				
+				/*for(BillingDetailsCart billingdetailsC :listBillingDetails){
 					lstProductstock = productStockService.getAllProductStockByProductId(billingdetailsC.getProductId());
 					productStock=lstProductstock.get(0);
-					if(Integer.parseInt(productStock.getStock()) >= Integer.parseInt(billingdetailsCart.getQuantity())){
+					if(Integer.parseInt(productStock.getStock()) >= Integer.parseInt(billingdetailsC.getQuantity())){
 						//Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsCart.getQuantity());
 							//int iQty=Integer.parseInt(billingdetailsC.getQuantity());
 							int sNewStock = Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsCart.getQuantity());
@@ -338,9 +341,11 @@ public class BillingController {
 							 productStockService.updateProductStock(productStock);
 						}	
 					
-				}
+				}*/
 				//update stockDetails
-				for(BillingDetailsCart billingdetailsC :listBillingDetails){
+				
+				stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
+				/*for(BillingDetailsCart billingdetailsC :listBillingDetails){
 					List<StockDetails> lstStockDeatails = stockDetailsService.getStockDetailsByProductId(billingdetailsC.getProductId());
 					stockDetails=lstStockDeatails.get(0);
 				String sSale="Sale";
@@ -351,7 +356,7 @@ public class BillingController {
 				stockDetails.setTransactionType(sSale);
 				stockDetails.setTransactionDate(CommonUtils.getDate());
 				stockDetailsService.updateStockDetails(stockDetails);
-				}
+				}*/
 				objBillingDetatilsCartService.deleteBillDetailsCart(sBillId);
 				 String newJson = billInfoController.billInfoHome( objResponce,sBillId, objSession,  objRequest);
 					
@@ -378,6 +383,9 @@ public class BillingController {
 		String sBillId = "";
 		String sJson = "";
 		boolean isDelete = false;
+		 ProductStock existProductStock=null;
+		 StockDetails stockDetails =null;
+		 List<ProductStock> lstProductstock =null;
 		try {
 			sBillId = data.getString("billId");
 		  	 if(sBillId.length() > 0){
@@ -413,6 +421,12 @@ public class BillingController {
 			billingInfoCart.setPackSlipNo(data.getString("packSlipNo"));
 			
 			isSave=objBillingInfoCartService.updateBillInfoCart(billingInfoCart);
+			
+			//updatedproductStock
+			productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
+			
+			//update stockDetails
+			stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
 			
 				if(isSave){
 					 objSession.setAttribute("sessionBillId","");
@@ -459,7 +473,7 @@ public class BillingController {
 			
 			//update Stock
 			
-			productStockService.updatingStock(productStock, billingdetailsCart, lstProductstock, data);
+			//productStockService.updatingStock(productStock, billingdetailsCart, lstProductstock, data);
 
 			isUpdate = billingDetailsDao.updateBillDetails(billingdetailsCart);
 			
@@ -539,7 +553,7 @@ public class BillingController {
 				
 				//update Stock
 				
-				productStockService.updatedStock(productStock,billingdetailsCart,lstProductstock, data);
+				//productStockService.updatedStock(productStock,billingdetailsCart,lstProductstock, data);
 				
 			 	sBillId =data.getString("billId");
 				System.out.println("billId==="+sBillId);
