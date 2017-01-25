@@ -10,6 +10,7 @@ public class CommonUtils {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 	
+	
 	public static String getDate() {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
