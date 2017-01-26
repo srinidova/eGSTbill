@@ -212,8 +212,8 @@ $(function() {
                         <li><a class="bottom" href="#">&nbsp;</a></li>
                     </ul>
                 </li>                 
-                <li class="ten-box" style="width:20%;">Details</li>
-                <li class="eleven-box last" style="width:16%;">Duplicate</li>
+                <!-- <li class="ten-box" style="width:20%;">Details</li> -->
+                <!-- <li class="eleven-box last" style="width:16%;">Duplicate</li> -->
             </ul>
             <div class="table-list-blk" id="billData">
                              

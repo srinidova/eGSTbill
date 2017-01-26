@@ -21,29 +21,32 @@ $("#logout").click(function(){
                 if(register == null) {
             %>
             <li> Product </li>
-			<li> New Billing </li>
-			<li> Registration </li>
-			<li> Purchase Info </li>
-			<li>SearchBill</li>
-			<li>Bill Info </li>
-			<li>unBillCart</li>
-			<li>clientInfo</li>
+            <li> Stock </li>
+            <li> Purchaser </li>
+			<li> New Bill </li>
+			<li>BillSearch</li>
+			<li> UnBill </li>
+			<li> Damage </li>
+			<li> Upload </li>
+			<!-- <li>Bill Info </li> -->
+			<!-- <li>clientInfo</li> -->
             <!-- //<li><a href="/eBilling/loginHome">Login</a></li> -->
             <li style="padding-left:50%;">Hi,<a href="/eBilling/loginHome">Login</a></li>
 
         <% } else {
          %>
          <li> <a href="productHome">Product</a> </li>
-		<li> <a href="newBill">New Billing</a> </li>
-		<li> <a href="purchaseInfoHome">Purchase Info</a> </li>
-		<li> <a href="searchBill">SearchBill</a> </li>
-		<li> <a href="billInfoHome">Bill Info</a> </li>
-		<li> <a href="unBillCart">UnBillCart</a> </li>
-		<li> <a href="clientHome">ClientInfo</a> </li>
-		<li> <a href="uploadHome">uploadPage</a> </li>
-		<li> <a href="damageHome">DamageProduct</a> </li>
-		<li> <a href="statusHome">StatusPage</a> </li>
-		<li> <a href="stockHome">Stock</a> </li>
+         <li> <a href="stockHome">Stock</a> </li>
+         <li> <a href="purchaseInfoHome">Purchaser</a> </li>
+		<li> <a href="newBill">New Bill</a> </li>
+		<li> <a href="searchBill">BillSearch</a> </li>
+		<!-- <li> <a href="billInfoHome">Bill Info</a> </li> -->
+		<li> <a href="unBillCart">UnBill</a> </li>
+		<!-- <li> <a href="clientHome">ClientInfo</a> </li> -->
+		<li> <a href="damageHome">Damage</a> </li>
+		<li> <a href="uploadHome">Upload</a> </li>
+		<!-- <li> <a href="statusHome">Status</a> </li> -->
+		
         <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout">Logout</a></li>
         <% }%>
 		
