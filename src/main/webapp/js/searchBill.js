@@ -25,7 +25,6 @@ function showBillInfoData(response){
 	$("#billData ul li").remove();
 	response = jQuery.parseJSON(response);
 	if(response != undefined && response.length >0){
-	$.each(response,function(i, catObj) {
 			serviceUnitArray[catObj.billId] = catObj;
 				var tblRow = "<ul class=''>"
 						+ "<li class='five-box' style='width:18%;'>"

@@ -32,6 +32,7 @@
 		//var billInfoCart = '${sessionScope.BillInfoCartModel}';
 		var billId = '${sessionScope.BillId}';
 		var printBill= '${sessionScope.printInfo}';
+		var disMsg='${sessionScope.getAllStock}'
 		$(document).ready(function() {
 			
 			 $('#billId').val(billId);
@@ -195,7 +196,7 @@
 			</div>
 			<div class="block table-toop-space">
 				<div class="head-box">
-					<h2><span class="icon2">&nbsp;</span>Bill Products<aside class="block-footer-right sucessfully" id="unc1" style="display:none;" >Delete Sucessfully</aside></h2>
+					<h2><span class="icon2">&nbsp;</span>Bill Products<aside class="block-footer-right sucessfully" id="unc1" style="display:none" >Delete Sucessfully</aside></h2>
 				</div>
 				<div class="block-box-mid block-box-last-mid">
                                     <ul class="table-list">

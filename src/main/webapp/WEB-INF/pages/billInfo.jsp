@@ -107,7 +107,7 @@ function showUnBillDetailsData(response){
 	$("#userData ul li").remove(); 
 	serviceUnitArray = {};
 	var i=0;
-	if(response != undefined && response.length > 0){
+	if(response != undefined){
 		var resBillInfo = response.listBillingInfoCart;
 		//purchaseArr = response[0].listPurchase;
 		if(resBillInfo != null){
@@ -136,26 +136,26 @@ function showUnBillDetailsData(response){
 				$(tblRow).appendTo("#userData"); 
 			});
 		}
-    	 $('#totalMrpDisp').text(response[0].totalMrp);
-    	 $('#totalQuantityDisp').text(response[0].totalQuantity);
-    	 $('#totalRateDisp').text(response[0].totalRate);
-    	 $('#totalAmountDisp').text(response[0].totalAmount);
-    	 $('#billNo').text(response[0].billNo);
-    	 $('#billDate').text(response[0].billDate);
-		 $('#lrNo').text(response[0].lrNo);
-		 $('#lrDate').text(response[0].lrDate);
-		 $('#orderNo').text(response[0].orderNo);
-		 $('#orderDate').text(response[0].orderDate);
-		 $('#dispatchedBy').text(response[0].dispatchedBy);
-		 $('#noOfPacks').text(response[0].noOfPacks);
-		 $('#orderBy').text(response[0].orderBy);
-		 $('#packSlipNo').text(response[0].packSlipNo);
-		 $('#termsOfPayment').text(response[0].termOfPayment);
-		 $('#terms').text(response[0].terms);
-		 $('#name').text(response[0].name);
-		 $('#discount').text(response[0].discount);
-		 $('#phone').text(response[0].phone);
-		 $('#address').text(response[0].address);
+    	 $('#totalMrpDisp').text(response.totalMrp);
+    	 $('#totalQuantityDisp').text(response.totalQuantity);
+    	 $('#totalRateDisp').text(response.totalRate);
+    	 $('#totalAmountDisp').text(response.totalAmount);
+    	 $('#billNo').text(response.billNo);
+    	 $('#billDate').text(response.billDate);
+		 $('#lrNo').text(response.lrNo);
+		 $('#lrDate').text(response.lrDate);
+		 $('#orderNo').text(response.orderNo);
+		 $('#orderDate').text(response.orderDate);
+		 $('#dispatchedBy').text(response.dispatchedBy);
+		 $('#noOfPacks').text(response.noOfPacks);
+		 $('#orderBy').text(response.orderBy);
+		 $('#packSlipNo').text(response.packSlipNo);
+		 $('#termsOfPayment').text(response.termOfPayment);
+		 $('#terms').text(response.terms);
+		 $('#name').text(response.name);
+		 $('#discount').text(response.discount);
+		 $('#phone').text(response.phone);
+		 $('#address').text(response.address);
 	}
 	//paginationTable(3);
 }

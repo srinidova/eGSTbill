@@ -36,6 +36,56 @@ $(document).ready(function() {
 	
 		showBillInfoData(allSearchBill);
 		
+		$('#name').keypress(function (e) {
+	        var regex = new RegExp("^[a-zA-Z]+$");
+	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	        if (regex.test(str)) {
+	            return true;
+	        }
+	        else
+	        {
+	        e.preventDefault();
+	        //alert('Please Enter Alphabate');
+	        $("#unc").text('Please Enter Alphabates');
+	    	$("#unc").show();
+	       	$("#unc").fadeOut(2000);
+	        return false;
+	        }
+	    });
+		
+		$('#billNo').keypress(function (e) {
+	        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
+	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	        if (regex.test(str)) {
+	            return true;
+	        }
+	        else
+	        {
+	        e.preventDefault();
+	        //alert('Please Enter Alphabate');
+	        $("#unc").text('Please Enter Numbers');
+	    	$("#unc").show();
+	       	$("#unc").fadeOut(2000);
+	        return false;
+	        }
+	    });
+		$('#phone').keypress(function (e) {
+	        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
+	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	        if (regex.test(str)) {
+	            return true;
+	        }
+	        else
+	        {
+	        e.preventDefault();
+	        //alert('Please Enter Alphabate');
+	        $("#unc").text('Please Enter Numbers');
+	    	$("#unc").show();
+	       	$("#unc").fadeOut(2000);
+	        return false;
+	        }
+	    });
+		
 });
  
 $(function() {
@@ -89,7 +139,7 @@ $(function() {
                 </div>
             </div>
             <div class="block-footer">
-                <aside class="block-footer-left sucessfully">Sucessfully Message</aside>
+                <aside class="block-footer-left sucessfully" style="display:none" id="unc">Sucessfully Message</aside>
                 <aside class="block-footer-right">
                     <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
                     <input class="btn-save" name="" value="search" id="search" type="button">

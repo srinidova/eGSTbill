@@ -27,6 +27,15 @@ function showBillInfoData(response){
 	response = jQuery.parseJSON(response);
 	if(response != undefined && response.length >0){
 	$.each(response,function(i, catObj) {
+			var billNo =catObj.billNo;
+			var billNo =catObj.name;
+			var billNo =catObj.phone;
+			var billNo =catObj.billDate;
+			var billNo =catObj.totalAmount;
+			var billNo =catObj.lrNo;
+			var billNo =catObj.lrDate;
+			var billNo =catObj.dispatchedBy;
+			var billNo =catObj.dispatchedDate;
 			serviceUnitArray[catObj.billId] = catObj;
 				var tblRow = "<ul class=''>"
 						+ "<li class='five-box' style='width:18%;'>"
@@ -36,7 +45,7 @@ function showBillInfoData(response){
 						+ catObj.name
 						+ "</li>"
 						+ "<li class='five-box' style='width:34%;'>"
-						+ catObj.phone
+						+catObj.phone
 						+ "</li>"
 						+ "<li class='five-box' style='width:35%;'>"
 						+ catObj.billDate

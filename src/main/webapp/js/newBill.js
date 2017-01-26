@@ -241,7 +241,15 @@ function infoDataClear(){
 	            	 resJSON = JSON.parse(response);
 	                 if(resJSON != null ){
 	 	            	 if(resJSON.status == "ERROR"){
-	 	                	  $("#unc").text('Product Stock is Low');
+	 	            		var stock=0;
+	 	            		 var objArr = JSON.parse(disMsg)
+	 	            		 for(var i=0;i<objArr.length;i++){
+	 	            			if(objArr[i].productId ==$("#productId").val()){
+	 	            				stock= objArr[i].stock;
+	 	            				//return;
+	 	            			}
+	 	            		 }
+	 	                	  $("#unc").text('Product Stock is Low '+stock);
 	 	                	  $("#productName").val("");
 	 	                	  $("#unc").show();
 	 	                      $("#unc").fadeOut(5000);

@@ -95,25 +95,7 @@ public class BillingController {
 			if(billingInfoCart == null){
 				billingInfoCart = new BillingInfoCart();
 			}
-			// Calculating totals
-			//billingInfoCart = objBillingDetatilsCartService.calculateTotal(listBillingDetails, billingInfoCart);
 			
-			// Adding product list to billingInfo
-			/*if(listBillingDetails != null && listBillingDetails.size() > 0){
-			billingInfoCart.setListBillingInfoCart(listBillingDetails);
-			 listBillInfoCart = new ArrayList<BillingInfoCart>();
-			 listBillInfoCart.add(billingInfoCart);
-			}*/
-			
-			// Adding puchaser list to billingInfo
-			 //billingInfoCart.setListPurchase(listPurchaseInfoModel);
-			
-			//Converting billingInfoCart to JSON
-			/*if (listBillInfoCart != null && listBillInfoCart.size() > 0) {
-				//objMapper = new ObjectMapper();
-				//sJson = objMapper.writeValueAsString(listBillInfoCart);
-				//objSession.setAttribute("allBillingDetaisCart", "");
-			}*/
 		} catch (Exception e) {
 			System.out.println("Exception in BillingController in getBillingDetails()"+ e);
 		} finally {
