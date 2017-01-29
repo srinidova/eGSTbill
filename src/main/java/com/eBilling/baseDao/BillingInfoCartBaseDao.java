@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eBilling.baseModel.BillingInfoCart;
 import com.eBilling.baseModel.BillingInfoCart;
+import com.eBilling.baseModel.BillingInfoCart;
 import com.eBilling.model.BillingInfoModel;
 
 public class BillingInfoCartBaseDao {
@@ -70,7 +71,7 @@ public class BillingInfoCartBaseDao {
 	public List<BillingInfoCart> getAllBillInfoCart() {
 		List<BillingInfoCart> retlist = null;
 		try {
-			String sql = "SELECT * from billinginfoCart " ;
+			String sql = "SELECT * from billinginfoCart where billNo != 'null'" ;
 			retlist = jdbcTemplate.query(sql, new BeanPropertyRowMapper<BillingInfoCart>(BillingInfoCart.class));
 
 		} catch (Exception e) {
@@ -131,6 +132,19 @@ public class BillingInfoCartBaseDao {
 		}
 
 		return isDelete;
+	}
+	public List<BillingInfoCart> getAllBillInfoByBillNo(BillingInfoCart billingInfoCart) {
+		List<BillingInfoCart> retlist = null;
+		try {
+			String sql = "SELECT * from billinginfoCart where billId = ? ";
+			System.out.println("query----"+sql);
+			retlist = jdbcTemplate.query(sql, new Object[] {billingInfoCart.getBillId()},new BeanPropertyRowMapper<BillingInfoCart>(BillingInfoCart.class));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return retlist;
 	}
 	
 	

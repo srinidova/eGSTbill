@@ -25,4 +25,6 @@ public interface BillingInfoCartService {
 
 	boolean deleteBillInfoCart(String sBillId);
 
+	List<BillingInfoCart> getAllBillInfoByBillNo(BillingInfoCart billingInfoCart);
+
 }

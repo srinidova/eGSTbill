@@ -84,10 +84,7 @@ public class BillInfoController {
 	}
 	@RequestMapping(value = "/billInfoHome")
 	public String billInfoHome(HttpSession session){
-		//String sjon = (String)session.getAttribute("printBillVal");
-		/*String sjson = (String)session.getAttribute("PrintBillInfo");
-		String sjon1 = (String)session.getAttribute("PrintBillDetails");
-		System.out.println(sjon+"sjson=="+sjson+"sjon1=="+sjon1);*/
+		
 		return "billInfoHome";
 	}
 	@RequestMapping(value = "/unBillInfo")
@@ -214,31 +211,45 @@ public class BillInfoController {
 							billingDetatilsCartService.saveBillDetailsCart(billingDetailsCart);
 							System.out.println("listBillingDetails.size=="+listBillingDetails.size());
 						}
-						
+						session.setAttribute("sessionBillId", sNewBillId);
 			
-						lstBillingInfocart = objBillingInfoCartService.getAllBillInfoCartByNewBillId(sNewBillId);
-						System.out.println("lstBillingInfocart====="+lstBillingInfocart);
-						
-						listBillingDetailsCart = billingDetatilsCartService.getAllBillDetailsCartByBillId(sNewBillId);
-						System.out.println("listBillingDetails.size=="+listBillingDetailsCart.size());
-						billingInfoCart.setListBillingInfoCart(listBillingDetailsCart);
-						lstBillingInfocart.set(0, billingInfoCart);
-						
-						objJSON = new JSONObject();
-						objJSON.append("objBillingInfo", billingInfoCart);
-						if (lstBillingInfocart != null && lstBillingInfocart.size() > 0) {
-							objMapper = new ObjectMapper();
-							sJson = objMapper.writeValueAsString(lstBillingInfocart);
-						}
-						System.out.println("sJson---"+sJson);
-						session.setAttribute("updateCart", sJson);
 						
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 
 		}
-		return sJson;
+		return "newBill";
+	}
+	@RequestMapping(value = "/updateUnbillCart")
+	public @ResponseBody String updateUnbillCart(HttpServletResponse objResponce,@RequestParam("billId") String sBillId,HttpSession session, HttpServletRequest objRequest)
+			throws IOException {
+		System.out.println("From billInfoHome Home");
+		objResponce.setCharacterEncoding("UTF-8");
+		String sJson = "";
+		List<BillingDetails> listBillingDetails = null;
+		 BillingInfo billingInfo = null;
+		 List<BillingInfoCart> lstBillingInfoCart = null;
+		 JSONObject objJSON = null;
+		 ObjectMapper objMapper  = null;
+		 BillingInfoCart existBillingInfoCart = null;
+		 BillingInfoCart billingInfoCart = null;
+		 BillingDetails existBillingDetails =null;
+		 BillingDetailsCart billingDetailsCart =null;
+		 List<BillingInfoCart> lstBillingInfocart = null;
+		 List<BillingDetailsCart> listBillingDetailsCart = null;
+		try {
+			//String sBillNo = data.getString("billNo");
+			System.out.println("bill controller====sBillNo====="+sBillId);
+			session.setAttribute("sessionBillId", sBillId);
+						
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		//return sJson;
+		return "newBill";
 	}
 	
 	

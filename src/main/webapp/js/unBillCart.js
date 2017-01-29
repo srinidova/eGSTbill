@@ -27,15 +27,6 @@ function showBillInfoData(response){
 	response = jQuery.parseJSON(response);
 	if(response != undefined && response.length >0){
 	$.each(response,function(i, catObj) {
-			var billNo =catObj.billNo;
-			var billNo =catObj.name;
-			var billNo =catObj.phone;
-			var billNo =catObj.billDate;
-			var billNo =catObj.totalAmount;
-			var billNo =catObj.lrNo;
-			var billNo =catObj.lrDate;
-			var billNo =catObj.dispatchedBy;
-			var billNo =catObj.dispatchedDate;
 			serviceUnitArray[catObj.billId] = catObj;
 				var tblRow = "<ul class=''>"
 						+ "<li class='five-box' style='width:18%;'>"
@@ -70,8 +61,8 @@ function showBillInfoData(response){
 						+ "</li>"
 						+ "<li class='ten-box' style='width:20%;'><a id='"+catObj.billId+"' onclick='unBillPrint(this.id);return false;'><img src='./images/icon2.jpg'></a>"
 						+"</li>"
-						/*+ "<li class='ten-box' style='width:18%;'><a href='#'><img src='./images/copy.png' width='12' height='12'></a>"
-						+"</li>"*/
+						+ "<li class='ten-box' style='width:18%;'><a id='"+catObj.billId+"' onclick='updateUnbillCart(this.id);return false;'><img src='./images/copy.png' width='12' height='12'></a>"
+						+"</li>"
 						+"</ul>"
 				$(tblRow).appendTo("#billData");
 			});
@@ -91,6 +82,20 @@ function showBillInfoData(response){
 		}
 	});
 } 
+ 
+ function updateUnbillCart(billId){
+		data = {};
+		data["billId"] = billId;
+		$.ajax({   
+			type : "GET",
+			url : "updateUnbillCart",
+			 data: "billId="+billId,
+			success : function(response) {
+			console.log(response);
+			window.location.href = "newBill";
+			}
+		});
+	}
 function dataClear(){
 	
  $('#billNo').val("")

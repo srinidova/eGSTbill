@@ -59,12 +59,12 @@ public class BillingDetailsBaseDao {
 			System.out.println("BillingDetailsCart=getAmount=="+billingDetails.getAmount());
 			System.out.println("BillingDetailsCart=getBillDetailsId=="+billingDetails.getBillDetailsId());
 			
-			String sql = "UPDATE billingdetailscart  set  quantity = ?,rate = ?,amount =? where billDetailsId = ? ";
+			String sql = "UPDATE billingdetailscart  set  quantity = ?,rate = ?,amount =? where productId = ? ";
 
 			int update = jdbcTemplate.update(
 					sql,
 					new Object[] { 
-							billingDetails.getQuantity(),billingDetails.getRate(),billingDetails.getAmount(),billingDetails.getBillDetailsId()
+							billingDetails.getQuantity(),billingDetails.getRate(),billingDetails.getAmount(),billingDetails.getProductId()
 							 });
 			System.out.println(sql);
 			System.out.println(billingDetails.getBillId());

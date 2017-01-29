@@ -1,8 +1,9 @@
 var serviceUnitArrayBill ={};
 var purchaseArr = [];
+var data = {};
 function showBillDetailsData(response){
-	$("#userData ul").remove();
-	$("#userData ul li").remove(); 
+	 /*$("#userData ul").remove();
+	$("#userData ul li").remove();*/
 	serviceUnitArray = {};
 	response = jQuery.parseJSON(response);
 	var i=0;
@@ -69,10 +70,167 @@ function showBillDetailsData(response){
 		 $('#orderDate').val(response[0].orderDate);
 		 $('#dispatchedBy').val(response[0].dispatchedBy);
 		 $('#dispatchedDate').val(response[0].dispatchedDate);
-		 $('#noOfPages').val(response[0].noOfPacks);
-		 $('#termsOfPayment').val(response[0].termOfPayment);
+		 $('#noOfPacks').val(response[0].noOfPacks);
+		 $('#termOfPayment').val(response[0].termOfPayment);
 		 $('#terms').val(response[0].terms);
 		 $('#lrDate').val(response[0].lrDate);
+		 $('#orderBy').val(response[0].orderBy);
+		 $('#tinNo').val(response[0].tinNo);
+		 $('#packSlipNo').val(response[0].packSlipNo);
+		 $('#billNo').val(response[0].billNo);
+    	
+	}
+}
+function showUpdateBillData(response){
+	/*$("#userData ul").remove();
+	$("#userData ul li").remove(); */
+	serviceUnitArray = {};
+	response = jQuery.parseJSON(response);
+	var i=0;
+	if(response != undefined && response.length > 0){
+		var productArr = response[0].listBillingInfoCart;
+		purchaseArr = response[0].listPurchase;
+		if(purchaseArr != null || purchaseArr != ""){
+			getAllPurchase(purchaseArr);
+			}
+		if(productArr != null){
+			$.each(productArr,function(i, catObj) {
+				serviceUnitArray[catObj.billDetailsId] = catObj;
+				 var tblRow ="<ul class=''>"
+					 	+ "<li class='five-box'  title='"+catObj.billDetailsId+"'>"
+						+ (i+1)  
+						+"</li>"
+						+ "<li class='bil-prod-box'  title='"+catObj.productName+"'>"
+						+ catObj.productName
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.mrp+"'>"
+						+ catObj.mrp
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.quantity+"'>"
+						+ catObj.quantity
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.rate+"'>"
+						+ catObj.rate
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.amount+"'>"
+						+ catObj.amount
+						+ "</li>"
+						+ "<li class='ten-box'>"
+						+ "<a href='javascript:void(0)' id='"
+						+ catObj.billDetailsId
+						+ "' onclick='editBill(this.id)' id='editId class='ico del' href='#'>Edit</a>"
+						+ '</li>'
+						+ "<li class='ten-box'>"
+						+ "<a href='javascript:void(0)' id='"
+						+ catObj.billDetailsId
+						+ "' onclick='deleteProduct(this.id)' id='editId class='ico del' href='#'>Delete</a>"
+						+ '</li>'
+						
+						+"</ul>";
+				$(tblRow).appendTo("#userData"); 
+			});
+		}
+    	$('#totalMrpDisp').text(response[0].totalMrp);
+    	$('#totalQuantityDisp').text(response[0].totalQuantity);
+    	$('#totalRateDisp').text(response[0].totalRate);
+    	$('#totalAmountDisp').text(response[0].totalAmount);
+    	$('#totalAmount').val(response[0].totalAmount);
+    	 $('#totalMrp').val(response[0].totalMrp);
+		 $('#totalQuantity').val(response[0].totalQuantity);
+		 $('#totalRate').val(response[0].totalRate);
+		 
+		 $('#billId').val(response[0].billId);
+		 $('#name').val(response[0].name);
+		 $('#discount').val(response[0].discount);
+		 $('#phone').val(response[0].phone);
+		 $('#address').val(response[0].address);
+		 $('#lrNo').val(response[0].lrNo);
+		 $('#lrDate').val(response[0].lrDate);
+		 $('#orderNo').val(response[0].orderNo);
+		 $('#orderDate').val(response[0].orderDate);
+		 $('#dispatchedBy').val(response[0].dispatchedBy);
+		 $('#dispatchedDate').val(response[0].dispatchedDate);
+		 $('#noOfPacks').val(response[0].noOfPacks);
+		 $('#termOfPayment').val(response[0].termOfPayment);
+		 $('#terms').val(response[0].terms);
+		 $('#lrDate').val(response[0].lrDate);
+		 $('#orderBy').val(response[0].orderBy);
+		 $('#tinNo').val(response[0].tinNo);
+		 $('#packSlipNo').val(response[0].packSlipNo);
+		 $('#billNo').val(response[0].billNo);
+    	
+	}
+}
+function showUpdateUnBillData(response){
+	/*$("#userData ul").remove();
+	$("#userData ul li").remove(); */
+	serviceUnitArray = {};
+	response = jQuery.parseJSON(response);
+	var i=0;
+	if(response != undefined ){
+		var productArr = response.listBillingInfoCart;
+		if(productArr != null){
+			$.each(productArr,function(i, catObj) {
+				serviceUnitArray[catObj.billDetailsId] = catObj;
+				 var tblRow ="<ul class=''>"
+					 	+ "<li class='five-box'  title='"+catObj.billDetailsId+"'>"
+						+ (i+1)  
+						+"</li>"
+						+ "<li class='bil-prod-box'  title='"+catObj.productName+"'>"
+						+ catObj.productName
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.mrp+"'>"
+						+ catObj.mrp
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.quantity+"'>"
+						+ catObj.quantity
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.rate+"'>"
+						+ catObj.rate
+						+ "</li>"
+						+ "<li class='five-box'  title='"+catObj.amount+"'>"
+						+ catObj.amount
+						+ "</li>"
+						+ "<li class='ten-box'>"
+						+ "<a href='javascript:void(0)' id='"
+						+ catObj.billDetailsId
+						+ "' onclick='editBill(this.id)' id='editId class='ico del' href='#'>Edit</a>"
+						+ '</li>'
+						+ "<li class='ten-box'>"
+						+ "<a href='javascript:void(0)' id='"
+						+ catObj.billDetailsId
+						+ "' onclick='deleteProduct(this.id)' id='editId class='ico del' href='#'>Delete</a>"
+						+ '</li>'
+						
+						+"</ul>";
+				$(tblRow).appendTo("#userData"); 
+			});
+		}
+    	$('#totalAmountDisp').text(response.totalAmount);
+    	$('#totalAmount').val(response.totalAmount);
+    	 $('#totalMrp').val(response.totalMrp);
+		 $('#totalQuantity').val(response.totalQuantity);
+		 $('#totalRate').val(response.totalRate);
+		 
+		 $('#billId').val(response.billId);
+		 $('#name').val(response.name);
+		 $('#discount').val(response.discount);
+		 $('#phone').val(response.phone);
+		 $('#address').val(response.address);
+		 $('#lrNo').val(response.lrNo);
+		 $('#lrDate').val(response.lrDate);
+		 $('#orderNo').val(response.orderNo);
+		 $('#orderDate').val(response.orderDate);
+		 $('#dispatchedBy').val(response.dispatchedBy);
+		 $('#dispatchedDate').val(response.dispatchedDate);
+		 $('#noOfPacks').val(response.noOfPacks);
+		 $('#termOfPayment').val(response.termOfPayment);
+		 $('#terms').val(response.terms);
+		 $('#lrDate').val(response.lrDate);
+		 $('#orderBy').val(response.orderBy);
+		 $('#tinNo').val(response.tinNo);
+		 $('#packSlipNo').val(response.packSlipNo);
+		 $('#billNo').val(response.billNo);
     	
 	}
 }
@@ -106,10 +264,12 @@ function showTotalBill(response) {
 			 $('#orderDate').val(catObj.orderDate);
 			 $('#dispatchedBy').val(catObj.dispatchedBy);
 			 $('#dispatchedDate').val(catObj.dispatchedDate);
-			 $('#noOfPages').val(catObj.noOfPacks);
-			 $('#termsOfPayment').val(catObj.termOfPayment);
+			 $('#noOfPacks').val(catObj.noOfPacks);
+			 $('#termOfPayment').val(catObj.termOfPayment);
 			 $('#terms').val(catObj.terms);
-			 $('#lrDate').val(catObj.lrDate);
+			 $('#orderBy').val(catObj.orderBy);
+			 $('#tinNo').val(catObj.tinNo);
+			 $('#packSlipNo').val(catObj.packSlipNo);
 			 
 			});
 	}
@@ -195,6 +355,7 @@ function infoDataClear(){
 		$('#quantity').val( serviceUnitArray[id].quantity);
 		$('#rate').val( serviceUnitArray[id].rate);
 		$("#billDetailsId").val(id);
+		$("#billId").val( serviceUnitArray[id].billId);
 	}
 	function deleteProduct(id) {
 		
@@ -209,17 +370,13 @@ function infoDataClear(){
             url: "deleteBillingDetailsCart.htm",
             data: "jsondata= "+JSON.stringify(data),
             success: function (response) {
-
+            	$("#userData ul").remove();
+            	$("#userData ul li").remove();
            	 if(response != 0){
            		     $("#unc").text("Deleted Sucessfully");
            		   $("#unc").show();
                       $("#unc").fadeOut(5000); 
                       showBillDetailsData(response);
-                      $('#totalMrpDisp').text("");
-                     	$('#totalQuantityDisp').text("");
-                     	$('#totalRateDisp').text("");
-                     	$('#totalAmountDisp').text("");
-                     	$('#totalAmount').val("");
                 }
                 
             },
@@ -238,6 +395,9 @@ function infoDataClear(){
 	             url: "saveBillProduct.htm",
 	             data: "jsondata= "+JSON.stringify(data),
 	             success: function (response) {
+	            	 data = {};
+	            	 $("#userData ul").remove();
+	            		$("#userData ul li").remove();
 	            	 resJSON = JSON.parse(response);
 	                 if(resJSON != null ){
 	 	            	 if(resJSON.status == "ERROR"){
@@ -262,6 +422,7 @@ function infoDataClear(){
 	                       $("#productId").val("");
 		  					$("#quantity").val("");
 		  					$("#rate").val("");
+		  					$("#billDetailsId").val("");
 	 	                  }
 	                 }
 	            	
@@ -291,8 +452,6 @@ function infoDataClear(){
 			
 		} 
 function newBill() {
-	 data1 ={};
-	 data1["billId"]=$("#billId").val();
 	 data = {};
 	data["productId"] = $("#productId").val();
 	data["productName"] = $("#productName").val();
@@ -301,7 +460,7 @@ function newBill() {
 	data["mrp"] = $("#mrp").val();
 	data["billId"] = $("#billId").val();
 	data["billDetailsId"] = $("#billDetailsId").val();
-	
+	alert('billDetailsId'+$("#billDetailsId").val());
     
      if($('#rate').val().length == 0 ) {
 	    $('#rate').css('color','red');
@@ -317,7 +476,6 @@ function newBill() {
 	    $('#quantity').addClass('your-class');
 	    return false;
 	    }
-	
     else if($("#billDetailsId").val() != ""){
 		updateBillProduct();
 	}else{
@@ -333,33 +491,49 @@ function newBill() {
 
 	
 function updateBillProduct(){
-	
 	$.ajax({
              type: "POST",
              url: "updateBillDetailsCart.htm",
              data: "jsondata= "+JSON.stringify(data),
              success: function (response) {
-
-            	 if(response != 0){
-            		     $("#unc").text("Update Sucessfully");
+            	 data = {};
+            	 $("#userData ul").remove();
+         		$("#userData ul li").remove();
+            	 resJSON = JSON.parse(response);
+                 if(resJSON != null ){
+ 	            	 if(resJSON.status == "ERROR"){
+ 	            		var stock=0;
+ 	            		 var objArr = JSON.parse(disMsg)
+ 	            		 for(var i=0;i<objArr.length;i++){
+ 	            			if(objArr[i].productId ==$("#productId").val()){
+ 	            				stock= objArr[i].stock;
+ 	            				//return;
+ 	            			}
+ 	            		 }
+ 	                	  $("#unc").text('Product Stock is Low '+stock);
+ 	                	  $("#productName").val("");
+ 	                	  $("#unc").show();
+ 	                      $("#unc").fadeOut(5000);
+ 	                  }else{
+ 	                	  
+ 	                	 showBillDetailsData(response);
+                	  $("#unc").text("update Sucessfully");
             		   $("#unc").show();
-                       $("#unc").fadeOut(5000); 
-                       showBillDetailsData(response);
-                      //showBillDetailsData(JSON.parse(response));
-            		 $("#productId").val("");
-  					$("#quantity").val("");
-  					$("#rate").val("");
-  					 stop = true;
+                       $("#unc").fadeOut(5000);
+                       $("#productId").val("");
+	  					$("#quantity").val("");
+	  					$("#rate").val("");
+	  					$("#billDetailsId").val("");
+ 	                  }
                  }
-                 
-             },
+                 },
              error: function (e) { 
                  $("#btn-save").prop("disabled", false);
              }
 
 	}); 
 }
-function updateBillInfoCart(){
+function updateBillInfoCart(id){
 	
 	data = {};
 	data["billId"] = $("#billId").val();

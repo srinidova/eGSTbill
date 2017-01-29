@@ -130,16 +130,19 @@ public class BillingDetatilsCartServiceImpl implements BillingDetatilsCartServic
 		String sNewProductId = null;
 		boolean isExist = false;
 		try {
-			 sNewProductId = billingdetailsCart.getProductId();
-			 for(int i=0;i<listBillingDetails.size();i++){
-				 BillingDetailsCart existBillingDetailsCart = listBillingDetails.get(i);
-				 if(existBillingDetailsCart.getProductId().equals(sNewProductId)){
-					// System.out.println("in----------checkInCart---------------sNewProductId=="+sNewProductId+"--------------existBillingDetailsCart.getProductId()==="+existBillingDetailsCart.getProductId());
-					 isExist = true;
-					 break;
+			if(billingdetailsCart != null){
+				 sNewProductId = billingdetailsCart.getProductId();
+				 for(int i=0;i<listBillingDetails.size();i++){
+					 BillingDetailsCart existBillingDetailsCart = listBillingDetails.get(i);
+					 if(existBillingDetailsCart !=null && existBillingDetailsCart.getProductId().equals(sNewProductId)){
+						// System.out.println("in----------checkInCart---------------sNewProductId=="+sNewProductId+"--------------existBillingDetailsCart.getProductId()==="+existBillingDetailsCart.getProductId());
+						 isExist = true;
+						 break;
+					 }
+					 
 				 }
-				 
-			 }
+		}
+			
 			
 			
 		} catch (Exception e) {

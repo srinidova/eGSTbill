@@ -28,32 +28,19 @@
 <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
 		 <script type="text/javascript" src="js/newBill.js"></script>
 		<script type="text/javascript">
-		var lstBill= '${sessionScope.allBillingDetaisCart}';
-		//var billInfoCart = '${sessionScope.BillInfoCartModel}';
 		var billId = '${sessionScope.BillId}';
 		var printBill= '${sessionScope.printInfo}';
-		var disMsg='${sessionScope.getAllStock}'
+		var disMsg='${sessionScope.getAllStock}';
+		var updateCarts='${sessionScope.updateCart}';
 		$(document).ready(function() {
-			
-			 $('#billId').val(billId);
-				getAllProducts();
-				showBillDetailsData(lstBill);
+			getAllProducts();
+      		showBillDetailsData(updateCarts);
+		});
+		$(document).ready(function() {
 				if(lstBill != undefined && lstBill.length > 0){
 					purchaseArr = JSON.parse(lstBill)[0].listPurchase;
 					getAllPurchase(purchaseArr); 	
 				}
-				
-				
-				/* $('#html').editableSelect(); */
-				$('#name').editableSelect().on('select.editable-select', function (e, li) {
-			        $('#last-selected').html(
-			            li.val() + '. ' + li.text()
-			        );
-			    });
-				/* $('#name').editableSelect(); */
-				/* $('#name').editableSelect({ effects: 'name' });
-				$('#name').editableSelect({ effects: 'name' });
-				$('#name').editableSelect({ effects: 'name' }); */
 				
 				$('#quantity').keypress(function (e) {
 			        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
