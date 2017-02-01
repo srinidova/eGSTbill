@@ -183,6 +183,8 @@ function updateDamage(){
              time:1000,
              success: function (response) {
             	 $("#productId").val("");
+            	 $('#quantity').val("");
+            	 $('#description').val("");
             	 data = {};
             	 resJSON = JSON.parse(response);
             	 if(response != null){

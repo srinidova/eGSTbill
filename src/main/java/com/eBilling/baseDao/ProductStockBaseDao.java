@@ -134,7 +134,7 @@ public class ProductStockBaseDao {
 	public List<ProductStock> getAllProductStockByProductId(String sProductId) {
 		List<ProductStock> retlist = null;
 		try {
-			String sql = "SELECT *from productstock where productId = ?";
+			String sql = "SELECT ps.productId,stock,oldStock,newStock,p.productName,stockId FROM productStock ps,product p  where ps.productId = p.productId and ps.productId =?";
 			System.out.println("query for getAllProductStockByProductId===="+sql);
 			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<ProductStock>(ProductStock.class));
 		} catch (Exception e) {

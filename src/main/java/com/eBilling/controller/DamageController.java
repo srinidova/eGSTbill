@@ -32,6 +32,7 @@ import com.eBilling.service.DamageServiceImpl;
 import com.eBilling.service.ProductPopulateService;
 import com.eBilling.service.ProductStockService;
 import com.eBilling.service.RegistrationService;
+import com.eBilling.service.StockDetailsService;
 import com.eBilling.util.CommonUtils;
 import com.eBilling.util.EmailUtil;
 import com.eBilling.util.Sms;
@@ -46,6 +47,12 @@ public class DamageController {
 	DamageDao damageDao;
 	@Autowired
 	ProductPopulateService objProductService;
+	@Autowired
+	ProductStockService objProductStockService;
+	@Autowired
+	StockDetailsService stockDetailsService;
+	
+	
 	@RequestMapping(value = "damageHome")
 	public String damageHome(@ModelAttribute Damage damage, HttpServletResponse objResponce, HttpSession objSession,
 			HttpServletRequest objRequest) {
@@ -80,8 +87,8 @@ public class DamageController {
 		List<ProductStock> lstProductstock =null;
 		 ProductStock productStock=null;
 		try {
-
-				damage.setDamageId(CommonUtils.getAutoGenId());
+				String sDamageId = CommonUtils.getAutoGenId();
+				damage.setDamageId(sDamageId);
 				damage.setProductId(data.getString("productId"));
 				damage.setQuantity(data.getString("quantity"));
 				damage.setDescription(data.getString("description"));
@@ -95,8 +102,9 @@ public class DamageController {
 				}
                
 					sJson = damageServiceImpl.getAllDamage();
-                
-                damageServiceImpl.updatedStock(productStock, data, lstProductstock);
+					objProductStockService.deductStock(data.getString("productId"), data.getString("quantity"), sDamageId);
+					stockDetailsService.addStockDetails(data.getString("productId"),  data.getString("quantity"), sDamageId, "Damage");
+               // damageServiceImpl.updatedStock(productStock, data, lstProductstock);
                 
 			System.out.println("after req attr ");
 		} catch (Exception e) {
@@ -114,7 +122,8 @@ public class DamageController {
 		List<ProductStock> lstProductstock =null;
 		 ProductStock productStock=null;
 		try {
-			damage.setDamageId(data.getString("damageId"));
+			String sDamageId = CommonUtils.getAutoGenId();
+			damage.setDamageId(sDamageId);
 			damage.setProductId(data.getString("productId"));
 			damage.setQuantity(data.getString("quantity"));
 			damage.setDescription(data.getString("description"));
@@ -123,7 +132,8 @@ public class DamageController {
 			
 
 			//updateStock
-			damageServiceImpl.updateStock(productStock, data, lstProductstock);
+			objProductStockService.updateProductStock(data.getString("productId"), data.getString("quantity"));
+			stockDetailsService.addStockDetails(data.getString("productId"),  data.getString("quantity"), sDamageId, "Damage");
 			
 			isupdate = damageServiceImpl.updateDamage(damage);
 			// System.out.println("isupdate" + isupdate);
@@ -150,6 +160,7 @@ public class DamageController {
 		 
 		String sDamageId=data.getString("damageId");
 		isDelete = damageServiceImpl.deleteDamage(sDamageId);
+		
 		damageServiceImpl.addDeletedStock(productStock, data, lstProductstock);
 		
 		if (isDelete) {

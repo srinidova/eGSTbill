@@ -28,6 +28,8 @@ $("#logout").click(function(){
 			<li> UnBill </li>
 			<li> Damage </li>
 			<li> Upload </li>
+			<li> Users </li>
+			<li> Send Sms </li>
 			<!-- <li>Bill Info </li> -->
 			<!-- <li>clientInfo</li> -->
             <!-- //<li><a href="/eBilling/loginHome">Login</a></li> -->
@@ -45,6 +47,8 @@ $("#logout").click(function(){
 		<!-- <li> <a href="clientHome">ClientInfo</a> </li> -->
 		<li> <a href="damageHome">Damage</a> </li>
 		<li> <a href="uploadHome">Upload</a> </li>
+		<li> <a href="allUsers">Users</a> </li>
+		<li> <a href="sendSmsHome">Send Sms</a> </li>
 		<!-- <li> <a href="statusHome">Status</a> </li> -->
 		
         <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout">Logout</a></li>

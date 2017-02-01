@@ -151,10 +151,10 @@ $(function() {
                 </div>
                 <div class="login-pwd">
                     <label class="login-label-text">Password</label>
-                    <input class="input-login" type="text" name="cnumber" value="" id="password" onkeydown="removeBorder(this.id);" style="margin-left:10px;" />
+                    <input class="input-login" type="password" name="cnumber" value="" id="password" onkeydown="removeBorder(this.id);" style="margin-left:10px;" />
                 </div>
                 <div class="blck-login"> 
-                	<a href="#" class="login-links" style="padding-right:36px;">Forgot Password</a>  | <a href="registration" class="login-links" style="padding-left:29px;">Register</a> 
+                	<a href="resetPasswordHome" class="login-links" style="padding-right:36px;">Reset Password</a>  | <a href="registration" class="login-links" style="padding-left:29px;">Register</a> 
                 </div>            
             </div>
             <div class="block-footer">

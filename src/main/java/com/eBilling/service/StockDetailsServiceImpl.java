@@ -66,17 +66,15 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 			return lstStockDetails;
 		}
 	 @Override
-		public boolean updatedStockDetails(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
-			boolean isUpdate = false;
-			 String sProductId ="";
-			 String sBillId = "";
-			 List<BillingDetailsCart> listBillingDetails = null;
+		public boolean addStockDetails(String sProductId, String sBilledQty, String sBillId, String sTransactionTpye) {
+			boolean isAdd = false;
 			 StockDetails stockDetails =null;
 			try {
-					sBillId = data.getString("billId");
+					/*sBillId = data.getString("billId");
 					listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
 					for(BillingDetailsCart billingdetailsC :listBillingDetails){
 						List<StockDetails> lstStockDeatails =getStockDetailsByProductId(billingdetailsC.getProductId());
+				List<BillingDetailsCart> listBillingDetails = null;
 						stockDetails=lstStockDeatails.get(0);
 					String sSale="Sale";
 					stockDetails.setQuantity( billingdetailsC.getQuantity());
@@ -89,15 +87,28 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 					stockDetails.setProductId(billingdetailsC.getProductId());
 						saveStockDetails(stockDetails);
 						//updateStockDetails(stockDetails);
+						 * 
+*/					
+				stockDetails =new StockDetails();
+				stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
+				stockDetails.setProductId(sProductId);
+				stockDetails.setQuantity(sBilledQty);
+				stockDetails.setTransactionId(sBillId);
+				stockDetails.setTransactionDate(CommonUtils.getDate());
+				stockDetails.setTransactionType(sTransactionTpye);
+				
+				boolean isInsert = stockDetailsDao.saveStockDetails(stockDetails);
+				if(isInsert){
+					isAdd =true;
 				}
 				
 			}catch(Exception e){
-				objLogger.error("Exception in ProductStockServiceImpl in updateProductStock() "+e);
+				objLogger.error("Exception in ProductStockServiceImpl in addStockDetails() "+e);
 				e.printStackTrace();
 			}finally{
 				
 			}
-			return isUpdate;
+			return isAdd;
 		}
 
 }

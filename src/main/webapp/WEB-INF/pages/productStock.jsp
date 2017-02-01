@@ -17,7 +17,9 @@
  <script type="text/javascript" src="js/CustomPagenation.js"></script> 
  <script type="text/javascript" src="js/productStock.js"></script>
  <script type="text/javascript" src="js/commonUtils.js"></script>
-
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 var lstOrders ='${getAllStock}';
 $(document).ready(function() {
@@ -46,8 +48,8 @@ function getAllProducts() {
 </script>
 		
 		<section class="container">
-			<div class="block" id="">
-				<h2><span class="icon1">&nbsp;</span>New Product</h2>
+			<div class="block">
+				<h2><span class="icon1">&nbsp;</span>Stock</h2>
 				<form name="myForm" method="post" id="contact-form" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="">
@@ -84,7 +86,7 @@ function getAllProducts() {
 			</div>
 			<div class="block table-toop-space">
 				<div class="head-box">
-					<h2><span class="icon2">&nbsp;</span>Product Details <aside class="block-footer-right sucessfully" id="unc1" style="display:none;" >Delete Sucessfully</aside></h2>
+					<h2><span class="icon2">&nbsp;</span>Stock Details <aside class="block-footer-right sucessfully" id="unc1" style="display:none;" >Delete Sucessfully</aside></h2>
 				</div>
 				<div class="block-box-mid block-box-last-mid">
 					<ul class="table-list">
@@ -120,6 +122,7 @@ function getAllProducts() {
 						</li>                
 						<li class="eleven-box" style="width:140%;">Edit</li>
 						<li class="ten-box last" style="width:140%;">Delete</li>
+						<li class="ten-box" style="width:20%;">Details</li>
 					</ul>
 					<div class="table-list-blk" id='userData'>
 						<div class="pagenation">
@@ -134,6 +137,8 @@ function getAllProducts() {
 					</aside>
 				</div>
 			</div>
+			</div>
+			<div id="dialog" style="display: none;"></div>
 </section>
 		
 </body>

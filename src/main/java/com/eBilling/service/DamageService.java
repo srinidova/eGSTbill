@@ -22,15 +22,14 @@ public interface DamageService {
 
 	List<Damage> getDamageById(String sDamageId);
 
-	boolean updateStock(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 
 	boolean updatedStock(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 
+	//boolean updateStock111(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 	boolean addDeletedStock(ProductStock productStock, JSONObject data, List<ProductStock> lstProductstock);
 
 	boolean checkInQuantity(Damage damage, List<Damage> lstDamage);
 
 	List<Damage> updateProductQuantity(Damage damage, List<Damage> lstDamage);
-
 	
 }

@@ -35,6 +35,7 @@ import com.eBilling.util.EmailUtil;
 import com.eBilling.util.Sms;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class ProductStockController {
@@ -80,7 +81,7 @@ public class ProductStockController {
 		try {
 			
 			
-			System.out.println("saveProductStock:::::::::::"+productStock.toString());
+			/*System.out.println("saveProductStock:::::::::::"+productStock.toString());
 			productStock.setStockId(CommonUtils.getAutoGenId());
 			productStock.setProductId(productStock.getProductId());
 			productStock.setOldStock(productStock.getStock());
@@ -90,9 +91,12 @@ public class ProductStockController {
 			int iStock=iOldStock+iNewStock;
 			productStock.setStock(String.valueOf(iStock));
 			
-			isInsert = productStockService.saveProductStock(productStock);
-			sJson = productStockService.getAllProductStock();
-			System.out.println("isInsert===="+isInsert);
+			isInsert = productStockService.saveProductStock(productStock);*/
+			
+			productStockService.addStock(productStock);
+			
+			stockDetailsService.addStockDetails(productStock.getProductId(), productStock.getNewStock(), productStock.getStockId(), "Entry");
+			/*System.out.println("isInsert===="+isInsert);
 			String sEntry="Entry";
 			stockDetails =new StockDetails();
 			stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
@@ -102,9 +106,9 @@ public class ProductStockController {
 			stockDetails.setTransactionDate(CommonUtils.getDate());
 			stockDetails.setTransactionType(sEntry);
 			
-			isInsert = stockDetailsService.saveStockDetails(stockDetails);
+			isInsert = stockDetailsService.saveStockDetails(stockDetails);*/
 			
-			
+			sJson = productStockService.getAllProductStock();
 			
 			
 		} catch (Exception e) {
@@ -129,6 +133,7 @@ public class ProductStockController {
 			int iNewStock=Integer.parseInt(productStock.getNewStock());
 			int iStock=iOldStock+iNewStock;
 			productStock.setStock(String.valueOf(iStock));
+			
 			isupdate = productStockService.updateProductStock(productStock);
 			// System.out.println("isupdate" + isupdate);
 			if (isupdate)
@@ -164,6 +169,26 @@ public class ProductStockController {
 		}
 		return sJson;
 	}
-	
+	@RequestMapping(value = "/stockDetails")
+	public @ResponseBody String stockDetails(@RequestParam("productId") String sProductId, HttpSession objSession,
+			HttpServletRequest objRequest) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		
+		String sJson = "";
+		List<ProductStock> lstProductStock =null;
+		try{
+			lstProductStock = productStockService.getAllProductStockByProductId(sProductId);
+			System.out.println("lstProductStock======" + lstProductStock.size());
+			
+			if (lstProductStock != null && lstProductStock.size() > 0) {
+				ObjectMapper objectMapper= new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(lstProductStock);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return sJson;
+	}
 	
 }

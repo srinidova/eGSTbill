@@ -40,13 +40,13 @@ public class RegisterBaseDao {
 	public boolean updateRegister(Register register) {
 		boolean isUpdate = false;
 		try {
-			String sql = "UPDATE register  set regName = ?, mobileNo = ?, email = ?, regType= ?, password =? where regId = ? ";
+			String sql = "UPDATE register  set regName = ?, mobileNo = ?, email = ?, regType= ? where regId = ? ";
 
 			int update = jdbcTemplate.update(
 					sql,
 					new Object[] {register.getRegName() ,
 							register.getMobileNo(),register.getEmail(),
-							register.getRegType(),register.getPassword(),register.getRegId()
+							register.getRegType(),register.getRegId()
 							 });
 			System.out.println("update111==="+update);
 			System.out.println(sql);

@@ -31,12 +31,90 @@ function showProductData(response){
 						+ catObj.stockId
 						+ "' onclick='deleteProductStock(this.id)' id='delId' class='delRec' href='#'>Delete</a>"
 						+ '</li>'
+						+ "<li class='ten-box' style='width:20%;'><a id='"+catObj.productId+"' onclick='stockDetails(this.id);return false;'><img src='./images/icon2.jpg'></a>"
+						+"</li>"
 						+ "</li>"
 						+"</ul>";
 				$(tblRow).appendTo("#userData"); 
 			});
 	//paginationTable(3);
 	}
+}
+function popupStockData(response){
+	$("#dialog ul").remove();
+	if(response != undefined && response.length >0){
+		$.each(response,function(i, catObj) {
+			 var tblRow ="<ul class=''>"
+					+ "<li class='five-box' title='"+catObj.stock+"'>"
+					+"<span><b>Stock:</b></span>"
+					+ catObj.stock  
+					+ "</li>"
+					+ "<li class='nine-box' title='"+catObj.oldStock+"'>"
+					+"<span><b>Old Stock:</b></span>"
+					+ catObj.oldStock
+					+ "</li>"
+					+ "<li class='five-box'>"
+					+"<span><b>New Stock:</b></span>"
+					+ catObj.newStock
+					+ "</li>"
+					+ "<li class='five-box'>"
+					+"<span><b>ProductId:</b></span>"
+					+ catObj.productId
+					+ "</li>"
+					+ "<li class='five-box'>"
+					+"<span><b>ProductName:</b></span>"
+					+ catObj.productName
+					+ "</li>"
+					+"</ul>";
+			 $(tblRow).appendTo("#dialog");
+		});
+		//paginationTable(3);
+		}
+}
+$(function () {
+    $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        title: "Stock Details",
+        buttons: {
+            Close: function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+});
+   /* $("#btnSubmit").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "Default.aspx/SendParameters",
+            data: "{name: '" + $("#txtName").val() + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                $("#dialog").html(r.d);
+                $("#dialog").dialog("open");
+            }
+        });
+    });
+});*/
+function stockDetails(productId){
+	data = {};
+	data["productId"] = productId;
+	$.ajax({   
+		type : "GET",
+		url : "stockDetails",
+		contentType: "application/json; charset=utf-8",
+		 data: "productId="+productId,
+		success : function(response) {
+			console.log(response);
+			resJSON = JSON.parse(response);
+			popupStockData(resJSON)
+			$("#dialog").html(resJSON.d);
+            $("#dialog").dialog("open");
+		//alert(response);
+		//window.location.href = "billInfoHome";
+		}
+	});
 }
 
 function ProductStockDataClear(){
@@ -196,3 +274,4 @@ function updateProductStock(){
 
 	}); 
 }
+

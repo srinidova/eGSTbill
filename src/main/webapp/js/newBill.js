@@ -241,8 +241,6 @@ function showTotalBill(response) {
 	response = jQuery.parseJSON(response);
 	if(response != undefined && response.length > 0){
 	$.each(response,function(i, catObj) {
-			alert('catObj.billId=='+catObj.billId);
-			serviceUnitArrayBill[catObj.billId] = catObj;
 			 $('#totalMrpDisp').text(catObj.totalMrp);
 			 $('#totalQuantityDisp').text(catObj.totalQuantity);
 			 $('#totalRateDisp').text(catObj.totalRate);
@@ -460,7 +458,6 @@ function newBill() {
 	data["mrp"] = $("#mrp").val();
 	data["billId"] = $("#billId").val();
 	data["billDetailsId"] = $("#billDetailsId").val();
-	alert('billDetailsId'+$("#billDetailsId").val());
     
      if($('#rate').val().length == 0 ) {
 	    $('#rate').css('color','red');

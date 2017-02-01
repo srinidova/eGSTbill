@@ -18,8 +18,8 @@
  <!-- <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script> -->
  <script type="text/javascript">
  $(document).ready(function() {
-		var lstOrders ='${allregInfo}';
-		showRegisterData(JSON.parse(lstOrders));
+		//var lstOrders ='${allregInfo}';
+		//showRegisterData(JSON.parse(lstOrders));
 		$('#email').keyup(function() {
 		       var inputVal = $(this).val();
 		       var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -163,7 +163,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="block table-toop-space">
+			<!-- <div class="block table-toop-space">
 				<div class="head-box">
 					<h2><span class="icon2">&nbsp;</span>Register Details<aside class="block-footer-right sucessfully" id="unc1" style="display:none;" >Delete Sucessfully</aside></h2>
 				</div>
@@ -197,7 +197,7 @@
 						<li class="ten-box last" style="width:100%">Delete</li>
 					</ul>
 					<div class="table-list-blk" id="userData">
-						<!-- <ul>
+						<ul>
 							<li class="nine-box">Shirts</li>
 							<li class="five-box">1,000</li>
 							<li class="five-box">Nos</li>                    
@@ -210,16 +210,16 @@
 							<li class="five-box">Mts</li>                    
 							<li class="ten-box"><a href="#">Edit</a></li>
 							<li class="ten-box last"><a href="#">Delete</a></li>
-						</ul>    -->                                         
+						</ul>                                            
 					</div>
 				</div>
 				<div class="block-footer">
 					<aside class="block-footer-left"><exptotal></exptotal></aside>
 					<aside class="block-footer-right">
-						<!-- <input class="btn-cancel" name="" value="Cancel" type="button">
-						<input class="btn-save" name="" value="Save" type="submit"> -->
+						<input class="btn-cancel" name="" value="Cancel" type="button">
+						<input class="btn-save" name="" value="Save" type="submit">
 					</aside>
 				</div>
-			</div>
+			</div> -->
 		</section>
 </body>

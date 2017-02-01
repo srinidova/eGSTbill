@@ -207,7 +207,7 @@ function printBill(){
 </script>
 		<section id="printSec" class="container">
 			<div class="block">
-				<h2 id="newbill"><span class="icon1">&nbsp;</span>New Bill..............</h2>
+				<h2 id="newbill"><span class="icon1">&nbsp;</span>Bill Products</h2>
 				<form:form name="cf_form" method="post" id="contact-form" commandName="" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 				<div>
 				<table width="100%">
@@ -315,13 +315,13 @@ function printBill(){
 				</div>
 				<div class="block-box-mid block-box-last-mid">
                                     <ul class="table-list">
-                                        <li class="five-box" style="width:10%;border-bottom:1px solid #cccccc;">S.No
+                                        <li class="five-box" style="width:35%;border-bottom:1px solid #cccccc;">S.No
                                             <ul>
                                                 <li><a class="top" href="#">&nbsp;</a></li>
                                                 <li><a class="bottom" href="#">&nbsp;</a></li>
                                             </ul>
                                         </li>                
-                                        <li id="bil-prod-box" style="width:100%;border-bottom:1px solid #cccccc;">Description
+                                        <li id="bil-prod-box" style="width:35%;border-bottom:1px solid #cccccc;">Description
                                             <ul>
                                                 <li><a class="top" href="#">&nbsp;</a></li>
                                                 <li><a class="bottom" href="#">&nbsp;</a></li>

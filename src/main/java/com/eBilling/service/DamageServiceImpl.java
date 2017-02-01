@@ -117,7 +117,7 @@ public class DamageServiceImpl implements DamageService{
 		return sJson;
 	}
 	
-	@Override
+	/*@Override
 	public boolean updateStock(ProductStock productStock,JSONObject data,List<ProductStock> lstProductstock) {
 		boolean isUpdate = false;
 		 String sProductId ="";
@@ -149,7 +149,7 @@ public class DamageServiceImpl implements DamageService{
 			
 		}
 		return isUpdate;
-	}
+	}*/
 	@Override
 	public boolean updatedStock(ProductStock productStock,JSONObject data,List<ProductStock> lstProductstock) {
 		boolean isUpdate = false;

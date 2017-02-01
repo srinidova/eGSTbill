@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.eBilling.baseModel.BillingDetailsCart;
 import com.eBilling.dao.BillingDetailsCartDao;
+import com.eBilling.dao.DamageDao;
 import com.eBilling.dao.ProductStockDao;
+import com.eBilling.model.Damage;
 import com.eBilling.model.ProductStock;
 import com.eBilling.model.StockDetails;
 import com.eBilling.util.CommonUtils;
@@ -25,6 +27,10 @@ public class ProductStockServiceImpl implements ProductStockService{
 	BillingDetailsCartDao billingDetailsCartDao;
 	@Autowired
 	BillingDetatilsCartService objBillingDetatilsCartService;
+	@Autowired
+	DamageDao damageDao;
+	
+	
 	private Logger objLogger = Logger.getLogger(ProductStockServiceImpl.class);
 	
 	@Override
@@ -157,5 +163,112 @@ public class ProductStockServiceImpl implements ProductStockService{
 		return productStocks;
 	}
 	
+	@Override
+	public Boolean checkStock(String sProductId, String sBilledQty) {
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		List<ProductStock> productStocks = null;
+		 List<ProductStock> lstProductstock =null;
+		 ProductStock productStock=null;
+		 boolean bStockAvailable = false;
+		try {
+			lstProductstock = getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+			}
+			String sStock = productStock.getStock();
+			System.out.println("sStock=="+sStock+"-------sBilledQty====="+sBilledQty);
+			if(Integer.parseInt(sStock) >= Integer.parseInt(sBilledQty)){
+				bStockAvailable=true;
+			}
+			
+		} catch (Exception e) {
+			//objLogger.info("Exception in getAllProductStockByProductId()" + e);
+			System.out.println("Exception in checkStock()");
+		}
+		return bStockAvailable;
+	}
+
+	@Override
+	public boolean deductStock(String sProductId, String sBilledQty, String sBillId) {
+		boolean isUpdate = false;
+		List<ProductStock> lstProductstock = null;
+		try {
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			ProductStock productStock = lstProductstock.get(0);
+			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt(sBilledQty));
+			productStock.setStock(String.valueOf(sNewStock));
+			productStockDao.updateProductStock(productStock);
+			isUpdate = true;
+
+		} catch (Exception e) {
+			objLogger.error("Exception in ProductStockServiceImpl in deductStock() " + e);
+			e.printStackTrace();
+		} finally {
+
+		}
+		return isUpdate;
+	}
+	@Override
+	public boolean addStock(ProductStock productStock) {
+		boolean isAdd = false;
+		List<ProductStock> lstProductstock = null;
+		try {
+			System.out.println("saveProductStock:::::::::::"+productStock.toString());
+			productStock.setStockId(CommonUtils.getAutoGenId());
+			productStock.setProductId(productStock.getProductId());
+			productStock.setOldStock(productStock.getStock());
+			productStock.setNewStock(productStock.getNewStock());
+			int iOldStock=Integer.parseInt(productStock.getOldStock());
+			int iNewStock=Integer.parseInt(productStock.getNewStock());
+			int iStock=iOldStock+iNewStock;
+			productStock.setStock(String.valueOf(iStock));
+			
+			boolean isInsert = productStockDao.saveProductStock(productStock);
+			
+			if(isInsert)
+				isAdd = true;
+
+		} catch (Exception e) {
+			objLogger.error("Exception in ProductStockServiceImpl in addStock() " + e);
+			e.printStackTrace();
+		} finally {
+
+		}
+		return isAdd;
+	}
+	@Override
+	public boolean updateProductStock(String sProductId, String sQty) {
+		boolean isUpdate = false;
+		 List<Damage> lstDamageProduct =null;
+		 Damage existDamageStock =null;
+		 List<ProductStock> lstProductstock = null;
+		 ProductStock productStock =null;
+		try {
+			
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				productStock=lstProductstock.get(i);
+			}
+			lstDamageProduct=damageDao.getAllDamageProductsByProductId(sProductId);
+			for(int i=0;i<lstDamageProduct.size();i++){
+				existDamageStock=lstDamageProduct.get(i);
+			}
+			if(existDamageStock.getProductId().equals(sProductId)){
+				int stock = Math.abs(Integer.parseInt(sQty)-Integer.parseInt(existDamageStock.getQuantity()));
+				
+				int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( String.valueOf(stock)));
+				 productStock.setStock(String.valueOf(sNewStock));
+				 productStockDao.updateProductStock(productStock);
+			}
+			
+		}catch(Exception e){
+			objLogger.error("Exception in RegistrationServiceImpl in updateProductStock() "+e);
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return isUpdate;
+	}
 
 }

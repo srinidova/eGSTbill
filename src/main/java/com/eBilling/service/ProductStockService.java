@@ -33,6 +33,14 @@ public interface ProductStockService {
 	boolean updatingStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,
 			List<ProductStock> lstProductstock, JSONObject data);
 
+	Boolean checkStock(String sProductId, String sBilledQty);
+
+	boolean deductStock(String sProductId, String sBilledQty, String sBillId);
+
+	boolean addStock(ProductStock productStock);
+
+	boolean updateProductStock(String sProductId, String sBilledQty);
+
 	//boolean updateStock(ProductStock productStock);
 
 	

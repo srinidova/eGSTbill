@@ -17,8 +17,7 @@ public interface StockDetailsService {
 	List<StockDetails> getStockDetailsByProductId(String sProductId);
 
 
-	boolean updatedStockDetails(ProductStock productStock, BillingDetailsCart billingdetailsCart,
-			List<ProductStock> lstProductstock, JSONObject data);
+	boolean addStockDetails(String sProductId, String sBilledQty, String sBillId, String sTransactionTpye);
 
 
 

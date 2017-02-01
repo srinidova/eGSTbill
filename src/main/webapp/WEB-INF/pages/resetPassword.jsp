@@ -44,10 +44,25 @@
  		   url: 'resetPassword.htm',
  		   data:"jsondata= "+JSON.stringify(data), 
  		   success: function(data) {
- 			   console.log("sendSmssendSmssendSmssendSms");
+ 			  $("#mobileNoEmail").val("");
+ 			 $("#oldPassword").val("");
+ 			 $("#newPassword").val("");
+ 			 $("#confirmPassword").val("");
+ 			   if(data != ""){
+ 			   console.log(data);
+ 			  $("#unc").text('sucessfully Reset Your Password');
+       	   		$("#unc").show();
+           	 	$("#unc").fadeOut(10000);
+ 			   }
  		}
  	});
  }
+ function dataClear() {
+	 $("#mobileNoEmail").val("");
+		 $("#oldPassword").val("");
+		 $("#newPassword").val("");
+		 $("#confirmPassword").val("");
+}
 
  </script>
 	<!-- 	<section class="container">
@@ -92,7 +107,7 @@
         <form name="cf_form" method="post" id="loginForm" onsubmit="return false;">
             <div class="login-block">                
                 <div class="login-un">
-                    <label class="login-label-text">MobileNo Or Email:</label>
+                    <label class="login-label-text">Email:</label>
                     <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%;" />
                 </div>
                 <div class="login-un">
@@ -119,15 +134,15 @@
                     <label class="login-label-text">ConfirmPassword</label>
                     <input class="input-login" type="text" name="cnumber" value="" id="password" onkeydown="removeBorder(this.id);" style="margin-left:10px;" />
                 </div> -->
-                <div class="blck-login"> 
+               <!--  <div class="blck-login"> 
                 	<a href="#" class="login-links" style="padding-right:36px;">Forgot Password</a>  | <a href="registration" class="login-links" style="padding-left:29px;">Register</a> 
-                </div>            
+                </div> -->            
             </div>
             <div class="block-footer">
                 <aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
                 <aside class="block-footer-right">
-                    <input class="btn-cancel" name="" value="Cancel" type="button">
-                    <input class="btn-save" name="" id="login" value="login" type="submit" onclick="resetPassword();">
+                    <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
+                    <input class="btn-save" name="" id="login" value="submit" type="submit" onclick="resetPassword();">
                 </aside>
             </div>
         </form>

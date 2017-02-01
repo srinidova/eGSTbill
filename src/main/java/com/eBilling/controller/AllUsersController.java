@@ -31,7 +31,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 @Controller
-public class RegistraionController {
+public class AllUsersController {
 
 	/*
 	 * @Autowired sendSms objSendSms;
@@ -43,8 +43,8 @@ public class RegistraionController {
 	@Autowired
 	ServletContext objContext;
 
-	@RequestMapping(value = "/registration")
-	public String regHome(@ModelAttribute Register register, HttpServletResponse objResponce, HttpSession objSession,
+	@RequestMapping(value = "/allUsers")
+	public String allUsers(@ModelAttribute Register register, HttpServletResponse objResponce, HttpSession objSession,
 			HttpServletRequest objRequest) {
 
 		// System.out.println("From Prodcut Home");
@@ -53,17 +53,17 @@ public class RegistraionController {
 		try {
 			sJson = objRegistrationService.getAllRegister();
 			objRequest.setAttribute("allregInfo", sJson);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 
 		}
 
-		return "regHome";
+		return "allUsers";
 	}
-
-	@RequestMapping(value = "/saveRegister")
-	public @ResponseBody String saveRegister(@ModelAttribute Register register, HttpSession objSession,
+	@RequestMapping(value = "/saveRegisters")
+	public @ResponseBody String saveRegisters(@ModelAttribute Register register, HttpSession objSession,
 			HttpServletRequest objRequest) {
 		boolean isInsert = false;
 		String sJson = "";
@@ -94,10 +94,7 @@ public class RegistraionController {
 			
 			isInsert = objRegistrationService.saveRegister(register);
 			System.out.println("isInsert===="+isInsert);
-			if (isInsert) {
-				sJson = objRegistrationService.getAllRegister();
-				// System.out.println("save: " + sJson);
-			}
+			
 			if(isInsert){
 			if (sendSms.equals("yes")) {
 				String sOtpMsg = prop.getProperty("smsOtpText");
@@ -122,6 +119,10 @@ public class RegistraionController {
 			}
 
 			}
+			if (isInsert) {
+				sJson = objRegistrationService.getAllRegister();
+				// System.out.println("save: " + sJson);
+			}
 			}
 		} catch (Exception e) {
 			 System.out.println("Exception in RegistraionController in  saveRegister()");
@@ -130,8 +131,8 @@ public class RegistraionController {
 		return sJson;
 	}
 
-	@RequestMapping(value = "/updateRegister")
-	public @ResponseBody String updateRegister(@ModelAttribute Register register,
+	@RequestMapping(value = "/updateRegisters")
+	public @ResponseBody String updateRegisters(@ModelAttribute Register register,
 			@RequestParam("jsondata") JSONObject data, HttpSession objSession, HttpServletRequest objRequest) {
 		boolean isupdate = false;
 		String sJson = "";
@@ -155,8 +156,8 @@ public class RegistraionController {
 		return sJson;
 	}
 
-	@RequestMapping(value = "/deleteRegister")
-	public @ResponseBody String deleteRegister(@RequestParam("id") String id, HttpSession objSession,
+	@RequestMapping(value = "/deleteRegisters")
+	public @ResponseBody String deleteRegisters(@RequestParam("id") String id, HttpSession objSession,
 			HttpServletRequest objRequest) throws JsonGenerationException, JsonMappingException, IOException {
 		boolean isDelete = false;
 		String sJson = "";
@@ -168,64 +169,7 @@ public class RegistraionController {
 		}
 		return sJson;
 	}
-	@RequestMapping(value = "/resetPasswordHome")
-	public String resetPasswordHome(@ModelAttribute Register register, HttpServletResponse objResponce, HttpSession objSession,
-			HttpServletRequest objRequest) {
 
-		// System.out.println("From Prodcut Home");
-		objResponce.setCharacterEncoding("UTF-8");
-		String sJson = null;
-		try {
-			/*sJson = objRegistrationService.getAllRegister();
-			objRequest.setAttribute("allregInfo", sJson);*/
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-
-		}
-
-		return "resetPasswordHome";
-	}
-	@RequestMapping(value = "/resetPassword")
-	public @ResponseBody String resetPassword(@ModelAttribute Register register,
-			@RequestParam("jsondata") JSONObject data, HttpSession objSession, HttpServletRequest objRequest) {
-		boolean isUpdate = false;
-		String sJson = "";
-		List<Register> lstRegister = null;
-		try {
-			System.out.println("in resetPassword......"+data);
-			String sEmailOrMobileNo =data.getString("mobileNoEmail");
-			
-			System.out.println("sEmailOrMobileNo===="+sEmailOrMobileNo);
-			
-			lstRegister = objRegistrationService.getAllBillEmailAndMobileNo(sEmailOrMobileNo);
-			System.out.println("lstRegister==="+lstRegister.size());
-			if(lstRegister.size() >0){
-				for(int i=0;i<lstRegister.size();i++){
-					register = lstRegister.get(i);
-					if(register.getEmail().equals(data.getString("mobileNoEmail"))){
-						register.setPassword(data.getString("newPassword"));
-						register.setEmail(data.getString("mobileNoEmail"));
-						//register.setMobileNo(data.getString("mobileNoEmail"));
-						
-						isUpdate = objRegistrationService.updateResetPassword(register);
-						System.out.println("isUpdateisUpdate"+isUpdate);
-						if(isUpdate){
-							JSONObject json = new JSONObject();
-							json.put("status", "ERROR");
-							json.put("message", "sucessfully Reset Your Password");
-							sJson = json.toString();
-							return sJson;
-						}
-					}
-				}
-			}
-			
-		} catch (Exception ex) {
-			System.out.println("Exception in RegistraionController in  resetPassword()");
-			ex.printStackTrace();
-		}
-		return sJson;
-	}
+	
 }

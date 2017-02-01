@@ -135,7 +135,7 @@ public class UpLoadController {
 					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
 					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
 					
-				//isInsert = purchaseInfoService.savePurchaseInfo(purchaserInfo);
+				isInsert = purchaseInfoService.savePurchaseInfo(purchaserInfo);
 				
 				
 					} else {

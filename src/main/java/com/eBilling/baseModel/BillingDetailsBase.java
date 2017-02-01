@@ -7,6 +7,15 @@ public class BillingDetailsBase {
 	protected String quantity;
 	protected String rate;
 	protected String mrp;
+	protected String productName;
+	
+	
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public String getMrp() {
 		return mrp;
 	}

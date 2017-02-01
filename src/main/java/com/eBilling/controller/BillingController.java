@@ -142,7 +142,17 @@ public class BillingController {
 				
 			}*/
 			//if(Integer.parseInt(productStock.getStock()) >= Integer.parseInt(data.getString("quantity"))){
-				
+			if(sProductId !=""){
+			boolean bStockAvailable = productStockService.checkStock( sProductId, data.getString("quantity"));
+			System.out.println("bStockAvailable===="+bStockAvailable);
+			if(!bStockAvailable){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", "Product Stock is Low");
+				sJson = json.toString();
+				return sJson;
+			}
+			}
 				System.out.println("Adding Product");
 				sBillId = (String)objSession.getAttribute("sessionBillId");
 				billingInfoCart = new BillingInfoCart();
@@ -302,14 +312,15 @@ public class BillingController {
 					
 					 objBillingDetatilsService.saveBillDetails(billingDetails);
 					 
-					 
+					 productStockService.deductStock(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(), sBillId);
+					 stockDetailsService.addStockDetails(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(), sBillId, "Sale");
 				}
 				//updatedproductStock
-				productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
+				//productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
 				
 				//update stockDetails
 				
-				stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
+				//stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
 				/*for(BillingDetailsCart billingdetailsC :listBillingDetails){
 					List<StockDetails> lstStockDeatails = stockDetailsService.getStockDetailsByProductId(billingdetailsC.getProductId());
 					stockDetails=lstStockDeatails.get(0);
@@ -395,7 +406,7 @@ public class BillingController {
 			productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
 			
 			//update stockDetails
-			stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
+			//stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
 			
 				if(isSave){
 					 objSession.setAttribute("sessionBillId","");

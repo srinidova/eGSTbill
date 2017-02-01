@@ -41,7 +41,7 @@ function displayUserRow(catObj, dispType) {
 	
 }
 
-function showRegisterData(response){
+function showClientData(response){
 	//alert('aaa');
 	$("#userData ul li").remove();
 	//resJSON = JSON.parse(response);
