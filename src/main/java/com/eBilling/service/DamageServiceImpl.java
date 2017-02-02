@@ -186,8 +186,12 @@ public class DamageServiceImpl implements DamageService{
 				
 			}
 			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) + Integer.parseInt( data.getString("quantity")));
+			int sOldStock = Math.abs(Integer.parseInt(productStock.getOldStock()) + Integer.parseInt( data.getString("quantity")));
 			 productStock.setStock(String.valueOf(sNewStock));
+			 productStock.setOldStock(String.valueOf(sOldStock));
+			 
 			 productStockDao.updateProductStock(productStock);
+			 
 		}catch(Exception e){
 			objLogger.error("Exception in RegistrationServiceImpl in updatedStock() "+e);
 			e.printStackTrace();

@@ -220,6 +220,12 @@ public class RegistraionController {
 						}
 					}
 				}
+			}else{
+				JSONObject json = new JSONObject();
+				json.put("status", "ERRORMASSAGE");
+				json.put("message", "Invalid valid EmailId");
+				sJson = json.toString();
+				return sJson;
 			}
 			
 		} catch (Exception ex) {

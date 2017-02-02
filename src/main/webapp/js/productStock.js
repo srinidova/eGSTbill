@@ -196,6 +196,13 @@ function productStock() {
 			    $('#oldStock').addClass('your-class');
 			    return false;
 			    }
+		    else if($('#productId').val().length == 0 ) {
+			    $('#productId').css('color','red');
+			    $("#productId").css("border-color","red");
+			    $("#productId").attr("placeholder","Please Enter productId");
+			    $('#productId').addClass('your-class');
+			    return false;
+			    }
 		   
 		else if($("#stockId").val() != "" ){
 			//alert('aaaaaaaaaaa'+$("#stockId").val());

@@ -122,7 +122,7 @@ public class DamageController {
 		List<ProductStock> lstProductstock =null;
 		 ProductStock productStock=null;
 		try {
-			String sDamageId = CommonUtils.getAutoGenId();
+			String sDamageId = data.getString("damageId");
 			damage.setDamageId(sDamageId);
 			damage.setProductId(data.getString("productId"));
 			damage.setQuantity(data.getString("quantity"));

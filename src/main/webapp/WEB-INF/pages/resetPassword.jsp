@@ -49,10 +49,18 @@
  			 $("#newPassword").val("");
  			 $("#confirmPassword").val("");
  			   if(data != ""){
- 			   console.log(data);
- 			  $("#unc").text('sucessfully Reset Your Password');
-       	   		$("#unc").show();
-           	 	$("#unc").fadeOut(10000);
+ 				   resJSON=JSON.parse(data);
+ 				   if(resJSON.status == "ERROR"){
+ 					  console.log(data);
+ 		 			  	$("#unc").text('sucessfully Reset Your Password');
+ 		       	   		$("#unc").show();
+ 		           	 	$("#unc").fadeOut(10000);
+ 				   }else{
+ 					  	$("#unc").text('Please Enter Valid EmailId');
+		       	   		$("#unc").show();
+		           	 	$("#unc").fadeOut(10000);
+ 				   }
+ 			   
  			   }
  		}
  	});
@@ -107,20 +115,20 @@
         <form name="cf_form" method="post" id="loginForm" onsubmit="return false;">
             <div class="login-block">                
                 <div class="login-un">
-                    <label class="login-label-text">Email:</label>
-                    <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%;" />
+                    <label class="login-label-text" style="margin-right:43px;">Email:</label>
+                    <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%;margin-left:13%"/>
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text">OldPassword:</label>
-                    <input class="input-login" type="text" name="oldPassword"  value="" id="oldPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:12%" />
+                    <label class="login-label-text" style="margin-right:43px;" >OldPassword:</label>
+                    <input class="input-login" type="text" name="oldPassword"  value="" id="oldPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-3%" />
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text">NewPassword:</label>
-                    <input class="input-login" type="text" name="newPassword"  value="" id="newPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:12%" />
+                    <label class="login-label-text" style="margin-right:43px;">NewPassword:</label>
+                    <input class="input-login" type="text" name="newPassword"  value="" id="newPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-5%" />
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-left: -5%">ConfirmPassword:</label>
-                    <input class="input-login" type="text" name="confirmPassword"  value="" id="confirmPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:12%" />
+                    <label class="login-label-text" style="margin-right:26px;">ConfirmPassword:</label>
+                    <input class="input-login" type="text" name="confirmPassword"  value="" id="confirmPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-7%" />
                 </div>
                <!--  <div class="login-pwd">
                     <label class="login-label-text">OldPassword</label>

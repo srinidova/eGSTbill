@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eBilling.baseModel.PurchaserInfo;
+import com.eBilling.dao.ProductStockDao;
 import com.eBilling.model.LoginInfo;
 import com.eBilling.model.Product;
+import com.eBilling.model.ProductStock;
 import com.eBilling.service.ProductPopulateService;
 import com.eBilling.service.PurchaseInfoService;
 import com.eBilling.util.CommonUtils;
@@ -30,6 +32,9 @@ public class UpLoadController {
 	ProductPopulateService productPopulateService;
 	@Autowired
 	PurchaseInfoService purchaseInfoService;
+	@Autowired
+	ProductStockDao productStockDao;
+	
 	
 	@RequestMapping(value = "/uploadHome")
 	public String uploadHome(HttpServletResponse objResponce,
@@ -56,7 +61,7 @@ public class UpLoadController {
 		String sJson = "";
 		boolean isInsert = false;	
 		List<Product> lstProductModel = null;
-		
+		ProductStock productStock =null;
 		try{			
 			
 		System.out.println("inside the controller");
@@ -81,8 +86,18 @@ public class UpLoadController {
 				product.setUpdatedBy(CommonUtils.getDate());
 				product.setUpdatedDate(CommonUtils.getDate());
 				
-				//isInsert = productPopulateService.productSave(product);;
-
+				isInsert = productPopulateService.productSave(product);
+				productStock =new ProductStock();
+				productStock.setStockId(CommonUtils.getAutoGenId());
+				productStock.setProductId(product.getProductId());
+				productStock.setOldStock(a.getString("stock"));
+				productStock.setNewStock("0");
+				int iOldStock=Integer.parseInt(productStock.getOldStock());
+				int iNewStock=Integer.parseInt(productStock.getNewStock());
+				int iStock=iOldStock+iNewStock;
+				productStock.setStock(String.valueOf(iStock));
+				
+					productStockDao.saveProductStock(productStock);
 			} else {
 
 				JSONObject json = new JSONObject();

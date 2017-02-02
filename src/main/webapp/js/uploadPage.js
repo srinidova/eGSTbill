@@ -27,16 +27,17 @@ function importCsv(){
 		csvval=event.target.result.split("\n");
 		alert('csvval.length---'+csvval.length);
 		 console.log("csvval.length"+csvval[0]);
-		 if(csvval[0].split(",").length == 3){
+		// if(csvval[0].split(",").length == 3){
 		for(var i=1;i<csvval.length;i++) {
 			//var csvvalue=csvval[i].split(",");
 			var csvvalue = csvval[i].split(",");
 			var productName = $.trim(csvvalue[0]);
 			var productType = $.trim(csvvalue[1]);
 			var mrp = $.trim(csvvalue[2]);
+			var stock = $.trim(csvvalue[3]);
 			if(productName != ""){
 				//console.log("freeeeeeeeeeeee");
-				products.push({"productName":productName,"productType":productType,"mrp":mrp});
+				products.push({"productName":productName,"productType":productType,"mrp":mrp,"stock":stock});
 			}
 			}
 		alert('products.length---'+products.length);
@@ -61,9 +62,9 @@ function importCsv(){
 		}else{
 			//no valid contacts.
 		}
-		 }$("#unc").text('choose Purchase csv');
+		 /*}$("#unc").text('choose Purchase csv');
    	  	 $("#unc").show();
-         $("#unc").fadeOut(10000);
+         $("#unc").fadeOut(10000);*/
 	};
 }
 
