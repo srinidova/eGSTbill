@@ -135,6 +135,26 @@
 				});
 			}
 		}
+		function onCheck() {
+			//alert("hiiiii");
+			if($("oldCustmer").val(['oldCustmer'])){
+				$("#name").show();
+				$("#purchaserName").hide();
+				$("#newCustmer").prop('checked', false);
+				//getAllPurchase(purchaseArr);
+			}else{
+				$("#name").attr("disabled", "disabled");
+			}
+		}
+		function onCheck1() {
+			//alert("hiiiii");
+			if($("newCustmer").val(['newCustmer'])){
+				//$("#name").attr("disabled", "disabled");
+				$("#name").hide();
+				$("#purchaserName").show();
+				$("#oldCustmer").prop('checked', false);
+			}
+		}
 	</script>
 		<section class="container">
 			<div class="block">
@@ -264,23 +284,29 @@
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
+                                                        <div class="block-input">
+                                                        <input type="radio" id="oldCustmer" name="oldCustmer" value="oldCustmer" onclick="onCheck();" checked="checked"> Old Customer<br>
+																		<input type="radio" id="newCustmer" name="newCustmer" value="newCustmer" onclick="onCheck1()"> New Customer
+                                                        
+                                                        </div>
                                                             <div class="block-input">
                                                                 <label>Name</label>
-                                                                 <input   type="text" name="nameTxt" id="nameTxt">
+                                                                 <input  style="margin-left:120px; margin-top:-27px;" type="text" name="purchaserName" id="purchaserName">
                                                                 <select style="margin-left:120px; margin-top:-27px;" id="name" name="name" onchange="poupulatePurchase();">
                                                             	<option value="">--Select--</option>
                                                         </select>                  
                                                             </div>  
-                                                            <div class="block-input">
+                                                            <div class="block-input last">
                                                                 <label>Mobile No</label>
                                                                 <input type="text" name="phone" id="phone">
                                                             </div>
-                                                            <div class="block-input last">
+                                                            
+                                                        </div>
+                                                        <div class="block-searchbill">
+                                                        <div class="block-input ">
                                                                 <label>Address</label>
                                                                 <textarea name="address" id="address" rows="3"></textarea>
                                                             </div>
-                                                        </div>
-                                                        <div class="block-searchbill">
                                                             <div class="block-input">
                                                                 <label>LR No</label>
                                                                 <input type="text" name="lrNo" id="lrNo">                  
@@ -291,6 +317,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
+                                                        
                                                             <div class="block-input">
                                                                 <label>Order No</label>
                                                                 <input type="text" name="orderNo" id="orderNo">                  
@@ -305,6 +332,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
+                                                        
                                                             <div class="block-input">
                                                                 <label>Despatched By</label>
                                                                 <input type="text" name="dispatchedBy" id="dispatchedBy">                  
@@ -319,6 +347,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
+                                                        
                                                             <div class="block-input">
                                                                 <label>Pack Slip No</label>
                                                                 <input type="text" name="packSlipNo" id="packSlipNo">                  
@@ -333,6 +362,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
+                                                        
                                                             <div class="block-input">
                                                                 <label>Bill No</label>
                                                                 <input type="text" name="billNo" id="billNo">                  

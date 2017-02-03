@@ -537,7 +537,7 @@ function updateBillInfoCart(id){
 	data["billNo"] = $("#billNo").val();
 	data["orderNo"] = $("#orderNo").val();
 	data["orderDate"] = $("#orderDate").val();
-	
+	data["purchaserName"] = $("#purchaserName").val();
 	data["payment"] = $("#payment").val();
 	data["discount"] = $("#discount").val();
 	data["totalAmount"] = $("#totalAmount").val();
@@ -737,6 +737,7 @@ function updateBillInfoCart(id){
 function saveInfoCart(){
 	
 	data = {};
+	data["purchaserName"] = $("#purchaserName").val();
 	data["billId"] = $("#billId").val();
 	data["billNo"] = $("#billNo").val();
 	data["orderNo"] = $("#orderNo").val();
@@ -777,7 +778,7 @@ function saveInfoCart(){
 	    $('#orderNo').addClass('your-class');
 	    return false;
 	    }
-    else if($('#orderDate').val().length == 0 ) {
+    /*else if($('#orderDate').val().length == 0 ) {
 	    $('#orderDate').css('color','red');
 	    $("#orderDate").css("border-color","red");
 	    $("#orderDate").attr("placeholder","Please enter orderDate");
@@ -846,7 +847,7 @@ function saveInfoCart(){
 	    $("#dispatchedDate").attr("placeholder","Please enter dispatchedDate");
 	    $('#dispatchedDate').addClass('your-class');
 	    return false;
-	    }
+	    }*/
     else if($('#orderBy').val().length == 0 ) {
 	    $('#orderBy').css('color','red');
 	    $("#orderBy").css("border-color","red");

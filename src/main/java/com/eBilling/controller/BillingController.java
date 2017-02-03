@@ -258,6 +258,7 @@ public class BillingController {
 		 String sProductId ="";
 		 ProductStock existProductStock=null;
 		 StockDetails stockDetails =null;
+		 PurchaserInfo purchaserInfo =null;
 		try {
 			System.out.println("productStock::::::"+sProductId);
 			sBillId = data.getString("billId");
@@ -291,6 +292,22 @@ public class BillingController {
 			billingInfo.setPackSlipNo(data.getString("packSlipNo"));
 			
 			sJson=objBillingInfoService.saveBillInfo(billingInfo);
+			
+			 String sPurchaserName=data.getString("purchaserName");
+			if(sPurchaserName!=""){
+				purchaserInfo =new PurchaserInfo();
+				purchaserInfo.setName(sPurchaserName);
+				purchaserInfo.setAddress(data.getString("address"));
+				//purchaserInfo.seteMail(data.getString(""));
+				purchaserInfo.setMobileNo(data.getString("phone"));
+				purchaserInfo.setUpdatedBy(CommonUtils.getDate());
+				purchaserInfo.setUpdatedDate(CommonUtils.getDate());
+				purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
+				
+				
+				objInfoService.savePurchaseInfo(purchaserInfo);
+			}
+			
 			
 			
 			isDelete=objBillingInfoCartService.deleteBillInfoCart(sBillId);
@@ -364,6 +381,7 @@ public class BillingController {
 		 ProductStock existProductStock=null;
 		 StockDetails stockDetails =null;
 		 List<ProductStock> lstProductstock =null;
+		 PurchaserInfo purchaserInfo =null;
 		try {
 			
 			sBillNo= data.getString("billNo");
@@ -402,6 +420,21 @@ public class BillingController {
 			
 			isSave=objBillingInfoCartService.updateBillInfoCart(billingInfoCart);
 			
+			 String sPurchaserName=data.getString("purchaserName");
+				if(sPurchaserName!=""){
+					purchaserInfo =new PurchaserInfo();
+					purchaserInfo.setName(sPurchaserName);
+					purchaserInfo.setAddress(data.getString("address"));
+					//purchaserInfo.seteMail(data.getString("Email"));
+					purchaserInfo.setMobileNo(data.getString("phone"));
+					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
+					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
+					purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
+					
+					
+					objInfoService.savePurchaseInfo(purchaserInfo);
+				}
+				
 			//updatedproductStock
 			productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
 			

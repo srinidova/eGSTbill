@@ -98,14 +98,17 @@ function productRegister() {
 			    $('#name').addClass('your-class');
 			    return false;
 			    }
-		    
-		    else if(!$('#mobileNo').val().match('[0-9]{10}') ) {
+		 else if(!$('#mobileNo').val().match(/^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/) ) {
 			    $('#mobileNo').css('color','red');
 			    $("#mobileNo").css("border-color","red");
-			    $("#mobileNo").attr("placeholder","Please enter Mobile No");
+			    $("#mobileNo").attr("placeholder","Please Enter Mobile No");
 			    $('#mobileNo').addClass('your-class');
+			     $('#unc').text("Please specify a valid phone number.");
+			     $('#unc').show();
+			     $("#unc").fadeOut(10000);
+			    setTimeout(function(){$('#mobileNo').focus();},0);
 			    return false;
-			    }
+			 }
 		    else if($('#eMail').val().length == 0 ) {
 			    $('#eMail').css('color','red');
 			    $("#eMail").css("border-color","red");
