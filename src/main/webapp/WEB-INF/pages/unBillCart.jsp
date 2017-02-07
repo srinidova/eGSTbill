@@ -37,7 +37,7 @@ $(document).ready(function() {
 		showBillInfoData(allunBillCart);
 		
 		$('#name').keypress(function (e) {
-	        var regex = new RegExp("^[a-zA-Z]+$");
+	        var regex = new RegExp("^[a-zA-Z ]+$");
 	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
 	        if (regex.test(str)) {
 	            return true;
@@ -111,7 +111,7 @@ $(function() {
 <!-- SET: MAIN CONTENT -->
 <section class="container">
     <div class="block">
-        <h2><span class="icon1">&nbsp;</span>Search Bill</h2>
+        <h2><span class="icon1">&nbsp;</span>Un Bill</h2>
         <form name="cf_form"  action="#" onsubmit="return validationequiry()">
             <div class="block-searchbill">
                 <div class="block-searchbill-input">

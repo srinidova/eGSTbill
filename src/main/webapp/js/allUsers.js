@@ -189,7 +189,7 @@ function userRegister() {
 		    setTimeout(function(){$('#email').focus();},0);
 		    return false;
 		    }
-	    else if($('#password').val().length == 0 ) {
+	    /*else if($('#password').val().length == 0 ) {
 		    $('#password').css('color','red');
 		    $("#password").css("border-color","red");
 		    $("#password").attr("placeholder","Please enter password");
@@ -209,7 +209,7 @@ function userRegister() {
 			     $('#unc').text("Passwords do not match.");
 			     $("#unc").fadeOut(10000);
 	             return false;
-	    }else if($("#regId").val() != ""){
+	    }*/else if($("#regId").val() != ""){
 			updateRegisterData();
 		}else{
 			saveRegisterData();
@@ -236,7 +236,7 @@ function saveRegisterData(){
                     		 showRegisterData(resJSON[i]);
                     	 }*/
                     	 showRegisterData(JSON.parse(response));
-                    	  $("#unc").text('Save Sucessfully');
+                    	  $("#unc").text('Registration done sucessfully.Please login with OTP and reset password.');
                     	  	$("#unc").show();
                     	  	$("#unc").fadeOut(10000);
       					 	

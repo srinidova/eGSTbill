@@ -26,8 +26,11 @@
 <!-- <script type="text/javascript" src="js/jquery-1.7.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
  <!-- <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script> -->
- <script type="text/javascript">
  
+ <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+ <script type="text/javascript">
+
  $(document).ready(function() {
 		var lstOrders ='${sessionScope.allPurchaseInfo}';
 		//showPurchaseData(JSON.parse(lstOrders));
@@ -39,6 +42,49 @@
  	data["mobileNoEmail"] = $("#mobileNoEmail").val();
  	data["oldPassword"] = $("#oldPassword").val();
  	data["newPassword"] = $("#newPassword").val();
+ 	
+ 	 if(!$('#mobileNoEmail').val().match(/^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i) ) {
+    	
+	    $('#mobileNoEmail').css('color','red');
+	    $("#mobileNoEmail").css("border-color","red");
+	    $("#mobileNoEmail").attr("placeholder","Please enter email");
+	    $('#mobileNoEmail').addClass('your-class');
+	    $('#unc').text("Please enter valid emailid.");
+	     $('#unc').show();
+	     $("#unc").fadeOut(10000);
+	    setTimeout(function(){$('#mobileNoEmail').focus();},0);
+	    return false;
+	    }
+ 	else if($('#newPassword').val().length <=3 ) {
+ 	    $('#newPassword').css('color','red');
+ 	    $("#newPassword").css("border-color","red");
+ 	    $("#newPassword").attr("placeholder","Please enter newPassword");
+ 	    $('#newPassword').addClass('your-class');
+ 	    setTimeout(function(){$('#newPassword').focus();},0);
+ 	    return false;
+ 	    }
+ 	else if($('#oldPassword').val().length <=3 ) {
+ 	    $('#oldPassword').css('color','red');
+ 	    $("#oldPassword").css("border-color","red");
+ 	    $("#oldPassword").attr("placeholder","Please enter oldPassword");
+ 	    $('#oldPassword').addClass('your-class');
+ 	    setTimeout(function(){$('#newPassword').focus();},0);
+ 	    return false;
+ 	    }
+
+ 	 else if($('#confirmPassword').val().length <=3 ) {
+ 		    $('#confirmPassword').css('color','red');
+ 		    $("#confirmPassword").css("border-color","red");
+ 		    $("#confirmPassword").attr("placeholder","Please enter confirmPassword");
+ 		    $('#confirmPassword').addClass('your-class');
+ 		    setTimeout(function(){$('#confirmPassword').focus();},0);
+ 		    return false;
+ 		 }else if ($('#newPassword').val() != $('#confirmPassword').val()) {
+ 			     $('#unc').show();
+ 			     $('#unc').text("Passwords do not match.");
+ 			     $("#unc").fadeOut(10000);
+ 	          return false;
+ 	 } 
  	$.ajax({   
  		method: 'POST',			
  		   url: 'resetPassword.htm',
@@ -71,7 +117,31 @@
 		 $("#newPassword").val("");
 		 $("#confirmPassword").val("");
 }
+ 
+ 
+ /* if($('#newPassword').val().length <=3 ) {
+    $('#newPassword').css('color','red');
+    $("#newPassword").css("border-color","red");
+    $("#newPassword").attr("placeholder","Please enter newPassword");
+    $('#newPassword').addClass('your-class');
+    setTimeout(function(){$('#newPassword').focus();},0);
+    //return false;
+    }
 
+ else if($('#confirmPassword').val().length ==0 ) {
+	    $('#confirmPassword').css('color','red');
+	    $("#confirmPassword").css("border-color","red");
+	    $("#confirmPassword").attr("placeholder","Please enter confirmPassword");
+	    $('#confirmPassword').addClass('your-class');
+	    setTimeout(function(){$('#confirmPassword').focus();},0);
+	   // return false;
+	 }else if ($('#newPassword').val() != $('#confirmPassword').val()) {
+		     $('#unc').show();
+		     $('#unc').text("Passwords do not match.");
+		     $("#unc").fadeOut(10000);
+          return false;
+ } */
+ 
  </script>
 	<!-- 	<section class="container">
 			<div class="block">
@@ -115,20 +185,20 @@
         <form name="cf_form" method="post" id="loginForm" onsubmit="return false;">
             <div class="login-block">                
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:43px;">Email:</label>
-                    <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%;margin-left:13%"/>
+                    <label class="login-label-text" style="margin-right:43px; font-size: 15px;">Email:</label>
+                    <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%;margin-left:11%"/>
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:43px;" >OldPassword:</label>
-                    <input class="input-login" type="text" name="oldPassword"  value="" id="oldPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-3%" />
+                    <label class="login-label-text" style="margin-right:43px;     font-size: 15px;" >OTP/OldPassword:</label>
+                    <input class="input-login" type="password" name="oldPassword"  value="" id="oldPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-12%" />
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:43px;">NewPassword:</label>
-                    <input class="input-login" type="text" name="newPassword"  value="" id="newPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-5%" />
+                    <label class="login-label-text" style="margin-right:43px;     font-size: 15px;">NewPassword:</label>
+                    <input class="input-login" type="password" name="newPassword"  value="" id="newPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-4%" />
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:26px;">ConfirmPassword:</label>
-                    <input class="input-login" type="text" name="confirmPassword"  value="" id="confirmPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-7%" />
+                    <label class="login-label-text" style="margin-right:26px;     font-size: 15px;">ConfirmPassword:</label>
+                    <input class="input-login" type="password" name="confirmPassword"  value="" id="confirmPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-5%" />
                 </div>
                <!--  <div class="login-pwd">
                     <label class="login-label-text">OldPassword</label>

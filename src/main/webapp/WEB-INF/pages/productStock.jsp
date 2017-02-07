@@ -25,6 +25,25 @@ var lstOrders ='${getAllStock}';
 $(document).ready(function() {
 	getAllProducts();
 	showProductData(JSON.parse(lstOrders));
+	$("#oldStock").attr("disabled", "disabled");
+	$("#stock").attr("disabled", "disabled");
+	
+	$('#newStock').keypress(function (e) {
+        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else
+        {
+        e.preventDefault();
+        //alert('Please Enter Alphabate');
+        $("#unc").text('Please Enter Numbers');
+    	$("#unc").show();
+       	$("#unc").fadeOut(2000);
+        return false;
+        }
+    });
 	
 });
 

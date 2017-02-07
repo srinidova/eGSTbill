@@ -25,8 +25,8 @@ $(document).ready(function() {
 	showProductData(JSON.parse(lstOrders));
 	
 	
-	/* $('#productName').keypress(function (e) {
-        var regex = new RegExp("^[a-zA-Z]+$");
+	/*  $('#productName').keypress(function (e) {
+        var regex = new RegExp("^[a-zA-Z ]+$");
         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
             return true;
@@ -40,7 +40,7 @@ $(document).ready(function() {
        	$("#unc").fadeOut(2000);
         return false;
         }
-    }); */
+    });  */
 	
 	$('#mrp').keypress(function (e) {
         var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");

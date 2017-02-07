@@ -158,7 +158,7 @@
 	</script>
 		<section class="container">
 			<div class="block">
-				<h2><span class="icon1">&nbsp;</span>New Bill..............</h2>
+				<h2><span class="icon1">&nbsp;</span>New Bill</h2>
 				<form:form name="cf_form" method="post" id="contact-form" commandName="productCmd" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 					<div class="block-searchbill">
 						<div class="block-searchbill-input">

@@ -18,6 +18,10 @@
  <!-- <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script> -->
  <script type="text/javascript">
  $(document).ready(function() {
+	 $("#regType").attr("disabled", "disabled");
+	 $("#password").attr("disabled", "disabled");
+	 $("#cPassword").attr("disabled", "disabled");
+	 
 		var lstOrders ='${allregInfo}';
 		showRegisterData(JSON.parse(lstOrders));
 		$('#email').keyup(function() {
@@ -32,7 +36,7 @@
 		   });
 		
 		$('#regName').keypress(function (e) {
-	        var regex = new RegExp("^[a-zA-Z]+$");
+	        var regex = new RegExp("^[a-zA-Z ]+$");
 	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
 	        if (regex.test(str)) {
 	            return true;
