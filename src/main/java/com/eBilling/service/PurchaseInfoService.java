@@ -5,6 +5,8 @@ package com.eBilling.service;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.eBilling.baseModel.PurchaserInfo;
 
 /**
@@ -22,4 +24,6 @@ public interface PurchaseInfoService {
 	List<PurchaserInfo> getPurchaseByName(String sPurchaseName);
 
 	List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo);
+
+	boolean addPurchaseInfo(JSONObject data);
 }

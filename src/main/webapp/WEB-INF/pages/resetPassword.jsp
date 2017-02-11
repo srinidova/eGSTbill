@@ -55,7 +55,7 @@
 	    setTimeout(function(){$('#mobileNoEmail').focus();},0);
 	    return false;
 	    }
- 	else if($('#newPassword').val().length <=3 ) {
+ 	else if($('#newPassword').val().length <=5 ) {
  	    $('#newPassword').css('color','red');
  	    $("#newPassword").css("border-color","red");
  	    $("#newPassword").attr("placeholder","Please enter newPassword");

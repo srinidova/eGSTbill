@@ -6,11 +6,13 @@ package com.eBilling.service;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eBilling.baseDao.PurchaseInfoBaseDao;
 import com.eBilling.baseModel.PurchaserInfo;
+import com.eBilling.util.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -96,5 +98,41 @@ public class PurchaseInfoServiceImpl implements PurchaseInfoService{
 		}
 		return lstRegister;
 	}
+	@Override
+	public boolean addPurchaseInfo(JSONObject data) {
+		boolean isSave = false;
+		List<PurchaserInfo> lstPurchaseName=null;
+		PurchaserInfo purchaserInfo =null;
+		try {
+			 String sPurchaserName=data.getString("purchaserName");
+			 System.out.println("sName==="+sPurchaserName);
+			if(sPurchaserName != ""){
+				String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
+				lstPurchaseName = checkEmailAndMobileNo(emailOrMobileNO);
+				
+				if(lstPurchaseName == null || lstPurchaseName.size() == 0){
+					purchaserInfo =new PurchaserInfo();
+					purchaserInfo.setName(sPurchaserName);
+					purchaserInfo.setAddress(data.getString("address"));
+					purchaserInfo.seteMail(data.getString("eMail"));
+					purchaserInfo.setMobileNo(data.getString("phone"));
+					purchaserInfo.setMobileNo(data.getString("tinNo"));
+					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
+					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
+					purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
+					
+					
+					     savePurchaseInfo(purchaserInfo);
+					     isSave =true;
+				}
+			}
+		}catch(Exception e){
+			logger.error("Exception in PurchaseInfoServiceImpl in addPurchaseInfo() "+e);
+			//System.out.println("Exception in BillingDetatilsCartServiceImpl in savePurchaseInfo() "+e);
+		}finally{
+			
+		}
+		return isSave;
+}
 	
 }

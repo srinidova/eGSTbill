@@ -538,6 +538,7 @@ function updateBillProduct(){
 function updateBillInfoCart(id){
 	
 	data = {};
+	data["customerType"] = $("#customerType").val();
 	data["billId"] = $("#billId").val();
 	data["billNo"] = $("#billNo").val();
 	data["orderNo"] = $("#orderNo").val();
@@ -775,6 +776,7 @@ function saveInfoCart(){
 		data["name"] = $("#name").val();
 	}*/
 	data = {};
+	data["customerType"] = $("#customerType").val();
 	data["purchaserName"] = $("#purchaserName").val();
 	data["billId"] = $("#billId").val();
 	data["billNo"] = $("#billNo").val();

@@ -264,6 +264,19 @@ public class BillingController {
 		 PurchaserInfo purchaserInfo =null;
 		 List<PurchaserInfo> lstPurchaseName = null;
 		try {
+			
+			String sCustType = data.getString("customerType");
+			System.out.println("custmerType==="+sCustType);
+				if(StringUtils.isNotEmpty(sCustType) && sCustType.equals("newCustmer")){
+					boolean bInsertPur = objInfoService.addPurchaseInfo(data);
+					if(!bInsertPur){
+						data.put("status", "ERROR");
+						data.put("message", "Purchaser Email And mobile Already Exist");
+						sJson = data.toString();
+						return sJson;
+					}
+				}
+					
 			System.out.println("productStock::::::"+sProductId);
 			sBillId = data.getString("billId");
 		  	 if(sBillId.length() > 0){
@@ -272,7 +285,8 @@ public class BillingController {
 			billingInfo.setBillId(sBillId);
 			
 			String sName=data.getString("name");
-			if(sName !=null && sName !=""){
+			System.out.println("sName==="+sName);
+			if(StringUtils.isNotEmpty(sName)){
 				billingInfo.setName(sName);
 			}else{
 				billingInfo.setName(data.getString("purchaserName"));
@@ -303,7 +317,8 @@ public class BillingController {
 			
 			sJson=objBillingInfoService.saveBillInfo(billingInfo);
 			
-			 String sPurchaserName=data.getString("purchaserName");
+			/* String sPurchaserName=data.getString("purchaserName");
+			 System.out.println("sName==="+sPurchaserName);
 			if(sPurchaserName!=""){
 				String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
 				lstPurchaseName = objInfoService.checkEmailAndMobileNo(emailOrMobileNO);
@@ -329,7 +344,7 @@ public class BillingController {
 					sJson = data.toString();
 					return sJson;
 				}
-			}
+			}*/
 			
 			
 			
@@ -410,6 +425,19 @@ public class BillingController {
 		 List<PurchaserInfo> lstPurchaseName = null;
 		try {
 			
+			String sCustType = data.getString("customerType");
+			System.out.println("custmerType==="+sCustType);
+				if(StringUtils.isNotEmpty(sCustType) && sCustType.equals("newCustmer")){
+					boolean bInsertPur = objInfoService.addPurchaseInfo(data);
+					if(!bInsertPur){
+						data.put("status", "ERROR");
+						data.put("message", "Purchaser Email And mobile Already Exist");
+						sJson = data.toString();
+						return sJson;
+					}
+				}
+			
+			
 			sBillNo= data.getString("billNo");
 			sBillId = data.getString("billId");
 		  	 if(sBillId.length() > 0 && sBillNo.length() > 0){
@@ -421,7 +449,7 @@ public class BillingController {
 			billingInfoCart.setBillId(sBillId);
 			
 			String sName=data.getString("name");
-			if(sName !=null && sName !=""){
+			if(StringUtils.isNotEmpty(sName)){
 				billingInfo.setName(sName);
 			}else{
 				billingInfo.setName(data.getString("purchaserName"));
@@ -453,33 +481,7 @@ public class BillingController {
 			
 			isSave=objBillingInfoCartService.updateBillInfoCart(billingInfoCart);
 			
-			 String sPurchaserName=data.getString("purchaserName");
-				if(sPurchaserName!=""){
-					
-					String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
-					lstPurchaseName = objInfoService.checkEmailAndMobileNo(emailOrMobileNO);
-					if(lstPurchaseName == null || lstPurchaseName.size() == 0){
-						purchaserInfo =new PurchaserInfo();
-						purchaserInfo.setName(sPurchaserName);
-						purchaserInfo.setAddress(data.getString("address"));
-						purchaserInfo.seteMail(data.getString("eMail"));
-						purchaserInfo.setMobileNo(data.getString("phone"));
-						purchaserInfo.setMobileNo(data.getString("tinNo"));
-						purchaserInfo.setUpdatedBy(CommonUtils.getDate());
-						purchaserInfo.setUpdatedDate(CommonUtils.getDate());
-						purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
-						
-						
-						objInfoService.savePurchaseInfo(purchaserInfo);
-					}else {
-
-						//JSONObject json = new JSONObject();
-						data.put("status", "ERROR");
-						data.put("message", "Purchaser Email And mobile Already Exist");
-						sJson = data.toString();
-					}
-					
-				}
+			
 				
 			//updatedproductStock
 			//productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
