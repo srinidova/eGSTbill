@@ -72,10 +72,10 @@ public class RegistraionController {
 		String sOtp = null;
 		List<Register> lstRegister = null;
 		try {
-			
-			String emailOrMobileNO =register.getEmail()+""+register.getMobileNo();
+
+			String emailOrMobileNO = register.getEmail() + "" + register.getMobileNo();
 			lstRegister = objRegistrationService.checkEmailAndMobileNo(emailOrMobileNO);
-			
+
 			Properties prop = new Properties();
 			String propertiespath = objContext.getRealPath("Resources" + File.separator + "DataBase.properties");
 			input = new FileInputStream(propertiespath);
@@ -86,45 +86,43 @@ public class RegistraionController {
 
 			// System.out.println("sendMail==" + sendMail);
 			sOtp = CommonUtils.generatePIN();
-			System.out.println("lstRegister:::::::::::"+lstRegister.size());
-			if(lstRegister.size() == 0){
-			register.setPassword(sOtp);
-			register.setRegId(CommonUtils.getAutoGenId());
-			register.setEmailCode(sOtp);
-			
-			isInsert = objRegistrationService.saveRegister(register);
-			System.out.println("isInsert===="+isInsert);
-			if (isInsert) {
-				sJson = objRegistrationService.getAllRegister();
-				// System.out.println("save: " + sJson);
-			}
-			if(isInsert){
-			if (sendSms.equals("yes")) {
-				String sOtpMsg = prop.getProperty("smsOtpText");
-				// System.out.println("smsOtpText = " + smsOtpText);
-				  
-				  System.out.println("sOtpMsg=="+sOtpMsg);
-				  if(sOtpMsg != null && sOtpMsg.length() > 0){
-				   sOtpMsg = sOtpMsg.replace("OTP_TXT",sOtp);
-				  }
-				  System.out.println("sOtpMsg=="+sOtpMsg);
+			System.out.println("lstRegister:::::::::::" + lstRegister.size());
+			if (lstRegister.size() == 0) {
+				register.setPassword(sOtp);
+				register.setRegId(CommonUtils.getAutoGenId());
+				register.setEmailCode(sOtp);
 
-				Objsmsbean = new SendSms();
-				Objsmsbean.setSendTo("91" + register.getMobileNo());
-				Objsmsbean.setMessage(sOtpMsg);
-				// System.out.println("before sendSms");
-				Sms.sendMessage(objContext, Objsmsbean);
-				// System.out.println("after sendSms");
-			}
-			// System.out.println("sendmail===" + sendMail);
-			if (sendMail.equals("yes")) {
-				EmailUtil.sendEmail(register, objContext);
-			}
+				isInsert = objRegistrationService.saveRegister(register);
+				System.out.println("isInsert====" + isInsert);
 
-			}
+				if (isInsert) {
+					if (sendSms.equals("yes")) {
+						String sOtpMsg = prop.getProperty("smsOtpText");
+						// System.out.println("smsOtpText = " + smsOtpText);
+
+						System.out.println("sOtpMsg==" + sOtpMsg);
+						if (sOtpMsg != null && sOtpMsg.length() > 0) {
+							sOtpMsg = sOtpMsg.replace("OTP_TXT", sOtp);
+						}
+						System.out.println("sOtpMsg==" + sOtpMsg);
+
+						Objsmsbean = new SendSms();
+						Objsmsbean.setSendTo("91" + register.getMobileNo());
+						Objsmsbean.setMessage(sOtpMsg);
+						// System.out.println("before sendSms");
+						Sms.sendMessage(objContext, Objsmsbean);
+						// System.out.println("after sendSms");
+					}
+					// System.out.println("sendmail===" + sendMail);
+					if (sendMail.equals("yes")) {
+						EmailUtil.sendEmail(register, objContext);
+					}
+					sJson = objRegistrationService.getAllRegister();
+
+				}
 			}
 		} catch (Exception e) {
-			 System.out.println("Exception in RegistraionController in  saveRegister()");
+			System.out.println("Exception in RegistraionController in  saveRegister()");
 		}
 
 		return sJson;

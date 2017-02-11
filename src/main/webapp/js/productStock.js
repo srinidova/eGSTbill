@@ -45,22 +45,22 @@ function popupStockData(response){
 	if(response != undefined && response.length >0){
 		$.each(response,function(i, catObj) {
 			 var tblRow ="<ul class=''>"
-					+ "<li class='five-box' title='"+catObj.stock+"'>"
-					+"<span><b>Stock:</b></span>"
-					+ catObj.stock  
+					+ "<li class='five-box' title='"+catObj.transactionType+"'>"
+					+"<span><b>transactionType:</b></span>"
+					+ catObj.transactionType  
 					+ "</li>"
-					+ "<li class='nine-box' title='"+catObj.oldStock+"'>"
-					+"<span><b>Old Stock:</b></span>"
-					+ catObj.oldStock
-					+ "</li>"
-					+ "<li class='five-box'>"
-					+"<span><b>New Stock:</b></span>"
-					+ catObj.newStock
+					+ "<li class='nine-box' title='"+catObj.quantity+"'>"
+					+"<span><b>Quantity:</b></span>"
+					+ catObj.quantity
 					+ "</li>"
 					+ "<li class='five-box'>"
+					+"<span><b>TransactionDate:</b></span>"
+					+ catObj.transactionDate
+					+ "</li>"
+					/*+ "<li class='five-box'>"
 					+"<span><b>ProductId:</b></span>"
 					+ catObj.productId
-					+ "</li>"
+					+ "</li>"*/
 					+ "<li class='five-box'>"
 					+"<span><b>ProductName:</b></span>"
 					+ catObj.productName
@@ -132,26 +132,27 @@ function poupulateProductStock(id){
 function editProductStock(id)
 {	
 	$('#productId').val(id);
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
-	   $('#stock').val( serviceUnitArray[id].stock)
-	}
-	 else{
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
+	   $('#stock').val( serviceUnitArray[id].stock);
+	}else{
 		 $('#stock').val("0");
 		 $("#stock").attr("disabled", "disabled");
-	 }
-	
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].oldStock != undefined){
+	}
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
 		$('#oldStock').val(serviceUnitArray[id]. oldStock);
-	}
-	else{
-		$('#oldStock').val("0");
-		$("#oldStock").attr("disabled", "disabled");
-	}
-	if(serviceUnitArray[id] != undefined && serviceUnitArray[id].newStock != undefined)
-	$('#newStock').val( serviceUnitArray[id].newStock);
-	else
-		$('#stock').val("0");
-	$('#stockId').val( serviceUnitArray[id].stockId);
+		}else{
+			 $('#oldStock').val("0");
+			 $("#oldStock").attr("disabled", "disabled");
+		}
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
+		$('#newStock').val( serviceUnitArray[id].newStock);
+		}else{
+			 $('#newStock').val("0");
+		}
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
+		$('#stockId').val( serviceUnitArray[id].stockId);
+		}
+	
 }
 function deleteProductStock(id) {
 		$.ajax({
@@ -181,7 +182,7 @@ function productStock() {
 	data["stockId"]=$("#stockId").val();
 	
 		    
-		    if($('#stock').val().length == 0 ) {
+		   /* if($('#stock').val().length == 0 ) {
 			    $('#stock').css('color','red');
 			    $("#stock").css("border-color","red");
 			    $("#stock").attr("placeholder","Please enter stock");
@@ -195,8 +196,8 @@ function productStock() {
 			    $("#oldStock").attr("placeholder","Please enter oldStock");
 			    $('#oldStock').addClass('your-class');
 			    return false;
-			    }
-		    else if($('#productId').val().length == 0 ) {
+			    }*/
+		     if($('#productId').val().length == 0 ) {
 			    $('#productId').css('color','red');
 			    $("#productId").css("border-color","red");
 			    $("#productId").attr("placeholder","Please Enter productId");

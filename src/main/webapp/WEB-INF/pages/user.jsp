@@ -97,7 +97,10 @@ function validateLogin(){
 	}); 
 }
 
-
+function dataClear() {
+	$("#email").val("");
+	 $("#password").val("");
+}
 
 </script>
 <script type="text/javascript">
@@ -181,7 +184,7 @@ $(function() {
             <div class="block-footer">
                 <aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
                 <aside class="block-footer-right">
-                    <input class="btn-cancel" name="" value="Cancel" type="button">
+                    <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
                     <input class="btn-save" name="" id="login" value="login" type="submit" onclick="validateLogin();">
                 </aside>
             </div>

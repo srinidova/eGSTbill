@@ -14,6 +14,7 @@ import com.eBilling.baseModel.BillingInfo;
 import com.eBilling.baseModel.BillingInfoCart;
 import com.eBilling.dao.BillingInfoCartDao;
 import com.eBilling.dao.BillingInfoDao;
+import com.eBilling.model.AutoIncrement;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -107,6 +108,37 @@ public class BillingInfoCartServiceImpl implements BillingInfoCartService {
 		}
 		return lstBillingInfoCart;
 	}
-	
+
+	@Override
+	public String getUpdateId(String sTableName) {
+		ObjectMapper objectMapper = null;
+		int iIncrementNo = 0;
+		List<AutoIncrement> lstAutoIncrement = null;
+		AutoIncrement autoIncrement = null;
+		String sReturnVal = null;
+		try {
+			lstAutoIncrement = billingInfoCartDao.getAutoIncrement(sTableName);
+			System.out.println("lstAutoIncrement=="+lstAutoIncrement.size());
+			if (lstAutoIncrement != null && lstAutoIncrement.size() > 0) {
+				for (int i = 0; i < lstAutoIncrement.size(); i++) {
+					autoIncrement = lstAutoIncrement.get(i);
+					iIncrementNo = Integer.parseInt(autoIncrement.getIncrementId());
+					if (iIncrementNo > 0) {
+						iIncrementNo = iIncrementNo + 1;
+						sReturnVal = String.valueOf(iIncrementNo);
+						
+						autoIncrement.setIncrementId(String.valueOf(iIncrementNo));
+						billingInfoCartDao.updateAutoIncrement(autoIncrement);
+					}
+
+					
+				}
+			}
+		} catch (Exception e) {
+			objLogger.info("Exception in getUpdateId()" + e);
+			System.out.println("Exception in getUpdateId()");
+		}
+		return sReturnVal;
+	}
 
 }

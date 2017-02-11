@@ -85,7 +85,7 @@ public class BillingInfoBaseDao {
 	public List<BillingInfoCart> getAllBillInfoCart() {
 		List<BillingInfoCart> retlist = null;
 		try {
-			String sql = "SELECT billId,billNo,	billDate,lrNo,lrDate,orderNo,orderDate,dispatchedBy,dispatchedDate,noOfPacks,termOfPayment,	terms,name,phone,address,tinNo,totalAmount,discount,totalMrp,totalQuantity,totalRate from billinginfoCart";
+			String sql = "SELECT billId,billNo,	billDate,lrNo,lrDate,orderNo,orderDate,dispatchedBy,dispatchedDate,noOfPacks,termOfPayment,	terms,name,phone,address,tinNo,totalAmount,discount,totalMrp,totalQuantity,totalRate from billinginfocart";
 			System.out.println(sql);
 			retlist = jdbcTemplate.query(sql, new BeanPropertyRowMapper<BillingInfoCart>(BillingInfoCart.class));
 

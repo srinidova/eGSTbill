@@ -197,9 +197,15 @@ public class ProductStockServiceImpl implements ProductStockService{
 			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
 			ProductStock productStock = lstProductstock.get(0);
 			int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt(sBilledQty));
+			productStock.setStock(String.valueOf(sNewStock));
+			
+			if(Integer.parseInt(productStock.getOldStock()) != 0){
 			int sOldStock=Math.abs(Integer.parseInt(productStock.getOldStock()) - Integer.parseInt(sBilledQty));
 			productStock.setOldStock(String.valueOf(sOldStock));
-			productStock.setStock(String.valueOf(sNewStock));
+			}else{
+				int sOldStock=Math.abs(Integer.parseInt(sBilledQty) -Integer.parseInt(productStock.getOldStock()));
+				//productStock.setOldStock(String.valueOf(sOldStock));
+			}
 			
 			productStockDao.updateProductStock(productStock);
 			isUpdate = true;

@@ -50,6 +50,7 @@ function showBillDetailsData(response){
 				$(tblRow).appendTo("#userData"); 
 			});
 		}
+		$('#billNo').val(response[0].billNo);
     	$('#totalMrpDisp').text(response[0].totalMrp);
     	$('#totalQuantityDisp').text(response[0].totalQuantity);
     	$('#totalRateDisp').text(response[0].totalRate);
@@ -77,7 +78,7 @@ function showBillDetailsData(response){
 		 $('#orderBy').val(response[0].orderBy);
 		 $('#tinNo').val(response[0].tinNo);
 		 $('#packSlipNo').val(response[0].packSlipNo);
-		 $('#billNo').val(response[0].billNo);
+		 
     	
 	}
 }
@@ -375,6 +376,10 @@ function infoDataClear(){
            		   $("#unc").show();
                       $("#unc").fadeOut(5000); 
                       showBillDetailsData(response);
+                      $('#totalAmount').val("");
+                 	 $('#totalMrp').val("");
+                 	 $('#totalQuantity').val("");
+                 	 $('#totalRate').val("");
                 }
                 
             },
@@ -558,6 +563,7 @@ function updateBillInfoCart(id){
 	data["totalRate"] = $("#totalRate").val();
 	data["billDate"] = $("#billDate").val();
 	data["tinNo"] = $("#tinNo").val();
+	data["eMail"] = $("#eMail").val();
 	
 	if($('#billNo').val().length == 0 ) {
 	    $('#billNo').css('color','red');
@@ -566,8 +572,28 @@ function updateBillInfoCart(id){
 	    $('#billNo').addClass('your-class');
 	    return false;
 	    }
-    
-    else if($('#orderNo').val().length == 0 ) {
+	else if($('#payment').val().length == 0 ) {
+	    $('#payment').css('color','red');
+	    $("#payment").css("border-color","red");
+	    $("#payment").attr("placeholder","Please enter payment");
+	    $('#payment').addClass('your-class');
+	    return false;
+	    }
+    else if($('#totalAmount').val().length == 0 ) {
+	    $('#totalAmount').css('color','red');
+	    $("#totalAmount").css("border-color","red");
+	    $("#totalAmount").attr("placeholder","Please enter totalAmount");
+	    $('#totalAmount').addClass('your-class');
+	    return false;
+	    }
+    else if($('#phone').val().length == 0 ) {
+	    $('#phone').css('color','red');
+	    $("#phone").css("border-color","red");
+	    $("#phone").attr("placeholder","Please enter phone");
+	    $('#phone').addClass('your-class');
+	    return false;
+	    }
+    /*else if($('#orderNo').val().length == 0 ) {
 	    $('#orderNo').css('color','red');
 	    $("#orderNo").css("border-color","red");
 	    $("#orderNo").attr("placeholder","Please enter orderNo");
@@ -686,7 +712,7 @@ function updateBillInfoCart(id){
 	    $("#tinNo").attr("placeholder","Please enter tinNo");
 	    $('#tinNo').addClass('your-class');
 	    return false;
-	    }
+	    }*/
 	
 	
 	$.ajax({
@@ -735,7 +761,19 @@ function updateBillInfoCart(id){
 	}); 
 }
 function saveInfoCart(){
-	
+	/*if($("#purchaserName").val() == ""){
+		var purchaseName=$("#name").val();
+		data["purchaserName"] = purchaseName;
+			
+	}else{
+		data["purchaserName"] = $("#purchaserName").val();
+	}
+	if(typeof($("#name").val())==undefined){
+		var name= $("#purchaserName").val();
+		data["name"] = name;
+	}else{
+		data["name"] = $("#name").val();
+	}*/
 	data = {};
 	data["purchaserName"] = $("#purchaserName").val();
 	data["billId"] = $("#billId").val();
@@ -763,6 +801,8 @@ function saveInfoCart(){
 	data["totalRate"] = $("#totalRate").val();
 	data["billDate"] = $("#billDate").val();
 	data["tinNo"] = $("#tinNo").val();
+	data["eMail"] = $("#eMail").val();
+	
 	if($('#billNo').val().length == 0 ) {
 	    $('#billNo').css('color','red');
 	    $("#billNo").css("border-color","red");
@@ -771,13 +811,13 @@ function saveInfoCart(){
 	    return false;
 	    }
     
-    else if($('#orderNo').val().length == 0 ) {
+   /* else if($('#orderNo').val().length == 0 ) {
 	    $('#orderNo').css('color','red');
 	    $("#orderNo").css("border-color","red");
 	    $("#orderNo").attr("placeholder","Please enter orderNo");
 	    $('#orderNo').addClass('your-class');
 	    return false;
-	    }
+	    }*/
     /*else if($('#orderDate').val().length == 0 ) {
 	    $('#orderDate').css('color','red');
 	    $("#orderDate").css("border-color","red");
@@ -848,7 +888,7 @@ function saveInfoCart(){
 	    $('#dispatchedDate').addClass('your-class');
 	    return false;
 	    }*/
-    else if($('#orderBy').val().length == 0 ) {
+    /*else if($('#orderBy').val().length == 0 ) {
 	    $('#orderBy').css('color','red');
 	    $("#orderBy").css("border-color","red");
 	    $("#orderBy").attr("placeholder","Please enter orderBy");
@@ -890,7 +930,7 @@ function saveInfoCart(){
 	    $("#tinNo").attr("placeholder","Please enter tinNo");
 	    $('#tinNo').addClass('your-class');
 	    return false;
-	    }
+	    }*/
 	
 	
 

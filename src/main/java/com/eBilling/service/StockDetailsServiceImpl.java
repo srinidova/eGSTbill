@@ -110,5 +110,49 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 			}
 			return isAdd;
 		}
+	 
+	 @Override
+		public List<StockDetails> getProductStockDetailsByProductId(String sProductId) {
+			ObjectMapper objectMapper = null;
+			String sJson = null;
+			List<StockDetails> productStockDetails = null;
+			try {
+				productStockDetails = stockDetailsDao.getProductStockDetailsByProductId(sProductId);
+				
+			} catch (Exception e) {
+				//objLogger.info("Exception in getAllProductStockByProductId()" + e);
+				System.out.println("Exception in getAllProductStockByProductId()");
+			}
+			return productStockDetails;
+		}
+	 @Override
+		public boolean addSaveStockDetails(String sBillId ) {
+			boolean isAdd = false;
+			 StockDetails stockDetails =null;
+			 List<BillingDetailsCart> listBillingDetails = null;
+			try {
+					listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
+					for(BillingDetailsCart billingdetailsC :listBillingDetails){
+						List<StockDetails> lstStockDeatails =getStockDetailsByProductId(billingdetailsC.getProductId());
+						stockDetails=lstStockDeatails.get(0);
+					String sSale="Cart";
+					stockDetails.setQuantity( billingdetailsC.getQuantity());
+					stockDetails.setTransactionId(sBillId);
+					stockDetails.setTransactionType(sSale);
+					stockDetails.setTransactionDate(CommonUtils.getDate());
+					stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
+					stockDetails.setProductId(billingdetailsC.getProductId());
+					boolean isInsert = stockDetailsDao.saveStockDetails(stockDetails);
+					
+					}
+				
+			}catch(Exception e){
+				objLogger.error("Exception in ProductStockServiceImpl in addStockDetails() "+e);
+				e.printStackTrace();
+			}finally{
+				
+			}
+			return isAdd;
+		}
 
 }

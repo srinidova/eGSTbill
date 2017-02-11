@@ -142,6 +142,7 @@ public class PurchaseInfoController {
 				purchaserInfo.setMobileNo(data.getString("mobileNo"));
 				purchaserInfo.setAddress(data.getString("address"));
 				purchaserInfo.seteMail(data.getString("eMail"));
+				purchaserInfo.seteMail(data.getString("tinNo"));
 					isUpdate = purchaseInfoService.updatePurchaseInfo(purchaserInfo);
 				if (isUpdate) {
 					sJson = purchaseInfoService.getAllPurchaseInfo();

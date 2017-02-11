@@ -94,6 +94,9 @@
 							<!-- <input type="t" name="address" id="address"> -->
 							<textarea rows="5" cols="" name="address" onkeyup="removeError(this.id);" id="address" onsubmit="return false;" style="width:220px;margin-bottom:10px;"></textarea>
 						</div>
+						<div class="block-searchbill-input last">
+							<label>TinNo</label>
+						</div>
 						</div>
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>

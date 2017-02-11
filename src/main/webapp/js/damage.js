@@ -20,8 +20,8 @@ function showDamageData(response){
 				 var tblRow ="<ul class=''>"
 						 /* + "<li class='five-box'  title='"+catObj.productId+"'>"
 						+ catObj.productId  */
-						+ "<li class='nine-box'  title='"+catObj.productId+"' style='width:300%;'>"
-						+ catObj.productId
+						+ "<li class='nine-box'  title='"+catObj.productName+"' style='width:300%;'>"
+						+ catObj.productName
 						+ "</li>"
 						/* + "<li class='five-box'  title='"+protectType+"' style='width:140%;'>"
 						+ protectType

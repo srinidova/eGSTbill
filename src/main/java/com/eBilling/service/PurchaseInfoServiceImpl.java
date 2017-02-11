@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.eBilling.baseDao.PurchaseInfoBaseDao;
 import com.eBilling.baseModel.PurchaserInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author srinu
@@ -81,6 +82,19 @@ public class PurchaseInfoServiceImpl implements PurchaseInfoService{
 			
 		}
 		return getByName;
+	}
+	@Override
+	public List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo) {
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		List<PurchaserInfo> lstRegister = null;
+		try {
+			lstRegister = purchaseInfoBaseDao.checkEmailAndMobileNo(sEmailOrMobileNo);
+		} catch (Exception e) {
+			logger.info("Exception in getAllBillInfoByBillNo()" + e);
+			System.out.println("Exception in getAllBillInfoByBillNo()"+e);
+		}
+		return lstRegister;
 	}
 	
 }

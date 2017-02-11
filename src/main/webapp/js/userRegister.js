@@ -119,6 +119,9 @@ function userRegister() {
 		    $("#mobileNo").css("border-color","red");
 		    $("#mobileNo").attr("placeholder","Please enter Mobile No");
 		    $('#mobileNo').addClass('your-class');
+		    $('#unc').text("Please enter valid Mobile Number.");
+		     $('#unc').show();
+		     $("#unc").fadeOut(10000);
 		    setTimeout(function(){$('#mobileNo').focus();},0);
 		    return false;
 		 }
@@ -184,6 +187,7 @@ function saveRegisterData(){
       					 	$("#email").val("");
       					 	$("#password").val("");
       					 	$("#cPassword").val("");
+      					 	window.location.href = "resetPasswordHome";
       					return false;
                       }
             	  else {

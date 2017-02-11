@@ -17,14 +17,14 @@
     <div class="block-3">
 		<div class="mobile-no">
 			<h5>Mobile: 9246885990 <p>9246595990</p> <p>9246959550</p></h5>
-			<p class="text-email"><span class="label-text">Email:</span> <span id="clientEmailBrand"></span></p>
+			<p class="text-email"><span class="label-text">Email:</span> <span><b>gowthamihandlooms@gmail.com</b></span></p>
 		</div>
 	</div>
 </div> 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript">
  
- $(document).ready(function() {
+ /* $(document).ready(function() {
 		var lstClient = '${clientInfo}';
 		lstClientInfo = lstClient.replace(/\\/g, "////");
 		showClientData(JSON.parse(lstClientInfo));
@@ -40,7 +40,7 @@
 			 $('#clientEmailBrand').text(catObj.clientEmail);
 		});
 		}
-	}
+	} */
  
 
 </script>

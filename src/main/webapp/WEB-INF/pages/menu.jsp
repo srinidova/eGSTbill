@@ -51,7 +51,7 @@ $("#logout").click(function(){
 		<li> <a href="sendSmsHome">Send Sms</a> </li>
 		<!-- <li> <a href="statusHome">Status</a> </li> -->
 		
-        <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout">Logout</a></li>
+        <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout" style="margin-left: 73px;">Logout</a></li>
         <% }%>
 		
 </ul>

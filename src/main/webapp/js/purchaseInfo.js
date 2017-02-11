@@ -54,6 +54,7 @@ function dataClear(){
  $('#mobileNo').val("");
  $('#address').val("");
  $('#eMail').val("");
+ $('#tinNo').val("");
 }
 
 function editPurchageInfo(id)
@@ -62,6 +63,7 @@ function editPurchageInfo(id)
 	$('#mobileNo').val( serviceUnitArray[id].mobileNo);
 	$('#eMail').val( serviceUnitArray[id].eMail);
 	$('#address').val( serviceUnitArray[id].address);
+	$('#tinNo').val( serviceUnitArray[id].tinNo);
 }
 function deletePurchaseInfo(id) {
 	var count = 0;
@@ -90,6 +92,7 @@ function productRegister() {
 	data["address"] = $("#address").val();
 	data["eMail"] = $("#eMail").val();
 	data["purchaseId"] = $("#purchaseId").val();
+	data["tinNo"] = $("#tinNo").val();
 	
 		 if($('#name').val().length == 0 ) {
 			    $('#name').css('color','red');
@@ -128,6 +131,13 @@ function productRegister() {
 			    $('#address').addClass('your-class');
 			    return false;
 			    }
+		    else if($('#tinNo').val().length == 0 ) {
+			    $('#tinNo').css('color','red');
+			    $("#tinNo").css("border-color","red");
+			    $("#tinNo").attr("placeholder","Please enter tinNo");
+			    $('#tinNo').addClass('your-class');
+			    return false;
+			    }
 		    
 		    else if($("#purchaseId").val() != ""){
 					updatePurchaseInfo();
@@ -161,6 +171,7 @@ function savePurchageInfo(){
                         $('#mobileNo').val("");
                         $('#address').val("");
                         $('#eMail').val("");
+                        $('#tinNo').val("");
                      }
                    	
                     }
@@ -196,6 +207,7 @@ function updatePurchaseInfo(){
                         $('#mobileNo').val("");
                         $('#address').val("");
                         $('#eMail').val("");
+                        $('#tinNo').val("");
                      }
             	 }
                  

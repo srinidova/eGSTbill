@@ -81,76 +81,19 @@ public class StockDetailsBaseDao {
 		return retlist;
 	}
 	
-	
-	/*public boolean updateNewProductStock(ProductStock productStock) {
-		boolean isUpdate = false;
+	public List<StockDetails> getProductStockDetailsByProductId(String sProductId) {
+		List<StockDetails> retlist = null;
 		try {
-			if (productStock.getUpdatedOn() == null) {
-				productStock.setUpdatedOn(CommonUtils.getDate());
-			}
-			if (productStock.getUpdatedBy() == null) {
-				productStock.setUpdatedBy(CommonUtils.getDate());
-			}
-			String sql = "UPDATE productStock  set stock=?,oldStock=?,newStock=?,updateOn=?,updateBy=? where stockId = ? ";
-			System.out.println("sql==="+sql);
-			int update = jdbcTemplate.update(
-					sql,
-					new Object[] {
-							productStock.getStock(),productStock.getOldStock(),productStock.getNewStock(),productStock.getUpdatedOn(),productStock.getUpdatedBy(),productStock.getStockId()
-							 });
-			System.out.println("update111==="+update);
-			System.out.println(sql);
-			if (update > 0) {
-				isUpdate = true;
-			}
-
+			String sql = "SELECT s.productId,transactionType,quantity,transactionDate,p.productName from stockdetails s,product p where s.productId = p.productId and s.productId =?";
+			System.out.println("query for getProductStockDetailsByProductId===="+sql);
+			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<StockDetails>(StockDetails.class));
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return isUpdate;
-	}*/
-	/*public boolean deleteProductStock(String id) {
-		boolean isDelete = false;
-		try {
-			String sql = "DELETE FROM productStock WHERE stockId=?";
-			int delete = jdbcTemplate.update(sql, new Object[] { id });
-			System.out.println("delete row"+delete);
-			if (delete > 0) {
-				isDelete = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return isDelete;
-	}
-
-	
-	public List<ProductStock> getAllProductStock() {
-		List<ProductStock> retlist = null;
-		try {
-			String sql = "SELECT * from productStock";
-			retlist = jdbcTemplate.query(sql,ParameterizedBeanPropertyRowMapper.newInstance(ProductStock.class));
-
-		} catch (Exception e) {
+			//objLogger.error("Exception in BillingDetailsBaseDao in getProductStockDetailsByProductId()" + e);
 			e.printStackTrace();
 		}
 
 		return retlist;
 	}
-	public List<ProductStock> getAllProductStockByProductId(String sProductId) {
-		List<ProductStock> retlist = null;
-		try {
-			String sql = "SELECT *from productstock where productId = ?";
-			System.out.println("query for getAllProductStockByProductId===="+sql);
-			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<ProductStock>(ProductStock.class));
-		} catch (Exception e) {
-			//objLogger.error("Exception in BillingDetailsBaseDao in getAllBillDetailsByBillNo()" + e);
-			e.printStackTrace();
-		}
 
-		return retlist;
-	}*/
 	
 }

@@ -7,6 +7,15 @@ protected String quantity;
 protected String description;
 protected String updatedOn;
 protected String updatedBy;
+protected String productName;
+
+
+public String getProductName() {
+	return productName;
+}
+public void setProductName(String productName) {
+	this.productName = productName;
+}
 public String getDamageId() {
 	return damageId;
 }

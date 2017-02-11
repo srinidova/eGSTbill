@@ -9,7 +9,16 @@ public class StockBaseDetails {
 	protected String transactionDate;
 	protected String updatedBy;
 	protected String transactionType;
+	protected String productName;
 	
+	
+	
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public String getTransactionType() {
 		return transactionType;
 	}

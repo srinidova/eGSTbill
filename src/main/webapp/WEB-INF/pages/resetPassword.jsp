@@ -60,6 +60,9 @@
  	    $("#newPassword").css("border-color","red");
  	    $("#newPassword").attr("placeholder","Please enter newPassword");
  	    $('#newPassword').addClass('your-class');
+ 	   $("#unc").text('Please Enter Minimum 4 Charecters');
+	   		$("#unc").show();
+  	 	$("#unc").fadeOut(10000);
  	    setTimeout(function(){$('#newPassword').focus();},0);
  	    return false;
  	    }
@@ -98,9 +101,10 @@
  				   resJSON=JSON.parse(data);
  				   if(resJSON.status == "ERROR"){
  					  console.log(data);
- 		 			  	$("#unc").text('sucessfully Reset Your Password');
+ 		 			  	$("#unc").text('Sucessfully Reset Your Password. Login with New Password.');
  		       	   		$("#unc").show();
  		           	 	$("#unc").fadeOut(10000);
+ 		           	window.location.href = "loginHome";
  				   }else{
  					  	$("#unc").text('Please Enter Valid EmailId');
 		       	   		$("#unc").show();

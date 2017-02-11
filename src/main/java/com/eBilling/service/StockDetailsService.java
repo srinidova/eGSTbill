@@ -19,6 +19,10 @@ public interface StockDetailsService {
 
 	boolean addStockDetails(String sProductId, String sBilledQty, String sBillId, String sTransactionTpye);
 
+	List<StockDetails> getProductStockDetailsByProductId(String sProductId);
+
+	boolean addSaveStockDetails(String sBillId);
+
 
 
 	

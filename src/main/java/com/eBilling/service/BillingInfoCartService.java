@@ -27,4 +27,6 @@ public interface BillingInfoCartService {
 
 	List<BillingInfoCart> getAllBillInfoByBillNo(BillingInfoCart billingInfoCart);
 
+	String getUpdateId(String sTableName);
+
 }

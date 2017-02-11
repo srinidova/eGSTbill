@@ -104,7 +104,7 @@ public class DamageBaseDao {
 	public List<Damage> getAllDamage() {
 		List<Damage> lstDamage = null;
 		try {
-			String sql = "SELECT damageId, productId, quantity, description  from damage order by updatedBy desc";
+			String sql = "SELECT damageId,d.productId,p.productName,quantity, description  from damage d,product p where d.productId=p.productId";
 			//System.out.println("sql:::"+sql);
 			lstDamage = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Damage>(Damage.class));
 			//System.out.println("lstDamage:::"+lstDamage);

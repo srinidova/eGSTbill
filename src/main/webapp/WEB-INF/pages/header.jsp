@@ -39,5 +39,5 @@
                 </header>
                 <!-- END: HEADER --> 
                 <div id="page-title">
-                    <ul><li><h3>Home/Department</h3></li><li><marquee behavior="scroll" direction="left">Welcome to mySalesInfo...</marquee>
+                    <ul><li><h3><marquee behavior="scroll" direction="left">Welcome to Gowthami Handlooms...</marquee></h3></li><li>
                     </li></ul></div></div></div></body></html>

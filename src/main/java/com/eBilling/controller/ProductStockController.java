@@ -175,14 +175,14 @@ public class ProductStockController {
 		
 		
 		String sJson = "";
-		List<ProductStock> lstProductStock =null;
+		List<StockDetails> lstProductStockDetais =null;
 		try{
-			lstProductStock = productStockService.getAllProductStockByProductId(sProductId);
-			System.out.println("lstProductStock======" + lstProductStock.size());
+			lstProductStockDetais = stockDetailsService.getProductStockDetailsByProductId(sProductId);
+			System.out.println("lstProductStock======" + lstProductStockDetais.size());
 			
-			if (lstProductStock != null && lstProductStock.size() > 0) {
+			if (lstProductStockDetais != null && lstProductStockDetais.size() > 0) {
 				ObjectMapper objectMapper= new ObjectMapper();
-				sJson = objectMapper.writeValueAsString(lstProductStock);
+				sJson = objectMapper.writeValueAsString(lstProductStockDetais);
 			}
 		}catch(Exception e){
 			e.printStackTrace();

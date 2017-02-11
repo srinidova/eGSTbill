@@ -53,7 +53,7 @@ public class ProductStockBaseDao {
 			if (productStock.getUpdatedBy() == null) {
 				productStock.setUpdatedBy(CommonUtils.getDate());
 			}
-			String sql = "UPDATE productStock  set stock=?,oldStock=?,newStock=?,updateOn=?,updateBy=? where stockId = ? ";
+			String sql = "UPDATE productstock  set stock=?,oldStock=?,newStock=?,updateOn=?,updateBy=? where stockId = ? ";
 			System.out.println("sql==="+sql);
 			int update = jdbcTemplate.update(
 					sql,
@@ -105,7 +105,7 @@ public class ProductStockBaseDao {
 	public boolean deleteProductStock(String id) {
 		boolean isDelete = false;
 		try {
-			String sql = "DELETE FROM productStock WHERE stockId=?";
+			String sql = "DELETE FROM productstock WHERE stockId=?";
 			int delete = jdbcTemplate.update(sql, new Object[] { id });
 			System.out.println("delete row"+delete);
 			if (delete > 0) {
@@ -122,7 +122,7 @@ public class ProductStockBaseDao {
 	public List<ProductStock> getAllProductStock() {
 		List<ProductStock> retlist = null;
 		try {
-			String sql = "SELECT ps.productId,stock,oldStock,newStock,p.productName,stockId from productStock ps,product p where ps.productId=p.productId";
+			String sql = "SELECT ps.productId,stock,oldStock,newStock,p.productName,stockId from productstock ps,product p where ps.productId=p.productId";
 			retlist = jdbcTemplate.query(sql,ParameterizedBeanPropertyRowMapper.newInstance(ProductStock.class));
 			
 		} catch (Exception e) {
@@ -134,7 +134,7 @@ public class ProductStockBaseDao {
 	public List<ProductStock> getAllProductStockByProductId(String sProductId) {
 		List<ProductStock> retlist = null;
 		try {
-			String sql = "SELECT ps.productId,stock,oldStock,newStock,p.productName,stockId FROM productStock ps,product p  where ps.productId = p.productId and ps.productId =?";
+			String sql = "SELECT ps.productId,stock,oldStock,newStock,p.productName,stockId FROM productstock ps,product p  where ps.productId = p.productId and ps.productId =?";
 			System.out.println("query for getAllProductStockByProductId===="+sql);
 			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<ProductStock>(ProductStock.class));
 		} catch (Exception e) {

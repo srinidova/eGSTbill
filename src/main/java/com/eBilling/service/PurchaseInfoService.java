@@ -20,4 +20,6 @@ public interface PurchaseInfoService {
 	boolean savePurchaseInfo(PurchaserInfo purchaserInfo);
 
 	List<PurchaserInfo> getPurchaseByName(String sPurchaseName);
+
+	List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo);
 }

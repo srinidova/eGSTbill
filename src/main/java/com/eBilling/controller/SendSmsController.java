@@ -56,18 +56,25 @@ public class SendSmsController {
 	}
 
 	@RequestMapping(value = "/sendSms")
-	public @ResponseBody boolean sendSms(@ModelAttribute SendSms sendSms,@RequestParam("jsondata") JSONObject data, HttpSession objSession,
+	public @ResponseBody String sendSms(@ModelAttribute SendSms sendSms,@RequestParam("jsondata") JSONObject data, HttpSession objSession,
 			HttpServletRequest objRequest) {
 		boolean isInsert = false;
-		boolean sJson = false;
+		String sJson = "";
 		InputStream input = null;
 		SendSms Objsmsbean = null;
 		String sOtp = null;
 		try {
 			String sMessage=data.getString("message");
 			System.out.println("sMessage"+sMessage);
-			sJson=smsservice.smsToPurchase(sMessage);
-			System.out.println("sJson"+sJson);
+			isInsert=smsservice.smsToPurchase(sMessage);
+			System.out.println("sJson"+isInsert);
+			if(isInsert){
+				//JSONObject json=new JSONObject();
+				data.put("status", "ERRORMASSAGE");
+				data.put("message", "Send Sucessfully");
+				sJson = data.toString();
+				return sJson;
+			}
 		} catch (Exception e) {
 			 System.out.println("Exception in SendSmsController in  saveRegister()");
 		}

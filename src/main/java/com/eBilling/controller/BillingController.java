@@ -12,19 +12,18 @@ import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eBilling.baseDao.PurchaseInfoBaseDao;
 import com.eBilling.baseModel.BillingDetailsCart;
 import com.eBilling.baseModel.BillingInfo;
 import com.eBilling.baseModel.BillingInfoCart;
 import com.eBilling.baseModel.PurchaserInfo;
 import com.eBilling.dao.BillingDetailsDao;
 import com.eBilling.dao.BillingInfoDao;
-import com.eBilling.dao.ProductDao;
 import com.eBilling.model.BillingDetails;
 import com.eBilling.model.Product;
 import com.eBilling.model.ProductStock;
@@ -77,6 +76,8 @@ public class BillingController {
 		List<PurchaserInfo> listPurchaseInfoModel;
 		List<BillingInfoCart> listBillInfoCart = null;
 		String getAllProductStock=null;
+		List<PurchaserInfo> getAllPurchaser =null;
+		String sJsonPurchaser=null;
 		try {
 			JSONObject data= new JSONObject();
 			
@@ -85,6 +86,12 @@ public class BillingController {
 			System.out.println("First time caling");
 /*			sJson = objProductService.populateProducts();
 			objSession.setAttribute("allProducts", sJson);*/
+			getAllPurchaser = objInfoService.getAllPurchaseInfo();
+			objMapper = new ObjectMapper();
+			sJsonPurchaser = objMapper.writeValueAsString(getAllPurchaser);
+			objSession.setAttribute("getAllPurchaser", sJsonPurchaser);
+			
+			
 				sBillId = (String)objSession.getAttribute("sessionBillId");
 				System.out.println("First time caling sBillId==" + sBillId);
 				if(sBillId != null && sBillId.length() > 0){
@@ -162,6 +169,11 @@ public class BillingController {
 					if (StringUtils.isEmpty(sBillId)) {
 						sBillId = CommonUtils.getAutoGenId();
 						billingInfoCart.setBillId(sBillId);
+						String sBillNo = objBillingInfoCartService.getUpdateId("billInfoCart");
+						System.out.println("sBillNo==="+sBillNo);
+						if (StringUtils.isNotEmpty(sBillId)) {
+							billingInfoCart.setBillNo(sBillNo);
+						}
 						objBillingInfoCartService.saveBillInfoCart(billingInfoCart);
 					}
 				}else{
@@ -212,7 +224,10 @@ public class BillingController {
 				listPurchaseInfoModel = objInfoService.getAllPurchaseInfo();
 				System.out.println("listPurchaseInfoModel=="+listPurchaseInfoModel.size());
 				 billingInfoCart.setListPurchase(listPurchaseInfoModel);
-				
+				 
+				 isUpdate=objBillingInfoCartService.updateBillInfoCart(billingInfoCart);
+					System.out.println("isUpdate"+isUpdate);
+					
 				objJSON = new JSONObject();
 				objJSON.append("objBillingInfoCart", billingInfoCart);
 				List<BillingInfoCart> listBillInfoCart = new ArrayList<BillingInfoCart>();
@@ -222,18 +237,6 @@ public class BillingController {
 					sJson = objMapper.writeValueAsString(listBillInfoCart);
 				}
 				
-				isUpdate=objBillingInfoCartService.updateBillInfoCart(billingInfoCart);
-				System.out.println("isUpdate"+isUpdate);
-				
-				
-			/*}else {
-				JSONObject json = new JSONObject();
-				json.put("status", "ERROR");
-				json.put("message", "Product Stock is Low");
-				sJson = json.toString();
-				
-				
-			}*/
 		} catch (Exception e) {
 			System.out.println("Exception in Product Controller in  saveBillProduct()");
 		}
@@ -242,7 +245,7 @@ public class BillingController {
 	@RequestMapping(value = "/genarateBill")
 	public @ResponseBody
 	String genarateBill(
-			@ModelAttribute BillingInfo billingInfo, HttpSession objSession,HttpServletResponse objResponce,
+			@ModelAttribute BillingInfo billingInfo, HttpSession objSession,HttpServletResponse objResponce,Model model,
 			@RequestParam("jsondata") JSONObject data,
 			HttpServletRequest objRequest) {
 		List<BillingDetailsCart> listBillingDetails = null;
@@ -259,6 +262,7 @@ public class BillingController {
 		 ProductStock existProductStock=null;
 		 StockDetails stockDetails =null;
 		 PurchaserInfo purchaserInfo =null;
+		 List<PurchaserInfo> lstPurchaseName = null;
 		try {
 			System.out.println("productStock::::::"+sProductId);
 			sBillId = data.getString("billId");
@@ -266,6 +270,13 @@ public class BillingController {
 			//listBillingDetails = new List<BillingDetailsCart>();
 			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			billingInfo.setBillId(sBillId);
+			
+			String sName=data.getString("name");
+			if(sName !=null && sName !=""){
+				billingInfo.setName(sName);
+			}else{
+				billingInfo.setName(data.getString("purchaserName"));
+			}
 			
 			billingInfo.setBillNo(data.getString("billNo"));
 			billingInfo.setBillDate(CommonUtils.getDate());
@@ -278,7 +289,6 @@ public class BillingController {
 			billingInfo.setNoOfPacks(data.getString("noOfPacks"));
 			billingInfo.setTermOfPayment(data.getString("termOfPayment"));
 			billingInfo.setTerms(data.getString("terms"));
-			billingInfo.setName(data.getString("name"));
 			billingInfo.setPhone(data.getString("phone"));
 			billingInfo.setAddress(data.getString("address"));
 			billingInfo.setTinNo(data.getString("tinNo"));
@@ -295,17 +305,30 @@ public class BillingController {
 			
 			 String sPurchaserName=data.getString("purchaserName");
 			if(sPurchaserName!=""){
-				purchaserInfo =new PurchaserInfo();
-				purchaserInfo.setName(sPurchaserName);
-				purchaserInfo.setAddress(data.getString("address"));
-				//purchaserInfo.seteMail(data.getString(""));
-				purchaserInfo.setMobileNo(data.getString("phone"));
-				purchaserInfo.setUpdatedBy(CommonUtils.getDate());
-				purchaserInfo.setUpdatedDate(CommonUtils.getDate());
-				purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
+				String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
+				lstPurchaseName = objInfoService.checkEmailAndMobileNo(emailOrMobileNO);
 				
-				
-				objInfoService.savePurchaseInfo(purchaserInfo);
+				if(lstPurchaseName == null || lstPurchaseName.size() == 0){
+					purchaserInfo =new PurchaserInfo();
+					purchaserInfo.setName(sPurchaserName);
+					purchaserInfo.setAddress(data.getString("address"));
+					purchaserInfo.seteMail(data.getString("eMail"));
+					purchaserInfo.setMobileNo(data.getString("phone"));
+					purchaserInfo.setMobileNo(data.getString("tinNo"));
+					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
+					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
+					purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
+					
+					
+					objInfoService.savePurchaseInfo(purchaserInfo);
+				}else {
+
+					//JSONObject json = new JSONObject();
+					data.put("status", "ERROR");
+					data.put("message", "Purchaser Email And mobile Already Exist");
+					sJson = data.toString();
+					return sJson;
+				}
 			}
 			
 			
@@ -353,6 +376,8 @@ public class BillingController {
 				objBillingDetatilsCartService.deleteBillDetailsCart(sBillId);
 				 String newJson = billInfoController.billInfoHome( objResponce,sBillId, objSession,  objRequest);
 				 objSession.setAttribute("updateCart", "");
+				 objSession.setAttribute("sessionBillId","");
+				 
 					
 		  	 }
 		  	 
@@ -382,6 +407,7 @@ public class BillingController {
 		 StockDetails stockDetails =null;
 		 List<ProductStock> lstProductstock =null;
 		 PurchaserInfo purchaserInfo =null;
+		 List<PurchaserInfo> lstPurchaseName = null;
 		try {
 			
 			sBillNo= data.getString("billNo");
@@ -393,6 +419,13 @@ public class BillingController {
 			//listBillingDetails = new List<BillingDetailsCart>();
 			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			billingInfoCart.setBillId(sBillId);
+			
+			String sName=data.getString("name");
+			if(sName !=null && sName !=""){
+				billingInfo.setName(sName);
+			}else{
+				billingInfo.setName(data.getString("purchaserName"));
+			}
 			
 			billingInfoCart.setBillNo(sBillNo);
 			billingInfoCart.setBillDate(CommonUtils.getDate());
@@ -422,24 +455,37 @@ public class BillingController {
 			
 			 String sPurchaserName=data.getString("purchaserName");
 				if(sPurchaserName!=""){
-					purchaserInfo =new PurchaserInfo();
-					purchaserInfo.setName(sPurchaserName);
-					purchaserInfo.setAddress(data.getString("address"));
-					//purchaserInfo.seteMail(data.getString("Email"));
-					purchaserInfo.setMobileNo(data.getString("phone"));
-					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
-					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
-					purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
 					
+					String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
+					lstPurchaseName = objInfoService.checkEmailAndMobileNo(emailOrMobileNO);
+					if(lstPurchaseName == null || lstPurchaseName.size() == 0){
+						purchaserInfo =new PurchaserInfo();
+						purchaserInfo.setName(sPurchaserName);
+						purchaserInfo.setAddress(data.getString("address"));
+						purchaserInfo.seteMail(data.getString("eMail"));
+						purchaserInfo.setMobileNo(data.getString("phone"));
+						purchaserInfo.setMobileNo(data.getString("tinNo"));
+						purchaserInfo.setUpdatedBy(CommonUtils.getDate());
+						purchaserInfo.setUpdatedDate(CommonUtils.getDate());
+						purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
+						
+						
+						objInfoService.savePurchaseInfo(purchaserInfo);
+					}else {
+
+						//JSONObject json = new JSONObject();
+						data.put("status", "ERROR");
+						data.put("message", "Purchaser Email And mobile Already Exist");
+						sJson = data.toString();
+					}
 					
-					objInfoService.savePurchaseInfo(purchaserInfo);
 				}
 				
 			//updatedproductStock
-			productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
+			//productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
 			
 			//update stockDetails
-			//stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
+			stockDetailsService.addSaveStockDetails(sBillId);
 			
 				if(isSave){
 					 objSession.setAttribute("sessionBillId","");

@@ -136,14 +136,17 @@
 						<div class="block-searchbill-input last">
 							<label>Email</label>
 							<input type="text" name="email" id="email" onkeyup="removeError(this.id);">
+							<input type="hidden" id="regType" name="regType"  value="User">
+							<input type="hidden" id="regId">
 						</div>
 					</div>
-					<div class="block-searchbill">
+					<!-- <div class="block-searchbill">
 					<div class="block-searchbill-input">
 							<label>Register Type</label>
+							<input>
 							<select id="regType" name="regType"    tabindex=""  />
-                                                            <option value="Admin">Admin</option>
 															<option value="User">User</option>
+                                                            <option value="Admin">Admin</option>
 															<option value="Vendor">Vendor</option>
                                                         </select> 
 						</div>
@@ -156,7 +159,7 @@
 							<label>Confirm Password</label>
 							<input type="password" name="cPassword" id="cPassword" onkeyup="removeError(this.id);">
 						</div>
-						</div>
+						</div> -->
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
 						<aside class="block-footer-right">

@@ -13,9 +13,9 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+var billInfo = '${sessionScope.printBillVal}';
+var unBill = '${sessionScope.printUnBillVal}';
 $(document).ready(function() {
-	var billInfo = '${sessionScope.printBillVal}';
-	var unBill = '${sessionScope.printUnBillVal}';
 	console.log("unbill: "+ unBill);
 	console.log("billInfo: "+ billInfo);
 	if(billInfo != ""){
@@ -203,6 +203,13 @@ function printBill(){
 
 
 }
+function dataCancel() {
+	if(billInfo != ""){
+		window.location.href="/eBilling/searchBill";
+	}else{
+		window.location.href="/eBilling/unBillCart";
+	}
+}
 
 </script>
 		<section id="printSec" class="container">
@@ -386,11 +393,11 @@ function printBill(){
                 	</div>
 						
 				</div>
-				<div class="block-footer" id="print" onclick="printBill();">
+				<div class="block-footer" >
 					<aside class="block-footer-left"><exptotal></exptotal></aside>
 					<aside class="block-footer-right">				
-					<input class="btn-cancel" name="" value="Cancel" type="button">
-						<input class="btn-save" name="" value="Print" type="button">
+					<input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataCancel();">
+						<input class="btn-save" name="" value="Print" type="button" id="print" onclick="printBill();">
 					</aside>
 				</div>
 			</div>

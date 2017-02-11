@@ -2,6 +2,7 @@ package com.eBilling.baseDao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +17,7 @@ public class PurchaseInfoBaseDao {
 	@Autowired
 	public JdbcTemplate jdbcTemplate;
 
-	public final String INSERT_SQL = "INSERT INTO purchaseinfo( name,mobileNo,address,eMail,updatedBy,updatedDate,purchaseId) values (?, ?,?, ?,?,?,?)";
+	public final String INSERT_SQL = "INSERT INTO purchaseinfo( name,mobileNo,address,eMail,updatedBy,updatedDate,purchaseId,tinNo) values (?, ?,?, ?,?,?,?,?)";
 
 	@Transactional
 	public boolean savePurchaseInfo(final PurchaserInfo purchaseInfo) {
@@ -28,7 +29,7 @@ public class PurchaseInfoBaseDao {
 			int insert = jdbcTemplate.update(
 				INSERT_SQL,
 				new Object[] {  purchaseInfo.getName(),
-						purchaseInfo.getMobileNo(),purchaseInfo.getAddress(),purchaseInfo.geteMail(),purchaseInfo.getUpdatedBy(),purchaseInfo.getUpdatedDate(),purchaseInfo.getPurchaseId()});
+						purchaseInfo.getMobileNo(),purchaseInfo.getAddress(),purchaseInfo.geteMail(),purchaseInfo.getUpdatedBy(),purchaseInfo.getUpdatedDate(),purchaseInfo.getPurchaseId(),purchaseInfo.getTinNo()});
 		if (insert > 0) {
 			isSave = true;
 		}
@@ -44,13 +45,13 @@ public class PurchaseInfoBaseDao {
 			if (purchaseInfo.getUpdatedDate() == null) {
 				purchaseInfo.setUpdatedDate(CommonUtils.getDate());
 			}
-			String sql = "UPDATE purchaseinfo  set name = ?, mobileNo = ?, address= ?, eMail=?,updatedBy = ?,updatedDate =?  where purchaseId =? ";
+			String sql = "UPDATE purchaseinfo  set name = ?, mobileNo = ?, address= ?, eMail=?,updatedBy = ?,updatedDate =?,tinNo=?  where purchaseId =? ";
 
 			int update = jdbcTemplate.update(
 					sql,
 					new Object[] { 
 							 purchaseInfo.getName(),
-						purchaseInfo.getMobileNo(),purchaseInfo.getAddress(),purchaseInfo.geteMail(),purchaseInfo.getUpdatedBy(),purchaseInfo.getUpdatedDate(),purchaseInfo.getPurchaseId()
+						purchaseInfo.getMobileNo(),purchaseInfo.getAddress(),purchaseInfo.geteMail(),purchaseInfo.getUpdatedBy(),purchaseInfo.getUpdatedDate(),purchaseInfo.getPurchaseId(),purchaseInfo.getTinNo()
 							 });
 			System.out.println(sql);
 			if (update > 0) {
@@ -121,6 +122,21 @@ public class PurchaseInfoBaseDao {
 		System.out.println("getProduct=="+lstPurchaseInfoModel.size());
 
 		return lstPurchaseInfoModel;
+	}
+	
+	public List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo) {
+		List<PurchaserInfo> retlist = null;
+		try {
+			String sql = "SELECT * from purchaseinfo where eMail = ? and mobileNo";
+			System.out.println("query----"+sql);
+			retlist = jdbcTemplate.query(sql, new Object[] {StringUtils.trim(sEmailOrMobileNo)},new BeanPropertyRowMapper<PurchaserInfo>(PurchaserInfo.class));
+			
+			System.out.println("retlist----"+retlist.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return retlist;
 	}
 	
 }

@@ -8,6 +8,14 @@ public class PurchaserInfo {
 	protected String updatedBy;
 	protected String updatedDate;
 	protected String purchaseId;
+	protected String tinNo;
+	
+	public String getTinNo() {
+		return tinNo;
+	}
+	public void setTinNo(String tinNo) {
+		this.tinNo = tinNo;
+	}
 	public String getPurchaseId() {
 		return purchaseId;
 	}
