@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.eBilling.baseDao.PurchaseInfoBaseDao;
 import com.eBilling.baseModel.PurchaserInfo;
+import com.eBilling.model.Register;
 import com.eBilling.util.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -86,12 +87,12 @@ public class PurchaseInfoServiceImpl implements PurchaseInfoService{
 		return getByName;
 	}
 	@Override
-	public List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo) {
+	public List<PurchaserInfo> checkEmailAndMobileNo(String sEmail, String sMobileNo) {
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		List<PurchaserInfo> lstRegister = null;
 		try {
-			lstRegister = purchaseInfoBaseDao.checkEmailAndMobileNo(sEmailOrMobileNo);
+			lstRegister = purchaseInfoBaseDao.checkEmailAndMobileNo(sEmail,sMobileNo);
 		} catch (Exception e) {
 			logger.info("Exception in getAllBillInfoByBillNo()" + e);
 			System.out.println("Exception in getAllBillInfoByBillNo()"+e);
@@ -107,8 +108,10 @@ public class PurchaseInfoServiceImpl implements PurchaseInfoService{
 			 String sPurchaserName=data.getString("purchaserName");
 			 System.out.println("sName==="+sPurchaserName);
 			if(sPurchaserName != ""){
-				String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
-				lstPurchaseName = checkEmailAndMobileNo(emailOrMobileNO);
+				//String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
+				String sEmail = data.getString("eMail");
+				String sMobileNo= data.getString("phone");
+				lstPurchaseName = checkEmailAndMobileNo( sEmail,sMobileNo);
 				
 				if(lstPurchaseName == null || lstPurchaseName.size() == 0){
 					purchaserInfo =new PurchaserInfo();
@@ -133,6 +136,7 @@ public class PurchaseInfoServiceImpl implements PurchaseInfoService{
 			
 		}
 		return isSave;
-}
+}	
+	
 	
 }

@@ -48,6 +48,7 @@ public class PurchaseInfoController {
 				purchaseLst = objMapper.writeValueAsString(sJson);
 				objSession.setAttribute("allPurchaseInfo", purchaseLst);
 				System.out.println("From Prodcut Home=="+purchaseLst);
+				objSession.setAttribute("tabActive", "purchaser");
 			}
 			
 		} catch (Exception e) {
@@ -67,8 +68,11 @@ public class PurchaseInfoController {
 		String purchaseLst = null;
 		List<PurchaserInfo> lstPurchaseName = null;
 		try {		
-					
+			String sEmail = purchaserInfo.geteMail();
+			String sMobileNo= purchaserInfo.getMobileNo();
+			lstPurchaseName =purchaseInfoService.checkEmailAndMobileNo(sEmail,sMobileNo);
 					String sPurchaseName = purchaserInfo.getName();
+					if(lstPurchaseName.size()==0){
 					 lstPurchaseName = purchaseInfoService.getPurchaseByName(sPurchaseName);
 					System.out.println("saveLstPurchaseName==="+lstPurchaseName+"sPurchaseName=="+sPurchaseName);
 					if(lstPurchaseName == null || lstPurchaseName.size() == 0){
@@ -87,8 +91,14 @@ public class PurchaseInfoController {
 					} else {
 
 						JSONObject json = new JSONObject();
-						json.put("status", "ERROR");
+						json.put("status", "ERRORS");
 						json.put("message", "Product Already Exist");
+						purchaseLst = json.toString();
+					}
+					}else{
+						JSONObject json = new JSONObject();
+						json.put("status", "ERROR");
+						json.put("message", "Same email and mobileNo already exist.");
 						purchaseLst = json.toString();
 					}
 				//System.out.println("sJson"+sJson);
@@ -142,7 +152,7 @@ public class PurchaseInfoController {
 				purchaserInfo.setMobileNo(data.getString("mobileNo"));
 				purchaserInfo.setAddress(data.getString("address"));
 				purchaserInfo.seteMail(data.getString("eMail"));
-				purchaserInfo.seteMail(data.getString("tinNo"));
+				purchaserInfo.setTinNo(data.getString("tinNo"));
 					isUpdate = purchaseInfoService.updatePurchaseInfo(purchaserInfo);
 				if (isUpdate) {
 					sJson = purchaseInfoService.getAllPurchaseInfo();

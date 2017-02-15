@@ -60,9 +60,9 @@
  	    $("#newPassword").css("border-color","red");
  	    $("#newPassword").attr("placeholder","Please enter newPassword");
  	    $('#newPassword').addClass('your-class');
- 	   $("#unc").text('Please Enter Minimum 4 Charecters');
+ 	   $("#unc").text('Please Enter Minimum 6 Charecters');
 	   		$("#unc").show();
-  	 	$("#unc").fadeOut(10000);
+  	 	$("#unc").fadeOut(25000);
  	    setTimeout(function(){$('#newPassword').focus();},0);
  	    return false;
  	    }
@@ -85,7 +85,7 @@
  		 }else if ($('#newPassword').val() != $('#confirmPassword').val()) {
  			     $('#unc').show();
  			     $('#unc').text("Passwords do not match.");
- 			     $("#unc").fadeOut(10000);
+ 			     $("#unc").fadeOut(25000);
  	          return false;
  	 } 
  	$.ajax({   

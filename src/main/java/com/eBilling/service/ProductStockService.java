@@ -35,11 +35,14 @@ public interface ProductStockService {
 
 	Boolean checkStock(String sProductId, String sBilledQty);
 
-	boolean deductStock(String sProductId, String sBilledQty, String sBillId);
 
 	boolean addStock(ProductStock productStock);
 
 	boolean updateProductStock(String sProductId, String sBilledQty);
+
+	boolean deductStock(String sProductId, String sBilledQty);
+
+	boolean deductProductStock(String sProductId, String sBilledQty);
 
 	//boolean updateStock(ProductStock productStock);
 

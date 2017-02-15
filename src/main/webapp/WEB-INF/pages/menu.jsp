@@ -1,8 +1,18 @@
 
 <%@page import="com.eBilling.model.Register"%>
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<style>
+.highlight {background-color: #F00; color: #FFF;}
+.highlight a {color: #FFF;}
+#thenavigation li {display: inline; padding: 0 10px;}
+#thenavigation li a {text-decoration: none;}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
+	var tabAct = '${tabActive}';
+	$("#menuDiv a" ).removeClass('active');
+	$("#menuDiv a#"+tabAct ).addClass('active');
+	
 $("#logout").click(function(){
 	  $.ajax({ 
 	    	type : "GET",
@@ -37,18 +47,18 @@ $("#logout").click(function(){
 
         <% } else {
          %>
-         <li> <a href="productHome">Product</a> </li>
-         <li> <a href="stockHome">Stock</a> </li>
-         <li> <a href="purchaseInfoHome">Purchaser</a> </li>
-		<li> <a href="newBill">New Bill</a> </li>
-		<li> <a href="searchBill">BillSearch</a> </li>
+         <li> <a href="productHome" id="product">Product</a> </li>
+         <li> <a href="stockHome" id="stocks">Stock</a> </li>
+         <li> <a href="purchaseInfoHome" id="purchaser">Purchaser</a> </li>
+		<li> <a href="newBill" id="newBill">New Bill</a> </li>
+		<li> <a href="searchBill" id="searchBill">BillSearch</a> </li>
 		<!-- <li> <a href="billInfoHome">Bill Info</a> </li> -->
-		<li> <a href="unBillCart">UnBill</a> </li>
+		<li> <a href="unBillCart" id="unBill">UnBill</a> </li>
 		<!-- <li> <a href="clientHome">ClientInfo</a> </li> -->
-		<li> <a href="damageHome">Damage</a> </li>
-		<li> <a href="uploadHome">Upload</a> </li>
-		<li> <a href="allUsers">Users</a> </li>
-		<li> <a href="sendSmsHome">Send Sms</a> </li>
+		<li> <a href="damageHome" id="damage">Damage</a> </li>
+		<li> <a href="uploadHome" id="upload">Upload</a> </li>
+		<li> <a href="allUsers" id="allUser">Users</a> </li>
+		<li> <a href="sendSmsHome" id="sendSms">Send Sms</a> </li>
 		<!-- <li> <a href="statusHome">Status</a> </li> -->
 		
         <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout" style="margin-left: 73px;">Logout</a></li>

@@ -156,17 +156,23 @@ function savePurchageInfo(){
              success: function (response) {
             	 resJSON = JSON.parse(response);
                  if(resJSON != null ){
-
+                	 
                      if(resJSON.status == "ERROR"){
-                   	  $("#unc").text('Name already exists. Please choose other Name');
+                   	  $("#unc").text('Email and mobileNo already exist.');
                    	  $("#productName").val("");
                    	  $("#unc").show();
-                         $("#unc").fadeOut(5000);
-                     }else{
+                         $("#unc").fadeOut(25000);
+                     }else if(resJSON.status == "ERRORS"){
+                      	  $("#unc").text('Name already exists. Please choose other Name');
+                       	  $("#productName").val("");
+                       	  $("#unc").show();
+                             $("#unc").fadeOut(25000);
+                         }
+                     else{
                     	 showPurchaseData(resJSON);
                    	 $("#unc").text('Save Sucessfully');
                   	  	 $("#unc").show();
-                        $("#unc").fadeOut(5000);
+                        $("#unc").fadeOut(25000);
                         $('#name').val("");
                         $('#mobileNo').val("");
                         $('#address').val("");

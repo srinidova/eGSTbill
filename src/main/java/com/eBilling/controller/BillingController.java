@@ -99,7 +99,7 @@ public class BillingController {
 					data.put("productId", "");
 					 sJson =saveBillProduct(data, objSession);
 					 objSession.setAttribute("updateCart", sJson);
-					
+					 
 					//saveBillProduct(data, objSession);
 					
 				}
@@ -114,7 +114,7 @@ public class BillingController {
 				billingInfoCart = new BillingInfoCart();
 			}
 			
-			
+			objSession.setAttribute("tabActive", "newBill");
 		} catch (Exception e) {
 			System.out.println("Exception in BillingController in getBillingDetails()"+ e);
 		} finally {
@@ -367,7 +367,7 @@ public class BillingController {
 					
 					 objBillingDetatilsService.saveBillDetails(billingDetails);
 					 
-					 productStockService.deductStock(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(), sBillId);
+					 productStockService.deductStock(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity());
 					 stockDetailsService.addStockDetails(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(), sBillId, "Sale");
 				}
 				//updatedproductStock
@@ -680,4 +680,14 @@ public class BillingController {
 
 	}
 	
+	@RequestMapping(value = "/cancelBill")
+	public @ResponseBody String cancelBill(@RequestParam("sBillId") String sBillId,HttpSession objSession) {
+		boolean isDelete = false;
+		String sJson = "";
+		System.out.println("datadatadatadata"+sBillId);
+		objBillingDetatilsCartService.deleteBillDetailsCart(sBillId);
+		objBillingInfoCartService.deleteBillInfoCart(sBillId);
+		objSession.setAttribute("sessionBillId","");
+		return sJson;
+	}
 }

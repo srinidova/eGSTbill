@@ -73,8 +73,9 @@ public class RegistraionController {
 		List<Register> lstRegister = null;
 		try {
 
-			String emailOrMobileNO = register.getEmail() + "" + register.getMobileNo();
-			lstRegister = objRegistrationService.checkEmailAndMobileNo(emailOrMobileNO);
+			String sEmail = register.getEmail();
+			String sMobileNo= register.getMobileNo();
+			lstRegister = objRegistrationService.checkEmailAndMobileNo(sEmail,sMobileNo);
 
 			Properties prop = new Properties();
 			String propertiespath = objContext.getRealPath("Resources" + File.separator + "DataBase.properties");
@@ -120,6 +121,11 @@ public class RegistraionController {
 					sJson = objRegistrationService.getAllRegister();
 
 				}
+			}else{
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", "Email and Password Already Exist");
+				sJson = json.toString();
 			}
 		} catch (Exception e) {
 			System.out.println("Exception in RegistraionController in  saveRegister()");
@@ -231,5 +237,67 @@ public class RegistraionController {
 			ex.printStackTrace();
 		}
 		return sJson;
+	}
+	@RequestMapping(value = "/forgetPasswordHome")
+	public String forgetPasswordHome(@ModelAttribute Register register, HttpServletResponse objResponce, HttpSession objSession,
+			HttpServletRequest objRequest) {
+
+		objResponce.setCharacterEncoding("UTF-8");
+		String sJson = null;
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return "forgetPasswordHome";
+	}
+	@RequestMapping(value = "/forgetPassword")
+	public String forgetPassword(@RequestParam("jsondata") JSONObject data, HttpServletResponse objResponce, HttpSession objSession,
+			HttpServletRequest objRequest) {
+
+		objResponce.setCharacterEncoding("UTF-8");
+		String sJson = null;
+		List<Register> lstRegister = null;
+		Register register =null;
+		InputStream input = null;
+		try {
+			Properties prop = new Properties();
+			String propertiespath = objContext.getRealPath("Resources" + File.separator + "DataBase.properties");
+			input = new FileInputStream(propertiespath);
+			// load a properties file
+			prop.load(input);
+			String sendMail = prop.getProperty("sendMail");
+			String sendSms = prop.getProperty("sendSms");
+			
+			String sEmail= data.getString("forgetEmail");
+			String sMobileNo = data.getString("forgetMobileNo");
+			lstRegister = objRegistrationService.checkEmailAndMobileNo(sEmail,sMobileNo);
+			
+			
+			if(lstRegister.size() > 0 && lstRegister != null){
+				for(int i=0; i<lstRegister.size();i++){
+					register =lstRegister.get(i);
+				}
+				if (sendMail.equals("yes")) {
+					EmailUtil.sendForgetEmail(register, objContext);
+				}
+				
+			}else{
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", "Please enter correct email and password");
+				sJson = json.toString();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return "sJson";
 	}
 }

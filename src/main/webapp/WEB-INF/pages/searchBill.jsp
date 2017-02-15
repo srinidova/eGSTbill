@@ -140,7 +140,7 @@ $(function() {
                 </div>
             </div>
             <div class="block-footer">
-                <aside class="block-footer-left sucessfully" id="unc" style="diplay:none">Sucessfully Message</aside>
+               <!--  <aside class="block-footer-left sucessfully" id="unc" style="diplay:none">Sucessfully Message</aside> -->
                 <aside class="block-footer-right">
                     <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
                     <input class="btn-save" name="" value="search" id="search" type="button">

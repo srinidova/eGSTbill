@@ -374,7 +374,7 @@ function infoDataClear(){
            	 if(response != 0){
            		     $("#unc").text("Deleted Sucessfully");
            		   $("#unc").show();
-                      $("#unc").fadeOut(5000); 
+                      $("#unc").fadeOut(15000); 
                       showBillDetailsData(response);
                       $('#totalAmount').val("");
                  	 $('#totalMrp').val("");
@@ -415,13 +415,13 @@ function infoDataClear(){
 	 	                	  $("#unc").text('Product Stock is Low '+stock);
 	 	                	  $("#productName").val("");
 	 	                	  $("#unc").show();
-	 	                      $("#unc").fadeOut(5000);
+	 	                      $("#unc").fadeOut(15000);
 	 	                  }else{
 	 	                	  
 	 	                	 showBillDetailsData(response);
 	                	  $("#unc").text("Save Sucessfully");
 	            		   $("#unc").show();
-	                       $("#unc").fadeOut(5000);
+	                       $("#unc").fadeOut(15000);
 	                       $("#productId").val("");
 		  					$("#quantity").val("");
 		  					$("#rate").val("");
@@ -464,18 +464,24 @@ function newBill() {
 	data["billId"] = $("#billId").val();
 	data["billDetailsId"] = $("#billDetailsId").val();
     
-     if($('#rate').val().length == 0 ) {
+	if(!$('#rate').val().match(/^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/) ) {
 	    $('#rate').css('color','red');
 	    $("#rate").css("border-color","red");
 	    $("#rate").attr("placeholder","Please enter rate");
 	    $('#rate').addClass('your-class');
+	    $("#unc").text("Please enter numbers only.");
+		   $("#unc").show();
+        $("#unc").fadeOut(15000);
 	    return false;
 	    }
-    else if($('#quantity').val().length == 0 ) {
+    else if(!$('#quantity').val().match(/^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/) ) {
 	    $('#quantity').css('color','red');
 	    $("#quantity").css("border-color","red");
 	    $("#quantity").attr("placeholder","Please enter quantity");
 	    $('#quantity').addClass('your-class');
+	    $("#unc").text("Please enter numbers only.");
+		   $("#unc").show();
+     $("#unc").fadeOut(15000);
 	    return false;
 	    }
     else if($("#billDetailsId").val() != ""){
@@ -488,10 +494,6 @@ function newBill() {
 	
 
 }
-		
-
-
-	
 function updateBillProduct(){
 	$.ajax({
              type: "POST",
@@ -515,13 +517,13 @@ function updateBillProduct(){
  	                	  $("#unc").text('Product Stock is Low '+stock);
  	                	  $("#productName").val("");
  	                	  $("#unc").show();
- 	                      $("#unc").fadeOut(5000);
+ 	                      $("#unc").fadeOut(15000);
  	                  }else{
  	                	  
  	                	 showBillDetailsData(response);
                 	  $("#unc").text("update Sucessfully");
             		   $("#unc").show();
-                       $("#unc").fadeOut(5000);
+                       $("#unc").fadeOut(15000);
                        $("#productId").val("");
 	  					$("#quantity").val("");
 	  					$("#rate").val("");
@@ -592,6 +594,27 @@ function updateBillInfoCart(id){
 	    $("#phone").css("border-color","red");
 	    $("#phone").attr("placeholder","Please enter phone");
 	    $('#phone').addClass('your-class');
+	    return false;
+	    }
+    else if($('#tinNo').val().length == 0 ) {
+	    $('#tinNo').css('color','red');
+	    $("#tinNo").css("border-color","red");
+	    $("#tinNo").attr("placeholder","Please enter tinNo");
+	    $('#tinNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#address').val().length == 0 ) {
+	    $('#address').css('color','red');
+	    $("#address").css("border-color","red");
+	    $("#address").attr("placeholder","Please enter address");
+	    $('#address').addClass('your-class');
+	    return false;
+	    }
+    else if($('#eMail').val().length == 0 ) {
+	    $('#eMail').css('color','red');
+	    $("#eMail").css("border-color","red");
+	    $("#eMail").attr("placeholder","Please enter email");
+	    $('#eMail').addClass('your-class');
 	    return false;
 	    }
     /*else if($('#orderNo').val().length == 0 ) {
@@ -812,6 +835,48 @@ function saveInfoCart(){
 	    $('#billNo').addClass('your-class');
 	    return false;
 	    }
+	else if($('#payment').val().length == 0 ) {
+	    $('#payment').css('color','red');
+	    $("#payment").css("border-color","red");
+	    $("#payment").attr("placeholder","Please enter payment");
+	    $('#payment').addClass('your-class');
+	    return false;
+	    }
+    else if($('#totalAmount').val().length == 0 ) {
+	    $('#totalAmount').css('color','red');
+	    $("#totalAmount").css("border-color","red");
+	    $("#totalAmount").attr("placeholder","Please enter totalAmount");
+	    $('#totalAmount').addClass('your-class');
+	    return false;
+	    }
+    else if($('#phone').val().length == 0 ) {
+	    $('#phone').css('color','red');
+	    $("#phone").css("border-color","red");
+	    $("#phone").attr("placeholder","Please enter phone");
+	    $('#phone').addClass('your-class');
+	    return false;
+	    }
+    else if($('#tinNo').val().length == 0 ) {
+	    $('#tinNo').css('color','red');
+	    $("#tinNo").css("border-color","red");
+	    $("#tinNo").attr("placeholder","Please enter tinNo");
+	    $('#tinNo').addClass('your-class');
+	    return false;
+	    }
+    else if($('#address').val().length == 0 ) {
+	    $('#address').css('color','red');
+	    $("#address").css("border-color","red");
+	    $("#address").attr("placeholder","Please enter address");
+	    $('#address').addClass('your-class');
+	    return false;
+	    }
+    else if($('#eMail').val().length == 0 ) {
+	    $('#eMail').css('color','red');
+	    $("#eMail").css("border-color","red");
+	    $("#eMail").attr("placeholder","Please enter email");
+	    $('#eMail').addClass('your-class');
+	    return false;
+	    }
     
    /* else if($('#orderNo').val().length == 0 ) {
 	    $('#orderNo').css('color','red');
@@ -977,4 +1042,84 @@ function saveInfoCart(){
              
              
 	}); 
+}
+function cancelBill(id) {
+	var sBillId =$("#billId").val();
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "cancelBill.htm",
+        data: "sBillId= "+sBillId,
+        success: function (response) {
+        	 $("#userData").html("");
+       	  $('#totalMrpDisp').text("");
+         	$('#totalQuantityDisp').text("");
+         	$('#totalRateDisp').text("");
+         	$('#totalAmountDisp').text("");
+         	$('#totalAmount').val("");
+       	 $('#totalMrp').val("");
+   		 $('#totalQuantity').val("");
+   		 $('#totalRate').val("");
+   		 
+   		 $('#billId').val("");
+   		 $('#name').val("");
+   		 $('#discount').val("");
+   		 $('#phone').val("");
+   		 $('#address').val("");
+   		 $('#lrNo').val("");
+   		 $('#lrDate').val("");
+   		 $('#orderNo').val("");
+   		 $('#orderDate').val("");
+   		 $('#dispatchedBy').val("");
+   		 $('#dispatchedDate').val("");
+   		 $('#noOfPacks').val("");
+   		 $('#termOfPayment').val("");
+   		 $('#terms').val("");
+   		 $('#lrDate').val();
+   		 $('#billNo').val("");
+   		 $('#packSlipNo').val("");
+   		 $('#orderBy').val("");
+   		 $('#tinNo').val("");
+        },
+        error: function (e) { 
+            $("#btn-save").prop("disabled", false);
+        }
+
+}); 
+}
+
+
+function onkeyRate(id) {
+	if(!$('#rate').val().match(/^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/) ) {
+	    $("#unc").text("Please enter numbers only.");
+		   $("#unc").show();
+        $("#unc").fadeOut(15000);
+	    return false;
+	    }
+	
+}
+function onkeyQuantity(id) {
+	/*if(!$('#quantity').val().match(/^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/) ) {
+	    
+	    $("#unc").text("Please enter numbers only.");
+		   $("#unc").show();
+     $("#unc").fadeOut(15000);
+	    return false;
+	    }*/
+	
+	var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
+    var str = String.fromCharCode(!id.charCode ? id.which : id.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+    else
+    {
+    //e.preventDefault();
+    //alert('Please Enter Alphabate');
+    $("#unc").text('Please Enter Numbers');
+	$("#unc").show();
+   	$("#unc").fadeOut(20000);
+    return false;
+    }
 }

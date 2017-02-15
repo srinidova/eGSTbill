@@ -23,7 +23,7 @@ function showProductData(response){
 						+ "<li class='ten-box' style='width:140%;'>"
 						+ "<a href='javascript:void(0)' id='"
 						+ catObj.productId
-						+ "' onclick='editProductStock(this.id)' id='editId class='ico del' href='#'>Edit</a>"
+						+ "' onclick='editProductStock(this.id)' id='editId' value='editStock' class='ico del' href='#'>Edit</a>"
 						+ '</li>'
 						
 						+ "<li class='ten-box' style='width:140%;'>"
@@ -41,33 +41,27 @@ function showProductData(response){
 	}
 }
 function popupStockData(response){
-	$("#dialog ul").remove();
+	$("#dialog tr").remove();
 	if(response != undefined && response.length >0){
+		var tblRow ="<table cellpadding='5' cellspacing='5' style='border:1px solid black; width: 100%;'>"
+			tblRow +="<tr><th style='border:1px solid black; '>Transaction Date</th><th style='border:1px solid black; padding-right: 10%;'>Transaction Type</th><th style='border:1px solid black; padding-right: 9%;'>Quantity</th><th style='border:1px solid black; padding-right: 6%;'>Product Name</th></tr>"
 		$.each(response,function(i, catObj) {
-			 var tblRow ="<ul class=''>"
-					+ "<li class='five-box' title='"+catObj.transactionType+"'>"
-					+"<span><b>transactionType:</b></span>"
-					+ catObj.transactionType  
-					+ "</li>"
-					+ "<li class='nine-box' title='"+catObj.quantity+"'>"
-					+"<span><b>Quantity:</b></span>"
-					+ catObj.quantity
-					+ "</li>"
-					+ "<li class='five-box'>"
-					+"<span><b>TransactionDate:</b></span>"
+			tblRow 	+= "<tr style='border:1px solid black;'><td style='border:1px solid black;'>"
 					+ catObj.transactionDate
-					+ "</li>"
-					/*+ "<li class='five-box'>"
-					+"<span><b>ProductId:</b></span>"
-					+ catObj.productId
-					+ "</li>"*/
-					+ "<li class='five-box'>"
-					+"<span><b>ProductName:</b></span>"
+					+ "</td>"
+					+ "<td style='border:1px solid black;'>"
+					+ catObj.transactionType  
+					+ "</td>"
+					+ "<td style='border:1px solid black;'>"
+					+ catObj.quantity
+					+ "</td>"
+					+ "<td style='border:1px solid black;'>"
 					+ catObj.productName
-					+ "</li>"
-					+"</ul>";
-			 $(tblRow).appendTo("#dialog");
+					+ "</td></tr>"
+					
 		});
+		+"</table>";
+		 $(tblRow).appendTo("#dialog");
 		//paginationTable(3);
 		}
 }
@@ -123,36 +117,40 @@ function ProductStockDataClear(){
  $('#newStock').val("");
  $('#productId').val("");
 }
-function poupulateProductStock(id){
-	
-	var productId = $("#productId").val();
-	editProductStock(productId);
-	$('#newStock').val("");
-}
-function editProductStock(id)
-{	
+function editProductStock(id){
 	$('#productId').val(id);
-	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
-	   $('#stock').val( serviceUnitArray[id].stock);
+	//var productId = $("#productId").val();
+	//editProductStock(productId);
+	$('#stock').val( serviceUnitArray[id].stock);
+	$('#oldStock').val(serviceUnitArray[id]. oldStock);
+	$('#newStock').val( serviceUnitArray[id].newStock);
+	$('#stockId').val( serviceUnitArray[id].stockId);
+}
+function addProductStock(id)
+{	
+	var productId =$('#productId').val();
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[productId] != undefined && serviceUnitArray[productId].stock != undefined){
+	   $('#stock').val( serviceUnitArray[productId].stock);
 	}else{
 		 $('#stock').val("0");
 		 $("#stock").attr("disabled", "disabled");
 	}
-	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
-		$('#oldStock').val(serviceUnitArray[id]. oldStock);
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[productId] != undefined && serviceUnitArray[productId].oldStock != undefined){
+		$('#oldStock').val(serviceUnitArray[productId]. oldStock);
 		}else{
 			 $('#oldStock').val("0");
 			 $("#oldStock").attr("disabled", "disabled");
 		}
-	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
-		$('#newStock').val( serviceUnitArray[id].newStock);
+	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[productId] != undefined && serviceUnitArray[productId].newStock != undefined){
+		$('#newStock').val( serviceUnitArray[productId].newStock);
 		}else{
 			 $('#newStock').val("0");
 		}
-	if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
+	/*if(typeof(serviceUnitArray) != "undefined" && serviceUnitArray[id] != undefined && serviceUnitArray[id].stock != undefined){
 		$('#stockId').val( serviceUnitArray[id].stockId);
-		}
-	
+		}*/
+	$('#newStock').val("");
+	$('#stockId').val("");
 }
 function deleteProductStock(id) {
 		$.ajax({
@@ -180,23 +178,7 @@ function productStock() {
 	data["oldStock"] = $("#oldStock").val();
 	data["newStock"] = $("#newStock").val();
 	data["stockId"]=$("#stockId").val();
-	
 		    
-		   /* if($('#stock').val().length == 0 ) {
-			    $('#stock').css('color','red');
-			    $("#stock").css("border-color","red");
-			    $("#stock").attr("placeholder","Please enter stock");
-			    $('#stock').addClass('your-class');
-			    return false;
-			    }
-		    
-		    else if($('#oldStock').val().length == 0 ) {
-			    $('#oldStock').css('color','red');
-			    $("#oldStock").css("border-color","red");
-			    $("#oldStock").attr("placeholder","Please enter oldStock");
-			    $('#oldStock').addClass('your-class');
-			    return false;
-			    }*/
 		     if($('#productId').val().length == 0 ) {
 			    $('#productId').css('color','red');
 			    $("#productId").css("border-color","red");
@@ -206,7 +188,6 @@ function productStock() {
 			    }
 		   
 		else if($("#stockId").val() != "" ){
-			//alert('aaaaaaaaaaa'+$("#stockId").val());
 			updateProductStock();
 		}			   
 		else{

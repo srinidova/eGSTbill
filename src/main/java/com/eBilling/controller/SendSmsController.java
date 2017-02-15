@@ -45,6 +45,7 @@ public class SendSmsController {
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
 		try {
+			objSession.setAttribute("tabActive", "sendSms");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

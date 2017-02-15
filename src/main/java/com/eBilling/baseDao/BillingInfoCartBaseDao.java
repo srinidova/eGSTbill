@@ -124,14 +124,15 @@ public class BillingInfoCartBaseDao {
 	public boolean deleteBillInfoCart(String billId) {
 		boolean isDelete = false;
 		try {
+			System.out.println(billId);
 			String sql = "DELETE FROM billinginfocart WHERE billId=?";
-			int delete = jdbcTemplate.update(sql, new Object[] { billId });
+			int delete = jdbcTemplate.update(sql, new Object[] { StringUtils.trim(billId) });
 			System.out.println("billIdDelete"+delete);
 			if (delete > 0) {
 				isDelete = true;
 			}
 		} catch (Exception e) {
-
+e.printStackTrace();
 		}
 
 		return isDelete;

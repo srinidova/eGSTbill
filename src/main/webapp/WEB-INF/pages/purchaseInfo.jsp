@@ -50,6 +50,25 @@
 	        }
 	    });
 		
+		$('#tinNo').keypress(function (e) {
+	        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
+	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	        if (regex.test(str)) {
+	            return true;
+	        }
+	        else
+	        {
+	        e.preventDefault();
+	        //alert('Please Enter Alphabate');
+	        $("#unc").text('Please Enter Numbers');
+        	$("#unc").show();
+           	$("#unc").fadeOut(2000);
+	        return false;
+	        }
+	    });
+		
+		
+		
 		$('#mobileNo').keypress(function (e) {
 	        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
 	        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -96,6 +115,7 @@
 						</div>
 						<div class="block-searchbill-input last">
 							<label>TinNo</label>
+							<input type="text" name="tinNo" id="tinNo" onkeyup="removeError(this.id);">
 						</div>
 						</div>
 					<div class="block-footer">

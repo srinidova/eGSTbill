@@ -160,6 +160,7 @@ public class BillInfoController {
 			lstBillingInfo = objBillingInfoService.getAllBillInfoByBillNo(billingInfo);
 			System.out.println("lstBillingInfo==size===="+lstBillingInfo.size());
 			String sNewBillId =CommonUtils.getAutoGenId();
+			String sBillNo = objBillingInfoCartService.getUpdateId("billInfoCart");
 			for(int i=0;i<lstBillingInfo.size();i++){
 				existBillingInfo =lstBillingInfo.get(i);
 				//existBillingInfo.setBillId(sNewBillId);
@@ -168,7 +169,7 @@ public class BillInfoController {
 				billingInfoCart.setBillId(sNewBillId);
 				billingInfoCart.setAddress(existBillingInfo.getAddress());
 				billingInfoCart.setBillDate(existBillingInfo.getBillDate());
-				billingInfoCart.setBillNo(existBillingInfo.getBillNo());
+				billingInfoCart.setBillNo(sBillNo);
 				billingInfoCart.setDiscount(existBillingInfo.getDiscount());
 				billingInfoCart.setDispatchedBy(existBillingInfo.getDispatchedBy());
 				billingInfoCart.setDispatchedDate(existBillingInfo.getDispatchedDate());

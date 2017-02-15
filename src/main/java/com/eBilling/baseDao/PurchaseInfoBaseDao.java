@@ -50,8 +50,8 @@ public class PurchaseInfoBaseDao {
 			int update = jdbcTemplate.update(
 					sql,
 					new Object[] { 
-							 purchaseInfo.getName(),
-						purchaseInfo.getMobileNo(),purchaseInfo.getAddress(),purchaseInfo.geteMail(),purchaseInfo.getUpdatedBy(),purchaseInfo.getUpdatedDate(),purchaseInfo.getPurchaseId(),purchaseInfo.getTinNo()
+							 StringUtils.trim(purchaseInfo.getName()),
+							 StringUtils.trim(purchaseInfo.getMobileNo()),StringUtils.trim(purchaseInfo.getAddress()),StringUtils.trim(purchaseInfo.geteMail()),StringUtils.trim(purchaseInfo.getUpdatedBy()),StringUtils.trim(purchaseInfo.getUpdatedDate()),StringUtils.trim(purchaseInfo.getTinNo()),StringUtils.trim(purchaseInfo.getPurchaseId())
 							 });
 			System.out.println(sql);
 			if (update > 0) {
@@ -124,12 +124,12 @@ public class PurchaseInfoBaseDao {
 		return lstPurchaseInfoModel;
 	}
 	
-	public List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo) {
+	public List<PurchaserInfo> checkEmailAndMobileNo(String sEmail, String sMobileNo) {
 		List<PurchaserInfo> retlist = null;
 		try {
-			String sql = "SELECT * from purchaseinfo where eMail = ? and mobileNo";
+			String sql = "SELECT * from purchaseinfo where eMail = ? and mobileNo=?";
 			System.out.println("query----"+sql);
-			retlist = jdbcTemplate.query(sql, new Object[] {StringUtils.trim(sEmailOrMobileNo)},new BeanPropertyRowMapper<PurchaserInfo>(PurchaserInfo.class));
+			retlist = jdbcTemplate.query(sql, new Object[] {StringUtils.trim(sEmail),StringUtils.trim(sMobileNo)},new BeanPropertyRowMapper<PurchaserInfo>(PurchaserInfo.class));
 			
 			System.out.println("retlist----"+retlist.toString());
 		} catch (Exception e) {

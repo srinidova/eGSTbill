@@ -24,7 +24,7 @@ public interface RegistrationService {
 
 	boolean updateResetPassword(Register register);
 
-	List<Register> checkEmailAndMobileNo(String emailOrMobileNO);
+	List<Register> checkEmailAndMobileNo(String sEmail, String sMobileNo);
 
 	//boolean deleteRegister(String id);
 

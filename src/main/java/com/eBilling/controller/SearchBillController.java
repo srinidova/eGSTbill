@@ -38,6 +38,7 @@ public class SearchBillController {
 			sJson = objBillingInfoService.getAllBillInfo(billingInfo);
 			System.out.println("sJson==============================" + sJson);
 			session.setAttribute("allSearchBill", sJson);
+			session.setAttribute("tabActive", "searchBill");
 			// getAllProducts(objRequest);
 		} catch (Exception e) {
 			e.printStackTrace();

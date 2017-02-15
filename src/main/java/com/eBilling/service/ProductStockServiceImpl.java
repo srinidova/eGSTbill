@@ -2,6 +2,7 @@ package com.eBilling.service;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -190,7 +191,7 @@ public class ProductStockServiceImpl implements ProductStockService{
 	}
 
 	@Override
-	public boolean deductStock(String sProductId, String sBilledQty, String sBillId) {
+	public boolean deductStock(String sProductId, String sBilledQty) {
 		boolean isUpdate = false;
 		List<ProductStock> lstProductstock = null;
 		try {
@@ -219,24 +220,70 @@ public class ProductStockServiceImpl implements ProductStockService{
 		return isUpdate;
 	}
 	@Override
-	public boolean addStock(ProductStock productStock) {
-		boolean isAdd = false;
+	public boolean deductProductStock(String sProductId, String sBilledQty) {
+		boolean isUpdate = false;
 		List<ProductStock> lstProductstock = null;
 		try {
-			System.out.println("saveProductStock:::::::::::"+productStock.toString());
-			productStock.setStockId(CommonUtils.getAutoGenId());
-			productStock.setProductId(productStock.getProductId());
-			productStock.setOldStock(productStock.getStock());
-			productStock.setNewStock(productStock.getNewStock());
-			int iOldStock=Integer.parseInt(productStock.getOldStock());
-			int iNewStock=Integer.parseInt(productStock.getNewStock());
-			int iStock=iOldStock+iNewStock;
-			productStock.setStock(String.valueOf(iStock));
-			
-			boolean isInsert = productStockDao.saveProductStock(productStock);
-			
-			if(isInsert)
-				isAdd = true;
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			ProductStock productStock = lstProductstock.get(0);
+			if(productStock.getOldStock() != null){
+			int sNewStock = Math.abs(Integer.parseInt(productStock.getOldStock()) + Integer.parseInt(sBilledQty));
+			productStock.setStock(String.valueOf(sNewStock));
+			productStock.setNewStock(sBilledQty);
+			productStockDao.updateProductStock(productStock);
+			isUpdate = true;
+			}
+		} catch (Exception e) {
+			objLogger.error("Exception in ProductStockServiceImpl in deductProductStock() " + e);
+			e.printStackTrace();
+		} finally {
+
+		}
+		return isUpdate;
+	}
+	
+	@Override
+	public boolean addStock(ProductStock productStock) {
+		boolean isAdd = false;
+		boolean isupdate =false;
+		List<ProductStock> lstProductstock = null;
+		ProductStock existProductstock =null;
+		try {
+			String sProductId = productStock.getProductId();
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				existProductstock =lstProductstock.get(i);
+			}
+			if(lstProductstock.size() == 0){
+				System.out.println("saveProductStock:::::::::::"+productStock.toString());
+				productStock.setStockId(CommonUtils.getAutoGenId());
+				productStock.setProductId(productStock.getProductId());
+				productStock.setOldStock(productStock.getStock());
+				productStock.setNewStock(productStock.getNewStock());
+				int iOldStock=Integer.parseInt(productStock.getOldStock());
+				int iNewStock=Integer.parseInt(productStock.getNewStock());
+				int iStock=iOldStock+iNewStock;
+				productStock.setStock(String.valueOf(iStock));
+				boolean isInsert = productStockDao.saveProductStock(productStock);
+				if(isInsert)
+					isAdd = true;
+			}else{
+				if(existProductstock.getProductId() !=null && existProductstock.getProductId().equals(sProductId)){
+					productStock.setStockId(existProductstock.getStockId());
+					productStock.setOldStock(productStock.getStock());
+					productStock.setNewStock(productStock.getNewStock());
+					int iOldStock=Integer.parseInt(productStock.getOldStock());
+					int iNewStock=Integer.parseInt(productStock.getNewStock());
+					int iStock=iOldStock+iNewStock;
+					productStock.setStock(String.valueOf(iStock));
+					
+					isupdate = productStockDao.updateProductStock(productStock);
+					if(isupdate)
+						isAdd = true;
+					
+				
+				}
+				}
 
 		} catch (Exception e) {
 			objLogger.error("Exception in ProductStockServiceImpl in addStock() " + e);

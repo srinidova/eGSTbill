@@ -53,6 +53,7 @@ public class AllUsersController {
 		try {
 			sJson = objRegistrationService.getAllRegister();
 			objRequest.setAttribute("allregInfo", sJson);
+			objSession.setAttribute("tabActive", "allUser");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,8 +74,9 @@ public class AllUsersController {
 		List<Register> lstRegister = null;
 		try {
 			
-			String emailOrMobileNO =register.getEmail()+""+register.getMobileNo();
-			lstRegister = objRegistrationService.checkEmailAndMobileNo(emailOrMobileNO);
+			String sEmail = register.getEmail();
+			String sMobileNo= register.getMobileNo();
+			lstRegister = objRegistrationService.checkEmailAndMobileNo(sEmail,sMobileNo);
 			
 			Properties prop = new Properties();
 			String propertiespath = objContext.getRealPath("Resources" + File.separator + "DataBase.properties");
@@ -142,7 +144,7 @@ public class AllUsersController {
 			register.setMobileNo(data.getString("mobileNo"));
 			register.setRegType(data.getString("regType"));
 			register.setRegName(data.getString("regName"));
-			register.setPassword(data.getString("password"));
+			//register.setPassword(data.getString("password"));
 			// System.out.println("isupdateisupdateisupdateisupdate");
 			isupdate = objRegistrationService.updateRegister(register);
 			// System.out.println("isupdate" + isupdate);

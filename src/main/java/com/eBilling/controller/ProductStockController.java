@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,7 @@ public class ProductStockController {
 			objSession.setAttribute("allProducts", sJson);
 			getAllProductStock = productStockService.getAllProductStock();
 			objSession.setAttribute("getAllStock", getAllProductStock);
+			objSession.setAttribute("tabActive", "stocks");
 			System.out.println("getAllProductStock==="+getAllProductStock);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,32 +127,18 @@ public class ProductStockController {
 		String sJson = "";
 		StockDetails stockDetails=null;
 		try {
-			productStock.setStockId(data.getString("stockId"));
-			productStock.setNewStock(data.getString("newStock"));
-			productStock.setOldStock(data.getString("stock"));
-			productStock.setNewStock(data.getString("newStock"));
-			int iOldStock=Integer.parseInt(productStock.getOldStock());
-			int iNewStock=Integer.parseInt(productStock.getNewStock());
-			int iStock=iOldStock+iNewStock;
-			productStock.setStock(String.valueOf(iStock));
+			String sStockId = data.getString("stockId");
+			if(StringUtils.isNotEmpty(sStockId)){
+				isupdate = productStockService.deductProductStock(data.getString("productId"), data.getString("newStock"));
+				if (isupdate)
+					sJson = productStockService.getAllProductStock();
+				
+				stockDetailsService.addStockDetails(data.getString("productId"),data.getString("newStock"),sStockId,"Update");
+			}
 			
-			isupdate = productStockService.updateProductStock(productStock);
-			// System.out.println("isupdate" + isupdate);
-			if (isupdate)
-				sJson = productStockService.getAllProductStock();
-			// System.out.println("update: " + sJson);
-			String sEntry="Entry";
-			stockDetails =new StockDetails();
-			stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
-			stockDetails.setProductId(data.getString("productId"));
-			stockDetails.setQuantity(productStock.getNewStock());
-			stockDetails.setTransactionId(productStock.getStockId());
-			stockDetails.setTransactionDate(CommonUtils.getDate());
-			stockDetails.setTransactionType(sEntry);
 			
-			stockDetailsService.saveStockDetails(stockDetails);
 		} catch (Exception ex) {
-			System.out.println("Exception in RegistraionController in  updatePurchaseInfo()");
+			System.out.println("Exception in RegistraionController in  updateProductStock()");
 			ex.printStackTrace();
 		}
 		return sJson;

@@ -2,6 +2,7 @@ package com.eBilling.baseDao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -58,13 +59,13 @@ public class BillingDetailsCartBaseDao {
 	public boolean deleteBillDetailsCart(String billId) {
 		boolean isDelete = false;
 		try {
-			String sql = "DELETE FROM billingdetailscart WHERE billId = ?";
-			int delete = jdbcTemplate.update(sql, new Object[] { billId });
+			String sql = "DELETE FROM billingdetailscart WHERE billId =?";
+			int delete = jdbcTemplate.update(sql, new Object[] { StringUtils.trim(billId) });
 			if (delete > 0) {
 				isDelete = true;
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		return isDelete;

@@ -61,13 +61,17 @@ public class DamageController {
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
 		String allprod = null;
-		//String getAllProductStock =null;
+		String getAllProductStock =null;
 		try {
-			allprod = objProductService.populateProducts();
+			//allprod = objProductService.populateProducts();
 			sJson = damageServiceImpl.getAllDamage();
 			objRequest.setAttribute("allDamages", sJson);
 			System.out.println("sJson::::::"+sJson);
-			objSession.setAttribute("allProducts", allprod);
+			//objSession.setAttribute("allProducts", allprod);
+			objSession.setAttribute("tabActive", "damage");
+			
+			getAllProductStock = objProductStockService.getAllProductStock();
+			objSession.setAttribute("getAllStock", getAllProductStock);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,7 +106,7 @@ public class DamageController {
 				}
                
 					sJson = damageServiceImpl.getAllDamage();
-					objProductStockService.deductStock(data.getString("productId"), data.getString("quantity"), sDamageId);
+					objProductStockService.deductStock(data.getString("productId"), data.getString("quantity"));
 					stockDetailsService.addStockDetails(data.getString("productId"),  data.getString("quantity"), sDamageId, "Damage");
                // damageServiceImpl.updatedStock(productStock, data, lstProductstock);
                 

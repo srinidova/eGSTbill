@@ -44,7 +44,7 @@ $(document).ready(function() {
 	
 });
 function getAllProducts() {
-	var allProducts = '${sessionScope.allProducts}';
+	var allProducts = '${sessionScope.getAllStock}';
 	if(typeof allProducts != ''){
 		allProducts = JSON.parse(allProducts); 
 		if(allProducts != null && allProducts.length > 0){
@@ -70,7 +70,7 @@ function getAllProducts() {
 				<form name="myForm" method="post" id="contact-form" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="">
-							<label>Product Id</label>
+							<label style="margin-bottom: 4px;">Product Name:</label>
 							<select style="margin-left:120px; margin-top:-27px;" id="productId" name="productId">
 							
                                                             	<option value="">--Select--</option> 
@@ -82,12 +82,12 @@ function getAllProducts() {
 						</div>
 						
 						<div class="block-searchbill-input">
-							<label>Quantity</label>
+							<label>Quantity:</label>
 							<input type="text" name="prate" id="quantity"  placeholder="Enter quantity" tabindex="3" />
 						</div>
 						<div class="block-searchbill-input">
-							<label>Description</label>
-							<textarea name="description" id="description" rows="5"></textarea>
+							<label>Description:</label>
+							<textarea name="description" id="description" rows="5" style="margin-top: 8px;margin-left: 9px;margin-right: 110px;"></textarea>
 							<!-- <input type="textbox" name="prate" id="description"  placeholder="Enter description" tabindex="3" /> -->
 						</div>
 					</div>
@@ -112,7 +112,7 @@ function getAllProducts() {
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>              -->   
-						<li class="nine-box" style="width:300%;">Product Id
+						<li class="nine-box" style="width:300%;">Product Name
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>

@@ -23,7 +23,7 @@ public interface PurchaseInfoService {
 
 	List<PurchaserInfo> getPurchaseByName(String sPurchaseName);
 
-	List<PurchaserInfo> checkEmailAndMobileNo(String sEmailOrMobileNo);
-
 	boolean addPurchaseInfo(JSONObject data);
+
+	List<PurchaserInfo> checkEmailAndMobileNo(String sEmail, String sMobileNo);
 }

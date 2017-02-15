@@ -68,6 +68,9 @@
 	<definition name="sendSmsHome" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/sendSms.jsp" />
 	</definition>
+	<definition name="forgetPasswordHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/forgetPassword.jsp" />
+	</definition>
 	<!-- <definition name="" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/billingDetails.jsp" />
 	</definition> -->

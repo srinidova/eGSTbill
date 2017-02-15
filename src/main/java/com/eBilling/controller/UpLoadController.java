@@ -45,7 +45,7 @@ public class UpLoadController {
 		objResponce.setCharacterEncoding("UTF-8");
 			String sJson = null;
 		try {
-			
+			session.setAttribute("tabActive", "upload");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

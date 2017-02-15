@@ -21,10 +21,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-
-
-
 <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
 		 <script type="text/javascript" src="js/newBill.js"></script>
 		<script type="text/javascript">
@@ -34,6 +30,7 @@
 		var updateCarts='${sessionScope.updateCart}';
 		$(document).ready(function() {
 			getAllProducts();
+			getAllPurchase();
       		showBillDetailsData(updateCarts);
 		});
 		$(document).ready(function() {
@@ -41,6 +38,11 @@
 					purchaseArr = JSON.parse(lstBill)[0].listPurchase;
 					getAllPurchase(purchaseArr); 	
 				}
+				
+				$("#labelId").hide();
+				$("#labelId1").hide();
+				$("#labelId2").hide();
+				$("#labelId3").hide();
 				
 				$('#quantity').keypress(function (e) {
 			        var regex = new RegExp("^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$");
@@ -54,13 +56,12 @@
 			        //alert('Please Enter Alphabate');
 			        $("#unc").text('Please Enter Numbers');
 		        	$("#unc").show();
-		           	$("#unc").fadeOut(2000);
+		           	$("#unc").fadeOut(20000);
 			        return false;
 			        }
 			    });
 				
 		});
-		
 		
 		$(function() {
 			$("#lrDate").datepicker({
@@ -89,7 +90,15 @@
 				dateFormat : 'yy-mm-dd'
 			});
 		});
-		
+		$(function() {
+			$("#billDate").datepicker({
+				changeDate : true,
+				changeMonth : true,
+				changeYear : true,
+				showButtonPanel : false,
+				dateFormat : 'yy-mm-dd'
+			});
+		});
 		function getAllProducts() {
 			var allProducts = '${sessionScope.getAllStock}';
 			if(typeof allProducts != ''){
@@ -107,8 +116,10 @@
 				
 			}
 		}
-		function getAllPurchase(purchaseArr) {
-			var lstOrders = purchaseArr;
+		var getPurchase='${sessionScope.getAllPurchaser}';
+		var parchaserAll= JSON.parse(getPurchase);
+		function getAllPurchase() {
+			var lstOrders = parchaserAll;
 			if(lstOrders != null && lstOrders.length > 0){
 			var html = "<option value=''>Select</option>";
 			$.each(lstOrders,function(i, catObj) {
@@ -130,31 +141,103 @@
 						 $('#rate').val(catObj.mrp);
 						 $('#mrp').val(catObj.mrp);
 						 $('#productName').val(catObj.productName);
+						 
 						 return false;
 					} 
 				});
 			}
 		}
-		function onCheck() {
-			//alert("hiiiii");
+		function newCustomer() {
 			if($("oldCustmer").val(['oldCustmer'])){
 				$("#name").show();
 				$("#purchaserName").hide();
 				$("#newCustmer").prop('checked', false);
-				//getAllPurchase(purchaseArr);
 			}else{
 				$("#name").attr("disabled", "disabled");
 			}
 		}
-		function onCheck1() {
-			//alert("hiiiii");
+		function oldCustomer() {
 			if($("newCustmer").val(['newCustmer'])){
-				//$("#name").attr("disabled", "disabled");
 				$("#name").hide();
 				$("#purchaserName").show();
-				$("#oldCustmer").prop('checked', false);
 			}
 		}
+		function moreInfoShow()
+		{
+			if($("show").val(['show'])){
+				
+				$("#labelId").show();
+				$("#labelId1").show();
+				$("#labelId2").show();
+				$("#labelId3").show();
+			}else{
+				moreInfoHide();
+			}
+		}
+		function moreInfoHide()
+		{
+			if($("hide").val(['hide'])){
+				
+				$("#labelId").hide();
+				$("#labelId1").hide();
+				$("#labelId2").hide();
+				$("#labelId3").hide();
+				$("#show").prop('checked', false);
+			}
+			
+		}
+		$(document).ready(function () {
+	          var dateNewFormat, onlyDate, today = new Date();
+
+	          //dateNewFormat = today.getFullYear() + '-' + (1 + today.getMonth());
+	          dateNewFormat = (1 + today.getMonth())+ '-' + today.getFullYear();
+	          
+	          onlyDate = today.getDate();
+
+	          if (onlyDate.toString().length == 2) {
+	           onlyDate += '-' + dateNewFormat;
+	          }
+	          else {
+	              dateNewFormat += '-0' + onlyDate;
+	          }
+	          $('#billDate').val(onlyDate);
+	          //$('#lrDate').val(onlydate);
+	          //$('#dispatchedDate').val(onlyDate);
+	          //$('#orderDate').val(onlyDate);
+	      });
+		function editPurchaser() {
+			//alert("hiii");
+			var name = $("#name").val();
+			var lstOrders = parchaserAll;
+			if(lstOrders != null && lstOrders.length > 0){
+				$.each(lstOrders,function(i, catObj) {
+					 if(name == catObj.name){
+						 $('#phone').val(catObj.mobileNo);
+						 $('#eMail').val(catObj.eMail);
+						 $('#tinNo').val(catObj.tinNo);
+						 $('#address').val(catObj.address);
+						 return false;
+					} 
+				});
+			}
+		}
+		function customerType() {
+			var custType =$("#customerType").val();
+			if(custType == "oldCustmer"){
+				$("#name").show();
+				$("#purchaserName").hide();
+			}else{
+				$("#name").hide();
+				$("#purchaserName").show();
+			}
+			 //oldCustomer();
+			 //newCustomer();
+		}
+		$(document).ready(function(){
+		       $("button").click(function(){
+		           $("#moreInfoId").toggle();
+		       });
+		   });
 	</script>
 		<section class="container">
 			<div class="block">
@@ -176,7 +259,7 @@
 						</div>
 						<div class="block-searchbill-input">
 							<label>Quantity</label>
-							<input  type="text"   name="quantity" id="quantity" />
+							<input  type="text"   name="quantity" id="quantity" onkeypress="onkeyQuantity(this.id);"/>
 							<input  type="hidden" id="mrp">
 							<input  type="hidden" id="productName">
 							<input  type="hidden" id="billDetailsId">
@@ -184,18 +267,18 @@
 							<input  type="hidden" id="totalQuantity">
 							<input  type="hidden" id="totalRate">
 							<input  type="hidden" id="billId">
-							<input  type="hidden" id="billDate">
+							<!-- <input  type="hidden" id="billDate"> -->
 							
 						</div> 
 						<div class="block-searchbill-input">
 							<label>Rate</label>
-							<form:input path="mrp" type="text" name="prate" id="rate"></form:input>
+							<form:input path="mrp" type="text" name="rate" id="rate" onkeypress="onkeyRate(this.id)"></form:input>
 						</div>
 					</div>
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully"  id="unc" style="display: none">Sucessfully Message</aside>
 						<aside class="block-footer-right">
-							<input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
+							<input class="btn-cancel" name="" value="Cancel" type="button" onclick="cancelBill(id);">
 							<input class="btn-save" value="Save" id="saveIds" type="button" onClick="newBill();">
 						</aside>
 					</div>
@@ -267,56 +350,83 @@
                                                     <div class="block-box-exp">
                                                         <div class="block-searchbill">
                                                             <div class="block-input">
+                                                                <label>Bill No</label>
+                                                                <input type="text" name="billNo" id="billNo">   
+                                                            </div> 
+                                                            <div class="block-input">
+                                                                 <label>Bill Date</label>
+                                                                <input type="text" name="billDate" id="billDate">
+                                                            </div>                 
+                                                            <div class="block-input  last">
                                                                 <label>Payment Type</label>
                                                                 <select id="payment" name="addclient">
                                                                     <option value="Cash">Cash</option>
                                                                     <option value="Card">Card</option>
                                                                     <option value="Cheque">Cheque</option>
                                                                 </select> 
-                                                            </div> 
-                                                            <div class="block-input">
-                                                                <label>Discount</label>
-                                                                <input type="text" name="discount" id="discount">
-                                                            </div>                 
-                                                            <div class="block-input  last">
-                                                                <label><b>Total Amount</b></label>
-                                                                <input disabled="disabled" type="text" name="totalAmount" id="totalAmount">
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
-                                                        <div class="block-input">
-                                                        <input type="radio" id="oldCustmer" name="oldCustmer" value="oldCustmer" onclick="onCheck();" checked="checked"> Old Customer<br>
-																		<input type="radio" id="newCustmer" name="newCustmer" value="newCustmer" onclick="onCheck1()"> New Customer
+                                                         <div class="block-input ">
+                                                                <label>CustomerType</label>
+                                                                <select id="customerType" name="customerType" onchange="customerType();">
+                                                                    <option value="oldCustmer" selected="selected">Old Custmer</option>
+                                                                    <option value="newCustmer">New Custmer</option>
+                                                                </select> 
+                                                            </div>
+                                                        <!-- <div class="block-input"  style="margin-right: 42px;">
+                                                       
+                                                      <label>Old Customer</label>  <input type="radio" id="oldCustmer" name="oldCustmer" checked="checked" value="oldCustmer" onclick="newCustomer();"  style="margin-left: -91px;"> 
+														<label>New Customer</label><input type="radio" id="newCustmer" name="newCustmer" value="newCustmer" onclick="oldCustomer()"  style="margin-left: -91px;"> 
                                                         
-                                                        </div>
+                                                        </div> -->
                                                             <div class="block-input">
                                                                 <label>Name</label>
                                                                  <input  style="margin-left:120px; margin-top:-27px;" type="text" name="purchaserName" id="purchaserName">
-                                                                <select style="margin-left:120px; margin-top:-27px;" id="name" name="name" onchange="poupulatePurchase();">
+                                                                <select style="margin-left:120px; margin-top:-27px;" id="name" name="name" onchange="editPurchaser();">
                                                             	<option value="">--Select--</option>
                                                         </select>                  
                                                             </div>  
                                                             <div class="block-input last">
-                                                                <label>Mobile No</label>
-                                                                <input type="text" name="phone" id="phone">
+                                                                <label><b>Total Amount</b></label>
+                                                                <input disabled="disabled" type="text" name="totalAmount" id="totalAmount">
                                                             </div>
                                                             
                                                         </div>
                                                         <div class="block-searchbill">
                                                         <div class="block-input ">
-                                                                <label>Address</label>
-                                                                <textarea name="address" id="address" rows="3"></textarea>
+                                                                <label>Email</label>
+                                                                <input type="text" name="eMail" id="eMail">
                                                             </div>
                                                             <div class="block-input">
-                                                                <label>LR No</label>
-                                                                <input type="text" name="lrNo" id="lrNo">                  
+                                                                <label>Mobile No</label>
+                                                                <input type="text" name="phone" id="phone">                 
                                                             </div>  
                                                             <div class="block-input">
-                                                                <label>LR Date</label>
-                                                                <input type="text" name="lrDate" id="lrDate">
+                                                                <label>Discount</label>
+                                                                <input type="text" name="discount" id="discount">
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
+                                                        
+                                                            <div class="block-input">
+                                                                <label>Address</label>
+                                                                <textarea name="address" id="address" rows="3"></textarea>                  
+                                                            </div>                                                        
+                                                            <div class="block-input">
+                                                                <label>Tin No</label>
+                                                                <input type="text" name="tinNo" id="tinNo">
+                                                            </div>
+                                                            <div class="block-input last">
+                                                                <label>Net Amount</label>
+                                                                <input type="text" name="netAmoumt" id="netAmoumt">
+                                                            </div>
+                                                        </div>
+                                                        <div class="block-searchbill">
+                                                         <button style="margin-bottom: 138px;margin-right: 8px;margin-left: -51px;">More info</button>
+                                                         <div id="moreInfoId" style="display:none;">
+                                                         <p>This is content show/hide</p>
+                                                         <div class="block-searchbill" id="labelId" >
                                                         
                                                             <div class="block-input">
                                                                 <label>Order No</label>
@@ -331,57 +441,60 @@
                                                                 <input type="text" name="orderBy" id="orderBy">
                                                             </div>
                                                         </div>
-                                                        <div class="block-searchbill">
+                                                        
+                                                        <div class="block-searchbill" id="labelId1">
                                                         
                                                             <div class="block-input">
-                                                                <label>Despatched By</label>
-                                                                <input type="text" name="dispatchedBy" id="dispatchedBy">                  
-                                                            </div>
+                                                                <label>LR No</label>
+                                                                <input type="text" name="lrNo" id="lrNo">                  
+                                                            </div>  
                                                             <div class="block-input">
-                                                                <label>Despatched Date</label>
-                                                                <input type="text" name="dispatchedDate" id="dispatchedDate">
+                                                                <label>LR Date</label>
+                                                                <input type="text" name="lrDate" id="lrDate">
                                                             </div>
                                                             <div class="block-input last">
                                                                 <label>No of Packages</label>
                                                                 <input type="text" name="noOfPacks" id="noOfPacks">
                                                             </div>
                                                         </div>
-                                                        <div class="block-searchbill">
+                                                        
+                                                        <div class="block-searchbill" id="labelId2" >
                                                         
                                                             <div class="block-input">
                                                                 <label>Pack Slip No</label>
                                                                 <input type="text" name="packSlipNo" id="packSlipNo">                  
                                                             </div>  
                                                             <div class="block-input">
-                                                                <label>Terms of Payment</label>
-                                                                <input type="text" name="termOfPayment" id="termOfPayment">
+                                                                <label>Despatched Date</label>
+                                                                <input type="text" name="dispatchedDate" id="dispatchedDate">
                                                             </div>
-                                                            <div class="block-input last">
+                                                             <div class="block-input">
+                                                                <label>Despatched By</label>
+                                                                <input type="text" name="dispatchedBy" id="dispatchedBy"> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="block-searchbill" id="labelId3">
+                                                        
+                                                            <div class="block-input">
+                                                                <label>Terms of Payment</label>
+                                                                <input type="text" name="termOfPayment" id="termOfPayment">                  
+                                                            </div>  
+                                                            <div class="block-input">
                                                                 <label>Terms</label>
                                                                 <input type="text" name="terms" id="terms">
                                                             </div>
+                                                            
                                                         </div>
-                                                        <div class="block-searchbill">
-                                                        
-                                                            <div class="block-input">
-                                                                <label>Bill No</label>
-                                                                <input type="text" name="billNo" id="billNo">                  
-                                                            </div>  
-                                                            <div class="block-input">
-                                                                <label>Tin No</label>
-                                                                <input type="text" name="tinNo" id="tinNo">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                         </div>
                                                 </ul>                                             
 					
 				</div>
 				<div class="block-footer" id="print">
 					<aside class="block-footer-left"><exptotal></exptotal></aside>
 					<aside class="block-footer-right">
-					<input class="btn-cancel" name="" value="Cancel" type="button" onclick="infoDataClear()">
+					<input class="btn-cancel" name="" value="Cancel" type="button" onclick="cancelBill(this.id)">
 						<input class="btn-save" name="" value="Cart" type="button" onclick="saveInfoCart();">
-						<input class="btn-save" name="" value="Bill" id="printBill" type="submit" onclick="updateBillInfoCart();">
+						<input class="btn-save" name="" value="Bill" id="printBill" type="submit" onclick="updateBillInfoCart();" style=" margin-right: 118px; margin-top: -25px;">
 					</aside>
 				</div>
 			</div>

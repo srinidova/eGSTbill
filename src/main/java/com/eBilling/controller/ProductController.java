@@ -45,6 +45,7 @@ public class ProductController {
 		try {
 			sJson = objPopulateService.populateProducts();
 			objSession.setAttribute("allProducts", sJson);
+			objSession.setAttribute("tabActive", "product");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

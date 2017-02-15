@@ -72,8 +72,8 @@ function getAllProducts() {
 				<form name="myForm" method="post" id="contact-form" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="">
-							<label>Product Name:</label>
-							 <select style="margin-left:120px; margin-top:-27px;" id="productId" name="productId" onchange="poupulateProductStock(this.id);">
+							<label style="margin-bottom: 4px;">Product Name:</label>
+							 <select style="margin-left:158px; margin-top:-27px;" id="productId" name="productId" onchange="addProductStock(this.id);">
                                                             	<option value="">--Select--</option>
                                                         </select>
 							 <input  type="hidden" id="productName">
@@ -90,7 +90,7 @@ function getAllProducts() {
 					</div>
 					<div class="block-searchbill" id="">
 					<div class="block-searchbill-input">
-							<label>NewStock:</label>
+							<label style="margin-right: 5px; margin-left: 20px">NewStock:</label>
 							<input type="text" name="newStock" id="newStock"   tabindex="3" />
 						</div>
 					</div>
@@ -115,32 +115,32 @@ function getAllProducts() {
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>              -->   
-						<li class="nine-box" style="width:300%;">ProductName:
+						<li class="nine-box" style="width:309%;">ProductName:
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>
-						<li class="five-box" style="width:140%;">Stock:
+						<li class="five-box" style="width:146%;">Stock:
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>
-						<li class="five-box" style="width:140%;">NewStock:
+						<li class="five-box" style="width:144%;">NewStock:
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li> 
-						<li class="five-box" style="width:140%;">OldStock:
+						<li class="five-box" style="width:143%;">OldStock:
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>                
-						<li class="eleven-box" style="width:140%;">Edit</li>
-						<li class="ten-box last" style="width:140%;">Delete</li>
+						<li class="eleven-box" style="width:144%;">Edit</li>
+						<li class="ten-box last" style="width:132%;">Delete</li>
 						<li class="ten-box" style="width:20%;">Details</li>
 					</ul>
 					<div class="table-list-blk" id='userData'>

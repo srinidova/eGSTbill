@@ -144,12 +144,12 @@ public class RegisterBaseDao {
 
 		return retlist;
 	}
-	public List<Register> checkEmailAndMobileNo(String sEmailOrMobileNo) {
+	public List<Register> checkEmailAndMobileNo(String sEmail, String sMobileNo) {
 		List<Register> retlist = null;
 		try {
-			String sql = "SELECT * from register where email = ? and mobileNo";
+			String sql = "SELECT * from register where email = ? and mobileNo =?";
 			System.out.println("query----"+sql);
-			retlist = jdbcTemplate.query(sql, new Object[] {StringUtils.trim(sEmailOrMobileNo)},new BeanPropertyRowMapper<Register>(Register.class));
+			retlist = jdbcTemplate.query(sql, new Object[] {StringUtils.trim(sEmail),StringUtils.trim(sMobileNo)},new BeanPropertyRowMapper<Register>(Register.class));
 			
 			System.out.println("retlist----"+retlist.toString());
 		} catch (Exception e) {

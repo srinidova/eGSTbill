@@ -86,12 +86,12 @@ public List<Register> getAllBillEmailAndMobileNo(String sEmailOrMobileNo) {
 	}
 	return lstRegister;
 }
-public List<Register> checkEmailAndMobileNo(String sEmailOrMobileNo) {
+public List<Register> checkEmailAndMobileNo(String sEmail, String sMobileNo) {
 	ObjectMapper objectMapper = null;
 	String sJson = null;
 	List<Register> lstRegister = null;
 	try {
-		lstRegister = registerDao.checkEmailAndMobileNo(sEmailOrMobileNo);
+		lstRegister = registerDao.checkEmailAndMobileNo(sEmail,sMobileNo);
 	} catch (Exception e) {
 		logger.info("Exception in getAllBillInfoByBillNo()" + e);
 		System.out.println("Exception in getAllBillInfoByBillNo()"+e);
