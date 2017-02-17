@@ -75,7 +75,7 @@ function deletePurchaseInfo(id) {
 		                 if(response != null ){
 		                	 $("#unc1").text("Delete Sucessfully");
 		            		   $("#unc1").show();
-		                       $("#unc1").fadeOut(5000);
+		                       $("#unc1").fadeOut(15000);
 		                       showPurchaseData(response);
 		                	}
 		                 },
@@ -108,7 +108,7 @@ function productRegister() {
 			    $('#mobileNo').addClass('your-class');
 			     $('#unc').text("Please specify a valid phone number.");
 			     $('#unc').show();
-			     $("#unc").fadeOut(10000);
+			     $("#unc").fadeOut(15000);
 			    setTimeout(function(){$('#mobileNo').focus();},0);
 			    return false;
 			 }
@@ -120,7 +120,7 @@ function productRegister() {
 			    $('#eMail').addClass('your-class');
 			    $('#unc').text("Please enter valid emailid.");
 			     $('#unc').show();
-			     $("#unc").fadeOut(10000);
+			     $("#unc").fadeOut(15000);
 			    setTimeout(function(){$('#eMail').focus();},0);
 			    return false;
 			    }
@@ -203,7 +203,7 @@ function updatePurchaseInfo(){
             		 if(resJSON.status == "ERROR"){
                    	  	 $("#unc").text('Name already exists. Please choose other Name');
                    	 	 $("#unc").show();
-                         $("#unc").fadeOut(5000);
+                         $("#unc").fadeOut(25000);
                      }else{
                     	 showPurchaseData(resJSON);
                    	 $("#unc").text('Updated Sucessfully');

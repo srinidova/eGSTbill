@@ -60,7 +60,7 @@ function showBillInfoData(response){
 						+ "</li>"
 						+ "<li class='ten-box' style='width:20%;'><a id='"+catObj.billId+"' onclick='test(this.id);return false;'><img src='./images/icon2.jpg'></a>"
 						+"</li>"
-						+ "<li class='ten-box' style='width:16%;'><a id='"+catObj.billId+"' onclick='updateCart(this.id);return false;'><img src='./images/copy.png' width='12' height='12'></a>"
+						+ "<li class='ten-box' style='width:16.5%;'><a id='"+catObj.billId+"' onclick='updateCart(this.id);return false;'><img src='./images/copy.png' width='12' height='12'></a>"
 						+"</li>"
 						+"</ul>"
 				$(tblRow).appendTo("#billData");

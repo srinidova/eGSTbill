@@ -72,7 +72,7 @@ $(document).ready(function() {
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="">
 							<label>Product Name</label>
-							 <input type="text" name="productName" id="productName"   placeholder="Enter Product name" tabindex="1" onkeydown=""  />
+							 <input type="text" name="productName" id="productName"   placeholder="Enter Product Name" tabindex="1" onkeydown=""  />
 							 <input type="hidden" name="productId" id="productId"/>
 						</div>
 						<div class="block-searchbill-input">
@@ -84,13 +84,13 @@ $(document).ready(function() {
 						</div> 
 						<div class="block-searchbill-input">
 							<label>MRP</label>
-							<input type="text" name="prate" id="mrp"  placeholder="Enter mrp" tabindex="3" />
+							<input type="text" name="prate" id="mrp"  placeholder="Enter MRP" tabindex="3" />
 						</div>
 					</div>
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
 						<aside class="block-footer-right">
-							 <input class="btn-cancel" value="cancel"  name="Cancel" type="button" onclick="productDataClear();" >
+							 <input class="btn-cancel" value="Cancel"  name="Cancel" type="button" onclick="productDataClear();" >
                     <input class="btn-save" value="Save" id="saveIds" type="button" onClick="productRegister();">
 						</aside>
 					</div>

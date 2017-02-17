@@ -95,7 +95,7 @@ $(function() {
 		changeMonth : true,
 		changeYear : true,
 		showButtonPanel : false,
-		dateFormat : 'yy-mm-dd'
+		dateFormat : 'dd-mm-yy'
 	});
 });
 $(function() {
@@ -104,7 +104,7 @@ $(function() {
 		changeMonth : true,
 		changeYear : true,
 		showButtonPanel : false,
-		dateFormat : 'yy-mm-dd'
+		dateFormat : 'dd-mm-yy'
 	});
 });
 </script>
@@ -114,7 +114,7 @@ $(function() {
 <section class="container">
     <div class="block">
         <h2><span class="icon1">&nbsp;</span>Search Bill</h2>
-        <form name="cf_form"  action="#" onsubmit="return validationequiry()">
+        <form name="cf_form"  action="#" onsubmit="return validationequiry()" style=" background-color: #ffffff;">
             <div class="block-searchbill">
                 <div class="block-searchbill-input">
                     <label>Bill No</label>
@@ -143,7 +143,7 @@ $(function() {
                <!--  <aside class="block-footer-left sucessfully" id="unc" style="diplay:none">Sucessfully Message</aside> -->
                 <aside class="block-footer-right">
                     <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
-                    <input class="btn-save" name="" value="search" id="search" type="button">
+                    <input class="btn-save" name="" value="Search" id="search" type="button">
                 </aside>
             </div>
         </form>
@@ -202,13 +202,13 @@ $(function() {
                         <li><a class="bottom" href="#">&nbsp;</a></li>
                     </ul>
                 </li>
-                <li class="five-box" style="width:25%;">Despatch
+                <li class="five-box" style="width:25%;">Dispatch
                     <ul>
                         <li><a class="top" href="#">&nbsp;</a></li>
                         <li><a class="bottom" href="#">&nbsp;</a></li>
                     </ul>
                 </li>                
-                <li class="five-box" style="width:25%;">Desp. Date
+                <li class="five-box" style="width:25%;">Dispatch Date
                     <ul>
                         <li><a class="top" href="#">&nbsp;</a></li>
                         <li><a class="bottom" href="#">&nbsp;</a></li>

@@ -70,7 +70,7 @@ function getAllProducts() {
 				<form name="myForm" method="post" id="contact-form" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="">
-							<label style="margin-bottom: 4px;">Product Name:</label>
+							<label style="margin-bottom: 4px;">Product Name</label>
 							<select style="margin-left:120px; margin-top:-27px;" id="productId" name="productId">
 							
                                                             	<option value="">--Select--</option> 
@@ -82,11 +82,11 @@ function getAllProducts() {
 						</div>
 						
 						<div class="block-searchbill-input">
-							<label>Quantity:</label>
+							<label>Quantity</label>
 							<input type="text" name="prate" id="quantity"  placeholder="Enter quantity" tabindex="3" />
 						</div>
 						<div class="block-searchbill-input">
-							<label>Description:</label>
+							<label>Description</label>
 							<textarea name="description" id="description" rows="5" style="margin-top: 8px;margin-left: 9px;margin-right: 110px;"></textarea>
 							<!-- <input type="textbox" name="prate" id="description"  placeholder="Enter description" tabindex="3" /> -->
 						</div>
@@ -94,7 +94,7 @@ function getAllProducts() {
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
 						<aside class="block-footer-right">
-							 <input class="btn-cancel" value="cancel"  name="Cancel" type="button" onclick="damageDataClear();" >
+							 <input class="btn-cancel" value="Cancel"  name="Cancel" type="button" onclick="damageDataClear();" >
                     <input class="btn-save" value="Save" id="saveIds" type="button" onClick="damageRegister();">
 						</aside>
 					</div>

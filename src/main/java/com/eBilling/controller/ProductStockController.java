@@ -95,9 +95,9 @@ public class ProductStockController {
 			
 			isInsert = productStockService.saveProductStock(productStock);*/
 			
-			productStockService.addStock(productStock);
+			productStockService.addNewStock(productStock);
 			
-			stockDetailsService.addStockDetails(productStock.getProductId(), productStock.getNewStock(), productStock.getStockId(), "Entry");
+			stockDetailsService.addStockDetails(productStock.getProductId(), productStock.getNewStock(), productStock.getStockId(), "Entry",productStock.getNewStock(),productStock.getOldStock());
 			/*System.out.println("isInsert===="+isInsert);
 			String sEntry="Entry";
 			stockDetails =new StockDetails();
@@ -133,7 +133,7 @@ public class ProductStockController {
 				if (isupdate)
 					sJson = productStockService.getAllProductStock();
 				
-				stockDetailsService.addStockDetails(data.getString("productId"),data.getString("newStock"),sStockId,"Update");
+				stockDetailsService.addStockDetails(data.getString("productId"),data.getString("stock"),sStockId,"Update",data.getString("newStock"),data.getString("oldStock"));
 			}
 			
 			

@@ -101,8 +101,6 @@ public class PurchaseInfoController {
 						json.put("message", "Same email and mobileNo already exist.");
 						purchaseLst = json.toString();
 					}
-				//System.out.println("sJson"+sJson);
-			//System.out.println("after req attr "+purchaseLst);
 		} catch (Exception e) {
 			System.out
 					.println("Exception in Product Controller in savePurchaseInfo()");
@@ -179,11 +177,6 @@ public class PurchaseInfoController {
 		List<PurchaserInfo> sJson = null;
 		isDelete = purchaseInfoService.deletePurchaseInfo(id);
 		sJson = purchaseInfoService.getAllPurchaseInfo();
-		/*if (sJson != null && sJson.size() > 0) {
-			ObjectMapper objMapper = new ObjectMapper();
-				purchaseLst = objMapper.writeValueAsString(sJson);
-				objSession.setAttribute("allPurchaseInfo", purchaseLst);
-			}*/
 		return sJson;
 
 	}

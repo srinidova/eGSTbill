@@ -143,12 +143,6 @@ public class BillingController {
 		try {
 			
 			sProductId = data.getString("productId");
-			/* lstProductstock = productStockService.getAllProductStockByProductId(sProductId);
-			for(int i=0;i<lstProductstock.size();i++){
-				productStock=lstProductstock.get(i);
-				
-			}*/
-			//if(Integer.parseInt(productStock.getStock()) >= Integer.parseInt(data.getString("quantity"))){
 			if(sProductId !=""){
 			boolean bStockAvailable = productStockService.checkStock( sProductId, data.getString("quantity"));
 			System.out.println("bStockAvailable===="+bStockAvailable);
@@ -314,38 +308,9 @@ public class BillingController {
 			billingInfo.setOrderBy(data.getString("orderBy"));
 			billingInfo.setPayment(data.getString("payment"));
 			billingInfo.setPackSlipNo(data.getString("packSlipNo"));
+			billingInfo.setNetAmount(data.getString("netAmount"));
 			
 			sJson=objBillingInfoService.saveBillInfo(billingInfo);
-			
-			/* String sPurchaserName=data.getString("purchaserName");
-			 System.out.println("sName==="+sPurchaserName);
-			if(sPurchaserName!=""){
-				String emailOrMobileNO = data.getString("eMail") + "" + data.getString("phone");
-				lstPurchaseName = objInfoService.checkEmailAndMobileNo(emailOrMobileNO);
-				
-				if(lstPurchaseName == null || lstPurchaseName.size() == 0){
-					purchaserInfo =new PurchaserInfo();
-					purchaserInfo.setName(sPurchaserName);
-					purchaserInfo.setAddress(data.getString("address"));
-					purchaserInfo.seteMail(data.getString("eMail"));
-					purchaserInfo.setMobileNo(data.getString("phone"));
-					purchaserInfo.setMobileNo(data.getString("tinNo"));
-					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
-					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
-					purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());
-					
-					
-					objInfoService.savePurchaseInfo(purchaserInfo);
-				}else {
-
-					//JSONObject json = new JSONObject();
-					data.put("status", "ERROR");
-					data.put("message", "Purchaser Email And mobile Already Exist");
-					sJson = data.toString();
-					return sJson;
-				}
-			}*/
-			
 			
 			
 			isDelete=objBillingInfoCartService.deleteBillInfoCart(sBillId);
@@ -367,27 +332,15 @@ public class BillingController {
 					
 					 objBillingDetatilsService.saveBillDetails(billingDetails);
 					 
-					 productStockService.deductStock(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity());
-					 stockDetailsService.addStockDetails(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(), sBillId, "Sale");
+					//updatedproductStock
+					 productStockService.deductedStock(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(),objSession);
+					 //Object sessionStock = objSession.getAttribute("sessionStock");
+					ProductStock oStock=  (ProductStock) objSession.getAttribute("sessionStock");
+					  String sNewStock=oStock.getNewStock();
+					  String sOldStock = oStock.getOldStock();
+						
+					 stockDetailsService.addStockDetails(billingdetailsCart.getProductId(), billingdetailsCart.getQuantity(), sBillId, "Sale",sNewStock,sOldStock);
 				}
-				//updatedproductStock
-				//productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
-				
-				//update stockDetails
-				
-				//stockDetailsService.updatedStockDetails(existProductStock, billingdetailsCart, lstProductstock, data);
-				/*for(BillingDetailsCart billingdetailsC :listBillingDetails){
-					List<StockDetails> lstStockDeatails = stockDetailsService.getStockDetailsByProductId(billingdetailsC.getProductId());
-					stockDetails=lstStockDeatails.get(0);
-				String sSale="Sale";
-				//stockDetails =new StockDetails();
-				//stockDetails=lstProductstock.get(0);
-				stockDetails.setQuantity( billingdetailsCart.getQuantity());
-				stockDetails.setTransactionId(data.getString("billNo"));
-				stockDetails.setTransactionType(sSale);
-				stockDetails.setTransactionDate(CommonUtils.getDate());
-				stockDetailsService.updateStockDetails(stockDetails);
-				}*/
 				objBillingDetatilsCartService.deleteBillDetailsCart(sBillId);
 				 String newJson = billInfoController.billInfoHome( objResponce,sBillId, objSession,  objRequest);
 				 objSession.setAttribute("updateCart", "");
@@ -406,7 +359,7 @@ public class BillingController {
 	@RequestMapping(value = "/saveCart")
 	public @ResponseBody
 	String saveCart(
-			@ModelAttribute BillingInfo billingInfo, HttpSession objSession,
+			@ModelAttribute BillingInfo billingInfo, HttpSession objSession,HttpServletResponse objResponce,
 			@RequestParam("jsondata") JSONObject data,
 			HttpServletRequest objRequest) {
 		List<BillingDetailsCart> listBillingDetails = null;
@@ -478,27 +431,33 @@ public class BillingController {
 			billingInfoCart.setOrderBy(data.getString("orderBy"));
 			billingInfoCart.setPayment(data.getString("payment"));
 			billingInfoCart.setPackSlipNo(data.getString("packSlipNo"));
+			billingInfoCart.setNetAmount(data.getString("netAmount"));
+			//System.out.println("netamoutnt=="+data.getString("netAmount"));
 			
 			isSave=objBillingInfoCartService.updateBillInfoCart(billingInfoCart);
 			
 			
 				
 			//updatedproductStock
-			//productStockService.updatedStock(existProductStock, billingdetailsCart, lstProductstock, data);
+			productStockService.updatedStock(sBillId,objSession);
 			
+			
+				
 			//update stockDetails
-			stockDetailsService.addSaveStockDetails(sBillId);
+			ProductStock oStock=  (ProductStock) objSession.getAttribute("sessionCartStock");
+			stockDetailsService.addSaveStockDetails(sBillId,oStock);
 			
 				if(isSave){
 					 objSession.setAttribute("sessionBillId","");
 					 objSession.setAttribute("updateCart", "");
 				}
 		  	 }
+		  	String newJson = billInfoController.unBillInfo(objResponce, sBillId, objSession, objRequest);
 		} catch (Exception ex) {
 			//System.out.println("Exception thrown in updateDeatailsCart");
 			ex.printStackTrace();
 		}
-		return sJson;
+		return "billInfoHome";
 	}
 	@RequestMapping(value = "/updateBillDetailsCart")
 	public @ResponseBody

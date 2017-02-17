@@ -119,7 +119,7 @@ public class PurchaseInfoServiceImpl implements PurchaseInfoService{
 					purchaserInfo.setAddress(data.getString("address"));
 					purchaserInfo.seteMail(data.getString("eMail"));
 					purchaserInfo.setMobileNo(data.getString("phone"));
-					purchaserInfo.setMobileNo(data.getString("tinNo"));
+					purchaserInfo.setTinNo(data.getString("tinNo"));
 					purchaserInfo.setUpdatedBy(CommonUtils.getDate());
 					purchaserInfo.setUpdatedDate(CommonUtils.getDate());
 					purchaserInfo.setPurchaseId(CommonUtils.getAutoGenId());

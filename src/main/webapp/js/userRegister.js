@@ -137,27 +137,7 @@ function userRegister() {
 			    setTimeout(function(){$('#email').focus();},0);
 			    return false;
 			    }
-	   /* else if($('#password').val().length <=3 ) {
-		    $('#password').css('color','red');
-		    $("#password").css("border-color","red");
-		    $("#password").attr("placeholder","Please enter password");
-		    $('#password').addClass('your-class');
-		    setTimeout(function(){$('#password').focus();},0);
-		    return false;
-		    }
-	    else if($('#cPassword').val().length == 0 ) {
-		    $('#cPassword').css('color','red');
-		    $("#cPassword").css("border-color","red");
-		    $("#cPassword").attr("placeholder","Please enter cPassword");
-		    $('#cPassword').addClass('your-class');
-		    setTimeout(function(){$('#cPassword').focus();},0);
-		    return false;
-		 }else if ($('#password').val() != $('#cPassword').val()) {
-			     $('#unc').show();
-			     $('#unc').text("Passwords do not match.");
-			     $("#unc").fadeOut(10000);
-	             return false;
-	    }*/else if($("#regId").val() != ""){
+	  else if($("#regId").val() != ""){
 			updateRegisterData();
 		}else{
 			saveRegisterData();
@@ -180,7 +160,7 @@ function saveRegisterData(){
                     	 
                     	  $("#unc").text('Registration done sucessfully.Please login with OTP and reset password.');
                     	  	$("#unc").show();
-                    	  	$("#unc").fadeOut(10000);
+                    	  	$("#unc").fadeOut(20000);
       					 	$("#regName").val("");
       					 	$("#mobileNo").val("");
       					 	$("#regType").val("");

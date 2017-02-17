@@ -2,6 +2,8 @@ package com.eBilling.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -96,19 +98,24 @@ public class ProductStockServiceImpl implements ProductStockService{
 		return isUpdate;
 	}
 	@Override
-	public boolean updatedStock(ProductStock productStock,BillingDetailsCart billingdetailsCart,List<ProductStock> lstProductstock,JSONObject data) {
+	public boolean updatedStock(String sBillId,HttpSession objSession) {
 		boolean isUpdate = false;
 		 String sProductId ="";
-		 String sBillId = "";
 		 List<BillingDetailsCart> listBillingDetails = null;
+		 List<ProductStock> lstProductstock =null;
+		 ProductStock productStock =null;
 		try {
-			sBillId = data.getString("billId");
 			listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
 			for(BillingDetailsCart billingdetailsC :listBillingDetails){
 				lstProductstock = productStockDao.getAllProductStockByProductId(billingdetailsC.getProductId());
 				productStock=lstProductstock.get(0);
-						int sNewStock =Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( billingdetailsC.getQuantity()));
-						 productStock.setStock(String.valueOf(sNewStock));
+				int sNewStock = Math.abs(Integer.parseInt(productStock.getNewStock()) - Integer.parseInt(billingdetailsC.getQuantity()));
+				
+				productStock.setOldStock(productStock.getNewStock());
+				productStock.setNewStock(String.valueOf(sNewStock));
+				productStock.setStock(String.valueOf(sNewStock));
+				
+				objSession.setAttribute("sessionCartStock",productStock);
 						 productStockDao.updateProductStock(productStock);
 				
 			}
@@ -191,7 +198,7 @@ public class ProductStockServiceImpl implements ProductStockService{
 	}
 
 	@Override
-	public boolean deductStock(String sProductId, String sBilledQty) {
+	public boolean deductStock(String sProductId, String sBilledQty,HttpSession objSession) {
 		boolean isUpdate = false;
 		List<ProductStock> lstProductstock = null;
 		try {
@@ -207,7 +214,7 @@ public class ProductStockServiceImpl implements ProductStockService{
 				int sOldStock=Math.abs(Integer.parseInt(sBilledQty) -Integer.parseInt(productStock.getOldStock()));
 				//productStock.setOldStock(String.valueOf(sOldStock));
 			}
-			
+			objSession.setAttribute("sessionStock",productStock);
 			productStockDao.updateProductStock(productStock);
 			isUpdate = true;
 
@@ -227,9 +234,10 @@ public class ProductStockServiceImpl implements ProductStockService{
 			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
 			ProductStock productStock = lstProductstock.get(0);
 			if(productStock.getOldStock() != null){
-			int sNewStock = Math.abs(Integer.parseInt(productStock.getOldStock()) + Integer.parseInt(sBilledQty));
-			productStock.setStock(String.valueOf(sNewStock));
+			productStock.setOldStock(productStock.getNewStock());
+			productStock.setStock(String.valueOf(sBilledQty));
 			productStock.setNewStock(sBilledQty);
+			
 			productStockDao.updateProductStock(productStock);
 			isUpdate = true;
 			}
@@ -294,7 +302,7 @@ public class ProductStockServiceImpl implements ProductStockService{
 		return isAdd;
 	}
 	@Override
-	public boolean updateProductStock(String sProductId, String sQty) {
+	public boolean updateProductStock(String sProductId, String sQty,HttpSession objSession) {
 		boolean isUpdate = false;
 		 List<Damage> lstDamageProduct =null;
 		 Damage existDamageStock =null;
@@ -313,11 +321,13 @@ public class ProductStockServiceImpl implements ProductStockService{
 			if(existDamageStock.getProductId().equals(sProductId)){
 				int stock = Math.abs(Integer.parseInt(sQty)-Integer.parseInt(existDamageStock.getQuantity()));
 				
-				int sNewStock = Math.abs(Integer.parseInt(productStock.getStock()) - Integer.parseInt( String.valueOf(stock)));
-				int sOldStock = Math.abs(Integer.parseInt(productStock.getOldStock()) - Integer.parseInt( String.valueOf(stock)));
+				int sNewStock = Math.abs(Integer.parseInt(productStock.getNewStock()) - Integer.parseInt( String.valueOf(stock)));
+				//int sOldStock = Math.abs(Integer.parseInt(productStock.getOldStock()) - Integer.parseInt( String.valueOf(stock)));
 				 productStock.setStock(String.valueOf(sNewStock));
-				 productStock.setOldStock(String.valueOf(sOldStock));
+				 productStock.setNewStock(String.valueOf(sNewStock));
+				 productStock.setOldStock(productStock.getNewStock());
 				 
+				 objSession.setAttribute("sessionDamageStock",productStock);
 				 productStockDao.updateProductStock(productStock);
 			}
 			
@@ -326,6 +336,82 @@ public class ProductStockServiceImpl implements ProductStockService{
 			e.printStackTrace();
 		}finally{
 			
+		}
+		return isUpdate;
+	}
+	@Override
+	public boolean addNewStock(ProductStock productStock) {
+		boolean isAdd = false;
+		boolean isupdate =false;
+		List<ProductStock> lstProductstock = null;
+		ProductStock existProductstock =null;
+		try {
+			String sProductId = productStock.getProductId();
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			for(int i=0;i<lstProductstock.size();i++){
+				existProductstock =lstProductstock.get(i);
+			}
+			if(lstProductstock.size() == 0){
+				System.out.println("saveProductStock:::::::::::"+productStock.toString());
+				productStock.setStockId(CommonUtils.getAutoGenId());
+				productStock.setProductId(productStock.getProductId());
+				productStock.setOldStock(productStock.getStock());
+				productStock.setNewStock(productStock.getNewStock());
+				//int iOldStock=Integer.parseInt(productStock.getOldStock());
+				int iNewStock=Integer.parseInt(productStock.getNewStock());
+				//int iStock=iOldStock+iNewStock;
+				productStock.setStock(String.valueOf(iNewStock));
+				boolean isInsert = productStockDao.saveProductStock(productStock);
+				if(isInsert)
+					isAdd = true;
+			}else{
+				if(existProductstock.getProductId() !=null && existProductstock.getProductId().equals(sProductId)){
+					productStock.setStockId(existProductstock.getStockId());
+					productStock.setOldStock(existProductstock.getNewStock());
+					int iPreNewStock=Integer.parseInt(existProductstock.getNewStock());
+					int iNewStock=Integer.parseInt(productStock.getNewStock());
+					int iStock=iPreNewStock+iNewStock;
+					productStock.setStock(String.valueOf(iStock));
+					productStock.setNewStock(String.valueOf(iStock));
+					
+					isupdate = productStockDao.updateProductStock(productStock);
+					if(isupdate)
+						isAdd = true;
+					
+				
+				}
+				}
+
+		} catch (Exception e) {
+			objLogger.error("Exception in ProductStockServiceImpl in addStock() " + e);
+			e.printStackTrace();
+		} finally {
+
+		}
+		return isAdd;
+	}
+	@Override
+	public boolean deductedStock(String sProductId, String sBilledQty,HttpSession objSession) {
+		boolean isUpdate = false;
+		List<ProductStock> lstProductstock = null;
+		try {
+			lstProductstock = productStockDao.getAllProductStockByProductId(sProductId);
+			ProductStock productStock = lstProductstock.get(0);
+			int sNewStock = Math.abs(Integer.parseInt(productStock.getNewStock()) - Integer.parseInt(sBilledQty));
+			
+			productStock.setOldStock(productStock.getNewStock());
+			productStock.setNewStock(String.valueOf(sNewStock));
+			productStock.setStock(String.valueOf(sNewStock));
+			
+			objSession.setAttribute("sessionStock",productStock);
+			productStockDao.updateProductStock(productStock);
+			isUpdate = true;
+
+		} catch (Exception e) {
+			objLogger.error("Exception in ProductStockServiceImpl in deductStock() " + e);
+			e.printStackTrace();
+		} finally {
+
 		}
 		return isUpdate;
 	}

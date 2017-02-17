@@ -10,7 +10,7 @@
     </div>
     <div class="block-4">    		
     		<p class="text-prop">Prop: <span>D. Kumaraswamy</span></p>
-    		<p class="text-address">MIG-183, 1<small>st</small>floor,Bharat Nagar Colony,</p>  
+    		<p class="text-address">MIG-183, 1<small>st</small>floor, Bharat Nagar Colony,</p>  
     		<p class="text-address">Moosapet,Hyderabad - 500 018</p>
     		<h4 class="text-tin">Tin no: <span>1234567890</span></h4> 	
     </div>

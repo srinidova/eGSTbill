@@ -2,6 +2,8 @@ package com.eBilling.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONObject;
 
 import com.eBilling.baseModel.BillingDetailsCart;
@@ -23,8 +25,7 @@ public interface ProductStockService {
 	List<ProductStock> getAllProductStockByProductId(String sProductId);
 
 
-	boolean updatedStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,
-			List<ProductStock> lstProductstock, JSONObject data);
+	boolean updatedStock(String sBillId,HttpSession objSession);
 
 	/*boolean updateStock(ProductStock productStock, BillingDetailsCart billingdetailsCart,
 			List<ProductStock> lstProductstock, JSONObject data);*/
@@ -38,11 +39,17 @@ public interface ProductStockService {
 
 	boolean addStock(ProductStock productStock);
 
-	boolean updateProductStock(String sProductId, String sBilledQty);
+	boolean updateProductStock(String sProductId, String sBilledQty,HttpSession objSession);
 
-	boolean deductStock(String sProductId, String sBilledQty);
+	//boolean deductStock(String sProductId, String sBilledQty);
 
 	boolean deductProductStock(String sProductId, String sBilledQty);
+
+	boolean deductStock(String sProductId, String sBilledQty, HttpSession objSession);
+
+	boolean addNewStock(ProductStock productStock);
+
+	boolean deductedStock(String sProductId, String sBilledQty, HttpSession objSession);
 
 	//boolean updateStock(ProductStock productStock);
 

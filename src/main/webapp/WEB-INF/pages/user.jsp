@@ -41,7 +41,7 @@ function validateLogin(){
 	 
 	//data["regName"] = $("#regName").val();
 	//data["password"] = $("#password").val();
-	if(!$('#email').val().match((/^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i)||(/^1?(\d{3})(\d{3})(\d{4})$/)) ) {
+	if($('#email').val().length == 0) {
     	
 	    $('#email').css('color','red');
 	    $("#email").css("border-color","red");
@@ -175,7 +175,7 @@ $(function() {
                 </div>
                 <div class="login-pwd">
                     <label class="login-label-text">Password</label>
-                    <input class="input-login" type="password" name="cnumber" value="" id="password" onkeydown="removeBorder(this.id);" style="margin-left:10px;" />
+                    <input class="input-login" type="password" name="cnumber" value="" id="password" onkeydown="removeBorder(this.id);" style="margin-left:12px; width: 233px;" />
                 </div>
                 <div class="blck-login"> 
                 	<a href="resetPasswordHome" class="login-links" style="padding-right:36px;">Reset Password</a>  | <a href="registration" class="login-links" style="padding-left:29px;">Register</a> 
@@ -185,7 +185,7 @@ $(function() {
                 <aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
                 <aside class="block-footer-right">
                     <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
-                    <input class="btn-save" name="" id="login" value="login" type="submit" onclick="validateLogin();">
+                    <input class="btn-save" name="" id="login" value="Login" type="submit" onclick="validateLogin();">
                 </aside>
             </div>
         </form>

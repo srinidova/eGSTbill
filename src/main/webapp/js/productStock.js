@@ -26,12 +26,12 @@ function showProductData(response){
 						+ "' onclick='editProductStock(this.id)' id='editId' value='editStock' class='ico del' href='#'>Edit</a>"
 						+ '</li>'
 						
-						+ "<li class='ten-box' style='width:140%;'>"
+						+ "<li class='ten-box' style='width:129%;'>"
 						+ "<a href='javascript:void(0)' id='"
 						+ catObj.stockId
 						+ "' onclick='deleteProductStock(this.id)' id='delId' class='delRec' href='#'>Delete</a>"
 						+ '</li>'
-						+ "<li class='ten-box' style='width:20%;'><a id='"+catObj.productId+"' onclick='stockDetails(this.id);return false;'><img src='./images/icon2.jpg'></a>"
+						+ "<li class='ten-box' style='width:31%;' last><a id='"+catObj.productId+"' onclick='stockDetails(this.id);return false;'><img src='./images/icon2.jpg'></a>"
 						+"</li>"
 						+ "</li>"
 						+"</ul>";
@@ -44,7 +44,8 @@ function popupStockData(response){
 	$("#dialog tr").remove();
 	if(response != undefined && response.length >0){
 		var tblRow ="<table cellpadding='5' cellspacing='5' style='border:1px solid black; width: 100%;'>"
-			tblRow +="<tr><th style='border:1px solid black; '>Transaction Date</th><th style='border:1px solid black; padding-right: 10%;'>Transaction Type</th><th style='border:1px solid black; padding-right: 9%;'>Quantity</th><th style='border:1px solid black; padding-right: 6%;'>Product Name</th></tr>"
+			tblRow +="<tr><th style='border:1px solid black; '>Transaction Date</th><th style='border:1px solid black; padding-right: 10%;'>Transaction Type</th><th style='border:1px solid black; padding-right: 9%;'>Quantity</th><th style='border:1px solid black; padding-right: 6%;'>Product Name</th>" +
+					"<th style='border:1px solid black; padding-right: 6%;'>Old Quantity</th><th style='border:1px solid black; padding-right: 6%;'>New Quantity</th></tr>"
 		$.each(response,function(i, catObj) {
 			tblRow 	+= "<tr style='border:1px solid black;'><td style='border:1px solid black;'>"
 					+ catObj.transactionDate
@@ -57,6 +58,12 @@ function popupStockData(response){
 					+ "</td>"
 					+ "<td style='border:1px solid black;'>"
 					+ catObj.productName
+					+ "</td>"
+					+ "<td style='border:1px solid black;'>"
+					+ catObj.oldQuantity
+					+ "</td>"
+					+ "<td style='border:1px solid black;'>"
+					+ catObj.newQuantity
 					+ "</td></tr>"
 					
 		});
@@ -77,20 +84,7 @@ $(function () {
         }
     });
 });
-   /* $("#btnSubmit").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "Default.aspx/SendParameters",
-            data: "{name: '" + $("#txtName").val() + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (r) {
-                $("#dialog").html(r.d);
-                $("#dialog").dialog("open");
-            }
-        });
-    });
-});*/
+ 
 function stockDetails(productId){
 	data = {};
 	data["productId"] = productId;
@@ -161,7 +155,7 @@ function deleteProductStock(id) {
 		                 if(response != null ){
 		                	 $("#unc1").text("Delete Sucessfully");
 		            		   $("#unc1").show();
-		                       $("#unc1").fadeOut(5000);
+		                       $("#unc1").fadeOut(15000);
 		                	 showProductData(response);
 		                	}
 		                 },
@@ -211,12 +205,12 @@ function saveProductStock(){
                 	  $("#unc").text('Name already exists. Please choose other Name');
                 	  $("#stock").val("");
                 	  $("#unc").show();
-                      $("#unc").fadeOut(5000);
+                      $("#unc").fadeOut(15000);
                   }else{
                 	showProductData(resJSON);
                 	 $("#unc").text('Save Sucessfully');
                	  	 $("#unc").show();
-                     $("#unc").fadeOut(5000);
+                     $("#unc").fadeOut(15000);
   					 $("#stock").val("");
   					 $("#newStock").val("");
   					$("#oldStock").val("");
@@ -244,12 +238,12 @@ function updateProductStock(){
             		 if(resJSON.status == "ERROR"){
                    	  	 $("#unc").text('Name already exists. Please choose other Name');
                    	 	 $("#unc").show();
-                         $("#unc").fadeOut(5000);
+                         $("#unc").fadeOut(15000);
                      }else{
                    	showProductData(resJSON);
                    	 $("#unc").text('Updated Sucessfully');
                   	  	 $("#unc").show();
-                        $("#unc").fadeOut(5000);
+                        $("#unc").fadeOut(15000);
      					 $("#stock").val("");
      					 $("#newStock").val("");
      					$("#oldStock").val("");

@@ -62,11 +62,11 @@
  	    $('#newPassword').addClass('your-class');
  	   $("#unc").text('Please Enter Minimum 6 Charecters');
 	   		$("#unc").show();
-  	 	$("#unc").fadeOut(25000);
+  	 	$("#unc").fadeOut(15000);
  	    setTimeout(function(){$('#newPassword').focus();},0);
  	    return false;
  	    }
- 	else if($('#oldPassword').val().length <=3 ) {
+ 	else if($('#oldPassword').val().length <=0 ) {
  	    $('#oldPassword').css('color','red');
  	    $("#oldPassword").css("border-color","red");
  	    $("#oldPassword").attr("placeholder","Please enter oldPassword");
@@ -75,7 +75,7 @@
  	    return false;
  	    }
 
- 	 else if($('#confirmPassword').val().length <=3 ) {
+ 	 else if($('#confirmPassword').val().length <=0 ) {
  		    $('#confirmPassword').css('color','red');
  		    $("#confirmPassword").css("border-color","red");
  		    $("#confirmPassword").attr("placeholder","Please enter confirmPassword");
@@ -189,20 +189,20 @@
         <form name="cf_form" method="post" id="loginForm" onsubmit="return false;">
             <div class="login-block">                
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:43px; font-size: 15px;">Email:</label>
-                    <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%;margin-left:11%"/>
+                    <label class="login-label-text" style="margin-right: 48px;margin-left: 73px;font-size: 15px;">Email:</label>
+                    <input class="input-login" type="text" name="mobileNoEmail"  value="" id="mobileNoEmail" onkeydown="removeBorder(this.id);" style="margin-bottom: 9px;width: 53%;margin-left: -8%;"/>
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:43px;     font-size: 15px;" >OTP/OldPassword:</label>
-                    <input class="input-login" type="password" name="oldPassword"  value="" id="oldPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-12%" />
+                    <label class="login-label-text" style="margin-right:43px;margin-left: -13px;font-size: 15px;" >OTP/OldPassword:</label>
+                    <input class="input-login" type="password" name="oldPassword"  value="" id="oldPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53.5%;margin-left: -7%;" />
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:43px;     font-size: 15px;">NewPassword:</label>
-                    <input class="input-login" type="password" name="newPassword"  value="" id="newPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-4%" />
+                    <label class="login-label-text" style="margin-right:43px;margin-left: 17px;font-size: 15px;">NewPassword:</label>
+                    <input class="input-login" type="password" name="newPassword"  value="" id="newPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53.5%;margin-left: -7.2%;" />
                 </div>
                 <div class="login-un">
-                    <label class="login-label-text" style="margin-right:26px;     font-size: 15px;">ConfirmPassword:</label>
-                    <input class="input-login" type="password" name="confirmPassword"  value="" id="confirmPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53%; margin-left:-5%" />
+                    <label class="login-label-text" style="margin-right:26px;margin-left: -5px;font-size: 15px;">ConfirmPassword:</label>
+                    <input class="input-login" type="password" name="confirmPassword"  value="" id="confirmPassword" onkeydown="removeBorder(this.id);" style="margin-bottom:10px;width: 53.6%;margin-left: -3%;" />
                 </div>
                <!--  <div class="login-pwd">
                     <label class="login-label-text">OldPassword</label>
@@ -224,7 +224,7 @@
                 <aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
                 <aside class="block-footer-right">
                     <input class="btn-cancel" name="" value="Cancel" type="button" onclick="dataClear();">
-                    <input class="btn-save" name="" id="login" value="submit" type="submit" onclick="resetPassword();">
+                    <input class="btn-save" name="" id="login" value="Submit" type="submit" onclick="resetPassword();">
                 </aside>
             </div>
         </form>

@@ -40,9 +40,6 @@ $("#logout").click(function(){
 			<li> Upload </li>
 			<li> Users </li>
 			<li> Send Sms </li>
-			<!-- <li>Bill Info </li> -->
-			<!-- <li>clientInfo</li> -->
-            <!-- //<li><a href="/eBilling/loginHome">Login</a></li> -->
             <li style="padding-left:50%;">Hi,<a href="/eBilling/loginHome">Login</a></li>
 
         <% } else {
@@ -61,7 +58,7 @@ $("#logout").click(function(){
 		<li> <a href="sendSmsHome" id="sendSms">Send Sms</a> </li>
 		<!-- <li> <a href="statusHome">Status</a> </li> -->
 		
-        <li style="padding-left:19%;">Hi, <%=register.getRegName() %><a href="logOut" id="logout" style="margin-left: 73px;">Logout</a></li>
+        <li style="padding-left:19%; color:#283da2;">Hi, <%=register.getRegName() %><a href="logOut" id="logout" style="margin-left: 73px;">Logout</a></li>
         <% }%>
 		
 </ul>

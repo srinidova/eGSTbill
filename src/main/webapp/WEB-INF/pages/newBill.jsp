@@ -78,7 +78,7 @@
 				changeMonth : true,
 				changeYear : true,
 				showButtonPanel : false,
-				dateFormat : 'yy-mm-dd'
+				dateFormat : 'dd-mm-yy'
 			});
 		});
 		$(function() {
@@ -87,7 +87,7 @@
 				changeMonth : true,
 				changeYear : true,
 				showButtonPanel : false,
-				dateFormat : 'yy-mm-dd'
+				dateFormat : 'dd-mm-yy'
 			});
 		});
 		$(function() {
@@ -96,7 +96,7 @@
 				changeMonth : true,
 				changeYear : true,
 				showButtonPanel : false,
-				dateFormat : 'yy-mm-dd'
+				dateFormat : 'dd-mm-yy'
 			});
 		});
 		function getAllProducts() {
@@ -326,8 +326,8 @@
                                                 <li><a class="bottom" href="#">&nbsp;</a></li>
                                             </ul>
                                         </li>        
-                                        <li class="eleven-box last">Edit</li>        
-                                        <li class="ten-box">Delete</li>
+                                        <li class="eleven-box">Edit</li>        
+                                        <li class="ten-box last" >Delete</li>
                                     </ul>
                                     <div class="table-list-blk" id="userData"> </div>
                                     </ul>
@@ -368,7 +368,7 @@
                                                         </div>
                                                         <div class="block-searchbill">
                                                          <div class="block-input ">
-                                                                <label>CustomerType</label>
+                                                                <label>Customer Type</label>
                                                                 <select id="customerType" name="customerType" onchange="customerType();">
                                                                     <option value="oldCustmer" selected="selected">Old Custmer</option>
                                                                     <option value="newCustmer">New Custmer</option>
@@ -389,7 +389,7 @@
                                                             </div>  
                                                             <div class="block-input last">
                                                                 <label><b>Total Amount</b></label>
-                                                                <input disabled="disabled" type="text" name="totalAmount" id="totalAmount">
+                                                                <input disabled="disabled" type="text" name="totalAmount" id="totalAmount" >
                                                             </div>
                                                             
                                                         </div>
@@ -404,7 +404,7 @@
                                                             </div>  
                                                             <div class="block-input">
                                                                 <label>Discount</label>
-                                                                <input type="text" name="discount" id="discount">
+                                                                <input  type="text" name="discount" id="discount" onchange="netAmount()">
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">
@@ -419,7 +419,7 @@
                                                             </div>
                                                             <div class="block-input last">
                                                                 <label>Net Amount</label>
-                                                                <input type="text" name="netAmoumt" id="netAmoumt">
+                                                                <input disabled="disabled" type="text" name="netAmount" id="netAmount">
                                                             </div>
                                                         </div>
                                                         <div class="block-searchbill">

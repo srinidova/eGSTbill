@@ -98,7 +98,7 @@ function deleteDamage(id) {
 		                 if(response != null ){
 		                	 $("#unc").text("Delete Sucessfully");
 		            		   $("#unc").show();
-		                       $("#unc").fadeOut(5000);
+		                       $("#unc").fadeOut(15000);
 		                	 showDamageData(response);
 		                	}
 		                 },
@@ -132,6 +132,16 @@ function damageRegister() {
 			    $('#description').addClass('your-class');
 			    return false;
 			    } 
+		    else if($('#productId').val().length == 0 ) {
+			    $('#productId').css('color','red');
+			    $("#productId").css("border-color","red");
+			    $("#productId").attr("placeholder","Choose Product Name");
+			    $('#productId').addClass('your-class');
+			    $("#unc").text('Choose Product Name.');
+          	  	 $("#unc").show();
+                $("#unc").fadeOut(15000);
+			    return false;
+			    }
 		   
 		 if(dId != "" ){
 			data["dmageId"] = dId;
@@ -156,12 +166,18 @@ function saveDamage(){
                 	  $("#unc").text('Name already exists. Please choose other Name');
                 	  $("#productId").val("");
                 	  $("#unc").show();
-                      $("#unc").fadeOut(5000);
-                  }else{
+                      $("#unc").fadeOut(15000);
+                  }else if(resJSON.status == "ERRORS"){
+                	  $("#unc").text('Product Stock is Low.');
+                	  $("#productId").val("");
+                	  $("#unc").show();
+                      $("#unc").fadeOut(15000);
+                  }
+                  else{
                 	showDamageData(resJSON);
                 	 $("#unc").text('Save Sucessfully');
                	  	 $("#unc").show();
-                     $("#unc").fadeOut(5000);
+                     $("#unc").fadeOut(15000);
   					 $("#productId").val("");
   					 $("#quantity").val("");
   					$("#description").val("");
@@ -191,12 +207,18 @@ function updateDamage(){
             		 if(resJSON.status == "ERROR"){
                    	  	 $("#unc").text('Name already exists. Please choose other Name');
                    	 	 $("#unc").show();
-                         $("#unc").fadeOut(5000);
-                     }else{
+                         $("#unc").fadeOut(15000);
+                     }else if(resJSON.status == "ERRORS"){
+                	  $("#unc").text('Product Stock is Low.');
+                	  $("#productId").val("");
+                	  $("#unc").show();
+                      $("#unc").fadeOut(15000);
+                  }
+            		 else{
                    	showDamageData(resJSON);
                    	 $("#unc").text('Updated Sucessfully');
                   	  	 $("#unc").show();
-                        $("#unc").fadeOut(5000);
+                        $("#unc").fadeOut(15000);
      					 $("#productId").val("");
      					 $("#quantity").val("");
      					$("#description").val("");

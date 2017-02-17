@@ -18,7 +18,7 @@ public class StockDetailsBaseDao {
 	@Autowired
 	public JdbcTemplate jdbcTemplate;
 
-	public final String INSERT_SQL = "INSERT INTO stockDetails( productId,stockDetailsId,transactionType,quantity,transactionId,transactionDate,updatedBy) values (?, ?,?, ?,?,?,?)";
+	public final String INSERT_SQL = "INSERT INTO stockDetails( productId,stockDetailsId,transactionType,quantity,transactionId,transactionDate,updatedBy,oldQuantity,newQuantity) values (?, ?,?, ?,?,?,?,?,?)";
 
 	@Transactional
 	public boolean saveStockDetails(final StockDetails stockDetails) {
@@ -31,7 +31,7 @@ public class StockDetailsBaseDao {
 			int insert = jdbcTemplate.update(
 				INSERT_SQL,
 				new Object[] {  stockDetails.getProductId(),
-						stockDetails.getStockDetailsId(),stockDetails.getTransactionType(),stockDetails.getQuantity(),stockDetails.getTransactionId(),stockDetails.getTransactionDate(),stockDetails.getUpdatedBy()});
+						stockDetails.getStockDetailsId(),stockDetails.getTransactionType(),stockDetails.getQuantity(),stockDetails.getTransactionId(),stockDetails.getTransactionDate(),stockDetails.getUpdatedBy(),stockDetails.getOldQuantity(),stockDetails.getNewQuantity()});
 		if (insert > 0) {
 			isSave = true;
 		}
@@ -84,7 +84,7 @@ public class StockDetailsBaseDao {
 	public List<StockDetails> getProductStockDetailsByProductId(String sProductId) {
 		List<StockDetails> retlist = null;
 		try {
-			String sql = "SELECT s.productId,transactionType,quantity,transactionDate,p.productName from stockdetails s,product p where s.productId = p.productId and s.productId =?";
+			String sql = "SELECT s.productId,transactionType,quantity,transactionDate,p.productName,oldQuantity,newQuantity from stockdetails s,product p where s.productId = p.productId and s.productId =?";
 			System.out.println("query for getProductStockDetailsByProductId===="+sql);
 			retlist = jdbcTemplate.query(sql, new Object[] {sProductId}, new BeanPropertyRowMapper<StockDetails>(StockDetails.class));
 		} catch (Exception e) {

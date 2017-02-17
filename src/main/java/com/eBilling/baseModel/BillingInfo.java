@@ -31,7 +31,14 @@ public class BillingInfo {
 	protected String packSlipNo;
 	protected List<BillingDetails> listBillingDeteails;
 	protected List<PurchaserInfo> listPurchase;
+	protected String netAmount;
 	
+	public String getNetAmount() {
+		return netAmount;
+	}
+	public void setNetAmount(String netAmount) {
+		this.netAmount = netAmount;
+	}
 	
 	
 	

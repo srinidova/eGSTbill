@@ -27,6 +27,14 @@ public class BillingInfoCart {
 	protected String orderBy;
 	protected String payment;
 	protected String packSlipNo;
+	protected String netAmount;
+	
+	public String getNetAmount() {
+		return netAmount;
+	}
+	public void setNetAmount(String netAmount) {
+		this.netAmount = netAmount;
+	}
 	protected List<BillingDetailsCart> listBillingInfoCart;
 	protected List<PurchaserInfo> listPurchase;
 	

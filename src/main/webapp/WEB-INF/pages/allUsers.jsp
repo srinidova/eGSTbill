@@ -124,7 +124,7 @@
 		<section class="container">
 			<div class="block">
 				<h2><span class="icon1">&nbsp;</span>New Register<aside class="block-footer-right sucessfully" id="unc2" style="display:none;" >Delete Sucessfully</aside></h2>
-				<form name="cf_form" method="post" onsubmit="return false;" id="contact-form" >
+				<form name="cf_form" method="post" onsubmit="return false;" id="contact-form" style=" background-color: #ffffff;">
 					<div class="block-searchbill">
 						<div class="block-searchbill-input">
 							<label >Name</label>
@@ -187,13 +187,13 @@
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>
-						<li class="five-box" style="width:221%">email
+						<li class="five-box" style="width:221%">Email
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>    
-						<li class="five-box" style="width:100%">RegisterType
+						<li class="five-box" style="width:100%">Register Type
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>

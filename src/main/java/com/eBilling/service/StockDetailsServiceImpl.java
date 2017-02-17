@@ -2,13 +2,13 @@ package com.eBilling.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eBilling.baseModel.BillingDetailsCart;
-import com.eBilling.dao.ProductStockDao;
 import com.eBilling.dao.StockDetailsDao;
 import com.eBilling.model.ProductStock;
 import com.eBilling.model.StockDetails;
@@ -66,29 +66,12 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 			return lstStockDetails;
 		}
 	 @Override
-		public boolean addStockDetails(String sProductId, String sBilledQty, String sBillId, String sTransactionTpye) {
+		public boolean addStockDetails(String sProductId, String sBilledQty, String sBillId, String sTransactionTpye,String sNewStock,String sOldStock) {
 			boolean isAdd = false;
 			 StockDetails stockDetails =null;
 			try {
-					/*sBillId = data.getString("billId");
-					listBillingDetails = objBillingDetatilsCartService.getAllbillDeteailsCart(sBillId);
-					for(BillingDetailsCart billingdetailsC :listBillingDetails){
-						List<StockDetails> lstStockDeatails =getStockDetailsByProductId(billingdetailsC.getProductId());
-				List<BillingDetailsCart> listBillingDetails = null;
-						stockDetails=lstStockDeatails.get(0);
-					String sSale="Sale";
-					stockDetails.setQuantity( billingdetailsC.getQuantity());
-					stockDetails.setTransactionId(data.getString("billNo"));
-					stockDetails.setTransactionType(sSale);
-					stockDetails.setTransactionDate(CommonUtils.getDate());
-					
-					
-					stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
-					stockDetails.setProductId(billingdetailsC.getProductId());
-						saveStockDetails(stockDetails);
-						//updateStockDetails(stockDetails);
-						 * 
-*/					
+				
+				
 				stockDetails =new StockDetails();
 				stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
 				stockDetails.setProductId(sProductId);
@@ -96,7 +79,8 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 				stockDetails.setTransactionId(sBillId);
 				stockDetails.setTransactionDate(CommonUtils.getDate());
 				stockDetails.setTransactionType(sTransactionTpye);
-				
+				stockDetails.setNewQuantity(sNewStock);
+				stockDetails.setOldQuantity(sOldStock);
 				boolean isInsert = stockDetailsDao.saveStockDetails(stockDetails);
 				if(isInsert){
 					isAdd =true;
@@ -126,7 +110,7 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 			return productStockDetails;
 		}
 	 @Override
-		public boolean addSaveStockDetails(String sBillId ) {
+		public boolean addSaveStockDetails(String sBillId,ProductStock oStock) {
 			boolean isAdd = false;
 			 StockDetails stockDetails =null;
 			 List<BillingDetailsCart> listBillingDetails = null;
@@ -135,6 +119,10 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 					for(BillingDetailsCart billingdetailsC :listBillingDetails){
 						List<StockDetails> lstStockDeatails =getStockDetailsByProductId(billingdetailsC.getProductId());
 						stockDetails=lstStockDeatails.get(0);
+						
+						  String sNewStock=oStock.getNewStock();
+						  String sOldStock = oStock.getOldStock();
+						
 					String sSale="Cart";
 					stockDetails.setQuantity( billingdetailsC.getQuantity());
 					stockDetails.setTransactionId(sBillId);
@@ -142,6 +130,9 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 					stockDetails.setTransactionDate(CommonUtils.getDate());
 					stockDetails.setStockDetailsId(CommonUtils.getAutoGenId());
 					stockDetails.setProductId(billingdetailsC.getProductId());
+					stockDetails.setNewQuantity(sNewStock);
+					stockDetails.setOldQuantity(sOldStock);
+					
 					boolean isInsert = stockDetailsDao.saveStockDetails(stockDetails);
 					
 					}

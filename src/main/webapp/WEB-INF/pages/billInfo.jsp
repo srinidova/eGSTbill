@@ -7,7 +7,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%> --%>
 
 <head>
+<style type="text/css">
+.bill-info-td{
+color: #fff;
+}
 
+</style>
 </head>
 <body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -27,10 +32,6 @@ $(document).ready(function() {
 		showUnBillDetailsData(JSON.parse(unBill));
 		//showUnBIllPrintData(unBill);
 	}
-	/* var PrintBillDetails = '${sessionScope.PrintBillDetails}';
-	var PrintBillInfo = '${sessionScope.PrintBillInfo}';
-	showBillDetailsData(PrintBillDetails);
-	showPrintData(PrintBillInfo); */
 	
 });
 
@@ -99,6 +100,7 @@ function showPrintData(response){
 		 $('#discount').text(catObj.discount);
 		 $('#phone').text(catObj.phone);
 		 $('#address').text(catObj.address);
+		 $('#netAmount').text(catObj.netAmount);
 	});
 	}
 }
@@ -114,22 +116,22 @@ function showUnBillDetailsData(response){
 			$.each(resBillInfo,function(i, catObj) {
 				serviceUnitArray[catObj.billDetailsId] = catObj;
 				 var tblRow ="<ul class=''>"
-					 	+ "<li class='five-box'  title='"+catObj.billDetailsId+"' style='width:10%;'>"
+					 	+ "<li class='five-box'  title='"+catObj.billDetailsId+"'>"
 						+ (i+1)
 						+"</li>"
-						+ "<li class='bil-prod-box'  title='"+catObj.productName+"' style='width:100%;'>"
+						+ "<li class='bil-prod-box'  title='"+catObj.productName+"'>"
 						+ catObj.productName
 						+ "</li>"
-						+ "<li class='five-box'  title='"+catObj.mrp+"' style='width:35%;'>"
+						+ "<li class='five-box'  title='"+catObj.mrp+"'>"
 						+ catObj.mrp
 						+ "</li>"
-						+ "<li class='five-box'  title='"+catObj.quantity+"' style='width:35%;'>"
+						+ "<li class='five-box'  title='"+catObj.quantity+"'>"
 						+ catObj.quantity
 						+ "</li>"
-						+ "<li class='five-box'  title='"+catObj.rate+"' style='width:35%;'>"
+						+ "<li class='five-box'  title='"+catObj.rate+"'>"
 						+ catObj.rate
 						+ "</li>"
-						+ "<li class='five-box'  title='"+catObj.amount+"' style='width:35%;'>"
+						+ "<li class='five-box'  title='"+catObj.amount+"'>"
 						+ catObj.amount
 						+ "</li>"
 						+"</ul>";
@@ -156,6 +158,7 @@ function showUnBillDetailsData(response){
 		 $('#discount').text(response.discount);
 		 $('#phone').text(response.phone);
 		 $('#address').text(response.address);
+		 $('#netAmount').text(response.netAmount);
 	}
 	//paginationTable(3);
 }
@@ -213,7 +216,7 @@ function dataCancel() {
 
 </script>
 		<section id="printSec" class="container">
-			<div class="block">
+			<div class="block" style="background: #314252;">
 				<h2 id="newbill"><span class="icon1">&nbsp;</span>Bill Products</h2>
 				<form:form name="cf_form" method="post" id="contact-form" commandName="" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 				<div>
@@ -238,7 +241,7 @@ function dataCancel() {
 					    <div class="block-3">
 							<div class="mobile-no">
 								<h5>Mobile: 9246885990 <p>9246595990</p> <p>9246959550</p></h5>
-								<p class="text-email"><span class="label-text">Email:</span> <span id="clientEmailBrand"></span></p>
+								<p class="text-email"><span class="label-text">Email:</span> <span id="clientEmailBrand">gowthamihandlooms@gmail.com</span></p>
 							</div>
 						</div>
 					</div> 
@@ -378,7 +381,7 @@ function dataCancel() {
                            <li class="five-box">&nbsp;</li>
                            <li class="five-box">&nbsp;</li>
                             <li class="five-box" style="text-align:right;"><h4>Discount</h4></li>
-                            <li class="five-box"><span>400</span></li>  
+                            <li class="five-box" id="discount"><span></span></li>  
                 		</ul>
                 	</div>
                 	<div>
@@ -388,7 +391,7 @@ function dataCancel() {
                            <li class="five-box">&nbsp;</li>
                            <li class="five-box">&nbsp;</li>
                             <li class="five-box" style="text-align:right;"><h4>Grand Total</h4></li>
-                            <li class="five-box"><span>400</span></li>  
+                            <li class="five-box" id="netAmount"><span></span></li>  
                 		</ul>
                 	</div>
 						

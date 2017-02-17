@@ -33,7 +33,7 @@ function sendSms(){
 	if($('#message').val().length == 0 ) {
 	    $('#message').css('color','red');
 	    $("#message").css("border-color","red");
-	    $("#message").attr("placeholder","Please enter message");
+	    $("#message").attr("placeholder","Please Enter Message");
 	    $('#message').addClass('your-class');
 	    return false;
 	    }
@@ -45,7 +45,7 @@ function sendSms(){
        		 if(response != "" ){
 	       		$("#unc").text('Send Sucessfully');
 	       	  	$("#unc").show();
-	       	  	$("#unc").fadeOut(slow);
+	       	  	$("#unc").fadeOut(15000);
 	       	 $("#message").val("");
        		 }
             },
@@ -64,11 +64,11 @@ function sendSms(){
 				<form name="myForm" method="post" id="contact-form" class="form-horizontal"  onsubmit="return validationequiry()">
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="" >
-							<label>Message:</label>
+							<label>Message</label>
 							 <textarea rows="4" cols="30" name="message" id="message" ></textarea>
 						</div>
 						<div class="block-searchbill-input">
-							<label>Send To:</label>
+							<label>Send To</label>
 							<select id="sendTo" name="sendTo"    tabindex="2"  />
                         <option value="0">Purchaser</option>
                         <option value="1">Custmor</option>
@@ -78,7 +78,7 @@ function sendSms(){
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
 						<aside class="block-footer-right">
-							 <input class="btn-cancel" value="cancel"  name="Cancel" type="button" onclick="dataClear();" >
+							 <input class="btn-cancel" value="Cancel"  name="Cancel" type="button" onclick="dataClear();" >
                     <input class="btn-save" value="Submit" id="Submit" type="button" onClick="sendSms();">
 						</aside>
 					</div>

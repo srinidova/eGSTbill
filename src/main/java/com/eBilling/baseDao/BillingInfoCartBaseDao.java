@@ -23,7 +23,7 @@ public class BillingInfoCartBaseDao {
 	public JdbcTemplate jdbcTemplate;
 	
 	
-	public final String INSERT_SQL = "INSERT INTO billinginfocart(billNo,billId,billDate,lrNo,lrDate,orderNo,orderDate,dispatchedBy,dispatchedDate,noOfPacks,termOfPayment,terms,name,totalAmount,tinNo,phone,address,discount,totalMrp,totalQuantity,totalRate,orderBy,payment,packSlipNo) values (?, ?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public final String INSERT_SQL = "INSERT INTO billinginfocart(billNo,billId,billDate,lrNo,lrDate,orderNo,orderDate,dispatchedBy,dispatchedDate,noOfPacks,termOfPayment,terms,name,totalAmount,tinNo,phone,address,discount,totalMrp,totalQuantity,totalRate,orderBy,payment,packSlipNo,netAmount) values (?, ?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	/* this should be conditional based on whether the id is present or not */
 	@Transactional
@@ -35,7 +35,7 @@ public class BillingInfoCartBaseDao {
 			int insert = jdbcTemplate.update(
 				INSERT_SQL,
 				new Object[] { 
-						billingInfoCart.getBillNo(),billingInfoCart.getBillId(),billingInfoCart.getBillDate(),billingInfoCart.getLrNo(),billingInfoCart.getLrDate(),billingInfoCart.getOrderNo(),billingInfoCart.getOrderDate(),billingInfoCart.getDispatchedBy(),billingInfoCart.getDispatchedDate(),billingInfoCart.getNoOfPacks(),billingInfoCart.getTermOfPayment(),billingInfoCart.getTerms(),billingInfoCart.getName(),billingInfoCart.getTotalAmount(),billingInfoCart.getTinNo(),billingInfoCart.getPhone(),billingInfoCart.getAddress(),billingInfoCart.getDiscount(),billingInfoCart.getTotalMrp(),billingInfoCart.getTotalQuantity(),billingInfoCart.getTotalRate(),billingInfoCart.getOrderBy(),billingInfoCart.getPayment(),billingInfoCart.getPackSlipNo()});
+						billingInfoCart.getBillNo(),billingInfoCart.getBillId(),billingInfoCart.getBillDate(),billingInfoCart.getLrNo(),billingInfoCart.getLrDate(),billingInfoCart.getOrderNo(),billingInfoCart.getOrderDate(),billingInfoCart.getDispatchedBy(),billingInfoCart.getDispatchedDate(),billingInfoCart.getNoOfPacks(),billingInfoCart.getTermOfPayment(),billingInfoCart.getTerms(),billingInfoCart.getName(),billingInfoCart.getTotalAmount(),billingInfoCart.getTinNo(),billingInfoCart.getPhone(),billingInfoCart.getAddress(),billingInfoCart.getDiscount(),billingInfoCart.getTotalMrp(),billingInfoCart.getTotalQuantity(),billingInfoCart.getTotalRate(),billingInfoCart.getOrderBy(),billingInfoCart.getPayment(),billingInfoCart.getPackSlipNo(),billingInfoCart.getNetAmount()});
 		if (insert > 0) {
 			isSave = true;
 		}
@@ -101,12 +101,12 @@ public class BillingInfoCartBaseDao {
 		try {
 			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
 			
-			String sql = "UPDATE billinginfocart  set billNo = ? ,billDate= ?, lrNo = ?,lrDate = ?,orderNo =?,orderDate=?,dispatchedBy=?,dispatchedDate=?,noOfPacks=?,termOfPayment=?,terms=?,name=?,phone=?,address=?,tinNo=?,totalAmount=?,discount=?,totalMrp=?,totalQuantity=?,totalRate=?,orderBy=?,payment=?,packSlipNo=? where billId = ? ";
+			String sql = "UPDATE billinginfocart  set billNo = ? ,billDate= ?, lrNo = ?,lrDate = ?,orderNo =?,orderDate=?,dispatchedBy=?,dispatchedDate=?,noOfPacks=?,termOfPayment=?,terms=?,name=?,phone=?,address=?,tinNo=?,totalAmount=?,discount=?,totalMrp=?,totalQuantity=?,totalRate=?,orderBy=?,payment=?,packSlipNo=?,netAmount=? where billId = ? ";
 
 			int update = jdbcTemplate.update(
 					sql,
 					new Object[] { 
-							billingInfoCart.getBillNo(),billingInfoCart.getBillDate(),billingInfoCart.getLrNo(),billingInfoCart.getLrDate(),billingInfoCart.getOrderNo(),billingInfoCart.getOrderDate(),billingInfoCart.getDispatchedBy(),billingInfoCart.getDispatchedDate(),billingInfoCart.getNoOfPacks(),billingInfoCart.getTermOfPayment(),billingInfoCart.getTerms(),billingInfoCart.getName(),billingInfoCart.getPhone(),billingInfoCart.getAddress(),billingInfoCart.getTinNo(),billingInfoCart.getTotalAmount(),billingInfoCart.getDiscount(),billingInfoCart.getTotalMrp(),billingInfoCart.getTotalQuantity(),billingInfoCart.getTotalRate(),billingInfoCart.getOrderBy(),billingInfoCart.getPayment(),billingInfoCart.getPackSlipNo(),billingInfoCart.getBillId()
+							billingInfoCart.getBillNo(),billingInfoCart.getBillDate(),billingInfoCart.getLrNo(),billingInfoCart.getLrDate(),billingInfoCart.getOrderNo(),billingInfoCart.getOrderDate(),billingInfoCart.getDispatchedBy(),billingInfoCart.getDispatchedDate(),billingInfoCart.getNoOfPacks(),billingInfoCart.getTermOfPayment(),billingInfoCart.getTerms(),billingInfoCart.getName(),billingInfoCart.getPhone(),billingInfoCart.getAddress(),billingInfoCart.getTinNo(),billingInfoCart.getTotalAmount(),billingInfoCart.getDiscount(),billingInfoCart.getTotalMrp(),billingInfoCart.getTotalQuantity(),billingInfoCart.getTotalRate(),billingInfoCart.getOrderBy(),billingInfoCart.getPayment(),billingInfoCart.getPackSlipNo(),billingInfoCart.getNetAmount(),billingInfoCart.getBillId()
 							 });
 			System.out.println(sql);
 			System.out.println(billingInfoCart.getBillId());

@@ -31,12 +31,12 @@ public class BillingInfoBaseDao {
 			}
 			java.sql.Timestamp updatedDate = new java.sql.Timestamp(product
 					.getUpdatedDate().getTime());*/
-			String INSERT_SQL1 = "INSERT INTO billinginfo(billId,billNo,billDate,lrNo,lrDate,orderNo,orderDate,dispatchedBy,dispatchedDate,noOfPacks,termOfPayment,terms,name,totalAmount,tinNo,phone,address,discount,totalMrp,totalQuantity,totalRate,orderBy,payment,packSlipNo) values (?, ?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String INSERT_SQL1 = "INSERT INTO billinginfo(billId,billNo,billDate,lrNo,lrDate,orderNo,orderDate,dispatchedBy,dispatchedDate,noOfPacks,termOfPayment,terms,name,totalAmount,tinNo,phone,address,discount,totalMrp,totalQuantity,totalRate,orderBy,payment,packSlipNo,netAmount) values (?, ?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			System.out.println("INSERT_SQL1==="+INSERT_SQL1);
 			int insert = jdbcTemplate.update(
 				INSERT_SQL1,
 				new Object[] { 
-						billInfo.getBillId(),billInfo.getBillNo(),billInfo.getBillDate(),billInfo.getLrNo(),billInfo.getLrDate(),billInfo.getOrderNo(),billInfo.getOrderDate(),billInfo.getDispatchedBy(),billInfo.getDispatchedDate(),billInfo.getNoOfPacks(),billInfo.getTermOfPayment(),billInfo.getTerms(),billInfo.getName(),billInfo.getTotalAmount(),billInfo.getTinNo(),billInfo.getPhone(),billInfo.getAddress(),billInfo.getDiscount(),billInfo.getTotalMrp(),billInfo.getTotalQuantity(),billInfo.getTotalRate(),billInfo.getOrderBy(),billInfo.getPayment(),billInfo.getPackSlipNo()});
+						billInfo.getBillId(),billInfo.getBillNo(),billInfo.getBillDate(),billInfo.getLrNo(),billInfo.getLrDate(),billInfo.getOrderNo(),billInfo.getOrderDate(),billInfo.getDispatchedBy(),billInfo.getDispatchedDate(),billInfo.getNoOfPacks(),billInfo.getTermOfPayment(),billInfo.getTerms(),billInfo.getName(),billInfo.getTotalAmount(),billInfo.getTinNo(),billInfo.getPhone(),billInfo.getAddress(),billInfo.getDiscount(),billInfo.getTotalMrp(),billInfo.getTotalQuantity(),billInfo.getTotalRate(),billInfo.getOrderBy(),billInfo.getPayment(),billInfo.getPackSlipNo(),billInfo.getNetAmount()});
 			System.out.println("insert==="+insert);		
 		if (insert > 0) {
 			//isSave = true;

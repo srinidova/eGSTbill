@@ -90,7 +90,20 @@ public class DamageController {
 		List<Damage> lstDamage = null;
 		List<ProductStock> lstProductstock =null;
 		 ProductStock productStock=null;
+		 String sProductId ="";
 		try {
+			sProductId = data.getString("productId");
+			if(sProductId !=""){
+			boolean bStockAvailable = objProductStockService.checkStock( sProductId, data.getString("quantity"));
+			System.out.println("bStockAvailable===="+bStockAvailable);
+			if(!bStockAvailable){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERRORS");
+				json.put("message", "Product Stock is Low");
+				sJson = json.toString();
+				return sJson;
+			}
+			}
 				String sDamageId = CommonUtils.getAutoGenId();
 				damage.setDamageId(sDamageId);
 				damage.setProductId(data.getString("productId"));
@@ -106,8 +119,12 @@ public class DamageController {
 				}
                
 					sJson = damageServiceImpl.getAllDamage();
-					objProductStockService.deductStock(data.getString("productId"), data.getString("quantity"));
-					stockDetailsService.addStockDetails(data.getString("productId"),  data.getString("quantity"), sDamageId, "Damage");
+					objProductStockService.deductedStock(sProductId,data.getString("quantity"),objSession);
+					ProductStock oStock=  (ProductStock) objSession.getAttribute("sessionStock");
+					  String sNewStock=oStock.getNewStock();
+					  String sOldStock = oStock.getOldStock();
+					  
+					stockDetailsService.addStockDetails(sProductId,data.getString("quantity"),sDamageId,"Damage",sNewStock,sOldStock);
                // damageServiceImpl.updatedStock(productStock, data, lstProductstock);
                 
 			System.out.println("after req attr ");
@@ -125,7 +142,21 @@ public class DamageController {
 		String sJson = "";
 		List<ProductStock> lstProductstock =null;
 		 ProductStock productStock=null;
+		 String sProductId ="";
 		try {
+			
+			sProductId = data.getString("productId");
+			if(sProductId !=""){
+			boolean bStockAvailable = objProductStockService.checkStock( sProductId, data.getString("quantity"));
+			System.out.println("bStockAvailable===="+bStockAvailable);
+			if(!bStockAvailable){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERRORS");
+				json.put("message", "Product Stock is Low");
+				sJson = json.toString();
+				return sJson;
+			}
+			}
 			String sDamageId = data.getString("damageId");
 			damage.setDamageId(sDamageId);
 			damage.setProductId(data.getString("productId"));
@@ -136,8 +167,12 @@ public class DamageController {
 			
 
 			//updateStock
-			objProductStockService.updateProductStock(data.getString("productId"), data.getString("quantity"));
-			stockDetailsService.addStockDetails(data.getString("productId"),  data.getString("quantity"), sDamageId, "Damage");
+			objProductStockService.updateProductStock(sProductId,data.getString("quantity"),objSession);
+			ProductStock oStock=  (ProductStock) objSession.getAttribute("sessionDamageStock");
+			  String sNewStock=oStock.getNewStock();
+			  String sOldStock = oStock.getOldStock();
+			stockDetailsService.addStockDetails(sProductId,data.getString("quantity"), sDamageId, "Damage",sNewStock,sOldStock);
+			
 			
 			isupdate = damageServiceImpl.updateDamage(damage);
 			// System.out.println("isupdate" + isupdate);
@@ -169,8 +204,6 @@ public class DamageController {
 		
 		if (isDelete) {
 			sJson = damageServiceImpl.getAllDamage();
-			//sJson = productStockService.getAllProductStock();
-			// System.out.println("Delete" + sJson);
 		}
 		return sJson;
 	}

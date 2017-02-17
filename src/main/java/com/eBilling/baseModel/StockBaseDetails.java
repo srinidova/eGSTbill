@@ -10,8 +10,20 @@ public class StockBaseDetails {
 	protected String updatedBy;
 	protected String transactionType;
 	protected String productName;
-	
-	
+	protected String oldQuantity;
+	public String getOldQuantity() {
+		return oldQuantity;
+	}
+	public void setOldQuantity(String oldQuantity) {
+		this.oldQuantity = oldQuantity;
+	}
+	public String getNewQuantity() {
+		return newQuantity;
+	}
+	public void setNewQuantity(String newQuantity) {
+		this.newQuantity = newQuantity;
+	}
+	protected String newQuantity;
 	
 	public String getProductName() {
 		return productName;

@@ -3,44 +3,6 @@
 var serviceUnitArray ={};
 var data = {};
 
-/*function displayUserRow(catObj, dispType) {
-	serviceUnitArray[catObj.regId] = catObj;
-		 var tblRow ="<ul class=''>"
-				  + "<li class='five-box'  title='"+catObj.mobileNo+"'>"
-				+ catObj.mobileNo  
-				+ "<li class='nine-box'  title='"+catObj.regName+"' style='width:300%;'>"
-				+ catObj.regName
-				+ "</li>"
-				+ "<li class='five-box'  title='"+catObj.mobileNo+"' style='width:140%;'>"
-				+ catObj.mobileNo
-				+ "</li>"
-				+ "<li class='five-box'  title='"+catObj.email+"' style='width:221%;'>"
-				+ catObj.email
-				+ "</li>"
-				+ "<li class='five-box'  title='"+catObj.regType+"' style='width:100%;'>"
-				+ catObj.regType
-				+ "</li>"
-				
-				+ "<li class='ten-box' style='width:100%;'>"
-				+ "<a href='javascript:void(0)' id='"
-				+ catObj.regId
-				+ "' onclick='editRegisterData(this.id)' id='editId class='ico del' href='#'>Edit</a>"
-				+ '</li>'
-				
-				+ "<li class='ten-box' style='width:100%;'>"
-				+ "<a href='javascript:void(0)' id='"
-				+ catObj.regId
-				+ "' onclick='deleteRegisterData(this.id)' id='delId' class='delRec' href='#'>Delete</a>"
-				+ '</li>'
-				+ "</li>"
-				+"</ul>";
-		 if (dispType == 'append') {
-			 $(tblRow).appendTo("#userData");
-		 } else {
-			 $(tblRow).prependTo("#userData"); 
-		 }
-	
-}*/
 function showRegisterData(response){
 	 /*$("#userData ul").remove();
 	$("#userData ul li").remove();*/
@@ -83,17 +45,6 @@ function showRegisterData(response){
 		//paginationTable(3);
 		}
 }
-/*function showRegisterData(response){
-	$("#userData ul li").remove();
-	//resJSON = JSON.parse(response);
-	if(response != undefined && response.length >0){
-	$.each(response,function(i, catObj) {
-		displayUserRow(catObj, "append");
-	});
-	//paginationTable(3);
-	}
-}*/
-
 
 function dataClear(){
 	
@@ -135,7 +86,7 @@ function deleteRegisterData(id) {
 							 showRegisterData(response);
 		           				   $("#unc1").text("Delete Sucessfully");
 			            		   $("#unc1").show();
-			                       $("#unc1").fadeOut(5000);
+			                       $("#unc1").fadeOut(15000);
 			                       $('#regName').val("");
 			                       $('#mobileNo').val("");
 			                       $('#regType').val("");
@@ -173,7 +124,7 @@ function userRegister() {
 		    $('#mobileNo').addClass('your-class');
 		     $('#unc').text("Please specify a valid phone number.");
 		     $('#unc').show();
-		     $("#unc").fadeOut(10000);
+		     $("#unc").fadeOut(15000);
 		    setTimeout(function(){$('#mobileNo').focus();},0);
 		    return false;
 		 }
@@ -185,31 +136,11 @@ function userRegister() {
 		    $('#email').addClass('your-class');
 		    $('#unc').text("Please enter valid emailid.");
 		     $('#unc').show();
-		     $("#unc").fadeOut(10000);
+		     $("#unc").fadeOut(15000);
 		    setTimeout(function(){$('#email').focus();},0);
 		    return false;
 		    }
-	    /*else if($('#password').val().length == 0 ) {
-		    $('#password').css('color','red');
-		    $("#password").css("border-color","red");
-		    $("#password").attr("placeholder","Please enter password");
-		    $('#password').addClass('your-class');
-		    setTimeout(function(){$('#password').focus();},0);
-		    return false;
-		    }
-	    else if($('#cPassword').val().length == 0 ) {
-		    $('#cPassword').css('color','red');
-		    $("#cPassword").css("border-color","red");
-		    $("#cPassword").attr("placeholder","Please enter cPassword");
-		    $('#cPassword').addClass('your-class');
-		    setTimeout(function(){$('#cPassword').focus();},0);
-		    return false;
-		 }else if ($('#password').val() != $('#cPassword').val()) {
-			     $('#unc').show();
-			     $('#unc').text("Passwords do not match.");
-			     $("#unc").fadeOut(10000);
-	             return false;
-	    }*/else if($("#regId").val() != ""){
+	    else if($("#regId").val() != ""){
 			updateRegisterData();
 		}else{
 			saveRegisterData();
@@ -231,14 +162,11 @@ function saveRegisterData(){
             		 
                      if(response != null ){
                     	 $("#userData ul li").remove();
-                    	 /*for(i=0;i<resJSON.length;i++){
-                    		 
-                    		 showRegisterData(resJSON[i]);
-                    	 }*/
+                    	 
                     	 showRegisterData(JSON.parse(response));
                     	  $("#unc").text('Registration done sucessfully.Please login with OTP and reset password.');
                     	  	$("#unc").show();
-                    	  	$("#unc").fadeOut(10000);
+                    	  	$("#unc").fadeOut(15000);
       					 	
       					return false;
                       }
@@ -272,7 +200,7 @@ function updateRegisterData(){
             		 showRegisterData(JSON.parse(response));
             		 	$("#unc").text("Update Sucessfully");
           		   		$("#unc").show();
-          		   		$("#unc").fadeOut(5000); 
+          		   		$("#unc").fadeOut(15000); 
           		   		$("#mobileNo").val("");
           		   		$("#regName").val("");
           		   		$("#productType").val("");

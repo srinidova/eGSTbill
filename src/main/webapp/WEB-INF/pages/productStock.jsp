@@ -10,6 +10,7 @@
 	color: red;
 }
 </style>
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -17,9 +18,10 @@
  <script type="text/javascript" src="js/CustomPagenation.js"></script> 
  <script type="text/javascript" src="js/productStock.js"></script>
  <script type="text/javascript" src="js/commonUtils.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
 <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
-rel="stylesheet" type="text/css" />
+rel="stylesheet" type="text/css" /> -->
 <script type="text/javascript">
 var lstOrders ='${getAllStock}';
 $(document).ready(function() {
@@ -72,7 +74,7 @@ function getAllProducts() {
 				<form name="myForm" method="post" id="contact-form" class="form-horizontal" action="http://localhost:8080/personal/reg#" onsubmit="return validationequiry()">
 					<div class="block-searchbill" id="">
 						<div class="block-searchbill-input" id="">
-							<label style="margin-bottom: 4px;">Product Name:</label>
+							<label style="margin-bottom: 4px;">Product Name</label>
 							 <select style="margin-left:158px; margin-top:-27px;" id="productId" name="productId" onchange="addProductStock(this.id);">
                                                             	<option value="">--Select--</option>
                                                         </select>
@@ -80,24 +82,24 @@ function getAllProducts() {
 							 <input  type="hidden" id="stockId">
 						</div>
 						<div class="block-searchbill-input">
-							<label>Stock:</label>
+							<label>Stock</label>
 							<input type="text" name="stock" id="stock" tabindex="3" />
 						</div> 
 						<div class="block-searchbill-input">
-							<label>OldStock:</label>
+							<label>Old Stock</label>
 							<input type="text" name="oldStock" id="oldStock"  tabindex="3" />
 						</div>
 					</div>
 					<div class="block-searchbill" id="">
 					<div class="block-searchbill-input">
-							<label style="margin-right: 5px; margin-left: 20px">NewStock:</label>
+							<label style="margin-right: 5px; margin-left: 20px">New Stock</label>
 							<input type="text" name="newStock" id="newStock"   tabindex="3" />
 						</div>
 					</div>
 					<div class="block-footer">
 						<aside class="block-footer-left sucessfully" id="unc" style="display: none">Save Sucessfully</aside>
 						<aside class="block-footer-right">
-							 <input class="btn-cancel" value="cancel"  name="Cancel" type="button" onclick="ProductStockDataClear();" >
+							 <input class="btn-cancel" value="Cancel"  name="Cancel" type="button" onclick="ProductStockDataClear();" >
                     <input class="btn-save" value="Save" id="saveIds" type="button" onClick="productStock();">
 						</aside>
 					</div>
@@ -115,33 +117,33 @@ function getAllProducts() {
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>              -->   
-						<li class="nine-box" style="width:309%;">ProductName:
+						<li class="nine-box" style="width:309%;">Product Name
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>
-						<li class="five-box" style="width:146%;">Stock:
+						<li class="five-box" style="width:146%;">Stock
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>
-						<li class="five-box" style="width:144%;">NewStock:
+						<li class="five-box" style="width:144%;">New Stock
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li> 
-						<li class="five-box" style="width:143%;">OldStock:
+						<li class="five-box" style="width:143%;">Old Stock
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>                
 						<li class="eleven-box" style="width:144%;">Edit</li>
-						<li class="ten-box last" style="width:132%;">Delete</li>
-						<li class="ten-box" style="width:20%;">Details</li>
+						<li class="ten-box " style="width:132%;">Delete</li>
+						<li class="ten-box last" style="width:20%; border-left: 1px solid #cccccc;">Details</li>
 					</ul>
 					<div class="table-list-blk" id='userData'>
 						<div class="pagenation">

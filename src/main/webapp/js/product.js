@@ -89,9 +89,9 @@ function deleteProduct(id) {
 					data : "id=" + id,
 					success: function (response) {
 		                 if(response != null ){
-		                	 $("#unc1").text("Delete Sucessfully");
-		            		   $("#unc1").show();
-		                       $("#unc1").fadeOut(5000);
+		                	 $("#unc").text("Delete Sucessfully");
+		            		   $("#unc").show();
+		                       $("#unc").fadeOut(15000);
 		                	 showProductData(response);
 		                	}
 		                 },
@@ -149,12 +149,12 @@ function saveProduct(){
                 	  $("#unc").text('Name already exists. Please choose other Name');
                 	  $("#productName").val("");
                 	  $("#unc").show();
-                      $("#unc").fadeOut(5000);
+                      $("#unc").fadeOut(15000);
                   }else{
                 	showProductData(resJSON);
                 	 $("#unc").text('Save Sucessfully');
                	  	 $("#unc").show();
-                     $("#unc").fadeOut(5000);
+                     $("#unc").fadeOut(15000);
   					 $("#productName").val("");
   					 $("#productType").val("");
   					$("#mrp").val("");
@@ -182,12 +182,12 @@ function updateProduct(){
             		 if(resJSON.status == "ERROR"){
                    	  	 $("#unc").text('Name already exists. Please choose other Name');
                    	 	 $("#unc").show();
-                         $("#unc").fadeOut(5000);
+                         $("#unc").fadeOut(15000);
                      }else{
                    	showProductData(resJSON);
                    	 $("#unc").text('Updated Sucessfully');
                   	  	 $("#unc").show();
-                        $("#unc").fadeOut(5000);
+                        $("#unc").fadeOut(15000);
      					 $("#productName").val("");
      					 $("#productType").val("");
      					$("#mrp").val("");

@@ -91,7 +91,7 @@
 		<section class="container">
 			<div class="block">
 				<h2><span class="icon1">&nbsp;</span>New Purchaser</h2>
-				<form name="cf_form" method="post" id="contact-form"  onsubmit="return false;">
+				<form name="cf_form" method="post" id="contact-form"  onsubmit="return false;" style=" background-color: #ffffff;">
 					<div class="block-searchbill">
 						<div class="block-searchbill-input">
 							<label>Name</label>
@@ -114,7 +114,7 @@
 							<textarea rows="5" cols="" name="address" onkeyup="removeError(this.id);" id="address" onsubmit="return false;" style="width:220px;margin-bottom:10px;"></textarea>
 						</div>
 						<div class="block-searchbill-input last">
-							<label>TinNo</label>
+							<label>Tin No</label>
 							<input type="text" name="tinNo" id="tinNo" onkeyup="removeError(this.id);">
 						</div>
 						</div>
@@ -145,7 +145,7 @@
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 							</ul>
 						</li>
-						<li class="five-box" style="width:220%">eMail
+						<li class="five-box" style="width:220%">Email
 							<ul>
 								<li><a class="top" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>
 								<li><a class="bottom" href="http://localhost:8080/personal/reg#">&nbsp;</a></li>

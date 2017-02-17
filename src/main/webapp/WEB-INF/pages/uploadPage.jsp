@@ -21,8 +21,8 @@
 
 		<section class="container">
 			<div class="block">
-				<h2><span class="icon1">&nbsp;</span>UploadPage Info<aside class="block-footer-right sucessfully" id="unc2" style="display:none;" >Delete Sucessfully</aside></h2>
-				<form name="cf_form" method="post" onsubmit="return false;" id="contact-form" >
+				<h2><span class="icon1">&nbsp;</span>Upload Page Info<aside class="block-footer-right sucessfully" id="unc2" style="display:none;" >Delete Sucessfully</aside></h2>
+				<form name="cf_form" method="post" onsubmit="return false;" id="contact-form" style=" background-color: #ffffff;">
 					
 					
 						<div class="block-searchbill">
