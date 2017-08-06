@@ -1,8 +1,16 @@
   
 <!-- SET: FOOTER -->
-<footer class="container" id="footer">
-    <p class="copy"> &copy; 2016 DovaSoft Technologies, all rights reserved.</p>
-</footer>
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copy">
+						<a href="#">© 2016 DovaSoft Technologies, all rights reserved.</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <!-- END: FOOTER --> 
 
 </div>

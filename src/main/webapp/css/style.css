@@ -1002,6 +1002,13 @@ ul.table-list li.stock-alloc-brnch-box{
 	padding: 0 5px;
     margin: 10px 0;
 }
+
+.custMsg {
+	margin-bottom: -20px;
+    margin-top: 1px;
+    text-align: right;
+    font-weight: bold;
+}
 /* div ul.table-list-total{
 	width:100%;
 	float:left;

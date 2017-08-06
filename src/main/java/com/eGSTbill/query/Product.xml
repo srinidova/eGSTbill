@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Product">
+	<insert id="addProduct" parameterClass="com.eGSTbill.model.Product">
+		insert into
+		product(productId,productName,hsnCode,uom,quantity,purchaserPrice,mrp,salePrice,discount,cGST,sGST,iGST,productType,updatedBy,updatedDate)
+		values(#productId#,#productName#,#hsnCode#,#uom#,#quantity#,#purchaserPrice#,#mrp#,#salePrice#,#discount#,#cGST#,#sGST#,#iGST#,#productType#,#updatedBy#,#updatedDate#)
+	</insert>
+	<select id="listProducts" resultClass="com.eGSTbill.model.Product">
+		select
+		productId,productName,hsnCode,uom,quantity,purchaserPrice,mrp,salePrice,discount,cGST,sGST,iGST,productType,updatedBy,updatedDate from
+		product
+	</select>
+	<delete id="deleteProduct" parameterClass="com.eGSTbill.model.Product">
+		delete from product where
+		productId = #productId#
+	</delete>
+	<select id="getProductByName" resultClass="com.eGSTbill.model.Product"  parameterClass="java.lang.String">
+		select
+		productId,productName,hsnCode,uom,quantity,purchaserPrice,mrp,salePrice,discount,cGST,sGST,iGST,updatedBy,updatedDate from
+		product where productName = #value#
+	</select>
+	<update id="updateProduct" parameterClass="com.eGSTbill.model.Product">
+		update product set productName
+		= #productName#, hsnCode = #hsnCode#, uom = #uom#, quantity = #quantity#, purchaserPrice
+		= #purchaserPrice#, mrp = #mrp#, salePrice = #salePrice#, discount = #discount#, cGST = #cGST#, sGST = #sGST#, iGST = #iGST#, productType = #productType#,
+		updatedBy = #updatedBy#,  updatedDate = #updatedDate#
+		where
+		productId = #productId#
+	</update>
+</sqlMap>

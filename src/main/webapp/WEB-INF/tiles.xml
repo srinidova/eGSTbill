@@ -7,74 +7,17 @@
 <tiles-definitions>
 	<definition name="base.definition" template="/WEB-INF/pages/home.jsp">
 		<put-attribute name="header" value="/WEB-INF/pages/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/pages/menu.jsp" />
 		<put-attribute name="main" value="/WEB-INF/pages/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/pages/footer.jsp" />
-		
 	</definition>
 
-	<!-- Login -->
-	<definition name="purchaseInfoHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/purchaseInfo.jsp" />
+	<definition name="productHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/addProduct.jsp" />
 	</definition>
-	<definition name="newBill" extends="base.definition">
+	<definition name="newBillHome" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/newBill.jsp" />
 	</definition>
-	<definition name="productHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/product.jsp" />
-	</definition>
-	<definition name="regHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/userRegister.jsp" />
-	</definition>
-	<definition name="searchBill" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/searchBill.jsp" />
-	</definition>
-	<definition name="loginHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/user.jsp" />
-	</definition>
-	<definition name="printBill" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/printBill.jsp" />
-	</definition>
-	<definition name="billInfoHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/billInfo.jsp" />
-	</definition>
-	<definition name="unBillCart" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/unBillCart.jsp" />
-	</definition>
-	<definition name="clientHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/clientInfo.jsp" />
-	</definition>
-	
-	<definition name="uploadHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/uploadPage.jsp" />
-	</definition>
-	<definition name="sendMessageHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/sendMessage.jsp" />
-	</definition>
-	<definition name="resetPasswordHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/resetPassword.jsp" />
-	</definition>
-	<definition name="stockHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/productStock.jsp" />
-	</definition>
-	<definition name="statusHome" extends="base.definition">
-  <put-attribute name="main" value="/WEB-INF/pages/status.jsp" />
- </definition>
-<definition name="damageHome" extends="base.definition">
-  <put-attribute name="main" value="/WEB-INF/pages/damage.jsp" />
- </definition>
- <definition name="allUsers" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/allUsers.jsp" />
-	</definition>
-	<definition name="sendSmsHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/sendSms.jsp" />
-	</definition>
-	<definition name="forgetPasswordHome" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/forgetPassword.jsp" />
-	</definition>
-	<!-- <definition name="" extends="base.definition">
-		<put-attribute name="main" value="/WEB-INF/pages/billingDetails.jsp" />
-	</definition> -->
-		
 </tiles-definitions>
 
 

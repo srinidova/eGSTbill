@@ -8,45 +8,26 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<!-- Enable Annotation based Declarative Transaction Management -->
-	 <!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
 	<bean id="transactionManagerAnnot"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManagerAnnot"/>
-		
-	<!-- Property placeholder configurer for database settings -->
+	<tx:annotation-driven transaction-manager="transactionManagerAnnot" />
+
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="/Resources/DataBase.properties" />
 	</bean>
 
-
-	<!-- using JEE namespace for lookup -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${driver}"></property>
 		<property name="url" value="${cs}"></property>
 		<property name="username" value="${userName}"></property>
 		<property name="password" value="${password}"></property>
-	</bean> 
+	</bean>
 
-	<!-- <bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
-		<property name="driverClassName" value="${driver1}"></property> <property 
-		name="url" value="${cs1}"></property> <property name="username" value="${userName1}"></property> 
-		<property name="password" value="${password1}"></property> </bean> <bean 
-		id="customConnection" class="com.aurospaces.neighbourhood.daosupport.CustomConnection"> 
-		<property name="dataSource"> <ref bean="dataSource1"/> </property> </bean> -->
 
-	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
-		<property name="dataSource"> <ref bean="dataSource"/> </property> <qualifier 
-		value="main"></qualifier> </bean> <bean id="transactionManagerAnnot" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
-		<property name="dataSource"> <ref bean="dataSource1"/> </property> <qualifier 
-		value="account"></qualifier> </bean> -->
-
-	 <!-- bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
-		<property name="jndiName" value="java:comp/env/jdbc/jdbcPool"/> </bean> --> 
 
 </beans>
 
