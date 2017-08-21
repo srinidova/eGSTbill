@@ -13,19 +13,19 @@ function showProductData(response) {
 									+ datObj.productName
 									+ '</td>'
 									+ '<td class="text-center">'
-									+ datObj.mrp
-									+ '</td>'
-									+ '<td class="text-center">'
 									+ datObj.hsnCode
 									+ '</td>'
 									+ '<td class="text-center">'
 									+ datObj.purchaserPrice
 									+ '</td>'
 									+ '<td class="text-center">'
-									+ datObj.mrp
+									+ datObj.cGST
 									+ '</td>'
 									+ '<td class="text-center">'
-									+ datObj.discount
+									+ datObj.iGST
+									+ '</td>'
+									+ '<td class="text-center">'
+									+ datObj.mrp
 									+ '</td>'
 									+ '<td class="text-center">'
 									+ '<a id="'
@@ -40,10 +40,11 @@ function showProductData(response) {
 									+ '</a>' + '</td>' + '</tr>'
 						});
 	}
-	$('#newsListData').empty().append(html);
+	$('#clientListData').empty().append(html);
 }
 
 function editProduct(productId) {
+	$('#btnProdSave').text("Update");
 	$('#productId').val(productId);
 	$('#productName').val(serviceUnitArray[productId].productName);
 	$('#hsnCode').val(serviceUnitArray[productId].hsnCode);
@@ -77,150 +78,11 @@ function deleteProduct(id) {
 		}
 	});
 }
-function prodFormValidate() {
-	var productId = $("#productId").val();
-	if ($("#productForm").valid()) {
-		if (productId != "") {
-			updateProduct();
-		} else {
-			saveProduct();
-		}
-	}
-}
+
 function productClear() {
 	$("#productForm")[0].reset();
+	$('#btnProdSave').text("Add");
 }
-$("#productForm")
-		.validate(
-				{
-					rules : {
-
-						productName : {
-							required : true,
-							minlength : 2,
-							alpha : true
-						},
-						hsnCode : {
-							required : true,
-
-							number : true
-						},
-						uom : {
-							required : true,
-
-							number : true
-						},
-						quantity : {
-							required : true,
-
-							number : true
-						},
-						purchaserPrice : {
-							required : true,
-
-							number : true
-						},
-						mrp : {
-							required : true,
-
-							number : true
-						},
-						salePrice : {
-							required : true,
-
-							number : true
-						},
-						discount : {
-							required : true,
-
-							number : true
-						},
-						cgst : {
-							required : true,
-
-							number : true
-						},
-						sgst : {
-							required : true,
-
-							number : true
-						},
-						igst : {
-							required : true,
-
-							number : true
-						},
-					},
-					messages : {
-
-						productName : {
-							required : "Please enter  ProductName",
-							minlength : "Your Name must consist of at least 2 characters",
-							alpha : "only characters"
-						},
-						hsnCode : {
-							required : "Please enter hsnCode number",
-							number : "Please enter numbers Only"
-						},
-						uom : {
-							required : "Please enter Uom",
-							number : "Please enter numbers Only"
-						},
-						quantity : {
-							required : "Please enter quantity",
-							number : "Please enter numbers Only"
-						},
-						purchaserPrice : {
-							required : "Please enter Purchaser Price",
-							number : "Please enter numbers Only"
-						},
-						mrp : {
-							required : "Please enter Mrp",
-							number : "Please enter numbers Only"
-						},
-						salePrice : {
-							required : "Please enter SalePrice",
-							number : "Please enter numbers Only"
-						},
-						discount : {
-							required : "Please enter Discount",
-							number : "Please enter numbers Only"
-						},
-						cgst : {
-							required : "Please enter CGST",
-							number : "Please enter numbers Only"
-						},
-						sgst : {
-							required : "Please enter SGST",
-							number : "Please enter numbers Only"
-						},
-						igst : {
-							required : "Please enter IGST",
-							number : "Please enter numbers Only"
-						},
-					},
-					errorElement : "em",
-					errorPlacement : function(error, element) {
-						error.addClass("help-block");
-
-						if (element.prop("type") === "checkbox") {
-							error.insertAfter(element.parent("label"));
-						} else {
-							error.insertAfter(element);
-						}
-					},
-					highlight : function(element, errorClass, validClass) {
-						$(element).parents(".col-sm-5").addClass("has-error")
-								.removeClass("has-success");
-					},
-					unhighlight : function(element, errorClass, validClass) {
-						$(element).parents(".col-sm-5").addClass("has-success")
-								.removeClass("has-error");
-					}
-				});
-$.validator.addMethod("alpha", function(value, element) {
-	return this.optional(element) || value == value.match(/^[a-zA-Z\s]+$/);
-});
 
 function saveProduct() {
 	data = {};

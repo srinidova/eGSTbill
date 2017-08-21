@@ -20,5 +20,16 @@
 	</transactionManager>
 	
 	<sqlMap resource="com/eGSTbill/query/Product.xml" />
+	<sqlMap resource="com/eGSTbill/query/BillDetailsCart.xml" />
+	<sqlMap resource="com/eGSTbill/query/BillCart.xml" />
+	<sqlMap resource="com/eGSTbill/query/Purchaser.xml" />
+ 	 <sqlMap resource="com/eGSTbill/query/BillCartBillDetailsCart.xml" /> 
+ 	 <sqlMap resource="com/eGSTbill/query/Client.xml" /> 
+ 	 <sqlMap resource="com/eGSTbill/query/User.xml" /> 
+ 	 <sqlMap resource="com/eGSTbill/query/ClientUser.xml" /> 
+ 	  <sqlMap resource="com/eGSTbill/query/Shipping.xml" /> 
+ 	  <sqlMap resource="com/eGSTbill/query/PurchaserShipping.xml" /> 
+ 	  <sqlMap resource="com/eGSTbill/query/ClientPurchaser.xml" /> 
+ 	  <sqlMap resource="com/eGSTbill/query/State.xml" /> 
 
 </sqlMapConfig>

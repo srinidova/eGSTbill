@@ -19,7 +19,13 @@
 						<div id="navbarCollapse" class="collapse navbar-collapse">
 							<ul id="fresponsive" class="nav navbar-nav dropdown">
 								<li class="active"><a href="productHome">Product</a></li>
-								<li><a href="#">Stock</a></li>
+								<li class="active"><a href="newBillHome">New Bill</a></li>
+								<li class="active"><a href="purchaserHome">Purchaser</a></li>
+								<li class="active"><a href="clientHome">Client</a></li>
+								<li class="active"><a href="userHome">User</a></li>
+								<li class="active"><a href="shippingHome">Shipping</a></li>
+								<!-- <li class="active"><a href="loginHome">Login</a></li> -->
+<!-- 								<li><a href="#">Stock</a></li>
 								<li><a href="#">Purchaser</a></li>
 								<li class="active"><a href="newBillHome">New Bill</a>
 								</li>
@@ -28,7 +34,7 @@
 								<li><a href="#">Damage</a></li>
 								<li><a href="#">Upload</a></li>
 								<li><a href="#">Users</a></li>
-								<li><a href="#">Send Sms</a></li>
+								<li><a href="#">Send Sms</a></li> -->
 							</ul>
 						</div>
 					</nav>

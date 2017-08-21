@@ -118,7 +118,7 @@
 								<div class="buttons">
 									<ul>
 										<li>
-											<button type="button" class="btn btn-primary " name="add"
+											<button type="button" id="btnProdSave" class="btn btn-primary " name="add"
 												value="add" onClick="prodFormValidate();">Add</button>
 										</li>
 										<li>
@@ -150,7 +150,7 @@
 												<th class="text-center">Action</th>
 											</tr>
 										</thead>
-										<tbody id="newsListData">
+										<tbody id="clientListData">
 										</tbody>
 									</table>
 								</div>
@@ -168,6 +168,150 @@
 	$(document).ready(function() {
 		showProductData(JSON.parse(lstOrders));
 	}); 
+	
+	function prodFormValidate() {
+		if ($("#productForm").valid()) {
+			var productId = $("#productId").val();
+			if (productId != "") {
+				updateProduct();
+				$('#btnProdSave').text("Add");
+			} else {
+				saveProduct();
+			}
+		}
+	}
+	
+	$("#productForm")
+	.validate(
+			{
+				rules : {
+
+					productName : {
+						required : true,
+						minlength : 2,
+						alpha : true
+					},
+					hsnCode : {
+						required : true,
+
+						number : true
+					},
+					uom : {
+						required : true,
+
+						number : true
+					},
+					quantity : {
+						required : true,
+
+						number : true
+					},
+					purchaserPrice : {
+						required : true,
+
+						number : true
+					},
+					mrp : {
+						required : true,
+
+						number : true
+					},
+					salePrice : {
+						required : true,
+
+						number : true
+					},
+					discount : {
+						required : true,
+
+						number : true
+					},
+					cgst : {
+						required : true,
+
+						number : true
+					},
+					sgst : {
+						required : true,
+
+						number : true
+					},
+					igst : {
+						required : true,
+
+						number : true
+					},
+				},
+				messages : {
+
+					productName : {
+						required : "Please enter  ProductName",
+						minlength : "Your Name must consist of at least 2 characters",
+						alpha : "only characters"
+					},
+					hsnCode : {
+						required : "Please enter hsnCode number",
+						number : "Please enter numbers Only"
+					},
+					uom : {
+						required : "Please enter Uom",
+						number : "Please enter numbers Only"
+					},
+					quantity : {
+						required : "Please enter quantity",
+						number : "Please enter numbers Only"
+					},
+					purchaserPrice : {
+						required : "Please enter Purchaser Price",
+						number : "Please enter numbers Only"
+					},
+					mrp : {
+						required : "Please enter Mrp",
+						number : "Please enter numbers Only"
+					},
+					salePrice : {
+						required : "Please enter SalePrice",
+						number : "Please enter numbers Only"
+					},
+					discount : {
+						required : "Please enter Discount",
+						number : "Please enter numbers Only"
+					},
+					cgst : {
+						required : "Please enter CGST",
+						number : "Please enter numbers Only"
+					},
+					sgst : {
+						required : "Please enter SGST",
+						number : "Please enter numbers Only"
+					},
+					igst : {
+						required : "Please enter IGST",
+						number : "Please enter numbers Only"
+					},
+				},
+				errorElement : "em",
+				errorPlacement : function(error, element) {
+					error.addClass("help-block");
+
+					if (element.prop("type") === "checkbox") {
+						error.insertAfter(element.parent("label"));
+					} else {
+						error.insertAfter(element);
+					}
+				},
+				highlight : function(element, errorClass, validClass) {
+					$(element).parents(".col-sm-5").addClass("has-error")
+							.removeClass("has-success");
+				},
+				unhighlight : function(element, errorClass, validClass) {
+					$(element).parents(".col-sm-5").addClass("has-success")
+							.removeClass("has-error");
+				}
+			});
+$.validator.addMethod("alpha", function(value, element) {
+return this.optional(element) || value == value.match(/^[a-zA-Z\s]+$/);
+});
 	</script>
 </body>
 </html>

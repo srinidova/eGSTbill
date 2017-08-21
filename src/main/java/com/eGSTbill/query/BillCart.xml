@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BillCart">
+	<insert id="addBillCart" parameterClass="com.eGSTbill.model.BillCart">
+		insert into
+		billcart(billCartId,billNo,totalQuantity,totalAmount,totalDiscount,taxValue,totalCgst,totalSgst,totalIgst,grandTotal,totalBeforeTax,totalTax,totalAfterTax,billDate,orderBy)
+		values(#billCartId#,#billNo#,#totalQuantity#,#totalAmount#,#totalDiscount#,#taxValue#,#totalCgst#,#totalSgst#,#totalIgst#,#grandTotal#,#totalBeforeTax#,#totalTax#,#totalAfterTax#,#billDate#,#orderBy#)
+	</insert>
+	<select id="listBillCart" resultClass="com.eGSTbill.model.BillCart">
+		select
+		billCartId,billNo,totalQuantity,totalAmount,totalDiscount,taxValue,totalCgst,totalSgst,totalIgst,grandTotal,totalBeforeTax,totalTax,totalAfterTax,billDate,orderBy from
+		billcart
+	</select>
+	<delete id="deleteBillCart" parameterClass="com.eGSTbill.model.BillCart">
+		delete from billcart where
+		billCartId = #billCartId#
+	</delete>
+	<select id="getBillCart" resultClass="com.eGSTbill.model.BillCart"  parameterClass="java.lang.String">
+		select
+		billCartId,billNo,totalQuantity,totalAmount,totalDiscount,taxValue,totalCgst,totalSgst,totalIgst,grandTotal,totalBeforeTax,totalTax,totalAfterTax,billDate,orderBy from
+		billcart where billNo = #value#
+	</select>
+	<update id="updateBillCart" parameterClass="com.eGSTbill.model.BillCart">
+		update billcart set  billNo
+		= #billNo#, totalQuantity = #totalQuantity#, totalAmount = #totalAmount#, totalDiscount = #totalDiscount#, taxValue
+		= #taxValue#, totalCgst = #totalCgst#, totalSgst = #totalSgst#, totalIgst = #totalIgst#,  grandTotal =#grandTotal#, totalBeforeTax = #totalBeforeTax#, totalTax = #totalTax#, totalAfterTax = #totalAfterTax#,
+		billDate = #billDate# , orderBy = #orderBy#
+		where
+		billCartId = #billCartId#
+	</update>
+	<select id="listBillCartByBillId" resultClass="com.eGSTbill.model.BillCart" parameterClass="java.lang.String">
+		select
+		billCartId,billNo,totalQuantity,totalAmount,totalDiscount,taxValue,totalCgst,totalSgst,totalIgst,grandTotal,totalBeforeTax,totalTax,totalAfterTax,billDate,orderBy from
+		billcart where billCartId = #value#
+	</select>
+	
+	
+</sqlMap>

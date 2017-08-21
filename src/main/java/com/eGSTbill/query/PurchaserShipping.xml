@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PurchaserShipping">
+	<insert id="addPurchaserShipping" parameterClass="com.eGSTbill.model.PurchaserShipping">
+		insert into
+		purchaser_shipping(purchaserId,shippingId)
+		values(#purchaserId#,#shippingId#)
+	</insert>
+	<select id="getShippingDetailsBypurchaserId"  parameterClass="java.lang.String" resultClass="com.eGSTbill.model.PurchaserShipping">
+		select shippingId,purchaserName,name,address,state,pin from shipping where shippingId in (select shippingId from purchaser_shipping where purchaserId = #value#)
+
+	</select>
+	
+</sqlMap>

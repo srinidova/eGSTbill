@@ -8,6 +8,7 @@ package com.eGSTbill.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -16,6 +17,9 @@ import java.net.URL;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 
 import com.eGSTbill.model.SendSms;
 /**
@@ -84,5 +88,17 @@ public class Sms {
 		}
 		return bSentSms;
 	}
-    
+	public boolean sendMessage(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile,
+			String sMessage) throws IOException {
+		boolean bSentSms = false;
+		//Sms sms = new Sms();
+
+		/*SendSms smsDTO = CommonUtils.getSmsProperties(request.getServletContext());
+		smsDTO.setSendTo("91" + userMobile);
+		smsDTO.setMessage(sMessage);*/
+
+		//bSentSms = sendMessage(request.getServletContext(), smsDTO);
+
+		return bSentSms;
+	}
 }
