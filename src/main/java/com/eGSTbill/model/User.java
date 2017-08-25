@@ -12,6 +12,7 @@ public class User {
 	protected String updatedOn;
 	protected String companyName;
 	protected String password;
+	protected String sendTo;
 	public String getUserId() {
 		return userId;
 	}

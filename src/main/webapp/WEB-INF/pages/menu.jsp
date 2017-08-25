@@ -24,7 +24,7 @@
 								<li class="active"><a href="clientHome">Client</a></li>
 								<li class="active"><a href="userHome">User</a></li>
 								<li class="active"><a href="shippingHome">Shipping</a></li>
-								<!-- <li class="active"><a href="loginHome">Login</a></li> -->
+								<li class="active"><a href="loginHome">Login</a></li>
 <!-- 								<li><a href="#">Stock</a></li>
 								<li><a href="#">Purchaser</a></li>
 								<li class="active"><a href="newBillHome">New Bill</a>

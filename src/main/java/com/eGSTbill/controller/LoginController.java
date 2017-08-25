@@ -9,6 +9,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+
 import org.apache.commons.lang.StringUtils;
 import org.bouncycastle.asn1.ocsp.Request;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,7 @@ import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.SmsService;
 import com.eGSTbill.service.UserService;
 import com.eGSTbill.util.CommonUtils;
+import com.eGSTbill.util.Sms;
 import com.itextpdf.text.pdf.codec.Base64.InputStream;
 
 import org.json.JSONObject;
@@ -87,7 +91,7 @@ public class LoginController {
 			e.printStackTrace();		}
 		return result;
 	}
-	@RequestMapping(value = "/forgotPassword")
+	/*@RequestMapping(value = "/forgotPassword")
 	public @ResponseBody String forgotPassword(@RequestParam("userMobile") String userMobile, HttpSession objSession,ServletContext objContext,
 			HttpServletRequest objRequest) {
 		System.out.println("in to forgot password");
@@ -136,5 +140,93 @@ public class LoginController {
 		return sPropertyContent;
 		
 	
+	}*/
+	@RequestMapping(value = "/forgotPassword")
+	public  @ResponseBody JSONObject forgotPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
+			throws IOException {
+		System.out.println("in to forgot password");
+		JSONObject jObj = new JSONObject();
+		User user = null;
+		//String sRole = null;
+		String sPwd = null;
+		String sMessage = null;
+		String sPropertyContent = null;
+		boolean bSentSms = false;
+		Sms sms = new Sms();
+
+		/*MemberBO memberBO = new MemberBO();
+		memDto = memberBO.getMemberByMobile(loginMobile);*/
+		UserService userService = new UserService();
+		user = userService.getUserByMobile(userMobile);
+		/*if (user != null) {
+			sRole = user.getPassword();
+		}*/
+		if (user != null ) {
+			sPwd = user.getPassword();
+			sPropertyContent = CommonUtils.getPropertyContent(request.getServletContext(), "smsPwdText");
+			System.out.println("in to forgotPassword sPropertyContent==="+sPropertyContent);
+			sMessage = sPwd + " " + sPropertyContent;
+			System.out.println("in to forgot password sMessage==="+sMessage);
+			System.out.println("in to forgotPassword userMobile==="+userMobile);
+			System.out.println("in to forgotPassword request==="+request);
+
+			bSentSms = sms.sendMessage(request, userMobile, sMessage);
+			if (bSentSms) {
+				jObj.put("Msg", "success");
+			} else {
+				jObj.put("Msg", "Error while sending SMS");
+			}
+		} else {
+			jObj.put("Msg", "Mobile Number Not Found.");
+		}
+
+		return jObj;
+	}
+	@RequestMapping(value = "/resetPassword")
+	public @ResponseBody JSONObject resetPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
+			throws IOException {
+		System.out.println("in to reset password");
+		JSONObject jObj = new JSONObject();
+		User user = null;
+		String sRole = null;
+		String sPin = null;
+		String sMessage = null;
+		String sPropertyContent = null;
+		boolean bSentSms = false;
+		Sms sms = new Sms();
+
+		UserService userService = new UserService();
+		user = userService.getUserByMobile(userMobile);
+		/*if (memDto != null) {
+			sRole = memDto.getMemberType();
+		}*/
+
+		if (user != null ) {
+			sPin = CommonUtils.getPin();
+			user.setPassword(sPin);
+			System.out.println("in to reset password==="+sPin);
+
+			//memDto.setPassword(sPin);
+			String sPwdUpdate = userService.passwordUpdate(user);
+			//String sPwdUpdate = memberBO.passwordUpdate(memDto);
+
+			if (sPwdUpdate.equals("success")) {
+				sPropertyContent = CommonUtils.getPropertyContent(request.getServletContext(), "smsUpdatePwd");
+				sMessage = sPin + " " + sPropertyContent;
+
+				bSentSms = sms.sendMessage(request, userMobile, sMessage);
+				if (bSentSms) {
+					jObj.put("Msg", "success");
+				} else {
+					jObj.put("Msg", "Error while sending SMS");
+				}
+			} else {
+				jObj.put("Msg", "Error while Reset Password");
+			}
+		} else {
+			jObj.put("Msg", "Mobile Number Not Found.");
+		}
+
+		return jObj;
 	}
 }

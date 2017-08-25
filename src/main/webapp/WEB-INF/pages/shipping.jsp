@@ -50,40 +50,9 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">State</label> <!-- <input class="form-control" id="state"
-										type="text" placeholder=""> -->
+									<label for="">State</label>
 										<select class="form-control"
 							id="state" name="state">
-							<!-- <option selected="selected" >--select--</option> -->
-							<option value="Andra Pradesh">Andra Pradesh</option>
-							<option value="Arunachal Pradesh">Arunachal Pradesh</option>
-							<option value="Assam">Assam</option>
-							<option value="Bihar">Bihar</option>
-							<option value="Chattisgarh">Chattisgarh</option>
-							<option value="Goa">Goa</option>
-							<option value="Gujarat">Gujarat</option>
-							<option value="Haryana">Haryana</option>
-							<option value="Himachal Pradesh">Himachal Pradesh</option>
-							<option value="Jammu Kashmir">Jammu Kashmir</option>
-							<option value="Jharkhand">Jharkhand</option>
-							<option value="Karnataka">Karnataka</option>
-							<option value="Kerala">Kerala</option>
-							<option value="Madya Pradesh">Madya Pradesh</option>
-							<option value="Maharashtra">Maharashtra</option>
-							<option value="Manipur">Manipur</option>
-							<option value="Meghalaya">Meghalaya</option>
-							<option value="Migoram">Migoram</option>
-							<option value="Nagaland">Nagaland</option>
-							<option value="Odish">Odish</option>
-							<option value="Punjab">Punjab</option>
-							<option value="Rajasthan">Rajasthan</option>
-							<option value="Sikkim">Sikkim</option>
-							<option value="Tamilnadu">Tamilnadu</option>
-							<option value="Telangana">Telangana</option>
-							<option value="Tripura">Tripura</option>
-							<option value="Uttarpradesh">Uttarpradesh</option>
-							<option value="Uttarakhand">Uttarakhand</option>
-							<option value="Westbengal">Westbengal</option>
 						</select>
 								</div>
 							</div>
@@ -125,7 +94,7 @@
 										<thead>
 											<tr>
 												<!-- <th class="text-center">Company Name</th> -->
-												<th class="text-center">Purchaser</th>
+												<!-- <th class="text-center">Purchaser</th> -->
 												<th class="text-center">Name</th>
 												<th class="text-center">Address</th>
 												<th class="text-center">State</th>
@@ -148,8 +117,10 @@
 	<div class="clearfix"></div>
 	<script type="text/javascript">
 	
-	var lstPurchasers = '${LISTPURCHASERS}';
+	//var lstPurchasers = '${LISTPURCHASERS}';
+	var lstPurchasers = '${PURCHASER}';
 	var lstShipping = '${LISTSHIPPING}';
+	var lstStates = '${ALLSTATES}';
 	console.log(lstPurchasers);
 	$(document).ready(function() {
 		console.log(lstShipping);
@@ -157,8 +128,25 @@
 		//alert("===ready====");
 		//showBilldata(JSON.parse(lstBillCart))
 		showShippingData(JSON.parse(lstShipping));
+		showStatesData(JSON.parse(lstStates)); 
+		
+		$('#state').click(function(e) {
+			//alert("in to state sorting");
+	    	sortDropDownListByText("#state");
+	    });
+		
+		
 
 	});
+ 	function sortDropDownListByText(selItem) {
+		$(selItem).each(function() {
+			var selectedValue = $(this).val();
+			$(this).html($("option", $(this)).sort(function(a, b) {
+				return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
+			}));
+			$(this).val(selectedValue);
+		});
+	}  
 	function showPurchaserData(response) {
 		serviceUnitArray = {};
 		var html = "<option value=''>-- Select --</option>";
@@ -170,6 +158,20 @@
 			});
 		}
 		$('#purchaserId').empty().append(html);
+		//console.log("=========="+serviceUnitArray);
+	}
+	
+	function showStatesData(response) {
+		arrStates = {};
+		//<option value="Andra Pradesh">Andra Pradesh</option>
+		var html = "<option value=''>-- Select --</option>";
+		if (response != undefined && response.length > 0) {
+			$.each(response, function(i, datObj) {
+				arrStates[datObj.stateId] = datObj;
+				html = html + '<option value="' + datObj.stateId + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
+			});
+		}
+		$('#state').empty().append(html);
 		//console.log("=========="+serviceUnitArray);
 	}
 	
@@ -229,9 +231,9 @@
 								serviceUnitArrayShipping[datObj.shippingId] = datObj;
 								html = html
 										+ '<tr>'
-										+ '<td class="text-center">'
+										/* + '<td class="text-center">'
 										+ datObj.companyName
-										+ '</td>'
+										+ '</td>' */
 										+ '<td class="text-center">'
 										+ datObj.name
 										+ '</td>'

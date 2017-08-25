@@ -64,38 +64,9 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">State<sup>*</sup></label> <select
-										class="form-control" id="purState" name="purState">
-										<option value="">-- Select --</option>
-										<option value="37">37 -- AP -- Andhra Pradesh</option>
-										<option value="12">12 -- AR -- Arunachal Pradesh</option>
-										<option value="18">18 -- AS -- Assam</option>
-										<option value="10">10 -- BH -- Bihar</option>
-										<option value="22">22 -- CT -- Chattisgarh</option>
-										<option value="30">30 -- GA -- Goa</option>
-										<option value="24">24 -- GJ -- Gujarat</option>
-										<option value="06">06 -- HR -- Haryana</option>
-										<option value="02">02 -- HP -- Himachal Pradesh</option>
-										<option value="01">01 -- JK -- Jammu Kashmir</option>
-										<option value="20">20 -- JH -- Jharkhand</option>
-										<option value="29">29 -- KA -- Karnataka</option>
-										<option value="32">32 -- KL -- Kerala</option>
-										<option value="23">23 -- MP -- Madya Pradesh</option>
-										<option value="27">27 -- MH -- Maharashtra</option>
-										<option value="14">14 -- MN -- Manipur</option>
-										<option value="17">17 -- ME -- Meghalaya</option>
-										<option value="15">15 -- MI -- Migoram</option>
-										<option value="13">13 -- NL -- Nagaland</option>
-										<option value="21">21 -- OR -- Odisha</option>
-										<option value="03">03 -- PB -- Punjab</option>
-										<option value="08">08 -- RJ -- Rajasthan</option>
-										<option value="11">11 -- SK -- Sikkim</option>
-										<option value="33">33 -- TN -- Tamilnadu</option>
-										<option value="36">36 -- TS -- Telangana</option>
-										<option value="16">16 -- TR -- Tripura</option>
-										<option value="09">09 -- UT -- Uttar Pradesh</option>
-										<option value="05">05 -- UT -- Uttarakhand</option>
-										<option value="19">19 -- WB -- Westbengal</option>
+									<label for="">State<sup>*</sup></label> 
+									<select class="form-control" id="purState" name="purState">
+										
 									</select>
 								</div>
 							</div>
@@ -201,11 +172,18 @@
 	<script type="text/javascript">
 		var lstPurchasers = '${LISTPURCHASERS}';
 		var lstOrders ='${LISTCLIENTS}';
+		var lstStates = '${ALLSTATES}';
 		$(document).ready(function() {
 			//LISTPURCHASERS
 
 			showPurchaseData(JSON.parse(lstPurchasers));
 			showClientData(JSON.parse(lstOrders));
+			showStatesData(JSON.parse(lstStates)); 
+			
+			$('#purState').click(function(e) {
+				//alert("in to state sorting");
+		    	sortDropDownListByText("#purState");
+		    });
 
 		});
 
@@ -521,6 +499,20 @@
 				//console.log("=========="+serviceUnitArray);
 			}
 			
+		 function showStatesData(response) {
+				arrStates = {};
+				//<option value="Andra Pradesh">Andra Pradesh</option>
+				var html = "<option value=''>-- Select --</option>";
+				if (response != undefined && response.length > 0) {
+					$.each(response, function(i, datObj) {
+						arrStates[datObj.stateId] = datObj;
+						html = html + '<option value="' + datObj.stateId + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
+					});
+				}
+				$('#purState').empty().append(html);
+				//console.log("=========="+serviceUnitArray);
+			}
+		 
 			function populateClientData(clientId) {
 				//console.log("=====pop====="+serviceUnitArray);
 				//alert("in to populateProdData=========="+serviceUnitArray);
@@ -528,6 +520,15 @@
 				//$('#companyName').val(serviceUnitArray[clientId].companyName);
 				
 			}
+			function sortDropDownListByText(selItem) {
+				$(selItem).each(function() {
+					var selectedValue = $(this).val();
+					$(this).html($("option", $(this)).sort(function(a, b) {
+						return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
+					}));
+					$(this).val(selectedValue);
+				});
+			}  
 	</script>
 </body>
 </html>

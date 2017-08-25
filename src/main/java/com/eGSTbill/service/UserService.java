@@ -127,4 +127,8 @@ public class UserService {
 	}
 	
 	
+	public String passwordUpdate(User user) {
+		UserDAO dao = new UserDAO();
+		return dao.passwordUpdate(user);
+	}
 }

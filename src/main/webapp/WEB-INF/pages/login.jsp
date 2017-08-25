@@ -90,7 +90,7 @@
 			url : "login.htm",
 			data : data,
 			success : function(response) {
-				window.location.href = 'newBillHome.jsp';
+				//window.location.href = 'newBillHome.jsp';
 				
 				/* resJSON = JSON.parse(response);
 				 if (response != null) {
@@ -116,8 +116,27 @@
 				url : "forgotPassword.htm",
 				data : data,
 				success : function(data) {
-					if (data.Msg == 'success') {
+					/* if (data.Msg == 'success') {
 						$("#errLogin").text("Password sent to your Mobile. Please Re Login.");
+					}else{
+						$("#errLogin").text(data.Msg);
+					}   */
+					
+				}
+			});
+		}
+	function resetPassword(){
+		alert("in to resetpassword")
+		data = {};
+		data["userMobile"] = $("#userMobile").val();
+		data["userPassword"] = $("#userPassword").val();
+			
+			$.ajax({
+				data : data,
+				url : "resetPassword.htm",
+				success : function(data) {
+					if (data.Msg == 'success') {
+						$("#errLogin").text("OTP sent to your Mobile. Please Re Login.");
 					}else{
 						$("#errLogin").text(data.Msg);
 					}  

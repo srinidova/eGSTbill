@@ -16,8 +16,10 @@ import com.eGSTbill.model.ClientPurchaser;
 import com.eGSTbill.model.Product;
 import com.eGSTbill.model.Purchaser;
 import com.eGSTbill.service.ClientPurchaserService;
+import com.eGSTbill.service.ClientService;
 import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.PurchaserService;
+import com.eGSTbill.service.StateService;
 import com.eGSTbill.util.CommonUtils;
 
 import org.json.JSONObject;
@@ -31,12 +33,23 @@ public class PurchaserController {
 		System.out.println("From purchaserHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
+		String sState = null;
 
 		try {
 			PurchaserService ps = new PurchaserService();
 			sJson = ps.listPurchaser();
 			if (sJson != null && sJson.length() > 0) {
 				objSession.setAttribute("LISTPURCHASERS", sJson);
+			}
+			ClientService cs = new ClientService();
+			sJson = cs.listClients();
+			if(sJson != null && sJson.length()>0){
+				objSession.setAttribute("LISTCLIENTS", sJson);
+			}
+			StateService st = new StateService();
+			sJson = st.getAllStates();
+			if (sJson != null && sJson.length() > 0) {
+				objSession.setAttribute("ALLSTATES", sJson);
 			}
 
 		} catch (Exception e) {

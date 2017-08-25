@@ -24,6 +24,7 @@ import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.PurchaserService;
 import com.eGSTbill.service.PurchaserShippingService;
 import com.eGSTbill.service.ShippingService;
+import com.eGSTbill.service.StateService;
 import com.eGSTbill.service.UserService;
 import com.eGSTbill.util.CommonUtils;
 
@@ -43,6 +44,18 @@ public class ShippingController {
 			sJson = bo.listShipping();
 			if (sJson != null && sJson.length() > 0) {
 				objSession.setAttribute("LISTSHIPPING", sJson);
+			}
+			
+			StateService st = new StateService();
+			sJson = st.getAllStates();
+			if (sJson != null && sJson.length() > 0) {
+				objSession.setAttribute("ALLSTATES", sJson);
+			}
+			
+			PurchaserService ps = new PurchaserService();
+			sJson = ps.listPurchaser();
+			if(sJson != null && sJson.length()>0 ){
+				objRequest.setAttribute("PURCHASER", sJson);
 			}
 			System.out.println("in to shipping controller==="+sJson);
 

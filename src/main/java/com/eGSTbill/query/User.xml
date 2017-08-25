@@ -28,4 +28,7 @@
 		userId,role,userName,mobile,email,address,updatedBy,updatedOn,companyName,password from
 		user where mobile = #value#
 	</select>
+	<update id="passwordUpdate" parameterClass="com.eGSTbill.model.User">
+		update user set password = #password# where userId = #userId# and mobile = #mobile#
+	</update>
 </sqlMap>

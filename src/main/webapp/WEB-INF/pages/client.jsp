@@ -79,7 +79,7 @@
 										<select class="form-control"
 							id="state" name="state">
 							<!-- <option selected="selected" >--select--</option> -->
-							<option value="Andra Pradesh">Andra Pradesh</option>
+							<!-- <option value="Andra Pradesh">Andra Pradesh</option>
 							<option value="Arunachal Pradesh">Arunachal Pradesh</option>
 							<option value="Assam">Assam</option>
 							<option value="Bihar">Bihar</option>
@@ -107,7 +107,7 @@
 							<option value="Tripura">Tripura</option>
 							<option value="Uttarpradesh">Uttarpradesh</option>
 							<option value="Uttarakhand">Uttarakhand</option>
-							<option value="Westbengal">Westbengal</option>
+							<option value="Westbengal">Westbengal</option> -->
 						</select>
 								</div>
 							</div>
@@ -147,12 +147,12 @@
 									<textarea class="form-control" rows="5" id="terms" name="terms" maxlength="250"></textarea>
 								</div>
 							</div>
-							<div class="col-md-4">
+							 <div class="col-md-4">
 								<div class="form-group">
 									<label for="">Logo</label> 
-									<input id="logPath" name="file" class="file form-control" type="file" >
+									<input id="logPath" name="file" class="file form-control" type="file" multiple="multiple" onchage="">
 								</div>
-							</div>
+							</div> 
 							<div class="col-md-10">
 								<div id="clientFrmMsg"
 									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
@@ -212,14 +212,104 @@
 	</div>
 	<div class="clearfix"></div>
 	<script type="text/javascript">
-	var lstOrders ='${LISTCLIENTS}';
-	console.log(lstOrders);
+	var lstStates = '${ALLSTATES}';
+	var lstClients ='${LISTCLIENTS}';
+
 	$(document).ready(function() {
-		showClientData(JSON.parse(lstOrders));
+		if(lstStates != undefined && lstStates.length >0){
+			showStatesData(JSON.parse(lstStates)); 
+		}
+		
+		if(lstClients != undefined && lstClients.length >0){
+			showClientData(JSON.parse(lstClients));
+		}
+		
+		$('#state').click(function(e) {
+	    	sortDropDownListByText("#state");
+	    });
 
 	}); 
+	function sortDropDownListByText(selItem) {
+		$(selItem).each(function() {
+			var selectedValue = $(this).val();
+			$(this).html($("option", $(this)).sort(function(a, b) {
+				return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
+			}));
+			$(this).val(selectedValue);
+		});
+	}  
+	function showStatesData(response) {
+		arrStates = {};
+		//<option value="Andra Pradesh">Andra Pradesh</option>
+		var html = "<option value=''>-- Select --</option>";
+		if (response != undefined && response.length > 0) {
+			$.each(response, function(i, datObj) {
+				arrStates[datObj.stateId] = datObj;
+				html = html + '<option value="' + datObj.stateId + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
+			});
+		}
+		$('#state').empty().append(html);
+		document.getElementById("state").innerHTML = html;
+		//console.log("=========="+serviceUnitArray);
+	}
 	
-	function addClient(){
+	function addClientNew(){
+		alert("1. in to addClientNew-----");
+		var formData = new FormData();
+		
+		formData.append('clientId',$("#clientId").val());
+		formData.append('companyName',$("#companyName").val());
+		formData.append('pan',$("#pan").val());
+		formData.append('gstn',$("#gstn").val());
+		formData.append('address',$("#address").val());
+		formData.append('state',$("#state").val());
+		formData.append('pin',$("#pin").val());
+		formData.append('contactPerson',$("#contactPerson").val());
+		formData.append('mobile',$("#mobile").val());
+		formData.append('email',$("#email").val());
+		formData.append('accountNumber',$("#accountNumber").val());
+		formData.append('bank',$("#bank").val());
+		formData.append('branch',$("#branch").val());
+		formData.append('ifsc',$("#ifsc").val());
+		formData.append('terms',$("#terms").val());
+		formData.append('file', $('input[type=file]')[0].files[0]);
+		
+		$.ajax({
+			type : "POST",
+			url : "addClient.htm",
+			data: formData,
+			dataType : 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+			success : function(response) {
+				alert("--------------response=="+response);
+				//resJSON = JSON.parse(response);
+ 				if (response != null) {
+					if (resJSON.status == "ERROR") {
+						alert("-------ERROR-------");
+						$("#clientFrmMsg").text(resJSON.message);
+						$("#clientFrmMsg").show();
+						$("#clientFrmMsg").fadeOut(15000);
+						$("#clientFrmMsg").val("");
+					} else {
+						alert("-------showClientData-------");
+						$("#clientFrmMsg").text('Client saved Sucessfully');
+						$("#clientFrmMsg").show();
+						$("#clientFrmMsg").fadeOut(15000);
+						clientClear();
+						showClientData(response);
+					}
+
+				} 
+			},
+			error : function(e) {
+				$("#btn-save").prop("disabled", false);
+			}
+		});
+	}
+	
+/*	function addClient(){
 		alert("in to add client");
 		
 		data = {};
@@ -238,13 +328,12 @@
 		data["branch"] = $("#branch").val();
 		data["ifsc"] = $("#ifsc").val();
 		data["terms"] = $("terms").val();
-		data["logPath"] = $("#logPath").val();
-		alert("in to add client"+terms);
-		alert("in to client "+accountNumber);
-		alert("in to client "+bank);
-		alert("in to client "+branch);
-		alert("in to client "+ifsc);
-		console.log(data);
+		//data["logPath"] = $("#logPath").val();
+		for (var i = 0; i < $("#logPath")[0].logPath.length; i++)
+			data.append('logPath',  $("#logPath")[0].logPath[i]);
+		alert("in to client=="+logPath);
+		//data.append("file", $('#file').get(0).files[0]);
+		//console.log(data);
 		$.ajax({
 			type : "POST",
 			url : "addClient.htm",
@@ -271,10 +360,10 @@
 				$("#btn-save").prop("disabled", false);
 			}
 		});
-	}
+	}*/
 	
 	function showClientData(response) {
-		alert("in to show client data");
+		//alert("in to show client data");
 		serviceUnitArray = {};
 		var html = '';
 		if (response != undefined && response.length > 0) {
@@ -298,7 +387,7 @@
 										+ datObj.address
 										+ '</td>'
 										+ '<td class="text-center">'
-										+ datObj.state
+										+ datObj.state 
 										+ '</td>'
 										+ '<td class="text-center">'
 										+ datObj.pin
@@ -325,7 +414,8 @@
 										+ '</a>' + '</td>' + '</tr>'
 							});
 		}
-		$('#clientListData').empty().append(html);
+		//$('#clientListData').empty().append(html);
+		document.getElementById("clientListData").innerHTML = html;
 	}
 	
 	function deleteClient(id) {
@@ -420,21 +510,23 @@
 	
 	function clientFormValidate() {
 		alert("in to clientFormValidation");
-		if ($("#clientForm").valid()) {
+		addClientNew();
+/* 		if ($("#clientForm").valid()) {
 			alert("in to client validate");
 			var clientId = $("#clientId").val();
 			if (clientId != "") {
 				updateClient();
 			} else {
-				addClient();
+				//addClient();
+				addClientNew();
 			}
-		}
+		} */
 	}
 	function clientClear() {
 		$("#clientForm")[0].reset();
 		$('#btnClientSave').text("Add");
 	}
-	$("#clientForm")
+/*	$("#clientForm")
 	.validate(
 			{
 				rules : {
@@ -578,7 +670,7 @@
 			});
 	$.validator.addMethod("alpha", function(value, element) {
 		return this.optional(element) || value == value.match(/^[a-zA-Z\s]+$/);
-		});
+		});*/
 	</script>
 </body>
 </html>

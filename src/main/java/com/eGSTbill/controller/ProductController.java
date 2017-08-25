@@ -27,6 +27,7 @@ public class ProductController {
 		System.out.println("From productHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
+		//String sState = null;
 		try {
 			ProducService bo = new ProducService();
 			sJson = bo.listProducts();

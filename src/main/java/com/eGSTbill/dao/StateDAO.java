@@ -9,7 +9,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class StateDAO {
 
-	public String getAllStates(State state) {
+	/*public String getAllStates(State state) {
 		String result = "fail";
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
@@ -19,25 +19,25 @@ public class StateDAO {
 			e.printStackTrace();
 		}
 		return result;
-	}
+	}*/
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Product> listProducts() {
-		ArrayList<Product> lstProducts = new ArrayList<Product>();
+	public ArrayList<State> getAllStates() {
+		ArrayList<State> lstStates = new ArrayList<State>();
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
-			lstProducts = (ArrayList<Product>) session.queryForList("Product.listProducts");
+			lstStates = (ArrayList<State>) session.queryForList("State.getAllStates");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (!lstProducts.equals(null)) {
-			return lstProducts;
+		if (!lstStates.equals(null)) {
+			return lstStates;
 		} else {
-			return lstProducts;
+			return lstStates;
 		}
 	}
 
-	public String deleteProduct(Product newProduct) {
+	/*public String deleteProduct(Product newProduct) {
 		String result = "fail";
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
@@ -74,5 +74,5 @@ public class StateDAO {
 			e.printStackTrace();
 		}
 		return result;
-	}
+	}*/
 }

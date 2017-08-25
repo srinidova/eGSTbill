@@ -17,14 +17,13 @@ import org.apache.commons.lang.StringUtils;
 
 import com.eGSTbill.dao.ProductDAO;
 import com.eGSTbill.model.Product;
-import com.eGSTbill.model.Sms;
 import com.eGSTbill.model.User;
 import com.eGSTbill.util.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SmsService {
 
-	public static boolean sendMessage(ServletContext objContext, User user ,String sMessage) throws IOException {
+	/*public static boolean sendMessage(ServletContext objContext, User user ,String sMessage) throws IOException {
 		boolean bSentSms = false;
 		String postData="";
 		String retval = "";
@@ -34,8 +33,8 @@ public class SmsService {
 		// sms = CommonUtils.getSmsProperties(request.getServletContext());
 		User mobileNo= user;
 		String message=sMessage;
-		/*user.setSendTo("91" + userMobile);
-		smsDTO.setMessage(sMessage);*/
+		user.setSendTo("91" + userMobile);
+		smsDTO.setMessage(sMessage);
 
 		//bSentSms = sendMessage(request.getServletContext(), sms);
 		 postData += "mobileNo=" + mobileNo + "&message=" + message;
@@ -62,5 +61,5 @@ public class SmsService {
 			bSentSms = true;
 
 		return bSentSms;
-	}
+	}*/
 }

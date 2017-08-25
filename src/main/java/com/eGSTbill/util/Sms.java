@@ -22,29 +22,30 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
 import com.eGSTbill.model.SendSms;
+import com.eGSTbill.model.SmsModel;
 /**
  *
  * @author srinivasa.dova
  */
 public class Sms {
-	public static boolean sendMessage(ServletContext objContext,SendSms Objsmsbean){
+	public static boolean sendMessage(ServletContext objContext,SmsModel smsModel){
 		boolean bSentSms = false;
 		String postData="";
 		String retval = "";
 		String Username ="";
 		String Password = "";
 		//String MobileNo = "917411184869";
-		String MobileNo = Objsmsbean.getSendTo();
+		String MobileNo = smsModel.getSendTo();
 		//String Message = "Test message from Dova Soft Dova Soft Dova Soft123456 ";
-		String Message = Objsmsbean.getMessage();
+		String Message = smsModel.getMessage();
 		String SenderID = "";
 		InputStream input = null;
-		String mailContent = null;
+		//String mailContent = null;
 		String smsUrl = null;
-		String smsOtpText = null;
+		//String smsOtpText = null;
 		try{
 			Properties prop = new Properties();
-			String propertiespath = objContext.getRealPath("Resources"+ File.separator + "DataBase.properties");
+			String propertiespath = objContext.getRealPath("Resources"+ File.separator + "eGSTbill.properties");
 			input = new FileInputStream(propertiespath);
 			// load a properties file
 			prop.load(input);
@@ -60,7 +61,7 @@ public class Sms {
 			
 			postData += "user=" + Username + "&password=" + Password + "&GSM=" +
 					MobileNo +"&sender=" + SenderID + "&SMSText=" + Message;
-			// System.out.println("postData============"+postData);
+			 System.out.println("postData============"+postData);
 			
 			URL url = new URL(smsUrl);
 			HttpURLConnection urlconnection = (HttpURLConnection) url.openConnection();
@@ -93,11 +94,18 @@ public class Sms {
 		boolean bSentSms = false;
 		//Sms sms = new Sms();
 
-		/*SendSms smsDTO = CommonUtils.getSmsProperties(request.getServletContext());
+		SmsModel smsModel = CommonUtils.getSmsProperties(request.getServletContext());
+		/*smsModel.sets
 		smsDTO.setSendTo("91" + userMobile);
 		smsDTO.setMessage(sMessage);*/
+		System.out.println("in to sendMessage "+userMobile);
+		//smsDTO.setSendTo("91" + loginMobile);
+		smsModel.setSendTo("91" + userMobile);
+		smsModel.setMessage(sMessage);
+		System.out.println("in to sendMessage==="+smsModel);
+		System.out.println("in to setSendTo==="+userMobile);
 
-		//bSentSms = sendMessage(request.getServletContext(), smsDTO);
+		bSentSms = sendMessage(request.getServletContext(), smsModel);
 
 		return bSentSms;
 	}

@@ -93,4 +93,17 @@ public class UserDAO {
 		}
 		return users;
 	}
+	public String passwordUpdate(User user) {
+		String result = "fail";
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+
+			session.insert("User.passwordUpdate", user);
+
+			result = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}	
 }
