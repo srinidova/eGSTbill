@@ -26,6 +26,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label for="username" class="cols-sm-2 control-label">Mobile</label>
+                <spin id="LoginFrmMsg" style="display: none; margin-left:100px ; text-align: right; font-weight: bold;">aaaaa</spin>
                 <div class="cols-sm-10">
                   <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                     <input type="text" class="form-control" name="userMobile" id="userMobile"  placeholder="Enter your Mobile"/>
@@ -47,6 +48,7 @@
               <div class="col-md-12">
               <div class="form-group ">
                 <button type="button" class="btn btn-primary btn-lg btn-block login-button" onclick="loginFormValidate();">Login</button>
+                <button type="button" class="btn btn-primary btn-lg btn-block login-button" onclick="loginClear();">Clear</button>
               </div>
               </div>
             </form>
@@ -66,27 +68,41 @@
 <script>
 function loginFormValidate() {
 	if ($("#loginForm").valid()) {
-		alert("----Ok---");
+		//alert("----Ok---");
+		login();
 	}
 }
 
 function login() {
-	alert("===in login===");
+	//alert("===in login===");
 	data = {};
 	data["userMobile"] = $("#userMobile").val();
 	data["userPassword"] = $("#userPassword").val();
+	
 	$.ajax({
 		type : "POST",
 		url : "login.htm",
 		data : data,
-		dataType : 'json',
 		success : function(response) {
-			alert("------sucess response----");
+			resJSON = JSON.parse(response);
+			//alert("------sucess response----resJSON=="+resJSON.status);
+			if (response != null) {
+				if (resJSON.status == "success") {
+					//alert("------sucess ----");
+					window.location.href = "newBillHome.htm";
+				} else {
+					//alert("------error ----");
+					$("#LoginFrmMsg").text(resJSON.message);
+					$("#LoginFrmMsg").show();
+					$("#LoginFrmMsg").fadeOut(15000);
+				}
+
+			}
 		},
 		error : function(e) {
-			
 		}
 	});
+
 }
 
 	$("#loginForm").validate(
@@ -255,6 +271,11 @@ function login() {
 		});
 
 	});
+	
+	function loginClear() {
+		$("#loginForm")[0].reset();
+		$("#loginForm").data('validator').resetForm();
+	}
 </script> 
 <script>$(document).ready(function(){
 	

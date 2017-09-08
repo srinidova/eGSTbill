@@ -11,14 +11,19 @@ import javax.ws.rs.core.Context;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eGSTbill.model.Client;
+import com.eGSTbill.model.ClientProduct;
+import com.eGSTbill.model.Product;
 import com.eGSTbill.model.Purchaser;
 import com.eGSTbill.model.User;
+import com.eGSTbill.service.ClientProductService;
 import com.eGSTbill.service.ClientService;
+import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.UserService;
 import com.eGSTbill.util.CommonUtils;
 import com.eGSTbill.util.Sms;
@@ -48,195 +53,62 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login")
-	public @ResponseBody String login(@RequestParam("userMobile") String userMobile,@RequestParam("userPassword") String userPassword, HttpSession objSession,
-			HttpServletRequest objRequest) {
-		String result ="fail";
-		String sRole = null;
-		String sPwd = null;
-		String sLoginId = null;
+	public @ResponseBody String addProduct(@RequestParam("userMobile") String userMobile,
+			@RequestParam("userPassword") String userPassword, HttpSession objSession, HttpServletRequest objRequest) {
+		String sJson = null;
 		User user = null;
-		Purchaser purchaser = null;
-		HttpSession session = null;
-		//System.out.println("in to login controler");
-		try{
-			//System.out.println("in to login controller==="+users.getMobile());
-			//System.out.println("in to login controller==="+users.getPassword());
+		String sPwd = null;
+		//System.out.println("in to login controler userMobile==" + userMobile);
+		//System.out.println("in to login controler userPassword==" + userPassword);
+		JSONObject json = new JSONObject();
+
+		try {
+
 			if (StringUtils.isNotEmpty(userMobile)) {
 				UserService userService = new UserService();
 				user = userService.getUserByMobile(userMobile);
 
 				if (user != null) {
 					sPwd = user.getPassword();
-					//sRole = memDto.getMemberType();
-					//sLoginId = memDto.getMemberId();
-					
 					if (userPassword.equals(sPwd)) {
-						//System.out.println("a. in to login controller==="+user.getMobile());
-						//System.out.println("b. in to login controller==="+user.getPassword());
-						
+						//System.out.println("a. in to login controller===" + user.getMobile());
+						//System.out.println("b. in to login controller===" + user.getPassword());
+
 						String sUsrRole = user.getRole();
-						//System.out.println("c. in to login sUsrRole==="+sUsrRole);
 						objSession.setAttribute("LOGINROLE", sUsrRole);
-						
+
 						ClientService cs = new ClientService();
 						String sUserId = user.getUserId();
-						//System.out.println("d. in to login sUserId==="+sUserId);
-						
-					
-						/*String sPurchaserId = purchaser.getPurchaserId();
-						ShippingService ss = new ShippingService();
-						String shipping = ss.getShippingsBypurchaserId(sPurchaserId);
-						
-						objSession.setAttribute("PURCHASERIDS", sPurchaserId);*/
-						
 						Client client = cs.getClientByUserId(sUserId);
-						if(client != null){
-							
-						
-						//System.out.println("e. in to login client==="+client.toString());
+
 						String sClientId = client.getClientId();
-						//System.out.println("f. in to login sClientId==="+sClientId);
 						objSession.setAttribute("CLIENTID", sClientId);
-						
+
 						user.setClientId(sClientId);
 						user.setClient(client);
-						//System.out.println("in to login controler"+user.getClient());
 						objSession.setAttribute("USER", user);
-						
-						//System.out.println("in to login user"+user);
-						
-						//PurchaserService ps = new PurchaserService();
-						 /* String sPurchaserId = purchaser.getPurchaserId();
-						 * 						Purchaser purchaser = ps.*/
-						//Purchaser purchaser = ps.listPurchasersByClientId(sClientId)
-						/*Purchaser purchaser = new Purchaser();
-						String sPurchaserId = purchaser.getPurchaserId();*/
-						
-						//objSession.setAttribute("PURCHASERID", sPurchaserId);
-						
-						/*PurchaserService ps = new PurchaserService();
-						String sPurchaserId = purchaser.
-						Purchaser purchaser = ps.
-						//String sUserId1  = user.getUserId();
-						System.out.println("i.in to login purchaser===="+purchaser.toString());
-						String sPurchaserId = purchaser.listPurchasersByClientId(sClientId);
-						*/
-						result = "newBillHome";
-						return result;
-						}else{
-							//System.out.println("g. in to login sClientId=null==");
-							JSONObject json = new JSONObject();
-							json.put("status", "ERROR");
-							json.put("message", "Error while login");
-							result = json.toString();
-							//System.out.println("h. in to login result==="+result);
-							return result ;
-						}
+
+						json.put("status", "success");
+
 					} else {
-						result = "Invalid Password";
-						System.out.println("in to result==="+result);
+						json.put("status", "ERROR");
+						json.put("message", "Invalid Password");
 					}
 				} else {
-					result = "Invalid Mobile Number";
-					System.out.println("in to result invalid mobile"+result);
+					json.put("status", "ERROR");
+					json.put("message", "Invalid Mobile Number");
 				}
 
 			}
-		}catch(Exception e){
-			//System.out.println("Exception in LoginController in login()");
-			e.printStackTrace();		}
-		return result;
-	}
-	/*@RequestMapping(value = "/login")
-	public @ResponseBody String login(@RequestParam("userMobile") String userMobile,@RequestParam("userPassword") String userPassword, HttpSession objSession,
-			HttpServletRequest objRequest) {
-		String result ="fail";
-		String sRole = null;
-		String sPwd = null;
-		String sLoginId = null;
-		User users = null;
-		HttpSession session = null;
-		try{
-			//System.out.println("in to login controller==="+users.getMobile());
-			//System.out.println("in to login controller==="+users.getPassword());
-			if (StringUtils.isNotEmpty(userMobile)) {
-				UserService userService = new UserService();
-				users = userService.getUserByMobile(userMobile);
-
-				if (users != null) {
-					sPwd = users.getPassword();
-					//sRole = memDto.getMemberType();
-					//sLoginId = memDto.getMemberId();
-					
-					if (userPassword.equals(sPwd)) {
-						result = "success";
-						System.out.println("in to login controller==="+users.getMobile());
-						System.out.println("in to login controller==="+users.getPassword());
-					} else {
-						result = "Invalid Password";
-						System.out.println("in to result==="+result);
-					}
-				} else {
-					result = "Invalid Mobile Number";
-					System.out.println("in to result invalid mobile"+result);
-				}
-
-			}
-		}catch(Exception e){
+			sJson = json.toString();
+			System.out.println("sJson==" + sJson);
+		} catch (Exception e) {
 			System.out.println("Exception in LoginController in login()");
-			e.printStackTrace();		}
-		return result;
-	}*/
-	/*@RequestMapping(value = "/forgotPassword")
-	public @ResponseBody String forgotPassword(@RequestParam("userMobile") String userMobile, HttpSession objSession,ServletContext objContext,
-			HttpServletRequest objRequest) {
-		System.out.println("in to forgot password");
-		String result = "fail";
-		User user = null;
-		String sRole = null;
-		String sPwd = null;
-		String sMessage = null;
-		String sPropertyContent = null;
-		boolean bSentSms = false;
-		//String sPropertyContent = null;
-		Properties prop = null;
-		FileInputStream input = null;
-		String propertiespath = null;
-		try{
-			 user = new User();
-			JSONObject jObj = new JSONObject();
-			UserService userService = new UserService();
-			user = userService.getUserByMobile(userMobile);
-			if (user != null ) {
-				sPwd = user.getPassword();
-				//sPropertyContent1 = CommonUtils.getPropertyContent(request.g, "smsPwdText")
-				propertiespath = objContext.getRealPath("Resources" + File.separator + "USGFA.properties");
-				prop = new Properties();
-				input = new FileInputStream(propertiespath);
-				prop.load(input);
-				sMessage = prop.getProperty("smsPwdText");
-				System.out.println("property List"+sPropertyContent);
-				//sPropertyContent = CommonUtils.getPropertyContent(objRequest.getServletContext(), "smsPwdText");
-				//sMessage = sPwd + " " + sPropertyContent;
-				SmsService smsService =new SmsService();
-				SmsService.sendMessage(objContext, user,sMessage);
-				if (bSentSms) {
-					jObj.put("Msg", "success");
-				} else {
-					jObj.put("Msg", "Error while sending SMS");
-				}
-			} else {
-				jObj.put("Msg", "Mobile Number Not Found.");
-			}
-			return result;
-		
-		}catch(Exception e){
-			
+			e.printStackTrace();
 		}
-		return sPropertyContent;
-		
-	
-	}*/
+		return sJson;
+	}
+
 	@RequestMapping(value = "/forgotPassword")
 	public  @ResponseBody JSONObject forgotPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
 			throws IOException {
@@ -325,4 +197,5 @@ public class LoginController {
 
 		return jObj;
 	}
+
 }

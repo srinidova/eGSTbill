@@ -37,8 +37,8 @@
 		<param-value>/WEB-INF/log4js/log4j.properties</param-value>
 	</context-param>
 	<welcome-file-list>
-	<welcome-file>index.html</welcome-file>
-		<!-- welcome-file>index.jsp</welcome-file-->
+		<!-- welcome-file>index.html</welcome-file-->
+		<welcome-file>index.jsp</welcome-file>
 		<web:welcome-file>product.jsp</web:welcome-file>
 	</welcome-file-list>
 	<session-config>
