@@ -24,4 +24,13 @@
 		where
 		purchaserId = #purchaserId#
 	</update>
+	<select id="listPurchasersByClientId" resultClass="com.eGSTbill.model.Purchaser" parameterClass="com.eGSTbill.model.ClientPurchaser">
+		select
+		purchaserId,companyName,panNumber,gstNumber,address,state,pincode,contactName,mobileNo,emailID,updatedBy,updatedDate from
+		purchaser where purchaserId in (select purchaserId from client_purchaser where clientId is not null 
+		<isNotNull property="clientId">
+		    AND clientId  = #clientId#
+	   </isNotNull>
+		)
+	</select>
 </sqlMap>

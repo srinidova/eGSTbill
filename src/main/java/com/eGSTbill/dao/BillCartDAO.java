@@ -7,6 +7,7 @@ import com.eGSTbill.model.BillCart;
 import com.eGSTbill.model.BillDetailsCart;
 import com.eGSTbill.model.Product;
 import com.ibatis.sqlmap.client.SqlMapClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BillCartDAO {
 
@@ -66,7 +67,7 @@ public class BillCartDAO {
 
 	public String updateBillCart(BillCart billCart) {
 		String result = "fail";
-		System.out.println("in to update BillCart");
+		////System.out.println("in to update BillCart");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("BillCart.updateBillCart", billCart);
@@ -91,5 +92,34 @@ public class BillCartDAO {
 		} else {
 			return lstBillCart;
 		}
+	}
+	@SuppressWarnings("unchecked")
+	public String  searchUnBilled(BillCart billCart) {
+		ArrayList<BillCart> billcart = new ArrayList<BillCart>();
+		boolean bAnd = false;
+		String sQuery = null;
+		ObjectMapper objectMapper=null;
+		String sJson = null;
+		try{
+			SqlMapClient session = new IbatisFactory().getSession();
+			
+			String sBillno = billCart.getBillNo();
+			
+			//System.out.println("in to searchUnBilled sBillno-------------"+sBillno);
+			
+			
+
+			billcart = (ArrayList<BillCart>) session.queryForList("BillCart.searchUnBilled", billCart);
+			//System.out.println("billcart     "+billcart);
+			if (billcart == null || billcart.size() > 0) {
+				objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(billcart);
+					
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return sJson;
 	}
 }

@@ -374,17 +374,30 @@
 	<script type="text/javascript">
 		var lstOrders = '${LISTPRODUCTS}';
 		var lstPurchasers = '${LISTPURCHASERS}';
-		var lstShipping = '${LISTSHIPPING}';
+		//var lstShipping = '${LISTSHIPPING}';
+		
+		
+		//console.log(lstShipping);
+		
 		serviceUnitArrayShipping = {};
 		//alert("lstOrders.length=="+lstOrders.length);
 
 		$(document).ready(function() {
 
+			//alert("in to listShipping==="+lstShipping);
 			if (lstOrders != undefined && lstOrders.length > 0) {
 				showProductData(JSON.parse(lstOrders));
 			}
+/* 			if(lstShipping != undefined && lstShipping.length >0){
+				showShippingData(JSON.parse(lstShipping));
+				//alert("lstShipping=="+lstShipping);
+				$('#purchaserId').val(lstShipping);
+				populateShippingSelect() ;
+			} */
 			showPurchaserData(JSON.parse(lstPurchasers));
 		});
+		
+		
 
 		function showProductData(response) {
 			serviceUnitArray = {};
@@ -551,7 +564,7 @@
 					.val(serviceUnitArrayBill[billDetailsCartId].discount);
 		}
 		function deleteBillDetailsCart(id) {
-			alert("in to delete BillDetailsCart" + id);
+			//alert("in to delete BillDetailsCart" + id);
 			var count = 0;
 			$.ajax({
 				type : "POST",
@@ -670,7 +683,7 @@
 				}
 			}
 
-			alert("in to populate purchaser data===" + purchaserId);
+			//alert("in to populate purchaser data===" + purchaserId);
 
 			$('#disCompanyName').text(
 					serviceUnitArrayPurchaser[purchaserId].companyName);
@@ -679,22 +692,23 @@
 					serviceUnitArrayPurchaser[purchaserId].state);
 			$('#disPurchaserGSTN').text(
 					serviceUnitArrayPurchaser[purchaserId].gstNumber);
-			getShippingData(purchaserId);
+			getShippingByPurchaserId();
+			//getShippingData(purchaserId);
 
 		}
 
-		function getShippingData(purchaserId) {
-
+		 function getShippingData(purchaserId) {
+		//alert("in to getShippingData==="+purchaserId);
 			data = {};
 			data["purchaserId"] = purchaserId;
-			alert("in to get shipping data===" + purchaserId);
+			//alert("in to get shipping data===" + purchaserId);
 			$.ajax({
 				type : "POST",
 				url : "listShippings.htm",
 				data : data,
 				success : function(response) {
 					resJSON = JSON.parse(response);
-					alert("getShippingData ---------- resJSON====" + resJSON);
+					//alert("getShippingData ---------- resJSON====" + resJSON);
 					if (response != null) {
 						if (resJSON.status == "ERROR") {
 
@@ -707,7 +721,7 @@
 
 				}
 			});
-		}
+		} 
 
 		function showShippingData(response) {
 			var html = "<option value=''>-- Select --</option>";
@@ -722,8 +736,11 @@
 			//console.log("show in to ===" + serviceUnitArrayShipping);
 		}
 
-		function populateShippingData(shippingId) {
+		function populateShippingData(purchaserId) {
 			var shippingId = $('#shippingId').val();
+			var purchaserId = $('#purchaserId').val();
+			//alert("in to populateShippingData=shippingId=="+shippingId);
+			//alert("in to populateShippingData=purchaserId=="+purchaserId);
 			var addressFull = "";
 			var address = serviceUnitArrayShipping[shippingId].address;
 			if (address.length > 0) {
@@ -746,6 +763,30 @@
 			$('#disShippingAddress').text(addressFull);
 			$('#disShippingState').text(
 					serviceUnitArrayShipping[shippingId].state);
+			getShippingData(purchaserId);
+
+		}
+		
+/* 		function populateShippingSelect() {
+			var purchaserId = $('#purchaserId').val();
+			getShippingByPurchaserId(purchaserId);
+		} */
+		
+		function getShippingByPurchaserId() {
+			var purchaserId = $('#purchaserId').val();
+			//alert("in to getShippingByPurchaserId==="+purchaserId);
+			$.ajax({
+				type : "POST",
+				url : "getShippingsBypurchaserId.json",
+				data : "purchaserId=" + purchaserId,
+				success : function(response) {
+					if (response != null) {
+						showShippingData(response);
+					}
+				},
+				error : function(e) {
+				}
+			})
 
 		}
 		$("#billForm")

@@ -34,6 +34,13 @@
 							<legend>New Purchaser</legend>
 							<div class="col-md-4">
 								<div class="form-group">
+									<label for="">Client</label> <select id="clientId" class="form-control" onchange="populatePurchaserSelect();">
+									</select>
+									 <!-- input type="hidden" class="form-control" id="companyName" name="companyName"-->
+								</div>
+							</div>							
+							<div class="col-md-4">
+								<div class="form-group">
 									<label for="">Company Name<sup>*</sup></label> <input
 										class="form-control" type="text" id="companyName"
 										name="companyName" placeholder="" maxlength="30"> <input
@@ -43,14 +50,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">PAN<sup>*</sup></label> <input
-										class="form-control" type="text" id="panNo" name="panNo"
-										maxlength="15" placeholder="">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="">GSTN NO<sup>*</sup></label> <input
+									<label for="">GSTN<sup>*</sup></label> <input
 										class="form-control" type="text" id="gstnNo" name="gstnNo"
 										maxlength="15" placeholder="">
 								</div>
@@ -58,8 +58,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Address<sup>*</sup></label>
-									<textarea class="form-control" id="purchaserAddress"
-										name="purchaserAddress" placeholder=""> </textarea>
+									<input class="form-control" type="text" id="purchaserAddress" name="purchaserAddress" placeholder=""> 
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -100,13 +99,11 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">Client</label> <select id="clientId" class="form-control" onchange="populateClientData();">
-									</select>
-									 <input type="hidden" class="form-control" id="companyName" name="companyName">
-									<!--  <input type="hidden" class="form-control" id="userId" name="userId"> -->
-									 <!-- <input  type="hidden" id="billCartId" name="billCartId"> -->
+									<label for="">PAN<sup>*</sup></label> <input
+										class="form-control" type="text" id="panNo" name="panNo"
+										maxlength="15" placeholder="">
 								</div>
-							</div>
+							</div>							
 							<div class="col-md-10">
 								<div id="purchaseFrmMsg"
 									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
@@ -170,18 +167,30 @@
 
 	<div class="clearfix"></div>
 	<script type="text/javascript">
-		var lstPurchasers = '${LISTPURCHASERS}';
-		var lstOrders ='${LISTCLIENTS}';
 		var lstStates = '${ALLSTATES}';
+		var lstClients ='${LISTCLIENTS}';
+		var lstPurchasers = '${LISTPURCHASERS}';
+		var sClientId = '${CLIENTID}';
+		console.log(sClientId);
+		console.log(lstPurchasers);
+		
 		$(document).ready(function() {
-			//LISTPURCHASERS
+			if(lstStates != undefined && lstStates.length >0){
+				showStatesData(JSON.parse(lstStates)); 
+			}
+			if(lstClients != undefined && lstClients.length >0){
+				showClientData(JSON.parse(lstClients));
+				//alert("sClientId=="+sClientId);
+				$('#clientId').val(sClientId);
+				populatePurchaserSelect() ;
+			}
+			if(lstPurchasers != undefined && lstPurchasers.length >0){
+				showPurchaseData(JSON.parse(lstPurchasers));
+			}
 
-			showPurchaseData(JSON.parse(lstPurchasers));
-			showClientData(JSON.parse(lstOrders));
-			showStatesData(JSON.parse(lstStates)); 
+			
 			
 			$('#purState').click(function(e) {
-				//alert("in to state sorting");
 		    	sortDropDownListByText("#purState");
 		    });
 
@@ -193,18 +202,18 @@
 		}
 		function purchaseFormValidate() {
 			if ($("#purchaserForm").valid()) {
-				alert("gstnNo........"+$("#gstnNo").val().substring(0,2));
+				//alert("gstnNo........"+$("#gstnNo").val().substring(0,2));
 				$("#purState").change(function(){ 
 			        var element = $(this).find('option:selected').attr("value"); 
 			    }); 
-				//alert("state code......"+element);
+				////alert("state code......"+element);
 				var purchaseId = $("#purchaserId").val();
 				if (purchaseId != "") {
-					alert("hello update=========" + purchaseId);
+					//alert("hello update=========" + purchaseId);
 					updatePurchaser(purchaseId);
 					$('#btnPurchaseSave').text("Add");
 				} else {
-					//alert("--------inside else---------");
+					////alert("--------inside else---------");
 					savePurchaser();
 				}
 			}
@@ -335,7 +344,7 @@
 					|| value == value.match(/^[a-zA-Z\s]+$/);
 		});
 		function savePurchaser() {
-			//alert("inside savePurchaser");
+			////alert("inside savePurchaser");
 			purchaserData = {};
 			purchaserData["purchaserId"] = $("#purchaserId").val();
 			purchaserData["clientId"] = $("#clientId").val();
@@ -348,8 +357,8 @@
 			purchaserData["contactName"] = $("#contactName").val();
 			purchaserData["mobileNo"] = $("#purchaserMobileNo").val();
 			purchaserData["emailID"] = $("#purchaserEmail").val();
-			//alert("purchase data"+purchaserData)
-			alert("in to save purchaser ==="+clientId);
+			////alert("purchase data"+purchaserData)
+			//alert("in to save purchaser ==="+clientId);
 			console.log(clientId);
 			$.ajax({
 				type : "POST",
@@ -370,7 +379,7 @@
 			});
 		}
 		function showPurchaseData(response) {
-			//alert("inside showpurchase data========"+response);
+			////alert("inside showpurchase data========"+response);
 			serviceUnitArrayPurchaser = {};
 			var html = '';
 			if (response != undefined && response.length > 0) {
@@ -415,7 +424,7 @@
 			$('#purchaserListData').empty().append(html);
 		}
 		function deletePurchaser(purchaserId) {
-			alert("inside delete");
+			//alert("inside delete");
 			$.ajax({
 				type : "POST",
 				url : "deletePurchaser.json",
@@ -435,7 +444,7 @@
 
 		}
 		function editPurchaser(purchaserId) {
-			alert("inside edit");
+			//alert("inside edit");
 			$('#purchaserId').val(purchaserId);
 			$('#companyName').val(serviceUnitArrayPurchaser[purchaserId].companyName);
 			$('#panNo').val(serviceUnitArrayPurchaser[purchaserId].panNumber);
@@ -449,7 +458,7 @@
 		}
 
 		 function updatePurchaser(purchaserId) {
-			 alert("inside update jsp purchaser==========="+purchaserId);
+			 //alert("inside update jsp purchaser==========="+purchaserId);
 			 	data = {};
 			 	data["purchaserId"] = purchaserId;
 				data["companyName"] = $("#companyName").val();
@@ -462,7 +471,7 @@
 				data["mobileNo"] = $("#purchaserMobileNo").val();
 				data["emailID"] = $("#purchaserEmail").val();
 				//var purchaserId = $("#purchaserId").val();
-			alert("panno id in update jsp..............");
+			//alert("panno id in update jsp..............");
 			$.ajax({
 				type : "POST",
 				url : "updatePurchaser.htm",
@@ -513,13 +522,6 @@
 				//console.log("=========="+serviceUnitArray);
 			}
 		 
-			function populateClientData(clientId) {
-				//console.log("=====pop====="+serviceUnitArray);
-				//alert("in to populateProdData=========="+serviceUnitArray);
-				var clientId = $('#clientId').val();
-				//$('#companyName').val(serviceUnitArray[clientId].companyName);
-				
-			}
 			function sortDropDownListByText(selItem) {
 				$(selItem).each(function() {
 					var selectedValue = $(this).val();
@@ -529,6 +531,27 @@
 					$(this).val(selectedValue);
 				});
 			}  
+			
+			function populatePurchaserSelect() {
+				var clientId = $('#clientId').val();
+				getPurchasersByClientId(clientId);
+			}	
+			
+			function getPurchasersByClientId(sClientId) {
+				$.ajax({
+					type : "POST",
+					url : "getPurchasersByClientId.json",
+					data : "sClientId=" + sClientId,
+					success : function(response) {
+						if (response != null) {
+							showPurchaseData(response);
+						}
+					},
+					error : function(e) {
+					}
+				})
+
+			}
 	</script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AutoIncrement">
+	<select id="getBillNo"  parameterClass="java.lang.String" resultClass="com.eGSTbill.model.AutoIncrement">
+		select tableName,columnName,incrementId from  autoincrement 
+	</select>
+	<update id="updateBillNo" parameterClass="com.eGSTbill.model.AutoIncrement">
+		<!-- update autoincrement set  incrementId ='1' where tableName = "billCart" -->
+		update autoincrement set incrementId =#incrementId# where tableName = #tableName#
+	</update>
+	
+	
+	
+</sqlMap>

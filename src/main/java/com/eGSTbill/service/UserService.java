@@ -40,7 +40,7 @@ public class UserService {
 	}
 
 	public String deleteUser(User user) {
-		System.out.println("in to delete user service");
+		//System.out.println("in to delete user service");
 		UserDAO dao = new UserDAO();
 		return dao.deleteUser(user);
 	}
@@ -91,7 +91,7 @@ public class UserService {
 		clientUser.setClientId(sClientId);
 		
 		ClientUserService cu = new ClientUserService();
-		System.out.println("in to Client User");
+		//System.out.println("in to Client User");
 		ClientUser clientuser = new ClientUser();
 		clientuser.setClientId(sClientId);
 		clientuser.setUserId(sUserId);
@@ -110,8 +110,8 @@ public class UserService {
 		return dao.addClientUSer(clientUser);
 	}
 	public User getUserByMobile(String sMobileNo) {
-		System.out.println("in to user service");
-		User users = null;
+		//System.out.println("in to user service");
+		User userExst = null;
 		User user = new User();
 		user.setMobile(sMobileNo);
 		//memberDto.setMobile(sMobileNo);
@@ -119,16 +119,35 @@ public class UserService {
 		ArrayList<User> lstUsers = dao.getUserByMobile(user);
 		if (lstUsers != null && lstUsers.size() > 0) {
 			for (int i = 0; i < lstUsers.size(); i++) {
-				users = lstUsers.get(i);
+				userExst = lstUsers.get(i);
 			}
 		}
 
-		return users;
+		return userExst;
 	}
 	
 	
 	public String passwordUpdate(User user) {
 		UserDAO dao = new UserDAO();
 		return dao.passwordUpdate(user);
+	}
+	
+	public String listUsersByClientId(String sClientId) {
+		String sJson = null;
+		ObjectMapper objectMapper = null;
+		ArrayList<User> lstUsers = null;
+		UserDAO dao = new UserDAO();
+		lstUsers = dao.listUsersByClientId(sClientId);
+		//System.out.println("lstProducts size==========="+lstUsers.size());
+		if (lstUsers == null || lstUsers.size() > 0) {
+			objectMapper = new ObjectMapper();
+			try {
+				sJson = objectMapper.writeValueAsString(lstUsers);
+				//System.out.println("result String list======"+sJson);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return sJson;
 	}
 }

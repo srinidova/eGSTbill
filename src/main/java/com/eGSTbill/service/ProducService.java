@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.apache.commons.lang.StringUtils;
 
 import com.eGSTbill.dao.ProductDAO;
+import com.eGSTbill.dao.PurchaserDAO;
 import com.eGSTbill.model.Product;
+import com.eGSTbill.model.Purchaser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ProducService {
@@ -71,5 +73,23 @@ public class ProducService {
 	public String updateProduct(Product newProduct) {
 		ProductDAO dao = new ProductDAO();
 		return dao.updateProduct(newProduct);
+	}
+	public String listProductsByClientId(String sClientId) {
+		String sJson = null;
+		ObjectMapper objectMapper = null;
+		ArrayList<Product> lstProducts = null;
+		ProductDAO dao = new ProductDAO();
+		lstProducts = dao.listProductsByClientId(sClientId);
+		////System.out.println("lstProducts size==========="+lstProducts.size());
+		if (lstProducts == null || lstProducts.size() > 0) {
+			objectMapper = new ObjectMapper();
+			try {
+				sJson = objectMapper.writeValueAsString(lstProducts);
+				//System.out.println("result String list======"+sJson);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return sJson;
 	}
 }

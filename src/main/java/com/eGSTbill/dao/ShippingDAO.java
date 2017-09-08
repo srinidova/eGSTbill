@@ -2,6 +2,8 @@ package com.eGSTbill.dao;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.eGSTbill.connection.IbatisFactory;
 import com.eGSTbill.model.Product;
 import com.eGSTbill.model.PurchaserShipping;
@@ -55,7 +57,7 @@ public class ShippingDAO {
 
 	public String updateShipping(Shipping shipping) {
 		String result = "fail";
-		System.out.println("in to update Shipping");
+		//System.out.println("in to update Shipping");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("Shipping.updateShipping", shipping);
@@ -66,6 +68,25 @@ public class ShippingDAO {
 		return result;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Shipping> getShippingsBypurchaserId(String sPurchaserId){
+		ArrayList<Shipping> lstShipping = new ArrayList<Shipping>();
+		try{
+			SqlMapClient session = new IbatisFactory().getSession();
+			PurchaserShipping ps = new PurchaserShipping();
+			//System.out.println("From DAO sPurchaserId=="+sPurchaserId);
+			if(StringUtils.isNotEmpty(sPurchaserId)){
+				ps.setPurchaserId(sPurchaserId);
+			}
+			lstShipping = (ArrayList<Shipping>) session.queryForList("Shipping.getShippingsBypurchaserId", ps);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if (!lstShipping.equals(null)) {
+			return lstShipping;
+		} else {
+			return lstShipping;
+		}
+	}	
 	
 }

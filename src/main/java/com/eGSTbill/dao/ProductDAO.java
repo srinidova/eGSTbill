@@ -2,8 +2,13 @@ package com.eGSTbill.dao;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.eGSTbill.connection.IbatisFactory;
+import com.eGSTbill.model.ClientProduct;
+import com.eGSTbill.model.ClientPurchaser;
 import com.eGSTbill.model.Product;
+import com.eGSTbill.model.Purchaser;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class ProductDAO {
@@ -64,7 +69,7 @@ public class ProductDAO {
 
 	public String updateProduct(Product newProduct) {
 		String result = "fail";
-		System.out.println("in to update product");
+		//System.out.println("in to update product");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("Product.updateProduct", newProduct);
@@ -73,5 +78,24 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Product> listProductsByClientId(String sClientId) {
+		ArrayList<Product> lstProducts = new ArrayList<Product>();
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+			ClientProduct cp = new ClientProduct();
+			////System.out.println("sClientId=="+sClientId);
+			if (StringUtils.isNotEmpty(sClientId)) {
+				cp.setClientId(sClientId);
+			}
+			lstProducts = (ArrayList<Product>) session.queryForList("Product.listProductsByClientId", cp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstProducts;
 	}
 }

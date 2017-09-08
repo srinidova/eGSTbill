@@ -29,4 +29,14 @@
 		where
 		productId = #productId#
 	</update>
+	
+	<select id="listProductsByClientId" resultClass="com.eGSTbill.model.Product" parameterClass="com.eGSTbill.model.ClientProduct">
+		select
+		productId,productName,hsnCode,uom,quantity,purchaserPrice,mrp,salePrice,discount,cGST,sGST,iGST,productType,updatedBy,updatedDate from
+		product where productId in (select productId from client_product where clientId is not null 
+		<isNotNull property="clientId">
+		    AND clientId  = #clientId#
+	   </isNotNull>
+		)
+	</select>
 </sqlMap>

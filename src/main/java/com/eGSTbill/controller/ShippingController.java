@@ -36,31 +36,36 @@ public class ShippingController {
 	@RequestMapping(value = "/shippingHome")
 	public String shippingHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From shippingHome");
+		//System.out.println("From shippingHome");
 		objResponce.setCharacterEncoding("UTF-8");
-		String sJson = null;
+		String sJsonShipping = null;
+		String sJsonStates = null;
+		String sJsonPurchasers = null;
 		try {
-			ShippingService bo = new ShippingService();
-			sJson = bo.listShipping();
-			if (sJson != null && sJson.length() > 0) {
-				objSession.setAttribute("LISTSHIPPING", sJson);
-			}
 			
 			StateService st = new StateService();
-			sJson = st.getAllStates();
-			if (sJson != null && sJson.length() > 0) {
-				objSession.setAttribute("ALLSTATES", sJson);
+			sJsonStates = st.getAllStates();
+			if (sJsonStates != null && sJsonStates.length() > 0) {
+				objSession.setAttribute("ALLSTATES", sJsonStates);
 			}
 			
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+			//System.out.println("From shippingHome sClientId=="+sClientId);
+			
 			PurchaserService ps = new PurchaserService();
-			sJson = ps.listPurchaser();
-			if(sJson != null && sJson.length()>0 ){
-				objRequest.setAttribute("PURCHASER", sJson);
+			sJsonPurchasers = ps.listPurchasersByClientId(sClientId);
+			if(sJsonPurchasers != null && sJsonPurchasers.length()>0 ){
+				objRequest.setAttribute("PURCHASERS", sJsonPurchasers);
 			}
-			System.out.println("in to shipping controller==="+sJson);
+			
+			ShippingService bo = new ShippingService();
+			sJsonShipping = bo.getShippingsBypurchaserId(null);
+			if (sJsonShipping != null && sJsonShipping.length() > 0) {
+				objSession.setAttribute("LISTSHIPPING", sJsonShipping);
+			}
 
 		} catch (Exception e) {
-			System.out.println("Exception in ShippingController in shippingHome()");
+			//System.out.println("Exception in ShippingController in shippingHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -75,7 +80,7 @@ public class ShippingController {
 		String sJson = null;
 		String sShippingId = null;
 		String resultAddPurShi = "fail";
-		System.out.println("in to addShipping controller");
+		//System.out.println("in to addShipping controller");
 		try{
 			sShippingId = CommonUtils.getAutoGenId();
 			shipping.setShippingId(sShippingId);
@@ -100,7 +105,7 @@ public class ShippingController {
 					}
 				}
 		}catch(Exception e){
-			System.out.println("Exception in ShippingController in addShipping()");
+			//System.out.println("Exception in ShippingController in addShipping()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -111,7 +116,7 @@ public class ShippingController {
 			HttpServletRequest objRequest) {
 		String result ="fail";
 		String sJson = null;
-		System.out.println("in to delete Shipping");
+		//System.out.println("in to delete Shipping");
 		try{
 			Shipping shipping = new Shipping();
 			shipping.setShippingId(shippingId);
@@ -128,7 +133,7 @@ public class ShippingController {
 			sJson =  bo.listShipping();
 				
 		}catch(Exception e){
-			System.out.println("Exception in ShippingController in deleteShipping()");
+			//System.out.println("Exception in ShippingController in deleteShipping()");
 			e.printStackTrace();		}
 		return sJson;
 	}
@@ -139,7 +144,7 @@ public class ShippingController {
 		String resultUpdate ="fail";
 		String sJson = null;
 		try{
-			System.out.println("in to update Shipping");
+			//System.out.println("in to update Shipping");
 			ShippingService bo = new ShippingService();
 			
 			resultUpdate = bo.updateShipping(shipping);
@@ -153,7 +158,7 @@ public class ShippingController {
 			bo = new ClientService();
 			sJson = bo.listClients();*/
 		}catch(Exception e){
-			System.out.println("Exception in ClientController in updateClient()");
+			//System.out.println("Exception in ClientController in updateClient()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -166,16 +171,33 @@ public class ShippingController {
 		String resultUpdate ="fail";
 		String sJson = null;
 		try{
-			System.out.println("in to listShippings shipping.purchaserId=="+purchaserId);
+			//System.out.println("in to listShippings shipping.purchaserId=="+purchaserId);
 			ShippingService bo = new ShippingService();
 			PurchaserShippingService psbo = new PurchaserShippingService();
 			
 			// Hear needs to get list of Shippings by purchaser id
 			//sJson = psbo.getShippingDetailsBypurchaserId(purchaserShipping);
 			sJson = bo.listShipping();
-			System.out.println("in to shipping controller==="+sJson);
+			//System.out.println("in to shipping controller==="+sJson);
 		}catch(Exception e){
-			System.out.println("Exception in ShippingController in listShippings()");
+			//System.out.println("Exception in ShippingController in listShippings()");
+			e.printStackTrace();
+		}
+		return sJson;
+	}
+	
+	@RequestMapping(value = "/getShippingsBypurchaserId")
+	public @ResponseBody String getShippingsBypurchaserId(@RequestParam("purchaserId") String purchaserId, HttpSession objSession,
+			HttpServletRequest objRequest) {
+		String sJson = null;
+		try{
+			//System.out.println("in to getShippingsBypurchaserId purchaserId=="+purchaserId);
+			ShippingService ss = new ShippingService();
+
+			sJson = ss.getShippingsBypurchaserId(purchaserId);
+			//System.out.println("in to shipping controller==="+sJson);
+		}catch(Exception e){
+			//System.out.println("Exception in ShippingController in getShippingsBypurchaserId()");
 			e.printStackTrace();
 		}
 		return sJson;

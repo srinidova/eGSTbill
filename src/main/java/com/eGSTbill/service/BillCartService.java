@@ -69,7 +69,7 @@ public class BillCartService {
 		BillDetailsCartService bilDetCartSer = new BillDetailsCartService();
 		
 		lstBillCart = dao.listBillCartByBillId(sBillId);
-		System.out.println("a. From BillCartService service listBillCartByBillId lstBillCart=="+lstBillCart.size());
+		//System.out.println("a. From BillCartService service listBillCartByBillId lstBillCart=="+lstBillCart.size());
 		if (lstBillCart == null || lstBillCart.size() > 0) {
 
 			try {
@@ -77,7 +77,7 @@ public class BillCartService {
 					billCart = lstBillCart.get(i);
 				}
 				ArrayList<BillDetailsCart> lstBillDetailsCart = bilDetCartSer.getBillDetailsCartByBillId(sBillId);
-				System.out.println("b. From BillCartService service listBillCartByBillId lstBillDetailsCart=="+lstBillDetailsCart.size());
+				//System.out.println("b. From BillCartService service listBillCartByBillId lstBillDetailsCart=="+lstBillDetailsCart.size());
 				billCart.setLstBillDetCart(lstBillDetailsCart);
 				
 				//caliculate total and update to table
@@ -117,15 +117,15 @@ public class BillCartService {
 					dTotDis = dTotDis + Double.parseDouble(bdc.getDiscount()); 
 					dTotTaxVal = dTotTaxVal + Double.parseDouble(bdc.getTaxableValue()); 
 					dTotCgst = dTotCgst + Double.parseDouble(bdc.getCgstAmount());
-					System.out.println("1. dTotCgst---------"+dTotCgst);
+					//System.out.println("1. dTotCgst---------"+dTotCgst);
 					dTotSgst = dTotSgst + Double.parseDouble(bdc.getSgstAmount()); 
 					//dTotIgst = dTotIgst + Double.parseDouble(bdc.getIgstAmount()); 
 					dTotGrandTot = dTotGrandTot + Double.parseDouble(bdc.getTotal());
 				}
 				
-				//System.out.println("dTotGrandTot---------"+dTotGrandTot);
+				////System.out.println("dTotGrandTot---------"+dTotGrandTot);
 				//String resultTotal = String.format("%.2f", dTotGrandTot);
-				System.out.println("2. dTotCgst---------"+dTotCgst);
+				//System.out.println("2. dTotCgst---------"+dTotCgst);
 				dTotBeforeTax = dTotTaxVal;
 				dTotTotalTax = dTotCgst + dTotSgst + dTotIgst;
 				dTotAfterTax = dTotBeforeTax + dTotTotalTax; 
@@ -143,7 +143,7 @@ public class BillCartService {
 				billCart.setTotalAfterTax(String.format("%.2f",dTotAfterTax));
 				
 				String resBilCardUpdt = updateBillCart(billCart);
-				System.out.println("b. From BillCartService service totalUpdate resBilCardUpdt=="+resBilCardUpdt);
+				//System.out.println("b. From BillCartService service totalUpdate resBilCardUpdt=="+resBilCardUpdt);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -160,10 +160,10 @@ public class BillCartService {
 		BillCartDAO dao = new BillCartDAO();
 		BillCart billCart = null;
 		BillDetailsCartService bilDetCartSer = new BillDetailsCartService();
-		System.out.println("a. From BillCartService service updatedBillCart sBillId=="+sBillId);
+		//System.out.println("a. From BillCartService service updatedBillCart sBillId=="+sBillId);
 		
 		lstBillCart = dao.listBillCartByBillId(sBillId);
-		System.out.println("b. From BillCartService service updatedBillCart lstBillCart=="+lstBillCart.size());
+		//System.out.println("b. From BillCartService service updatedBillCart lstBillCart=="+lstBillCart.size());
 		if (lstBillCart == null || lstBillCart.size() > 0) {
 
 			try {
@@ -171,7 +171,7 @@ public class BillCartService {
 					billCart = lstBillCart.get(i);
 				}
 				ArrayList<BillDetailsCart> lstBillDetailsCart = bilDetCartSer.getBillDetailsCartByBillId(sBillId);
-				System.out.println("b. From BillCartService service listBillCartByBillId lstBillDetailsCart=="+lstBillDetailsCart.size());
+				//System.out.println("b. From BillCartService service listBillCartByBillId lstBillDetailsCart=="+lstBillDetailsCart.size());
 				billCart.setLstBillDetCart(lstBillDetailsCart);
 				
 				//caliculate total and update to table
@@ -183,5 +183,8 @@ public class BillCartService {
 		}
 		return billCart;
 	}
-	
+	public String  searchUnBilled(BillCart billCart) {
+		BillCartDAO dao = new BillCartDAO();
+		return dao.searchUnBilled(billCart);
+	}
 }

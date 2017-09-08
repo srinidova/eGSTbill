@@ -78,36 +78,7 @@
 										type="text" placeholder=""> -->
 										<select class="form-control"
 							id="state" name="state">
-							<!-- <option selected="selected" >--select--</option> -->
-							<!-- <option value="Andra Pradesh">Andra Pradesh</option>
-							<option value="Arunachal Pradesh">Arunachal Pradesh</option>
-							<option value="Assam">Assam</option>
-							<option value="Bihar">Bihar</option>
-							<option value="Chattisgarh">Chattisgarh</option>
-							<option value="Goa">Goa</option>
-							<option value="Gujarat">Gujarat</option>
-							<option value="Haryana">Haryana</option>
-							<option value="Himachal Pradesh">Himachal Pradesh</option>
-							<option value="Jammu Kashmir">Jammu Kashmir</option>
-							<option value="Jharkhand">Jharkhand</option>
-							<option value="Karnataka">Karnataka</option>
-							<option value="Kerala">Kerala</option>
-							<option value="Madya Pradesh">Madya Pradesh</option>
-							<option value="Maharashtra">Maharashtra</option>
-							<option value="Manipur">Manipur</option>
-							<option value="Meghalaya">Meghalaya</option>
-							<option value="Migoram">Migoram</option>
-							<option value="Nagaland">Nagaland</option>
-							<option value="Odish">Odish</option>
-							<option value="Punjab">Punjab</option>
-							<option value="Rajasthan">Rajasthan</option>
-							<option value="Sikkim">Sikkim</option>
-							<option value="Tamilnadu">Tamilnadu</option>
-							<option value="Telangana">Telangana</option>
-							<option value="Tripura">Tripura</option>
-							<option value="Uttarpradesh">Uttarpradesh</option>
-							<option value="Uttarakhand">Uttarakhand</option>
-							<option value="Westbengal">Westbengal</option> -->
+							
 						</select>
 								</div>
 							</div>
@@ -147,12 +118,17 @@
 									<textarea class="form-control" rows="5" id="terms" name="terms" maxlength="250"></textarea>
 								</div>
 							</div>
-							 <div class="col-md-4">
+							 <!-- <div class="col-md-4">
 								<div class="form-group">
 									<label for="">Logo</label> 
 									<input id="logPath" name="file" class="file form-control" type="file" multiple="multiple" onchage="">
 								</div>
-							</div> 
+							</div>  -->
+							<!-- <div class="col-md-10">
+								<div id="clientFrmMsg"
+									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
+									Sucessfully</div>
+							</div> -->
 							<div class="col-md-10">
 								<div id="clientFrmMsg"
 									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
@@ -253,8 +229,8 @@
 		//console.log("=========="+serviceUnitArray);
 	}
 	
-	function addClientNew(){
-		alert("1. in to addClientNew-----");
+	/* function addClientNew(){
+		//alert("1. in to addClientNew-----");
 		var formData = new FormData();
 		
 		formData.append('clientId',$("#clientId").val());
@@ -283,17 +259,17 @@
             contentType: false,
             processData: false,
 			success : function(response) {
-				alert("--------------response=="+response);
+				//alert("--------------response=="+response);
 				//resJSON = JSON.parse(response);
  				if (response != null) {
 					if (resJSON.status == "ERROR") {
-						alert("-------ERROR-------");
+						//alert("-------ERROR-------");
 						$("#clientFrmMsg").text(resJSON.message);
 						$("#clientFrmMsg").show();
 						$("#clientFrmMsg").fadeOut(15000);
 						$("#clientFrmMsg").val("");
 					} else {
-						alert("-------showClientData-------");
+						//alert("-------showClientData-------");
 						$("#clientFrmMsg").text('Client saved Sucessfully');
 						$("#clientFrmMsg").show();
 						$("#clientFrmMsg").fadeOut(15000);
@@ -307,10 +283,10 @@
 				$("#btn-save").prop("disabled", false);
 			}
 		});
-	}
+	} */
 	
-/*	function addClient(){
-		alert("in to add client");
+	function addClient(){
+		//alert("in to add client");
 		
 		data = {};
 		data["clientId"] = $("#clientId").val();
@@ -329,9 +305,9 @@
 		data["ifsc"] = $("#ifsc").val();
 		data["terms"] = $("terms").val();
 		//data["logPath"] = $("#logPath").val();
-		for (var i = 0; i < $("#logPath")[0].logPath.length; i++)
-			data.append('logPath',  $("#logPath")[0].logPath[i]);
-		alert("in to client=="+logPath);
+		/* for (var i = 0; i < $("#logPath")[0].logPath.length; i++)
+			data.append('logPath',  $("#logPath")[0].logPath[i]); */
+		////alert("in to client=="+logPath);
 		//data.append("file", $('#file').get(0).files[0]);
 		//console.log(data);
 		$.ajax({
@@ -339,7 +315,9 @@
 			url : "addClient.htm",
 			data : data,
 			success : function(response) {
-				resJSON = JSON.parse(response);
+				$("#clientId").val("");
+				data = {};
+				 resJSON = JSON.parse(response);
 				if (response != null) {
 					if (resJSON.status == "ERROR") {
 						$("#clientFrmMsg").text(resJSON.message);
@@ -350,20 +328,28 @@
 						$("#clientFrmMsg").text('Client saved Sucessfully');
 						$("#clientFrmMsg").show();
 						$("#clientFrmMsg").fadeOut(15000);
-						clientClear();
+						//clientClear();
 						showClientData(response);
 					}
 
-				}
+				} 
+				
+				/* clientClear();
+				
+				$("#clientFrmMsg").text('Client saved Sucessfully');
+				$("#clientFrmMsg").show();
+				$("#clientFrmMsg").fadeOut(15000);
+				//resJSON = JSON.parse(response);
+				showClientData(response); */
 			},
 			error : function(e) {
 				$("#btn-save").prop("disabled", false);
 			}
 		});
-	}*/
+	}
 	
 	function showClientData(response) {
-		//alert("in to show client data");
+		////alert("in to show client data");
 		serviceUnitArray = {};
 		var html = '';
 		if (response != undefined && response.length > 0) {
@@ -419,7 +405,7 @@
 	}
 	
 	function deleteClient(id) {
-		alert("in to client delete");
+		//alert("in to client delete");
 		var count = 0;
 		$.ajax({
 			type : "POST",
@@ -439,7 +425,7 @@
 	}
 	
 	function editClient(clientId){
-		alert("in to editClient==="+clientId);
+		//alert("in to editClient==="+clientId);
 		$('#btnClientSave').text("Update");
 		$('#clientId').val(clientId);
 		$('#companyName').val(serviceUnitArray[clientId].companyName);
@@ -458,7 +444,7 @@
 	}
 	
 	function updateClient(){
-		alert("in to update client");
+		//alert("in to update client");
 		
 		data = {};
 		data["clientId"] = $("#clientId").val();
@@ -509,24 +495,24 @@
 	}
 	
 	function clientFormValidate() {
-		alert("in to clientFormValidation");
-		addClientNew();
-/* 		if ($("#clientForm").valid()) {
-			alert("in to client validate");
+		//alert("in to clientFormValidation");
+		//addClientNew();
+ 		if ($("#clientForm").valid()) {
+			//alert("in to client validate");
 			var clientId = $("#clientId").val();
 			if (clientId != "") {
 				updateClient();
 			} else {
-				//addClient();
-				addClientNew();
+				addClient();
+				//addClientNew();
 			}
-		} */
+		} 
 	}
 	function clientClear() {
 		$("#clientForm")[0].reset();
 		$('#btnClientSave').text("Add");
 	}
-/*	$("#clientForm")
+	$("#clientForm")
 	.validate(
 			{
 				rules : {
@@ -670,7 +656,7 @@
 			});
 	$.validator.addMethod("alpha", function(value, element) {
 		return this.optional(element) || value == value.match(/^[a-zA-Z\s]+$/);
-		});*/
+		});
 	</script>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class BillDetailsCartService {
 		BillDetailsCartDAO dao = new BillDetailsCartDAO();
 
 		lstBillDetailsCart = dao.listBillDetailsCart();
-		System.out.println("in to listBillDetails=========="+lstBillDetailsCart.size());
+		//System.out.println("in to listBillDetails=========="+lstBillDetailsCart.size());
 		if (lstBillDetailsCart == null || lstBillDetailsCart.size() > 0) {
 			objectMapper = new ObjectMapper();
 			try {
@@ -39,7 +39,7 @@ public class BillDetailsCartService {
 	}
 
 	public String deleteBillDetailsCart(BillDetailsCart billDetailsCart) {
-		System.out.println("in to billDetailsCart Service");
+		//System.out.println("in to billDetailsCart Service");
 		BillDetailsCartDAO dao = new BillDetailsCartDAO();
 		return dao.deleteBillDetailsCart(billDetailsCart);
 	}
@@ -56,7 +56,7 @@ public class BillDetailsCartService {
 	}
 
 	public String updateBillDetailsCart(BillDetailsCart billDetailsCart) {
-		System.out.println("in to update BillCartDetails service");
+		//System.out.println("in to update BillCartDetails service");
 		BillDetailsCartDAO dao = new BillDetailsCartDAO();
 		return dao.updateBillDetailsCart(billDetailsCart);
 	}
@@ -112,7 +112,7 @@ public class BillDetailsCartService {
 			
 			/******** adding to  BillCart_BillDetailsCart ********/
 			BillCartBillDetailsCartService bcbdc = new BillCartBillDetailsCartService();
-			System.out.println("in to BillCart_BillDetailsCart");
+			//System.out.println("in to BillCart_BillDetailsCart");
 			BillCartBillDetailsCart billCartBillDetailsCart = new BillCartBillDetailsCart();
 			billCartBillDetailsCart.setBillCartId(sBillCartId);
 			billCartBillDetailsCart.setBillDetailsCartId(sBillDetCartId);
@@ -135,7 +135,7 @@ public class BillDetailsCartService {
 		ArrayList<BillDetailsCart> lstBillDetailsCart = null;
 		BillDetailsCartDAO dao = new BillDetailsCartDAO();
 		lstBillDetailsCart = dao.getBillDetailsCartByBillId(sBillId);
-		System.out.println("From BillCartDetails service getBillDetailsCartByBillId lstBillDetailsCart=="+lstBillDetailsCart.size());
+		//System.out.println("From BillCartDetails service getBillDetailsCartByBillId lstBillDetailsCart=="+lstBillDetailsCart.size());
 
 		return lstBillDetailsCart;
 	}
@@ -189,7 +189,7 @@ public class BillDetailsCartService {
 			
 			/******** adding to  BillCart_BillDetailsCart ********//*
 			BillCartBillDetailsCartService bcbdc = new BillCartBillDetailsCartService();
-			System.out.println("in to BillCart_BillDetailsCart");
+			//System.out.println("in to BillCart_BillDetailsCart");
 			BillCartBillDetailsCart billCartBillDetailsCart = new BillCartBillDetailsCart();
 			billCartBillDetailsCart.setBillCartId(sBillCartId);
 			billCartBillDetailsCart.setBillDetailsCartId(sBillDetCartId);*/
@@ -215,7 +215,7 @@ public class BillDetailsCartService {
 		ArrayList<BillDetailsCart> lstBillDetailsCart = getBillDetailsCartByBillId(sBillCartId);
 		for(BillDetailsCart bdc : lstBillDetailsCart){
 			String sExstProdId = bdc.getProductId();
-			//System.out.println("sProdId==="+sProdId+"---------sExstProdId==="+sExstProdId);
+			////System.out.println("sProdId==="+sProdId+"---------sExstProdId==="+sExstProdId);
 			if(sProdId.equals(sExstProdId)){
 				existBilDetCart = bdc;
 				break;
@@ -236,9 +236,9 @@ public class BillDetailsCartService {
 		String sNewRate = product.getSalePrice();
 		
 		
-		//System.out.println("sExstQty==="+sExstQty+"---------sNewQty==="+sNewQty);
+		////System.out.println("sExstQty==="+sExstQty+"---------sNewQty==="+sNewQty);
 		int iQty = Integer.parseInt(sExstQty) + Integer.parseInt(sNewQty) ;
-		//System.out.println("iQty==="+iQty);
+		////System.out.println("iQty==="+iQty);
 		product.setQuantity(String.valueOf(iQty));
 		
 		//System.out.println("sExstRate==="+sExstRate+"---------sNewRate==="+sNewRate);

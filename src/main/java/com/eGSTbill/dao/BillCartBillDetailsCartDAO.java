@@ -9,7 +9,7 @@ public class BillCartBillDetailsCartDAO {
 	public String addBillCartBillDetailsCart(BillCartBillDetailsCart billCartBillDetailsCart) {
 		String result = "fail";
 		try {
-			System.out.println("in to BillCartBillDetailsCartDAO");
+			//System.out.println("in to BillCartBillDetailsCartDAO");
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("BillCartBillDetailsCart.addBillCartBillDetailsCart", billCartBillDetailsCart);
 			result = "success";

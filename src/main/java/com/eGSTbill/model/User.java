@@ -13,6 +13,22 @@ public class User {
 	protected String companyName;
 	protected String password;
 	protected String sendTo;
+	protected String clientId;
+	protected Client client;
+	
+	public String getClientId() {
+		return clientId;
+	}
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}

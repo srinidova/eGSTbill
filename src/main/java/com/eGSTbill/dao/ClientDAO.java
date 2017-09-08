@@ -40,7 +40,7 @@ public class ClientDAO {
 	public String deleteClient(Client client){
 		String result ="fail";
 		try{
-			System.out.println("in to deleteClient dao");
+			//System.out.println("in to deleteClient dao");
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("Client.deleteClient", client);
 			result = "success";
@@ -54,7 +54,7 @@ public class ClientDAO {
 	
 	public String updateClient(Client client) {
 		String result = "fail";
-		System.out.println("in to update Client dao");
+		//System.out.println("in to update Client dao");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("Client.updateClient", client);
@@ -63,5 +63,18 @@ public class ClientDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public ArrayList<Client> getClientByUserId(String sUserId) {
+		ArrayList<Client> lstClients = new ArrayList<Client>();
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+			lstClients = (ArrayList<Client>) session.queryForList("Client.getClientByUserId", sUserId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstClients;
 	}
 }

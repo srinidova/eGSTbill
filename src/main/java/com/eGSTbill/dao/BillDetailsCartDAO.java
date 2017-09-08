@@ -65,7 +65,7 @@ public class BillDetailsCartDAO {
 
 	public String updateBillDetailsCart(BillDetailsCart billDetailsCart) {
 		String result = "fail";
-		System.out.println("in to update BillDetailsCart");
+		////System.out.println("in to update BillDetailsCart");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("BillDetailsCart.updateBillDetailsCart", billDetailsCart);

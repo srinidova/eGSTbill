@@ -23,8 +23,13 @@
 		where
 		shippingId = #shippingId#
 	</update>
-	<select id="getShippingDetailsBypurchaserId"  parameterClass="java.lang.String" resultClass="com.eGSTbill.model.PurchaserShipping">
-		select shippingId,purchaserName,name,address,state,pin from shipping where shippingId in (select shippingId from purchaser_shipping where purchaserId = #value#)
+	<select id="getShippingsBypurchaserId"  parameterClass="com.eGSTbill.model.PurchaserShipping" resultClass="com.eGSTbill.model.Shipping">
+		select shippingId,purchaserName,name,address,state,pin from shipping 
+		where shippingId in (select shippingId from purchaser_shipping where purchaserId is not null
+		<isNotNull property="purchaserId">
+		    AND purchaserId  = #purchaserId#
+	   </isNotNull>
+		)
 
 	</select>
 </sqlMap>

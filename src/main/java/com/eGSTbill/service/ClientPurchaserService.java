@@ -19,32 +19,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ClientPurchaserService {
 
 	public String addClientPurchaser(ClientPurchaser clientPurchaser) {
-		System.out.println("in to ClientPurchaserService");
+		//System.out.println("in to ClientPurchaserService");
 		ClientPurchaserDAO dao = new ClientPurchaserDAO();
 		return dao.addClientPurchaser(clientPurchaser);
 	}
 
-	/*public ArrayList<PurchaserShipping> getShippingDetailsBypurchaserId(PurchaserShipping purchaserShipping) {
-		PurchaserShippingDAO  purchaserShippingDAO = new PurchaserShippingDAO();
-		return purchaserShippingDAO.getShippingDetailsBypurchaserId(purchaserShipping);
-	}*/
 	
-	/*public ArrayList<PurchaserShipping> getShippingDetailsBypurchaserId(PurchaserShipping purchaserShipping) {
-		String sJson = null;
-		ObjectMapper objectMapper = null;
-		ArrayList<PurchaserShipping> lstPurchaserShipping = null;
-		PurchaserShippingDAO dao = new PurchaserShippingDAO();
-
-		lstPurchaserShipping = dao.getShippingDetailsBypurchaserId(purchaserShipping);
-		if (lstPurchaserShipping == null || lstPurchaserShipping.size() > 0) {
-			objectMapper = new ObjectMapper();
-			try {
-				sJson = objectMapper.writeValueAsString(lstPurchaserShipping);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return lstPurchaserShipping;
-	}*/
 
 }

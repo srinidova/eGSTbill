@@ -35,7 +35,7 @@ public class ClientService {
 		return sJson;
 	}
 	public String deleteClient(Client client){
-		System.out.println("in to deleteClient service");
+		////System.out.println("in to deleteClient service");
 		ClientDAO dao = new ClientDAO();
 		return dao.deleteClient(client);
 		
@@ -44,5 +44,17 @@ public class ClientService {
 	public String updateClient(Client client) {
 		ClientDAO dao = new ClientDAO();
 		return dao.updateClient(client);
+	}
+	
+	public Client getClientByUserId(String sUserId) {
+		Client client = null;
+		ArrayList<Client> lstClients = null;
+		ClientDAO dao = new ClientDAO();
+		lstClients = dao.getClientByUserId(sUserId);
+		for(Client clientExst : lstClients){
+			client = clientExst;
+		}
+
+		return client;
 	}
 }

@@ -34,6 +34,20 @@
 		billCartId,billNo,totalQuantity,totalAmount,totalDiscount,taxValue,totalCgst,totalSgst,totalIgst,grandTotal,totalBeforeTax,totalTax,totalAfterTax,billDate,orderBy from
 		billcart where billCartId = #value#
 	</select>
-	
+	<select id="searchUnBilled" parameterClass="com.eGSTbill.model.BillCart" resultClass="com.eGSTbill.model.BillCart">
+		select
+		billCartId,billNo,totalQuantity,totalAmount,totalDiscount,taxValue,totalCgst,totalSgst,totalIgst,grandTotal,totalBeforeTax,totalTax,totalAfterTax,billDate,orderBy from
+		billcart where billNo is not null
+   
+   <isNotNull property="billNo">
+	    AND billNo like '%$billNo$%'
+   </isNotNull>
+
+	<isNotNull property="billDate">
+		AND billDate like '%$billDate$%'
+	</isNotNull>
+
+    
+    </select>
 	
 </sqlMap>

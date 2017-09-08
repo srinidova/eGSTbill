@@ -1,3 +1,31 @@
+<%
+//System.out.println("From Jsp------");
+boolean bShow = false;
+boolean bMasterAdmin = false;
+boolean bshowOnly = false;
+boolean bshowManager = false;
+if(session.getAttribute("LOGINROLE") != null){
+	String sRole=(String)session.getAttribute("LOGINROLE"); 
+	//System.out.println("In Menu jsp sRole=="+sRole);
+	
+	if(sRole != null && sRole.equals("MasterAdmin") ){
+		bMasterAdmin = true;
+	}
+	if(sRole != null && (sRole.equals("MasterAdmin") || sRole.equals("Admin") ) ){
+		bShow = true;
+	}
+	if(sRole.equals("Employee")){
+		bshowOnly = true;
+	}
+	if(sRole.equals("Manager")){
+		bshowManager = true;
+	}
+	
+}
+
+
+%>
+
 <!-- Menu Start -->
 <div class="clearfix"></div>
 <div id="header-area" class="header_area">
@@ -15,26 +43,39 @@
 									class="icon-bar"></span>
 							</button>
 						</div>
-						<!-- Collection of nav links and other content for toggling -->
 						<div id="navbarCollapse" class="collapse navbar-collapse">
 							<ul id="fresponsive" class="nav navbar-nav dropdown">
+							   <% if(bShow){ %>
 								<li class="active"><a href="productHome">Product</a></li>
 								<li class="active"><a href="newBillHome">New Bill</a></li>
 								<li class="active"><a href="purchaserHome">Purchaser</a></li>
-								<li class="active"><a href="clientHome">Client</a></li>
-								<li class="active"><a href="userHome">User</a></li>
 								<li class="active"><a href="shippingHome">Shipping</a></li>
-								<li class="active"><a href="loginHome">Login</a></li>
-<!-- 								<li><a href="#">Stock</a></li>
-								<li><a href="#">Purchaser</a></li>
-								<li class="active"><a href="newBillHome">New Bill</a>
-								</li>
-								<li><a href="#">BillSearch</a></li>
-								<li><a href="#">Consignment Bill</a></li>
-								<li><a href="#">Damage</a></li>
-								<li><a href="#">Upload</a></li>
-								<li><a href="#">Users</a></li>
-								<li><a href="#">Send Sms</a></li> -->
+								<!-- <li class="active"><a href="loginHome">LogOut</a></li> -->
+								<li class="active"><a href="userHome">User</a></li>
+								<li class="active"><a href="unbilledHome">UnBilled</a></li>
+							   <%}  if(bMasterAdmin){ %>
+									<li class="active"><a href="clientHome">Client</a></li>
+									<li class="active"><a href="loginHome">LogOut</a></li>
+								<%}else if(bshowOnly){%>
+								<li class="active"><a href="newBillHome">New Bill</a></li>
+								<li class="active"><a href="loginHome">LogOut</a></li>
+								<%}else if(bshowManager){%>
+								<li class="active"><a href="productHome">Product</a></li>
+								<li class="active"><a href="newBillHome">New Bill</a></li>
+								<li class="active"><a href="purchaserHome">Purchaser</a></li>
+								<li class="active"><a href="shippingHome">Shipping</a></li>
+								<li class="active"><a href="loginHome">LogOut</a></li>
+								<% } else{%>
+								 <!-- <li class="active"><a href="loginHome">Login</a></li>  -->
+								 <li class="active"><a href="loginHome">LogOut</a></li>
+							    <%}%>
+							<%-- <%if(bshowOnly){ %>
+								<li class="active"><a href="newBillHome">New Bill</a></li>
+								<% }%>
+								<% } else{%>
+								<li class="active"><a href="loginHome">LogOut</a></li>
+								<% }%> --%>
+								
 							</ul>
 						</div>
 					</nav>
@@ -44,4 +85,3 @@
 		<!-- /.header_bottom -->
 	</div>
 </div>
-<!-- Menu End -->

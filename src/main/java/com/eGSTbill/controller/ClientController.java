@@ -29,29 +29,29 @@ public class ClientController {
 	@RequestMapping(value = "/clientHome")
 	public String clientHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From clientHome");
+		//System.out.println("From clientHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJsonClients = null;
 		String sJsonStates = null;
 		try {
 			ClientService bo = new ClientService();
 			sJsonClients = bo.listClients();
-			System.out.println("1a. sJsonClients==="+sJsonClients);
+			////System.out.println("1a. sJsonClients==="+sJsonClients);
 			if (sJsonClients != null && sJsonClients.length() > 0) {
-				System.out.println("1b. sJsonClients==="+sJsonClients.length());
+				////System.out.println("1b. sJsonClients==="+sJsonClients.length());
 				objSession.setAttribute("LISTCLIENTS", sJsonClients);
 			}
 
 			StateService st = new StateService();
 			sJsonStates = st.getAllStates();
-			System.out.println("2a. sJsonClients==="+sJsonStates);
+			////System.out.println("2a. sJsonClients==="+sJsonStates);
 			if (sJsonStates != null && sJsonStates.length() > 0) {
-				System.out.println("2b. sJsonClients==="+sJsonStates.length());
+				////System.out.println("2b. sJsonClients==="+sJsonStates.length());
 				objSession.setAttribute("ALLSTATES", sJsonStates);
 			}
 
 		} catch (Exception e) {
-			System.out.println("Exception in ClientController in clientHome()");
+			//System.out.println("Exception in ClientController in clientHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -61,40 +61,41 @@ public class ClientController {
 
 	@RequestMapping(value = "/addClient")
 	public @ResponseBody String addClient(@ModelAttribute Client client, HttpSession objSession,
-			HttpServletRequest objRequest, @RequestParam("file") List<MultipartFile> multipartFile) {
+			HttpServletRequest objRequest ) {
+		//@RequestParam("file") List<MultipartFile> multipartFile
 		String resultAdd = "fail";
 		String sJson = null;
-		System.out.println("in to addClient controller");
+		//System.out.println("in to addClient controller");
 		CommonUtils utils = new CommonUtils();
 		String sFileName = null;
 		String sFileSavedPath = null;
 		try {
-			System.out.println("in to client controller===getCompanyName==" + client.getCompanyName());
-			String targetDir = objRequest.getServletContext().getRealPath("/") + "images/uploads/";
-			System.out.println("in to client controller===targetDir==" + targetDir);
-			if (!multipartFile.isEmpty()) {
+			//System.out.println("in to client controller===getCompanyName==" + client.getCompanyName());
+		//	String targetDir = objRequest.getServletContext().getRealPath("/") + "images/uploads/";
+			////System.out.println("in to client controller===targetDir==" + targetDir);
+			/*if (!multipartFile.isEmpty()) {
 				for (MultipartFile file : multipartFile) {
 					sFileName = file.getOriginalFilename();
-					//System.out.println("sFileName==" + sFileName);
+					////System.out.println("sFileName==" + sFileName);
 					sFileSavedPath = utils.fileSave(file.getInputStream(), targetDir, sFileName);
 				}
-			}
-			System.out.println(" sFileSavedPath ========" + sFileSavedPath);
+			}*/
+			////System.out.println(" sFileSavedPath ========" + sFileSavedPath);
 
-/*			System.out.println("in to client controller===" + client.getAccountNumber());
-			System.out.println("in to client controller===" + client.getBank());
-			System.out.println("in to client controller===" + client.getBranch());
-			System.out.println("in to client controller===" + client.getIfsc());
-			System.out.println("in to client controller===" + client.getLogoPath());*/
+/*			//System.out.println("in to client controller===" + client.getAccountNumber());
+			//System.out.println("in to client controller===" + client.getBank());
+			//System.out.println("in to client controller===" + client.getBranch());
+			//System.out.println("in to client controller===" + client.getIfsc());
+			//System.out.println("in to client controller===" + client.getLogoPath());*/
 			client.setClientId(CommonUtils.getAutoGenId());
 			client.setUpdatedBy(CommonUtils.getDate());
 			client.setUpdatedOn(CommonUtils.getDate());
-			if(StringUtils.isNotEmpty(sFileSavedPath)){
+			/*if(StringUtils.isNotEmpty(sFileSavedPath)){
 				client.setLogoPath(sFileSavedPath);
-			}
+			}*/
 			ClientService bo = new ClientService();
 			resultAdd = bo.addClient(client);
-			System.out.println(" resultAdd ========" + resultAdd);
+			//System.out.println(" resultAdd ========" + resultAdd);
 			if (StringUtils.isNotEmpty(resultAdd)) {
 				if (resultAdd.equals("fail")) {
 					JSONObject json = new JSONObject();
@@ -104,11 +105,11 @@ public class ClientController {
 				}
 			}else{
 				sJson = bo.listClients();
-				System.out.println(" sJson ========" + sJson);
+				//System.out.println(" sJson ========" + sJson);
 			}
 
 		} catch (Exception e) {
-			System.out.println("Exception in ClientController in addClient()");
+			//System.out.println("Exception in ClientController in addClient()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -121,7 +122,7 @@ public class ClientController {
 		String result = "fail";
 		String sJson = null;
 		try {
-			System.out.println("in to deleteClient controller");
+			//System.out.println("in to deleteClient controller");
 			Client client = new Client();
 			client.setClientId(clientId);
 			ClientService bo = new ClientService();
@@ -135,7 +136,7 @@ public class ClientController {
 			sJson = bo.listClients();
 
 		} catch (Exception e) {
-			System.out.println("Exception in ClientController in deleteClient()");
+			//System.out.println("Exception in ClientController in deleteClient()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -147,7 +148,7 @@ public class ClientController {
 		String resultUpdate = "fail";
 		String sJson = null;
 		try {
-			System.out.println("in to update client");
+			//System.out.println("in to update client");
 			ClientService bo = new ClientService();
 			client.setUpdatedBy(CommonUtils.getDate());
 			client.setUpdatedOn(CommonUtils.getDate());
@@ -163,7 +164,7 @@ public class ClientController {
 			bo = new ClientService();
 			sJson = bo.listClients();
 		} catch (Exception e) {
-			System.out.println("Exception in ClientController in updateClient()");
+			//System.out.println("Exception in ClientController in updateClient()");
 			e.printStackTrace();
 		}
 		return sJson;

@@ -37,6 +37,7 @@
 										type="text" id="productName" name="productName" placeholder=""
 										maxlength="30"> <input type="hidden"
 										class="form-control" id="productId" name="productId">
+										<!-- <input type="hidden" class="form-control" id="clientId" name="clientId"> -->
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -164,9 +165,18 @@
 	<div class="clearfix"></div>
 	<script type="text/javascript">
 	var lstOrders ='${LISTPRODUCTS}';
+	var lstClients ='${LISTCLIENTS}';
+	var sClientId = '${CLIENTID}';
+	console.log(sClientId);
+	console.log(lstClients);
 	//console.log(lstOrders);
 	$(document).ready(function() {
 		showProductData(JSON.parse(lstOrders));
+		
+		/* if(lstClients != undefined && lstClients.length >0){
+			////alert("sClientId=="+sClientId);
+			$('#clientId').val(sClientId);
+		} */
 	}); 
 	
 	function prodFormValidate() {

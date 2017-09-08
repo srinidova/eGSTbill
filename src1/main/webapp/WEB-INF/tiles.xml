@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="base.definition" template="/WEB-INF/pages/home.jsp">
+		<put-attribute name="header" value="/WEB-INF/pages/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/pages/menu.jsp" />
+		<put-attribute name="main" value="/WEB-INF/pages/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/pages/footer.jsp" />
+	</definition>
+
+	<definition name="productHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/addProduct.jsp" />
+	</definition>
+	<definition name="newBillHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/newBill.jsp" />
+	</definition>
+	<definition name="loginHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/login.jsp" />
+	</definition>
+	<definition name="purchaserHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/purchaser.jsp" />
+	</definition>
+	<definition name="clientHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/client.jsp" />
+	</definition>
+	<definition name="userHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/user.jsp" />
+	</definition>
+	<definition name="shippingHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/shipping.jsp" />
+	</definition>
+</tiles-definitions>
+
+

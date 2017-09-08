@@ -14,7 +14,6 @@
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
-<script type="text/javascript" src="js/product.js"></script>
 
 </head>
 <!-- Includes End-->
@@ -29,7 +28,7 @@
 							<legend>Shipping</legend>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">Purchaser</label> <select id="purchaserId" class="form-control" onchange="populatePurchaserData();">
+									<label for="">Purchaser</label> <select id="purchaserId" class="form-control" onchange="getShippingsBypurchaserId()">
 									</select>
 									 <input type="hidden" class="form-control" id="comapanyName" name="comapanyName">
 									 <input type="hidden" class="form-control" id="shippingId" name="shippingId">
@@ -45,7 +44,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Address</label> 
-									<textarea class="form-control" rows="5" id="address" name="address" maxlength="250"></textarea>
+									<input class="form-control" type="text" id="address" name="address" placeholder=""> 
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -116,22 +115,23 @@
 	</div>
 	<div class="clearfix"></div>
 	<script type="text/javascript">
-	
-	//var lstPurchasers = '${LISTPURCHASERS}';
-	var lstPurchasers = '${PURCHASER}';
+	var lstStates = '${ALLSTATES}';	
+	var lstPurchasers = '${PURCHASERS}';
 	var lstShipping = '${LISTSHIPPING}';
-	var lstStates = '${ALLSTATES}';
-	console.log(lstPurchasers);
+
+	//console.log(lstPurchasers);
 	$(document).ready(function() {
-		console.log(lstShipping);
-		showPurchaserData(JSON.parse(lstPurchasers));
-		//alert("===ready====");
-		//showBilldata(JSON.parse(lstBillCart))
-		showShippingData(JSON.parse(lstShipping));
-		showStatesData(JSON.parse(lstStates)); 
 		
+		if(lstStates != undefined && lstStates.length >0){
+			showStatesData(JSON.parse(lstStates)); 
+		}
+		if(lstPurchasers != undefined && lstPurchasers.length >0){
+			showPurchaserData(JSON.parse(lstPurchasers));
+		}
+		if(lstShipping != undefined && lstShipping.length >0){
+			showShippingData(JSON.parse(lstShipping));
+		}
 		$('#state').click(function(e) {
-			//alert("in to state sorting");
 	    	sortDropDownListByText("#state");
 	    });
 		
@@ -182,7 +182,7 @@
 		
 	}
 	function addShipping(){
-		alert("in to add shipping");
+		//alert("in to add shipping");
 		data = {};
 		data["purchaserId"] = $("#purchaserId").val();
 		data["companyName"] = $("#companyName").val();
@@ -220,7 +220,7 @@
 	
 	
 	function showShippingData(response) {
-		alert("in to showShipping data");
+		////alert("in to showShipping data");
 		serviceUnitArrayShipping = {};
 		var html = '';
 		if (response != undefined && response.length > 0) {
@@ -262,7 +262,7 @@
 		$('#shippingListData').empty().append(html);
 	}
 	function editShipping(shippingId) {
-		alert("in to edit shipping "+shippingId);
+		//alert("in to edit shipping "+shippingId);
 		$('#btnUserSave').text("Update");
 		$('#shippingId').val(shippingId);
 		$('#companyName').val(serviceUnitArrayShipping[shippingId].companyName);
@@ -272,7 +272,7 @@
 		$('#pin').val(serviceUnitArrayShipping[shippingId].pin);
 	}
 	function deleteShipping(id) {
-		alert("in to delete==="+id);
+		//alert("in to delete==="+id);
 		var count = 0;
 		$.ajax({
 			type : "POST",
@@ -291,7 +291,7 @@
 		});
 	}
 	function updateShipping(shippingId){
-		alert("in to update user===");
+		//alert("in to update user===");
 		data = {};
 		data["purchaserId"] = $("#purchaserId").val();
 		data["shippingId"] = $("#shippingId").val();
@@ -332,9 +332,9 @@
 		});
 	}
 	function shippingFormValidate() {
-		alert("in to shippingFormValidation");
+		//alert("in to shippingFormValidation");
 		if ($("#shippingForm").valid()) {
-			alert("in to shipping validate");
+			//alert("in to shipping validate");
 			var shippingId = $("#shippingId").val();
 			if (shippingId != "") {
 				updateShipping();
@@ -404,6 +404,26 @@
 	$.validator.addMethod("alpha", function(value, element) {
 		return this.optional(element) || value == value.match(/^[a-zA-Z\s]+$/);
 		});
+	
+
+	function getShippingsBypurchaserId() {
+		var purchaserId = $('#purchaserId').val();
+		////alert("1. purchaserId===="+purchaserId);
+		$.ajax({
+			type : "POST",
+			url : "getShippingsBypurchaserId.htm",
+			data : "purchaserId=" + purchaserId,
+			success : function(response) {
+				if (response != null) {
+					////alert("2. response===="+response);
+					showShippingData(JSON.parse(response));
+				}
+			},
+			error : function(e) {
+			}
+		})
+
+	}
 	</script>
 </body>
 </html>

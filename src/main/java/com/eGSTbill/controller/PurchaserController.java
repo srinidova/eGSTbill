@@ -30,30 +30,40 @@ public class PurchaserController {
 	@RequestMapping(value = "/purchaserHome")
 	public String purchaserHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From purchaserHome");
+		//System.out.println("From purchaserHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
 		String sState = null;
 
 		try {
-			PurchaserService ps = new PurchaserService();
-			sJson = ps.listPurchaser();
-			if (sJson != null && sJson.length() > 0) {
-				objSession.setAttribute("LISTPURCHASERS", sJson);
-			}
-			ClientService cs = new ClientService();
-			sJson = cs.listClients();
-			if(sJson != null && sJson.length()>0){
-				objSession.setAttribute("LISTCLIENTS", sJson);
-			}
+
 			StateService st = new StateService();
 			sJson = st.getAllStates();
 			if (sJson != null && sJson.length() > 0) {
 				objSession.setAttribute("ALLSTATES", sJson);
 			}
 
+			ClientService cs = new ClientService();
+			sJson = cs.listClients();
+			if(sJson != null && sJson.length()>0){
+				objSession.setAttribute("LISTCLIENTS", sJson);
+			}
+			
+			PurchaserService ps = new PurchaserService();
+			//sJson = ps.listPurchaser();
+			
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+			//System.out.println("sClientId=="+sClientId);
+			sJson = ps.listPurchasersByClientId(sClientId);
+			
+			if (sJson != null && sJson.length() > 0) {
+				objSession.setAttribute("LISTPURCHASERS", sJson);
+			}
+
+			
+
 		} catch (Exception e) {
-			System.out.println("Exception in ExampleController in exampleHome()");
+			//System.out.println("Exception in PurchaserController in purchaserHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -64,14 +74,14 @@ public class PurchaserController {
 	@RequestMapping(value = "/addPurchase")
 	public @ResponseBody String addPurchase(@ModelAttribute Purchaser purchaser, String clientId,HttpSession objSession,
 			HttpServletRequest objRequest) {
-		// System.out.println("inside java");
+		// //System.out.println("inside java");
 		String resultAdd = "fail";
 		String sJson = null;
 		String sPurchaserId = null;
 		String resultAddCliPur = "fail";
 		try {
 			String sCmpnyName = purchaser.getCompanyName();
-			System.out.println("pannumber==========" + purchaser.getPanNumber());
+			//System.out.println("pannumber==========" + purchaser.getPanNumber());
 
 			PurchaserService ps = new PurchaserService();
 			sPurchaserId = CommonUtils.getAutoGenId();
@@ -87,12 +97,12 @@ public class PurchaserController {
 			ClientPurchaserService cpbo = new ClientPurchaserService();
 			resultAddCliPur = cpbo.addClientPurchaser(clientPurchaser);
 
-			System.out.println("result========" + result);
+			//System.out.println("result========" + result);
 			sJson = ps.listPurchaser();
-			System.out.println(" final result in service========" + sJson);
+			//System.out.println(" final result in service========" + sJson);
 
 		} catch (Exception e) {
-			System.out.println("Exception in ProductController in addProduct()");
+			//System.out.println("Exception in ProductController in addProduct()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -117,7 +127,7 @@ public class PurchaserController {
 			sJson = bo.listPurchaser();
 
 		} catch (Exception e) {
-			System.out.println("Exception in ProductController in deleteProduct()");
+			//System.out.println("Exception in ProductController in deleteProduct()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -126,13 +136,13 @@ public class PurchaserController {
 	@RequestMapping(value = "/updatePurchaser")
 	public @ResponseBody String updatePurchase(@ModelAttribute Purchaser newPurchaser, HttpSession objSession,
 			HttpServletRequest objRequest) {
-		System.out.println("inside update java");
+		//System.out.println("inside update java");
 		String resultUpdate = "fail";
 		String sJson = null;
 		try {
 
 			String sCmpnyName = newPurchaser.getCompanyName();
-			System.out.println(" purchaser id  in update controller============" + newPurchaser.getPurchaserId()+"----newPurchaser.getPanNumber-----"+newPurchaser.getPanNumber());
+			//System.out.println(" purchaser id  in update controller============" + newPurchaser.getPurchaserId()+"----newPurchaser.getPanNumber-----"+newPurchaser.getPanNumber());
 			PurchaserService ps = new PurchaserService();
 
 			//newPurchaser.setPurchaserId(CommonUtils.getAutoGenId());
@@ -140,12 +150,33 @@ public class PurchaserController {
 			newPurchaser.setUpdatedDate(CommonUtils.getDate());
 			String result = ps.updatePurchaser(newPurchaser);
 
-			System.out.println("updateresult========" + result);
+			//System.out.println("updateresult========" + result);
 			sJson = ps.listPurchaser();
-			System.out.println(" final result in updateservice========" + sJson);
+			//System.out.println(" final result in updateservice========" + sJson);
 
 		} catch (Exception e) {
-			System.out.println("Exception in ProductController in addProduct()");
+			//System.out.println("Exception in ProductController in addProduct()");
+			e.printStackTrace();
+
+		}
+		return sJson;
+	}
+	
+	@RequestMapping(value = "/getPurchasersByClientId")
+	public @ResponseBody String getPurchasersByClientId(@RequestParam("sClientId") String sClientId, HttpSession objSession,
+			HttpServletRequest objRequest) {
+		//System.out.println("inside update java");
+		String sJson = null;
+		try {
+
+			//System.out.println(" sClientId============" + sClientId);
+			PurchaserService ps = new PurchaserService();
+
+			sJson = ps.listPurchasersByClientId(sClientId);
+			//System.out.println(" final result in getPurchasersByClientId========" + sJson);
+
+		} catch (Exception e) {
+			//System.out.println("Exception in ProductController in getPurchasersByClientId()");
 			e.printStackTrace();
 
 		}

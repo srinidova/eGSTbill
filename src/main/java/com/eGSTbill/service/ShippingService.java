@@ -47,6 +47,23 @@ public class ShippingService {
 		ShippingDAO dao = new ShippingDAO();
 		return dao.updateShipping(shipping);
 	}
-	
+
+	public String getShippingsBypurchaserId(String purchaserId) {
+		String sJson = null;
+		ObjectMapper objectMapper = null;
+		ArrayList<Shipping> lstShipping = null;
+		ShippingDAO dao = new ShippingDAO();
+
+		lstShipping = dao.getShippingsBypurchaserId(purchaserId);
+		if (lstShipping == null || lstShipping.size() > 0) {
+			objectMapper = new ObjectMapper();
+			try {
+				sJson = objectMapper.writeValueAsString(lstShipping);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return sJson;
+	}
 	
 }

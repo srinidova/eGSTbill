@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="User">
+	<insert id="addUser" parameterClass="com.eGSTbill.model.User">
+		insert into
+		user(userId,role,userName,mobile,email,address,updatedBy,updatedOn,companyName,password)
+		values(#userId#,#role#,#userName#,#mobile#,#email#,#address#,#updatedBy#,#updatedOn#,#companyName#,#password#)
+	</insert>
+	<select id="listUsers" resultClass="com.eGSTbill.model.User">
+		select
+		userId,role,userName,mobile,email,address,updatedBy,updatedOn,companyName from
+		user
+	</select>
+	<delete id="deleteUser" parameterClass="com.eGSTbill.model.User">
+		delete from user where
+		userId = #userId#
+	</delete>
+	<update id="updateUser" parameterClass="com.eGSTbill.model.User">
+		update user set role
+		= #role#, userName = #userName#, mobile = #mobile#, email = #email#, address
+		= #address#, updatedBy = #updatedBy#, updatedOn = #updatedOn#, companyName = #companyName#
+		where
+		userId = #userId#
+	</update>
+	<select id="getUserByMobile" resultClass="com.eGSTbill.model.User"  parameterClass="java.lang.String">
+		select
+		userId,role,userName,mobile,email,address,updatedBy,updatedOn,companyName,password from
+		user where mobile = #value#
+	</select>
+	<update id="passwordUpdate" parameterClass="com.eGSTbill.model.User">
+		update user set password = #password# where userId = #userId# and mobile = #mobile#
+	</update>
+</sqlMap>

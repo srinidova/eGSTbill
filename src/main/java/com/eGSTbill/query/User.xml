@@ -31,4 +31,13 @@
 	<update id="passwordUpdate" parameterClass="com.eGSTbill.model.User">
 		update user set password = #password# where userId = #userId# and mobile = #mobile#
 	</update>
+	<select id="listUsersByClientId" resultClass="com.eGSTbill.model.User" parameterClass="com.eGSTbill.model.ClientUser">
+		select
+		userId,role,userName,mobile,email,address,updatedBy,updatedOn,companyName,password from
+		user where userId in (select userId from client_user where clientId is not null 
+		<isNotNull property="clientId">
+		    AND clientId  = #clientId#
+	   </isNotNull>
+		)
+	</select>
 </sqlMap>

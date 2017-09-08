@@ -67,8 +67,8 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">Address</label> 
-									<textarea class="form-control" rows="5" id="address" name="address" maxlength="250"></textarea>
+									<label for="">Address</label>
+									<input class="form-control" type="text" id="address" name="address" placeholder=""> 
 								</div>
 							</div>
 							<div class="col-md-10">
@@ -132,6 +132,8 @@
 	
 	var lstOrders ='${LISTCLIENTS}';
 	var lstUsers ='${LISTUSERS}';
+	var lstClients ='${LISTCLIENTS}';
+	var sClientId = '${CLIENTID}';
 	
 	$(document).ready(function() {
 		showClientData(JSON.parse(lstOrders));
@@ -163,7 +165,7 @@
 		
 	}
 	function addUser(){
-		alert("in to add User");
+		//alert("in to add User");
 		data = {};
 		data["companyName"] = $("#companyName").val();
 		data["userId"] = $("#userId").val();
@@ -247,7 +249,7 @@
 	}
 	
 	function editUser(userId) {
-		alert("in to edit user "+userId);
+		//alert("in to edit user "+userId);
 		$('#btnUserSave').text("Update");
 		$('#userId').val(userId);
 		$('#companyName').val(serviceUnitArrayUser[userId].companyName);
@@ -259,7 +261,7 @@
 	}
 	
 	function deleteUser(id) {
-		alert("in to delete==="+id);
+		//alert("in to delete==="+id);
 		var count = 0;
 		$.ajax({
 			type : "POST",
@@ -278,7 +280,7 @@
 		});
 	}
 	function updateUser(userId){
-		alert("in to update user===");
+		//alert("in to update user===");
 		data = {};
 		data["companyName"] = $("#companyName").val();
 		data["userId"] = $("#userId").val();
@@ -319,9 +321,9 @@
 		});
 	}
 	function userFormValidate() {
-		alert("in to userFormValidation");
+		//alert("in to userFormValidation");
 		if ($("#userForm").valid()) {
-			alert("in to client validate");
+			//alert("in to client validate");
 			var userId = $("#userId").val();
 			if (userId != "") {
 				updateUser();

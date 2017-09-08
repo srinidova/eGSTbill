@@ -24,4 +24,9 @@
 		where
 		clientId = #clientId#
 	</update>
+	<select id="getClientByUserId" resultClass="com.eGSTbill.model.Client" parameterClass="java.lang.String">
+		select
+		clientId,companyName,pan,gstn,address,state,pin,contactPerson,mobile,email,updatedBy,updatedOn,logoPath,terms,accountNumber,bank,branch,ifsc from
+		client where clientId in (select clientId from client_user where userId = #value#)
+	</select>
 </sqlMap>

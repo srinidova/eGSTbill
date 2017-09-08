@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eGSTbill.model.Client;
+import com.eGSTbill.model.ClientProduct;
 import com.eGSTbill.model.Product;
+import com.eGSTbill.service.ClientProductService;
 import com.eGSTbill.service.ProducService;
+import com.eGSTbill.service.PurchaserService;
 import com.eGSTbill.util.CommonUtils;
 
 import org.json.JSONObject;
@@ -24,18 +28,27 @@ public class ProductController {
 	@RequestMapping(value = "/productHome")
 	public String productHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From productHome");
+		//System.out.println("From productHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
 		//String sState = null;
 		try {
 			ProducService bo = new ProducService();
-			sJson = bo.listProducts();
+			//sJson = bo.listProductsByClientId(sClientId)
+			//sJson = bo.listProducts();
+			
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+			//System.out.println("sClientId=="+sClientId);
+			sJson = bo.listProductsByClientId(sClientId);
+			
 			if (sJson != null && sJson.length() > 0) {
 				objSession.setAttribute("LISTPRODUCTS", sJson);
 			}
+			
+			
+			
 		} catch (Exception e) {
-			System.out.println("Exception in ProductController in productHome()");
+			//System.out.println("Exception in ProductController in productHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -47,6 +60,8 @@ public class ProductController {
 			HttpServletRequest objRequest) {
 		String resultAdd ="fail";
 		String sJson = null;
+		String sProductId = null;
+		String resultClientProduct = null;
 		try {
 			String sProdName = product.getProductName();
 			ProducService bo = new ProducService();
@@ -58,8 +73,8 @@ public class ProductController {
 				json.put("message", sProdName + " already exists. Please choose another Name");
 				return sJson = json.toString();
 			}
-			
-			product.setProductId(CommonUtils.getAutoGenId());
+			sProductId = CommonUtils.getAutoGenId();
+			product.setProductId(sProductId);
 			product.setUpdatedBy(CommonUtils.getDate());
 			product.setUpdatedDate(CommonUtils.getDate());
 			resultAdd = bo.addProduct(product);
@@ -73,9 +88,27 @@ public class ProductController {
 				bo = new ProducService();
 				sJson = bo.listProducts();
 			}
-				
+			
+			/*Client client = new Client();
+			//System.out.println("e. in to login client==="+client.toString());
+			String sClientId = client.getClientId();
+			//System.out.println("f. in to login sClientId==="+sClientId);*/
+			
+			HttpSession session = objRequest.getSession();
+			String clientId = (String) session.getAttribute("CLIENTID");
+			
+			//System.out.println("in to product controller clientId "+clientId);
+			
+			ClientProduct clientproduct = new ClientProduct();
+			clientproduct.setClientId(clientId);
+			clientproduct.setProductId(sProductId);
+			
+			
+			ClientProductService cps = new ClientProductService();
+			resultClientProduct = cps.addClientProduct(clientproduct);
+			//System.out.println("in to client product resultClientProduct"+resultClientProduct);
 		} catch (Exception e) {
-			System.out.println("Exception in ProductController in addProduct()");
+			//System.out.println("Exception in ProductController in addProduct()");
 			e.printStackTrace();		}
 		return sJson;
 	}
@@ -98,7 +131,7 @@ public class ProductController {
 			sJson = bo.listProducts();
 				
 		}catch(Exception e){
-			System.out.println("Exception in ProductController in deleteProduct()");
+			//System.out.println("Exception in ProductController in deleteProduct()");
 			e.printStackTrace();		}
 		return sJson;
 	}
@@ -132,9 +165,30 @@ public class ProductController {
 			bo = new ProducService();
 			sJson = bo.listProducts();
 		}catch(Exception e){
-			System.out.println("Exception in ProductController in updateProduct()");
+			//System.out.println("Exception in ProductController in updateProduct()");
 			e.printStackTrace();
 		}
 		return sJson;
 	}
+	
+	/*@RequestMapping(value = "/getProductsByClientId")
+	public @ResponseBody String getProductsByClientId(@RequestParam("sClientId") String sClientId, HttpSession objSession,
+			HttpServletRequest objRequest) {
+		//System.out.println("inside update java");
+		String sJson = null;
+		try {
+
+			//System.out.println(" sClientId============" + sClientId);
+			ProducService ps = new ProducService();
+
+			sJson = ps.listProductsByClientId(sClientId);
+			//System.out.println(" final result in getProductsByClientId========" + sJson);
+
+		} catch (Exception e) {
+			//System.out.println("Exception in ProductController in getProductsByClientId()");
+			e.printStackTrace();
+
+		}
+		return sJson;
+	}*/
 }

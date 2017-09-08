@@ -172,3 +172,22 @@ function updateProduct() {
 
 	});
 }
+
+
+
+	function getProductsByClientId(sClientId) {
+	//alert("in to getProductsByClientId ==="+sClientId);
+	$.ajax({
+		type : "POST",
+		url : "getProductsByClientId.json",
+		data : "sClientId=" + sClientId,
+		success : function(response) {
+			if (response != null) {
+				showProductData(response)
+			}
+		},
+		error : function(e) {
+		}
+	})
+
+}

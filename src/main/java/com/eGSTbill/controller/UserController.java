@@ -30,12 +30,16 @@ public class UserController {
 	@RequestMapping(value = "/userHome")
 	public String userHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From userHome");
+		//System.out.println("From userHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJson = null;
 		try {
 			UserService bo = new UserService();
-			sJson = bo.listusers();
+			//sJson = bo.listusers();
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+			
+			//System.out.println("sClientId=="+sClientId);
+			sJson = bo.listUsersByClientId(sClientId);
 			if(sJson != null && sJson.length()>0){
 				objSession.setAttribute("LISTUSERS", sJson);
 			}
@@ -45,9 +49,11 @@ public class UserController {
 			if (sJson != null && sJson.length() > 0) {
 				objSession.setAttribute("LISTCLIENTS", sJson);
 			}
+			
+			
 
 		} catch (Exception e) {
-			System.out.println("Exception in UserController in userHome()");
+			//System.out.println("Exception in UserController in userHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -60,7 +66,7 @@ public class UserController {
 		String resultAdd ="fail";
 		String resultClientUser ="fail";
 		String sUserId = null;
-		System.out.println("in to addClient controller");
+		//System.out.println("in to addClient controller");
 		try{
 			sUserId = CommonUtils.getAutoGenId();
 			
@@ -86,7 +92,7 @@ public class UserController {
 			clientUser.setClientId(clientId);
 			clientUser.setUserId(userId);*/
 		}catch(Exception e){
-			System.out.println("Exception in UserController in addUser()");
+			//System.out.println("Exception in UserController in addUser()");
 			e.printStackTrace();
 		}
 		return resultClientUser;
@@ -97,7 +103,7 @@ public class UserController {
 			HttpServletRequest objRequest) {
 		String result ="fail";
 		String sJson = null;
-		System.out.println("in to delete user");
+		//System.out.println("in to delete user");
 		try{
 			User user = new User();
 			user.setUserId(userId);
@@ -114,7 +120,7 @@ public class UserController {
 			sJson = bo.listusers();
 				
 		}catch(Exception e){
-			System.out.println("Exception in UserController in deleteUser()");
+			//System.out.println("Exception in UserController in deleteUser()");
 			e.printStackTrace();		}
 		return sJson;
 	}
@@ -124,7 +130,7 @@ public class UserController {
 		String resultUpdate ="fail";
 		String sJson = null;
 		try{
-			System.out.println("in to update user");
+			//System.out.println("in to update user");
 			UserService bo = new UserService();
 			user.setUpdatedBy(CommonUtils.getDate());
 			user.setUpdatedOn(CommonUtils.getDate());
@@ -141,7 +147,7 @@ public class UserController {
 
 			sJson = bo.listusers();
 		}catch(Exception e){
-			System.out.println("Exception in ClientController in updateClient()");
+			//System.out.println("Exception in ClientController in updateClient()");
 			e.printStackTrace();
 		}
 		return sJson;

@@ -2,7 +2,11 @@ package com.eGSTbill.dao;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.eGSTbill.connection.IbatisFactory;
+import com.eGSTbill.model.ClientProduct;
+import com.eGSTbill.model.ClientUser;
 import com.eGSTbill.model.Product;
 import com.eGSTbill.model.User;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -39,7 +43,7 @@ public class UserDAO {
 
 	public String deleteUser(User user) {
 		String result = "fail";
-		System.out.println("in to delete user DAO");
+		//System.out.println("in to delete user DAO");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("User.deleteUser", user);
@@ -66,7 +70,7 @@ public class UserDAO {
 
 	public String updateUser(User user) {
 		String result = "fail";
-		System.out.println("in to update user");
+		//System.out.println("in to update user");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("User.updateUser", user);
@@ -80,12 +84,12 @@ public class UserDAO {
 	public ArrayList<User> getUserByMobile(User user) {
 		ArrayList<User> users = new ArrayList<User>();
 		try {
-			System.out.println("in to getUserByMobile dao");
+			//System.out.println("in to getUserByMobile dao");
 			SqlMapClient session = new IbatisFactory().getSession();
 
 			String sMobile = user.getMobile();
 			users = (ArrayList<User>) session.queryForList("User.getUserByMobile", sMobile);
-			System.out.println("in to getUserByMobile==="+user);
+			//System.out.println("in to getUserByMobile==="+user);
 
 
 		} catch (Exception e) {
@@ -106,4 +110,23 @@ public class UserDAO {
 		}
 		return result;
 	}	
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<User> listUsersByClientId(String sClientId) {
+		ArrayList<User> lstUsers = new ArrayList<User>();
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+			ClientUser cu = new ClientUser();
+			////System.out.println("sClientId=="+sClientId);
+			if (StringUtils.isNotEmpty(sClientId)) {
+				cu.setClientId(sClientId);
+			}
+			lstUsers = (ArrayList<User>) session.queryForList("User.listUsersByClientId", cu);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstUsers;
+	}
 }

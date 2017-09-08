@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eGSTbill.dao.AutoIncrementDAO;
+import com.eGSTbill.model.AutoIncrement;
 import com.eGSTbill.model.BillCart;
 import com.eGSTbill.model.BillDetailsCart;
 import com.eGSTbill.model.Product;
+import com.eGSTbill.model.Purchaser;
+import com.eGSTbill.service.AutoIncrementService;
 import com.eGSTbill.service.BillCartService;
 import com.eGSTbill.service.BillDetailsCartService;
 import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.PurchaserService;
+import com.eGSTbill.service.ShippingService;
 import com.eGSTbill.util.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,29 +36,44 @@ public class NewBillController {
 	@RequestMapping(value = "/newBillHome")
 	public String newBillHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From newBillHome");
+		//System.out.println("From newBillHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJsonProd = null;
 		String sJsonPurch = null;
+		String sJsonShipping = null;
 		try {
 
 			ProducService bo = new ProducService();
-			sJsonProd = bo.listProducts();
+			//sJsonProd = bo.listProducts();
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+			//System.out.println("sClientId=="+sClientId);
+			sJsonProd = bo.listProductsByClientId(sClientId);
+			
 			if (sJsonProd != null && sJsonProd.length() > 0) {
 				objSession.setAttribute("LISTPRODUCTS", sJsonProd);
 			}
 
 			PurchaserService ps = new PurchaserService();
-			sJsonPurch = ps.listPurchaser();
+			sJsonPurch = ps.listPurchasersByClientId(sClientId);
 			if (sJsonPurch != null && sJsonPurch.length() > 0) {
 				objSession.setAttribute("LISTPURCHASERS", sJsonPurch);
 			}
+			
+			Purchaser purchaser = new Purchaser();
+			String sPurchaserId = purchaser.getPurchaserId();
+			
 
+			ShippingService ss = new ShippingService();
+			sJsonShipping = ss.getShippingsBypurchaserId(sPurchaserId);
+			
+			
+			//System.out.println("in to sJsonShipping==="+sJsonShipping);
 			objSession.setAttribute("sessBillCartId", null);
 			objSession.setAttribute("sessBillCart", null);
 
+			
 		} catch (Exception e) {
-			System.out.println("Exception in NewBillController in newBillHome()");
+			//System.out.println("Exception in NewBillController in newBillHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -61,7 +81,7 @@ public class NewBillController {
 		/*
 		 * try {
 		 * 
-		 * } catch (Exception e) { System.out.println(
+		 * } catch (Exception e) { //System.out.println(
 		 * "Exception in NewBillController in newBillHome()");
 		 * e.printStackTrace(); } finally {
 		 * 
@@ -74,21 +94,52 @@ public class NewBillController {
 	public @ResponseBody String addBillDetailsCart(@ModelAttribute Product product, HttpSession objSession,
 			HttpServletRequest objRequest) {
 		String resAddDetCart = "fail";
+		ArrayList<AutoIncrement> lstAutoIncrement= null;
 		String sJson = null;
 		String sBillCartId = null;
 		BillCart billCart = null;
 		String resAddBilCart = "fail";
+		String billNo = null;
+		String sBillNo = null;
 		BillCartService bilCartServ = null;
+		//AutoIncrement autoIncrement = null;
 		try {
 			BillDetailsCartService bilDetCartServ = new BillDetailsCartService();
 			bilCartServ = new BillCartService();
 
 			sBillCartId = (String) objSession.getAttribute("sessBillCartId");
+			AutoIncrement autoIncrement = new AutoIncrement();
 			if (StringUtils.isEmpty(sBillCartId)) {
+				
+				AutoIncrementService autoIncrementService = new AutoIncrementService();
+				AutoIncrementDAO dao = new AutoIncrementDAO();
+				
+				
+				
+				lstAutoIncrement = dao.getBillNo();
+				for(int i = 0; i < lstAutoIncrement.size(); i++){
+					autoIncrement  = lstAutoIncrement.get(i);
+					sBillNo = autoIncrement.getIncrementId();
+					
+					//System.out.println("---sBillNo---"+sBillNo);
+				}
+				//System.out.println("---sBillNo----2--"+sBillNo);
+				
+				 autoIncrementService.getAndUpdateBillNo(sBillNo, objSession);
+				 
+				/*if (StringUtils.isNotEmpty(billNo)) {
+					autoIncrement.setIncrementId(billNo);
+				}*/
+				autoIncrement  =  (AutoIncrement) objSession.getAttribute("INCREMENTID");
+				
+				
+				
+				//System.out.println("in to new bill conroller increment"+autoIncrement.getIncrementId());
+				
 				sBillCartId = CommonUtils.getAutoGenId();
 				billCart = new BillCart();
 				billCart.setBillCartId(sBillCartId);
-				billCart.setBillNo("1");
+				billCart.setBillNo(autoIncrement.getIncrementId());
 
 				resAddBilCart = bilCartServ.addBillCart(billCart);
 				objSession.setAttribute("sessBillCartId", sBillCartId);
@@ -97,14 +148,14 @@ public class NewBillController {
 			//String sProdName = product.getProductName();
 			//String sProdId = product.getProductId();
 			BillDetailsCart existBilDetCart = bilDetCartServ.isProductBilled(product, sBillCartId);
-			System.out.println("existBilDetCart==="+existBilDetCart);
+			//System.out.println("existBilDetCart==="+existBilDetCart);
 			if(existBilDetCart == null){
 				resAddDetCart = bilDetCartServ.billProduct(product, sBillCartId);
 			}else{
 				resAddDetCart = bilDetCartServ.updateProdQty(existBilDetCart, product);
 			}
 			
-			
+			//objSession.setAttribute("", sBillCartId);
 			
 			if (StringUtils.isNotEmpty(resAddDetCart)) {
 				if (resAddDetCart.equals("fail")) {
@@ -114,7 +165,9 @@ public class NewBillController {
 					return sJson = json.toString();
 				}
 			}
-
+			//objSession.setAttribute("sBillCartId", "");
+			
+			
 			billCart = bilCartServ.updatedBillCart(sBillCartId);
 			ArrayList<BillCart> lstBillCartReturn = new ArrayList<BillCart>();
 			lstBillCartReturn.add(billCart);
@@ -123,9 +176,11 @@ public class NewBillController {
 				ObjectMapper objMapper = new ObjectMapper();
 				sJson = objMapper.writeValueAsString(lstBillCartReturn);
 			}
+			objSession.setAttribute("sessBillCart", null);
+			objSession.setAttribute("sessBillCartId", null);
 
 		} catch (Exception e) {
-			System.out.println("Exception in NewBillController in addBillDetailsCart()");
+			//System.out.println("Exception in NewBillController in addBillDetailsCart()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -165,7 +220,7 @@ public class NewBillController {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Exception in NewBillController in deleteBillDetailsCart()");
+			//System.out.println("Exception in NewBillController in deleteBillDetailsCart()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -181,15 +236,15 @@ public class NewBillController {
 		BillCart billCart = null;
 		String sBilDetCartId = null;
 		String sBillCartId = null;
-		// System.out.println("0. in to updateBillDetailsCart");
+		// //System.out.println("0. in to updateBillDetailsCart");
 		try {
 			sBillCartId = (String) objSession.getAttribute("sessBillCartId");
-			// System.out.println("0. From addBillDetailsCart
+			// //System.out.println("0. From addBillDetailsCart
 			// sBillCartId=="+sBillCartId);
 
 			sBilDetCartId = data.getString("billDetailsCartId");
 			product = new Product();
-			// System.out.println("1. in to
+			// //System.out.println("1. in to
 			// updateBillDetailsCart===="+data.toString());
 			product.setProductId(data.getString("productId"));
 			product.setProductName(data.getString("productName"));
@@ -208,12 +263,12 @@ public class NewBillController {
 				json.put("message", "Error while update BillDetailsCart");
 				return sJson = json.toString();
 			}
-			// System.out.println("2. in to updateBillDetailsCart
+			// //System.out.println("2. in to updateBillDetailsCart
 			// sBillCartId===="+sBillCartId);
 
 			BillCartService bilCartServ = new BillCartService();
 			billCart = bilCartServ.updatedBillCart(sBillCartId);
-			// System.out.println("4. in to updateBillDetailsCart
+			// //System.out.println("4. in to updateBillDetailsCart
 			// billCart===="+billCart);
 			ArrayList<BillCart> lstBillCartReturn = new ArrayList<BillCart>();
 			lstBillCartReturn.add(billCart);
@@ -222,10 +277,10 @@ public class NewBillController {
 				ObjectMapper objMapper = new ObjectMapper();
 				sJson = objMapper.writeValueAsString(lstBillCartReturn);
 			}
-			// System.out.println("5. From addBillDetailsCart sJson=="+sJson);
+			// //System.out.println("5. From addBillDetailsCart sJson=="+sJson);
 
 		} catch (Exception e) {
-			System.out.println("Exception in NewBillController in updateBillDetailsCart()");
+			//System.out.println("Exception in NewBillController in updateBillDetailsCart()");
 			e.printStackTrace();
 		}
 		return sJson;
