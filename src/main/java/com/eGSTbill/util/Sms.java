@@ -61,7 +61,7 @@ public class Sms {
 			
 			postData += "user=" + Username + "&password=" + Password + "&GSM=" +
 					MobileNo +"&sender=" + SenderID + "&SMSText=" + Message;
-			 System.out.println("postData============"+postData);
+			 //System.out.println("postData============"+postData);
 			
 			URL url = new URL(smsUrl);
 			HttpURLConnection urlconnection = (HttpURLConnection) url.openConnection();
@@ -85,7 +85,7 @@ public class Sms {
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("Error While sending............."+e);
+			//System.out.println("Error While sending............."+e);
 		}
 		return bSentSms;
 	}
@@ -98,12 +98,12 @@ public class Sms {
 		/*smsModel.sets
 		smsDTO.setSendTo("91" + userMobile);
 		smsDTO.setMessage(sMessage);*/
-		System.out.println("in to sendMessage "+userMobile);
+		//System.out.println("in to sendMessage "+userMobile);
 		//smsDTO.setSendTo("91" + loginMobile);
 		smsModel.setSendTo("91" + userMobile);
 		smsModel.setMessage(sMessage);
-		System.out.println("in to sendMessage==="+smsModel);
-		System.out.println("in to setSendTo==="+userMobile);
+		//System.out.println("in to sendMessage==="+smsModel);
+		//System.out.println("in to setSendTo==="+userMobile);
 
 		bSentSms = sendMessage(request.getServletContext(), smsModel);
 

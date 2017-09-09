@@ -107,10 +107,10 @@ public static SmsModel getSmsProperties(ServletContext objContext) throws IOExce
 			smsModel.setSenderId(smsSenderID);
 			smsModel.setUrl(smsUrl);
 			
-			System.out.println("in to getSmsProperties smsSenderID==="+smsSenderID);
+			/*System.out.println("in to getSmsProperties smsSenderID==="+smsSenderID);
 			System.out.println("in to getSmsProperties smsPassword==="+smsPassword);
 			System.out.println("in to getSmsProperties smsUserMobile==="+smsUserMobile);
-			System.out.println("in to getSmsProperties smsUrl==="+smsUrl);
+			System.out.println("in to getSmsProperties smsUrl==="+smsUrl);*/
 			
 			/*smsDTO.setUserName(smsUserName);
 			smsDTO.setPassword(smsPassword);
@@ -304,18 +304,18 @@ public static SmsModel getSmsProperties(ServletContext objContext) throws IOExce
 	
 	public String fileSave(InputStream inStream, String targetDir, String fileName){
 		boolean bRes = false;
-		System.out.println("targetDir=="+targetDir+"--------fileName=="+fileName+"----------inStream=="+inStream.toString());
+		//System.out.println("targetDir=="+targetDir+"--------fileName=="+fileName+"----------inStream=="+inStream.toString());
 		String sUploadPath = null;
 		try {
 			createFolderIfNotExists(targetDir);
 			
 			sUploadPath = targetDir + fileName;
-			System.out.println("sUploadPath=="+sUploadPath);
+			//System.out.println("sUploadPath=="+sUploadPath);
 			saveToFile(inStream, sUploadPath);
 			bRes = true;
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Error in CommonUtils --------fileSave---");
+			//System.out.println("Error in CommonUtils --------fileSave---");
 		}
 		
 		return sUploadPath;
