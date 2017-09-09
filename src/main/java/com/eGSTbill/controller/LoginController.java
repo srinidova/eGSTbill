@@ -101,9 +101,9 @@ public class LoginController {
 
 			}
 			sJson = json.toString();
-			System.out.println("sJson==" + sJson);
+			//System.out.println("sJson==" + sJson);
 		} catch (Exception e) {
-			System.out.println("Exception in LoginController in login()");
+			//System.out.println("Exception in LoginController in login()");
 			e.printStackTrace();
 		}
 		return sJson;
