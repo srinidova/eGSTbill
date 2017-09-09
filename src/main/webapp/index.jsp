@@ -9,7 +9,7 @@
 <link href="css/eGSTbill/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="css/eGSTbill/login.css" rel="stylesheet" type="text/css">
 </head>
-
+<script type="text/javascript"></script>
 <body>
 <div class="container">
   <div class="col-sm-8 col-sm-offset-2 main">
@@ -115,8 +115,14 @@ function forgotpassword(){
 			url : "forgotPassword.htm",
 			data : data,
 			success : function(data) {
-				 if (data.Msg == 'success') {
-					$("#errLogin").text("Password sent to your Mobile. Please Re Login.");
+				resJSON = JSON.parse(data);
+				/* console.log(data);
+				console.log(JSON.parse(data));
+				console.log(data); */
+				 if (resJSON.Msg == 'success') {
+					$("#LoginFrmMsg").text("Password sent to your Mobile. Please Re Login.");
+					$("#LoginFrmMsg").show();
+					$("#LoginFrmMsg").fadeOut(15000);
 				}else{
 					$("#errLogin").text(data.Msg);
 				}   
@@ -134,8 +140,11 @@ function resetPassword(){
 			data : data,
 			url : "resetPassword.htm",
 			success : function(data) {
-				if (data.Msg == 'success') {
-					$("#errLogin").text("OTP sent to your Mobile. Please Re Login.");
+				resJSON = JSON.parse(data);
+				if (resJSON.Msg == 'success') {
+					$("#LoginFrmMsg").text("OTP sent to your Mobile. Please Re Login.");
+					$("#LoginFrmMsg").show();
+					$("#LoginFrmMsg").fadeOut(15000);
 				}else{
 					$("#errLogin").text(data.Msg);
 				}  

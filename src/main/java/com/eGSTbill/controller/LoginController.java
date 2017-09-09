@@ -110,10 +110,11 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/forgotPassword")
-	public  @ResponseBody JSONObject forgotPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
+	public  @ResponseBody String forgotPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
 			throws IOException {
 		//System.out.println("in to forgot password");
 		JSONObject jObj = new JSONObject();
+		String sJson = null;
 		User user = null;
 		//String sRole = null;
 		String sPwd = null;
@@ -139,22 +140,28 @@ public class LoginController {
 			System.out.println("in to forgotPassword request==="+request);*/
 
 			bSentSms = sms.sendMessage(request, userMobile, sMessage);
-			if (bSentSms) {
+			
+			if (bSentSms == true) {
 				jObj.put("Msg", "success");
+				jObj.put("message", "Password sent to your Mobile. Please Re Login.");
 			} else {
 				jObj.put("Msg", "Error while sending SMS");
 			}
 		} else {
 			jObj.put("Msg", "Mobile Number Not Found.");
 		}
+		
+		sJson = jObj.toString();
 
-		return jObj;
+		//return String.valueOf(jObj);
+		return sJson;
 	}
 	@RequestMapping(value = "/resetPassword")
-	public @ResponseBody JSONObject resetPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
+	public @ResponseBody String resetPassword(@Context HttpServletRequest request, @QueryParam("userMobile") String userMobile)
 			throws IOException {
 		//System.out.println("in to reset password");
 		JSONObject jObj = new JSONObject();
+		String sJson = null;
 		User user = null;
 		String sRole = null;
 		String sPin = null;
@@ -185,6 +192,7 @@ public class LoginController {
 				bSentSms = sms.sendMessage(request, userMobile, sMessage);
 				if (bSentSms) {
 					jObj.put("Msg", "success");
+					jObj.put("message", "OTP sent to your Mobile. Please Re Login.");
 				} else {
 					jObj.put("Msg", "Error while sending SMS");
 				}
@@ -194,8 +202,9 @@ public class LoginController {
 		} else {
 			jObj.put("Msg", "Mobile Number Not Found.");
 		}
+		sJson = jObj.toString();
 
-		return jObj;
+		return sJson;
 	}
 
 }
