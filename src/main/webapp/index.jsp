@@ -44,7 +44,7 @@
                 </div>
               </div>
               </div>
-              <div class="login-register"> <a href="#" style="float:left;">Reset Password</a> <a href="#">Forgot password</a> </div>
+              <div class="login-register"> <a href="#" style="float:left;" onclick="resetPassword();">Reset Password</a> <a href="#" onclick="forgotpassword();">Forgot password</a> </div>
               <div class="col-md-12">
               <div class="form-group ">
                 <button type="button" class="btn btn-primary btn-lg btn-block login-button" onclick="loginFormValidate();">Login</button>
@@ -105,6 +105,44 @@ function login() {
 
 }
 
+function forgotpassword(){
+	data = {};
+	data["userMobile"] = $("#userMobile").val();
+	data["userPassword"] = $("#userPassword").val();
+		////alert("in to forgot password==="+userMobile);
+		$.ajax({
+			type : "POST",
+			url : "forgotPassword.htm",
+			data : data,
+			success : function(data) {
+				 if (data.Msg == 'success') {
+					$("#errLogin").text("Password sent to your Mobile. Please Re Login.");
+				}else{
+					$("#errLogin").text(data.Msg);
+				}   
+				
+			}
+		});
+	}
+	
+function resetPassword(){
+	data = {};
+	data["userMobile"] = $("#userMobile").val();
+	data["userPassword"] = $("#userPassword").val();
+		
+		$.ajax({
+			data : data,
+			url : "resetPassword.htm",
+			success : function(data) {
+				if (data.Msg == 'success') {
+					$("#errLogin").text("OTP sent to your Mobile. Please Re Login.");
+				}else{
+					$("#errLogin").text(data.Msg);
+				}  
+				
+			}
+		});
+	}
 	$("#loginForm").validate(
 			{
 				rules : {

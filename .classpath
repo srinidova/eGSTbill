@@ -24,6 +24,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ibatis.jar"/>
-	<classpathentry kind="lib" path="/Users/srinivasa.dova/Downloads/json-lib.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/DovaSoft/Documents/json-lib.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
