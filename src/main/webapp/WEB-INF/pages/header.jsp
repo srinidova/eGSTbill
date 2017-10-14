@@ -63,12 +63,12 @@ if(session.getAttribute("USER") != null){
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="logo" style="display:;">
+				<div class="logo" style="display:;" id="image">
 					<a href="#"><img src="images/logo-dova.png"
 						class="img-responsive" alt=""></a>
 				</div>
 			</div>
-			<div class="col-md-4 pull-right">
+			<div class="col-md-4 pull-right" id="headerUser">
 				<div class="address">
 					<h2>Prop: <%= sPropri %></h2>
 					<p>

@@ -192,9 +192,6 @@
 	var lstClients ='${LISTCLIENTS}';
 
 	$(document).ready(function() {
-		if(lstStates != undefined && lstStates.length >0){
-			showStatesData(JSON.parse(lstStates)); 
-		}
 		
 		if(lstClients != undefined && lstClients.length >0){
 			showClientData(JSON.parse(lstClients));
@@ -220,8 +217,8 @@
 		var html = "<option value=''>-- Select --</option>";
 		if (response != undefined && response.length > 0) {
 			$.each(response, function(i, datObj) {
-				arrStates[datObj.stateId] = datObj;
-				html = html + '<option value="' + datObj.stateId + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
+				arrStates[datObj.gstnCode] = datObj;
+				html = html + '<option value="' + datObj.gstnCode + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
 			});
 		}
 		$('#state').empty().append(html);
@@ -310,6 +307,34 @@
 		////alert("in to client=="+logPath);
 		//data.append("file", $('#file').get(0).files[0]);
 		//console.log(data);
+		
+		var gstn = $("#gstn").val();
+		
+		var state = $("#state").val();
+		var pan = $("#pan").val();
+		
+		var state = gstn.substring(0,2);
+		var gstnclistate = state.substring(0,2);
+		
+		var gstnpanNumber = gstn.substring(2,12);
+		var pan = pan.substring();
+		if((gstnclistate == state)){
+			var gstn = $("#gstn").val();
+		}else {
+			$("#clientFrmMsg").text('State Code Not Matched In Gstn');
+			$("#clientFrmMsg").show();
+			$("#clientFrmMsg").fadeOut(15000);
+			return false;
+		}if((gstnpanNumber == pan)){
+			var gstn = $("#gstn").val();
+		}else {
+			$("#clientFrmMsg").text('Pan Number Not Matched In Gstn');
+			$("#clientFrmMsg").show();
+			$("#clientFrmMsg").fadeOut(15000);
+			return false;
+		}
+		data["gstn"] = gstn; 
+		
 		$.ajax({
 			type : "POST",
 			url : "addClient.htm",
@@ -350,14 +375,14 @@
 	
 	function showClientData(response) {
 		////alert("in to show client data");
-		serviceUnitArray = {};
+		serviceUnitArrayClient = {};
 		var html = '';
 		if (response != undefined && response.length > 0) {
 			$
 					.each(
 							response,
 							function(i, datObj) {
-								serviceUnitArray[datObj.clientId] = datObj;
+								serviceUnitArrayClient[datObj.clientId] = datObj;
 								html = html
 										+ '<tr>'
 										+ '<td class="text-center">'
@@ -428,19 +453,19 @@
 		//alert("in to editClient==="+clientId);
 		$('#btnClientSave').text("Update");
 		$('#clientId').val(clientId);
-		$('#companyName').val(serviceUnitArray[clientId].companyName);
-		$('#pan').val(serviceUnitArray[clientId].pan);
-		$('#gstn').val(serviceUnitArray[clientId].gstn);
-		$('#address').val(serviceUnitArray[clientId].address);
-		$('#state').val(serviceUnitArray[clientId].state);
-		$('#pin').val(serviceUnitArray[clientId].pin);
-		$('#contactPerson').val(serviceUnitArray[clientId].contactPerson);
-		$('#mobile').val(serviceUnitArray[clientId].mobile);
-		$('#email').val(serviceUnitArray[clientId].email);
-		$('#accountNumber').val(serviceUnitArray[clientId].accountNumber);
-		$('#bank').val(serviceUnitArray[clientId].bank);
-		$('#branch').val(serviceUnitArray[clientId].branch);
-		$('#ifsc').val(serviceUnitArray[clientId].ifsc);
+		$('#companyName').val(serviceUnitArrayClient[clientId].companyName);
+		$('#pan').val(serviceUnitArrayClient[clientId].pan);
+		$('#gstn').val(serviceUnitArrayClient[clientId].gstn);
+		$('#address').val(serviceUnitArrayClient[clientId].address);
+		$('#state').val(serviceUnitArrayClient[clientId].state);
+		$('#pin').val(serviceUnitArrayClient[clientId].pin);
+		$('#contactPerson').val(serviceUnitArrayClient[clientId].contactPerson);
+		$('#mobile').val(serviceUnitArrayClient[clientId].mobile);
+		$('#email').val(serviceUnitArrayClient[clientId].email);
+		$('#accountNumber').val(serviceUnitArrayClient[clientId].accountNumber);
+		$('#bank').val(serviceUnitArrayClient[clientId].bank);
+		$('#branch').val(serviceUnitArrayClient[clientId].branch);
+		$('#ifsc').val(serviceUnitArrayClient[clientId].ifsc);
 	}
 	
 	function updateClient(){
@@ -525,12 +550,14 @@
 					pan : {
 						required : true,
 
-						number : true
+						
 					},
 					gstn : {
+						minlength : 15,
+						
 						required : true,
 
-						number : true
+						
 					},
 					contactPerson : {
 						required : true,
@@ -539,6 +566,8 @@
 					},
 					mobile : {
 						required : true,
+						minlength : 10,
+						
 
 						number : true
 					},

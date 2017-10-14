@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eGSTbill.dao.AutoIncrementDAO;
+import com.eGSTbill.dao.BillCartDAO;
 import com.eGSTbill.model.AutoIncrement;
 import com.eGSTbill.model.BillCart;
 import com.eGSTbill.model.BillDetailsCart;
+import com.eGSTbill.model.ClientUser;
 import com.eGSTbill.model.Product;
 import com.eGSTbill.model.Purchaser;
 import com.eGSTbill.service.AutoIncrementService;
 import com.eGSTbill.service.BillCartService;
 import com.eGSTbill.service.BillDetailsCartService;
+import com.eGSTbill.service.ClientService;
 import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.PurchaserService;
 import com.eGSTbill.service.ShippingService;
@@ -140,6 +143,8 @@ public class NewBillController {
 				billCart = new BillCart();
 				billCart.setBillCartId(sBillCartId);
 				billCart.setBillNo(autoIncrement.getIncrementId());
+				
+				System.out.println("autoIncrement.getIncrementId()"+autoIncrement.getIncrementId());
 
 				resAddBilCart = bilCartServ.addBillCart(billCart);
 				objSession.setAttribute("sessBillCartId", sBillCartId);
@@ -176,8 +181,8 @@ public class NewBillController {
 				ObjectMapper objMapper = new ObjectMapper();
 				sJson = objMapper.writeValueAsString(lstBillCartReturn);
 			}
-			objSession.setAttribute("sessBillCart", null);
-			objSession.setAttribute("sessBillCartId", null);
+			/*objSession.setAttribute("sessBillCart", null);
+			objSession.setAttribute("sessBillCartId", null);*/
 
 		} catch (Exception e) {
 			//System.out.println("Exception in NewBillController in addBillDetailsCart()");
@@ -283,6 +288,49 @@ public class NewBillController {
 			//System.out.println("Exception in NewBillController in updateBillDetailsCart()");
 			e.printStackTrace();
 		}
+		return sJson;
+	}
+	
+	@RequestMapping(value = "/generateBill")
+	public String generateBill(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
+			throws IOException {
+		ArrayList<BillCart> lstBillCart = null;
+		ObjectMapper objectMapper=null;
+		String sJson=null;
+		System.out.println("in to generateBill");
+		try {
+			
+		} catch (Exception e) {
+			//System.out.println("Exception in NewBillController in newBillHome()");
+			e.printStackTrace();
+		} finally {
+
+		}
+		
+		return "generateBill";
+	}
+	
+	@RequestMapping(value = "/getClientByUserId")
+	public @ResponseBody String getClientByUserId(@RequestParam("userId") String userId, HttpSession objSession,
+			HttpServletRequest objRequest) {
+		String result ="fail";
+		String sJson = null;
+		try{
+			ClientUser clientuser = new ClientUser();
+			clientuser.setUserId(userId);
+			ClientService bo = new ClientService();
+			//result = bo.getClientByUserId(clientuser);
+			if(result.equals("fail")){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", "Error while delete product");
+				return sJson = json.toString();
+			}
+			//sJson = bo.listProducts();
+				
+		}catch(Exception e){
+			//System.out.println("Exception in ProductController in deleteProduct()");
+			e.printStackTrace();		}
 		return sJson;
 	}
 }

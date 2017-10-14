@@ -36,6 +36,12 @@
 	<definition name="unbilledHome" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/unBilled.jsp" />
 	</definition>
+	<definition name="generateBill" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/billed.jsp" />
+	</definition>
+	<definition name="categoryHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/category.jsp" />
+	</definition>
 </tiles-definitions>
 
 

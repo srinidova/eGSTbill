@@ -124,14 +124,14 @@
 	
 	function showUnBilledData(response) {
 		//alert("in to showUnBilledData");
-		serviceUnitArray = {};
+		serviceUnitArrayBillcart = {};
 		var html = '';
 		if (response != undefined && response.length > 0) {
 			$
 					.each(
 							response,
 							function(i, datObj) {
-								serviceUnitArray[datObj.billCartId] = datObj;
+								serviceUnitArrayBillcart[datObj.billCartId] = datObj;
 								html = html
 										+ '<tr>'
 										+ '<td class="text-center">'

@@ -53,6 +53,7 @@ if(session.getAttribute("LOGINROLE") != null){
 								<!-- <li class="active"><a href="loginHome">LogOut</a></li> -->
 								<li class="active"><a href="userHome">User</a></li>
 								<li class="active"><a href="unbilledHome">UnBilled</a></li>
+								<li class="active"><a href="categoryHome">Category</a></li>
 							   <%}  if(bMasterAdmin){ %>
 									<li class="active"><a href="clientHome">Client</a></li>
 									<li class="active"><a href="loginHome">LogOut</a></li>

@@ -92,7 +92,7 @@
 										type="text" id="discount" name="discount" placeholder="">
 								</div>
 							</div>
-							<div class="col-md-4">
+						<!-- 	<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Quantity</label> <input class="form-control"
 										type="text" id="quantity" name="quantity" placeholder="">
@@ -109,7 +109,7 @@
 									<label for="">UOM</label> <input class="form-control"
 										type="text" id="uom" name="uom" placeholder="">
 								</div>
-							</div>
+							</div> -->
 							<div class="col-md-10">
 								<div id="prodFrmMsg"
 									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
@@ -206,7 +206,7 @@
 
 						number : true
 					},
-					uom : {
+					/* uom : {
 						required : true,
 
 						number : true
@@ -215,7 +215,7 @@
 						required : true,
 
 						number : true
-					},
+					}, */
 					purchaserPrice : {
 						required : true,
 
@@ -226,11 +226,11 @@
 
 						number : true
 					},
-					salePrice : {
+					/* salePrice : {
 						required : true,
 
 						number : true
-					},
+					}, */
 					discount : {
 						required : true,
 
@@ -263,14 +263,14 @@
 						required : "Please enter hsnCode number",
 						number : "Please enter numbers Only"
 					},
-					uom : {
+					/* uom : {
 						required : "Please enter Uom",
 						number : "Please enter numbers Only"
 					},
 					quantity : {
 						required : "Please enter quantity",
 						number : "Please enter numbers Only"
-					},
+					}, */
 					purchaserPrice : {
 						required : "Please enter Purchaser Price",
 						number : "Please enter numbers Only"
@@ -279,10 +279,10 @@
 						required : "Please enter Mrp",
 						number : "Please enter numbers Only"
 					},
-					salePrice : {
+					/* salePrice : {
 						required : "Please enter SalePrice",
 						number : "Please enter numbers Only"
-					},
+					}, */
 					discount : {
 						required : "Please enter Discount",
 						number : "Please enter numbers Only"

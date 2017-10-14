@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Category">
+	<insert id="saveCategory" parameterClass="com.eGSTbill.model.Category">
+		insert into
+		category(categoryId,categoryName,description,updatedBy,updatedOn)
+		values(#categoryId#,#categoryName#,#description#,#updatedBy#,#updatedOn#)
+	</insert>
+	<select id="listCategorys" resultClass="com.eGSTbill.model.Category" parameterClass="java.lang.String">
+		select
+		categoryId,categoryName,description,updatedBy,updatedOn from
+		category
+	</select>
+	<delete id="deleteCategory" parameterClass="com.eGSTbill.model.Category">
+		delete from category where
+		categoryId = #categoryId#
+	</delete>
+	<update id="updateCategory" parameterClass="com.eGSTbill.model.Category">
+		update category set categoryName
+		= #categoryName#, description = #description#, updatedBy = #updatedBy#, updatedOn = #updatedOn#
+		where
+		categoryId = #categoryId#
+	</update>
+	<select id="getClientByUserId" resultClass="com.eGSTbill.model.Client" parameterClass="java.lang.String">
+		select
+		clientId,companyName,pan,gstn,address,state,pin,contactPerson,mobile,email,updatedBy,updatedOn,logoPath,terms,accountNumber,bank,branch,ifsc from
+		client where clientId in (select clientId from client_user where userId = #value#)
+	</select>
+</sqlMap>

@@ -52,7 +52,7 @@
 								<div class="form-group">
 									<label for="">GSTN<sup>*</sup></label> <input
 										class="form-control" type="text" id="gstnNo" name="gstnNo"
-										maxlength="15" placeholder="">
+										maxlength="15" placeholder="" >
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -64,7 +64,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">State<sup>*</sup></label> 
-									<select class="form-control" id="purState" name="purState">
+									<select class="form-control" id="purState" name="purState" >
 										
 									</select>
 								</div>
@@ -101,7 +101,7 @@
 								<div class="form-group">
 									<label for="">PAN<sup>*</sup></label> <input
 										class="form-control" type="text" id="panNo" name="panNo"
-										maxlength="15" placeholder="">
+										maxlength="15" placeholder="" >
 								</div>
 							</div>							
 							<div class="col-md-10">
@@ -193,7 +193,88 @@
 			$('#purState').click(function(e) {
 		    	sortDropDownListByText("#purState");
 		    });
-
+			/* $('#gstnNo').click(function(e) {
+		    	//sortDropDownListByText("#purState");
+				gstn("#gstnNo"); 
+		    }); */
+			/* $('#gstnNo').keyup(function() {
+			      /*  var inputVal = $(this).val();
+			       var regex = new RegExp("^[a-zA-Z ]+$");
+			        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+			       var emailReg =  ("^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}"); */
+			      // ("^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}");
+			       /* if(!emailReg.test(inputVal)) {
+			           $("#purchaseFrmMsg").text('Invalid Email Format');
+			           $("#purchaseFrmMsg").show();
+			              $("#purchaseFrmMsg").fadeOut(2000);
+			           return false;
+			       }
+			   });  */
+			/* $('#gstnNo').keypress(function (e) {
+		        var regex = new RegExp("/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/");
+		        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+		        if (regex.test(str)) {
+		            return true;
+		        }
+		        else
+		        {
+		        e.preventDefault();
+		        //alert('Please Enter Alphabate');
+		        $("#purchaseFrmMsg").text('Please Enter Alphabates');
+	        	$("#purchaseFrmMsg").show();
+	           	$("#purchaseFrmMsg").fadeOut(2000);
+		        return false;
+		        $( "#gstnNo" ).focus();
+		        }
+		    }); */
+		    
+			/* $('#gstnNo').keyup(function() {
+			       var inputVal = $(this).val();
+			       //var gstnReg = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+			       var gstnReg =  /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}Z[0-9]{1}?$/
+			    		   
+			       if(!gstnReg.test(inputVal)) {
+			           $("#purchaseFrmMsg").text('Invalid Email Format');
+			           $("#purchaseFrmMsg").show();
+			              $("#purchaseFrmMsg").fadeOut(2000);
+			           return false;
+			       }
+			   }); */
+		    
+			/* $('#gstnNo').keypress(function (e) {
+		       // var regex = new RegExp("/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/");
+		        //var regex = new RegExp("/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}Z[0-9]{1}?$/");
+		        var regex = new RegExp  ("^([0][1-9]|[1-2][0-9]|[3][0-5])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$");
+		        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+		        if (regex.test(str)) {
+		            return true;
+		        }
+		        else
+		        {
+		        e.preventDefault();
+		        $("#purchaseFrmMsg").text('Invalid Format');
+	        	$("#purchaseFrmMsg").show();
+	           	$("#purchaseFrmMsg").fadeOut(2000);
+		        return false;
+		        }
+		    }); */
+			$('#gstnNo').keyup(function() {
+			        var inputVal = $(this).val();
+			        var gstnReg =   /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
+			       //var gstnReg = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}Z[0-9]{1}?$/;
+			       //var gstnReg = /^([0-9]){2}([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}([0-9]){1}([a-zA-Z]){1}([0-9]){1}?$/;
+			       if(!gstnReg.test(inputVal)) {
+			        $("#purchaseFrmMsg").text('Invalid Gstn Format');
+			           $("#purchaseFrmMsg").show();
+			              $("#purchaseFrmMsg").fadeOut(2000);
+			           return false;
+			       } 
+				/* var reggst = /^([0-9]){2}([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}([0-9]){1}([a-zA-Z]){1}([0-9]){1}?$/;
+				if(!reggst.test(gstnNo) && gstnNo!=''  && gstnNo.length!=15){
+				        alert('GST Identification Number is not valid. It should be in this "11AAAAA1111Z1A1" format');
+				} */
+			   });
+			
 		});
 
 		function purchaseClear() {
@@ -202,11 +283,11 @@
 		}
 		function purchaseFormValidate() {
 			if ($("#purchaserForm").valid()) {
-				//alert("gstnNo........"+$("#gstnNo").val().substring(0,2));
+				alert("gstnNo........"+$("#gstnNo").val().substring(0,2));
 				$("#purState").change(function(){ 
 			        var element = $(this).find('option:selected').attr("value"); 
 			    }); 
-				////alert("state code......"+element);
+				//alert("state code......"+element);
 				var purchaseId = $("#purchaserId").val();
 				if (purchaseId != "") {
 					//alert("hello update=========" + purchaseId);
@@ -232,9 +313,11 @@
 								panNo : {
 									required : true,
 								},
-								gstnNo : {
-									required : true,
-								},
+								 gstnNo : {
+									minlength : 15,
+									maxlength : 15,
+									required : true
+								}, 
 								purchaserAddress : {
 									required : true,
 									minlength : 10
@@ -282,9 +365,10 @@
 								panNo : {
 									required : "Please enter the PAN number"
 								},
-								gstnNo : {
+								 gstnNo : {
+									//required : "Please enter GSTN Number",
 									required : "Please enter GSTN Number",
-								},
+								}, 
 								purchaserAddress : {
 									required : "Please enter Address",
 									minlength : "Please enter atleast 10 characters"
@@ -360,6 +444,36 @@
 			////alert("purchase data"+purchaserData)
 			//alert("in to save purchaser ==="+clientId);
 			console.log(clientId);
+			//gstnNumber();
+			 var gstnNo = $("#gstnNo").val();
+				
+			var purState = $("#purState").val();
+			var panNo = $("#panNo").val();
+			
+			var gstnState = gstnNo.substring(0,2);
+			var gstnpurstate = purState.substring(0,2);
+			
+			var gstnpanNumber = gstnNo.substring(2,12);
+			var gstnPan = panNo.substring();
+			
+			console.log(gstnState);
+			
+			if((gstnpurstate == gstnState)){
+				var gstnNo = $("#gstnNo").val();
+			}else {
+				$("#purchaseFrmMsg").text('State Code Not Matched In Gstn');
+				$("#purchaseFrmMsg").show();
+				$("#purchaseFrmMsg").fadeOut(15000);
+				return false;
+			}if((gstnpanNumber == panNo)){
+				var gstnNo = $("#gstnNo").val();
+			}else {
+				$("#purchaseFrmMsg").text('Pan Number Not Matched In Gstn');
+				$("#purchaseFrmMsg").show();
+				$("#purchaseFrmMsg").fadeOut(15000);
+				return false;
+			}
+			purchaserData["gstNumber"] = gstnNo; 
 			$.ajax({
 				type : "POST",
 				url : "addPurchase.htm",
@@ -371,6 +485,7 @@
 					$("#purchaseFrmMsg").fadeOut(15000);
 					resJSON = JSON.parse(response);
 					showPurchaseData(resJSON);
+					
 
 				},
 				error : function(e) {
@@ -444,7 +559,8 @@
 
 		}
 		function editPurchaser(purchaserId) {
-			//alert("inside edit");
+			//alert("inside edit");btnPurchaseSave
+			$('#btnPurchaseSave').text("Update");
 			$('#purchaserId').val(purchaserId);
 			$('#companyName').val(serviceUnitArrayPurchaser[purchaserId].companyName);
 			$('#panNo').val(serviceUnitArrayPurchaser[purchaserId].panNumber);
@@ -514,8 +630,8 @@
 				var html = "<option value=''>-- Select --</option>";
 				if (response != undefined && response.length > 0) {
 					$.each(response, function(i, datObj) {
-						arrStates[datObj.stateId] = datObj;
-						html = html + '<option value="' + datObj.stateId + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
+						arrStates[datObj.gstnCode] = datObj;
+						html = html + '<option value="' + datObj.gstnCode + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
 					});
 				}
 				$('#purState').empty().append(html);
@@ -531,7 +647,15 @@
 					$(this).val(selectedValue);
 				});
 			}  
-			
+			/* function gstn(id) {
+				if(!$('#gstnNo').val().match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/) ) {
+				    $("#unc").text("Please enter numbers only.");
+					   $("#unc").show();
+			        $("#unc").fadeOut(15000);
+				    return false;
+				    }
+				
+			} */
 			function populatePurchaserSelect() {
 				var clientId = $('#clientId').val();
 				getPurchasersByClientId(clientId);
@@ -551,6 +675,68 @@
 					}
 				})
 
+			}
+			function populateGstn(purchaserId) {
+				//alert("in to populateGstn purchaserId"+purchaserId)
+				var purchaserId = $('#purchaserId').val();
+				alert("in to populateGstn purchaserId"+purchaserId)
+				var gstnFull = "";
+				var state = serviceUnitArrayPurchaser[purchaserId].purState;
+				alert("in to populate gstn state"+purState);
+				alert("in to populateGstn serviceUnitArrayPurchaser[purchaserId].state"+serviceUnitArrayPurchaser[purchaserId].purState);
+				if (purState == serviceUnitArrayPurchaser[purchaserId].purState) {
+					if (gstnFull.length > 0) {
+						gstnFull = gstnFull + " " + purState;
+					} else {
+						gstnFull = gstnFull + " " + purState;
+					}
+				}
+				var panNo = serviceUnitArrayPurchaser[purchaserId].panNo;
+				if (panNo == serviceUnitArrayPurchaser[purchaserId].panNo) {
+					if (gstnFull.length > 0) {
+						gstnFull = gstnFull + " " + panNo;
+					} else {
+						gstnFull = gstnFull + " " + panNo;
+					}
+				}
+				
+				$('#gstNumber').text(gstnFull);
+				
+
+			}
+			function gstnNumber(){
+				
+				var gstnNo = $("#gstnNo").val();
+				
+				var purState = $("#purState").val();
+				var panNo = $("#panNo").val();
+				
+				var gstnState = gstnNo.substring(0,2);
+				var gstnpurstate = purState.substring(0,2);
+				
+				var gstnpanNumber = gstnNo.substring(2,12);
+				var gstnPan = panNo.substring();
+				
+				console.log(gstnState);
+				
+				 if((gstnpurstate == gstnState)){
+					var gstnNo = $("#gstnNo").val();
+				}else {
+					$("#purchaseFrmMsg").text('State Code Not Matched In Gstn');
+					$("#purchaseFrmMsg").show();
+					$("#purchaseFrmMsg").fadeOut(15000);
+					return false;
+				}if((gstnpanNumber == panNo)){
+					var gstnNo = $("#gstnNo").val();
+				}else {
+					$("#purchaseFrmMsg").text('Pan Number Not Matched In Gstn');
+					$("#purchaseFrmMsg").show();
+					$("#purchaseFrmMsg").fadeOut(15000);
+					return false;
+				} 
+				
+				
+				
 			}
 	</script>
 </body>

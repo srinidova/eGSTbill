@@ -49,5 +49,7 @@
 
     
     </select>
-	
+	<select id="generateBill" resultClass="com.eGSTbill.model.BillCart" parameterClass="java.lang.String">
+		select * from billcart where billCartId = #value#
+	</select>
 </sqlMap>

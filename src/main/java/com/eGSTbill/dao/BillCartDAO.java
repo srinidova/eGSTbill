@@ -2,6 +2,8 @@ package com.eGSTbill.dao;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.eGSTbill.connection.IbatisFactory;
 import com.eGSTbill.model.BillCart;
 import com.eGSTbill.model.BillDetailsCart;
@@ -121,5 +123,22 @@ public class BillCartDAO {
 			e.printStackTrace();
 		}
 		return sJson;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<BillCart> generateBill(String sBillId) {
+		ArrayList<BillCart> lstBillCart = new ArrayList<BillCart>();
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+			lstBillCart = (ArrayList<BillCart>) session.queryForList("BillCart.generateBill", StringUtils.trim(sBillId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (!lstBillCart.equals(null)) {
+			return lstBillCart;
+		} else {
+			return lstBillCart;
+		}
 	}
 }

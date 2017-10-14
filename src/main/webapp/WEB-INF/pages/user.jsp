@@ -56,7 +56,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Mobile</label> <input class="form-control"
-										type="text" id="mobile" name="mobile" placeholder="">
+										type="text" id="mobile" name="mobile" placeholder="" maxlength="10">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -68,7 +68,9 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Address</label>
-									<input class="form-control" type="text" id="address" name="address" placeholder=""> 
+									<!-- <input class="form-control" type="text" id="address" name="address" placeholder="">  -->
+									<textarea class="form-control" rows="5" id="address"
+						name="address" maxlength="250"></textarea>
 								</div>
 							</div>
 							<div class="col-md-10">
@@ -357,9 +359,10 @@
 						alpha : true
 					},
 					mobile : {
-						required: true,
-						minlength: 10,
-						number: true
+						required : true,
+						minlength : 10,
+						maxlength : 10,
+						number : true
 					},
 					email : {
 						required : true,
@@ -389,9 +392,11 @@
 						alpha : "only characters"
 					},
 					mobile : {
+						
 						required: "Please provide Mobile number",
-						minlength: "Your mobile must be at least 10 characters long",
-						number:"Please enter numbers Only"
+						number:"Please enter numbers Only",
+						minlength: "Your mobile must be at least 10 characters long"
+						
 					},
 					email: {
 						
@@ -402,7 +407,17 @@
 						
 						required: "Please provide Address"
 						
-					}
+					},
+					purState : {
+						required : {
+							depends : function(element) {
+								if ('none' == $('#purState').val()) {
+									$('#purState').val('');
+								}
+								return true;
+							}
+						},
+					},
 					
 				},
 				errorElement : "em",

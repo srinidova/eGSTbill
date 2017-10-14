@@ -45,6 +45,8 @@
 								<div class="form-group">
 									<label for="">Address</label> 
 									<input class="form-control" type="text" id="address" name="address" placeholder=""> 
+									<!-- <textarea class="form-control" rows="5" id="address"
+						name="address" maxlength="250"></textarea> -->
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -58,7 +60,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Pin </label> 
-									<input class="form-control" id="pin" name="pin" type="text" placeholder="">
+									<input class="form-control" id="pin" name="pin" type="text" placeholder="" maxlength="6">
 								</div>
 							</div>
 							<div class="col-md-10">
@@ -168,7 +170,7 @@
 		if (response != undefined && response.length > 0) {
 			$.each(response, function(i, datObj) {
 				arrStates[datObj.stateId] = datObj;
-				html = html + '<option value="' + datObj.stateId + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
+				html = html + '<option value="' + datObj.stateName + '">'+ datObj.gstnCode +'--'+ datObj.stateCode +'--'+ datObj.stateName + '</option>';
 			});
 		}
 		$('#state').empty().append(html);
@@ -360,8 +362,19 @@
 					},
 					pin : {
 						required : true,
-
-						number : true
+						number : true,
+						minlength : 6,
+						maxlength : 6
+					},
+					state : {
+						required : {
+							depends : function(element) {
+								if ('none' == $('#state').val()) {
+									$('#state').val('');
+								}
+								return true;
+							}
+						},
 					},
 					
 				},
@@ -375,6 +388,10 @@
 					address : {
 						required : "Please enter Address "
 						
+					},
+					state : {
+						required : "Please select an state",
+
 					},
 					pin : {
 						required : "Please enter Pin",

@@ -27,6 +27,7 @@ import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.UserService;
 import com.eGSTbill.util.CommonUtils;
 import com.eGSTbill.util.Sms;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class LoginController {
@@ -53,7 +54,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login")
-	public @ResponseBody String addProduct(@RequestParam("userMobile") String userMobile,
+	public @ResponseBody String login(@RequestParam("userMobile") String userMobile,
 			@RequestParam("userPassword") String userPassword, HttpSession objSession, HttpServletRequest objRequest) {
 		String sJson = null;
 		User user = null;
@@ -80,7 +81,10 @@ public class LoginController {
 						ClientService cs = new ClientService();
 						String sUserId = user.getUserId();
 						Client client = cs.getClientByUserId(sUserId);
-
+						ObjectMapper objectMapper=new ObjectMapper();
+						String sClient=objectMapper.writeValueAsString(client);
+						objSession.setAttribute("CLIENTINFO", sClient);
+						
 						String sClientId = client.getClientId();
 						objSession.setAttribute("CLIENTID", sClientId);
 
