@@ -65,11 +65,22 @@ public class ClientController {
 		//@RequestParam("file") List<MultipartFile> multipartFile
 		String resultAdd = "fail";
 		String sJson = null;
-		//System.out.println("in to addClient controller");
+		System.out.println("in to addClient controller ");
 		CommonUtils utils = new CommonUtils();
 		String sFileName = null;
 		String sFileSavedPath = null;
 		try {
+			
+			String sMobile = client.getMobile();
+			ClientService cs = new ClientService();
+			boolean bMobileExist = cs.getClientByMobileNo(sMobile);
+			System.out.println("in to get client by mobile number "+sMobile);
+			if(bMobileExist){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", sMobile + " already exists. Please choose another Name");
+				return sJson = json.toString();
+			}
 			//System.out.println("in to client controller===getCompanyName==" + client.getCompanyName());
 		//	String targetDir = objRequest.getServletContext().getRealPath("/") + "images/uploads/";
 			////System.out.println("in to client controller===targetDir==" + targetDir);
@@ -95,6 +106,7 @@ public class ClientController {
 			}*/
 			ClientService bo = new ClientService();
 			resultAdd = bo.addClient(client);
+			//System.out.println("in to client controller "+client.getTerms());
 			//System.out.println(" resultAdd ========" + resultAdd);
 			if (StringUtils.isNotEmpty(resultAdd)) {
 				if (resultAdd.equals("fail")) {

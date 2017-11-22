@@ -132,12 +132,12 @@ public class UserService {
 		return dao.passwordUpdate(user);
 	}
 	
-	public String listUsersByClientId(String sClientId) {
+	public String listUsersByClientId(String clientId) {
 		String sJson = null;
 		ObjectMapper objectMapper = null;
 		ArrayList<User> lstUsers = null;
 		UserDAO dao = new UserDAO();
-		lstUsers = dao.listUsersByClientId(sClientId);
+		lstUsers = dao.listUsersByClientId(clientId);
 		//System.out.println("lstProducts size==========="+lstUsers.size());
 		if (lstUsers == null || lstUsers.size() > 0) {
 			objectMapper = new ObjectMapper();
@@ -149,5 +149,44 @@ public class UserService {
 			}
 		}
 		return sJson;
+	}
+	/*public ArrayList<User> getUsersByMobileNo(String sClientId) {
+		User bMobileNoExist = null;;
+		ArrayList<User> lstUsers = null;
+		UserDAO dao = new UserDAO();
+		bMobileNoExist = dao.getUsersByMobileNo(sClientId);
+		
+		return bMobileNoExist;
+	}*/
+	
+	public boolean getUsersByMobileNo(String sMobileNo,String clientId) {
+		boolean bMobileNoExist = false;
+		ArrayList<User> lstUsers = null;
+		UserDAO dao = new UserDAO();
+		lstUsers = dao.getUsersByMobileNo(sMobileNo,clientId);
+		System.out.println(lstUsers.size());
+		if (lstUsers != null && lstUsers.size() >= 1) {
+			bMobileNoExist = true;
+		}
+		return bMobileNoExist;
+	}
+	public boolean checkUserByMobileNo(String sMobileNo, String clientId) {
+		boolean bMobileExist = false;
+		ArrayList<User> lstUsers = null;
+		UserDAO dao = new UserDAO();
+		//lstUsers = dao.getUsersByMobileNo(sMobileNo);
+		lstUsers = dao.getUsersByMobileNo(sMobileNo, clientId);
+		if (lstUsers == null || lstUsers.size() > 0) {
+			for(User user : lstUsers){
+				String sUserIdExst = user.getUserId();
+				//String sMobileNoExst = product.getProductName();
+					if(!StringUtils.equals(clientId, sUserIdExst)){
+						bMobileExist = true;
+						break;
+					}
+				
+			}
+		}
+		return bMobileExist;
 	}
 }

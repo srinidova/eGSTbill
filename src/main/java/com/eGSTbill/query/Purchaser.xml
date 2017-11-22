@@ -33,4 +33,12 @@
 	   </isNotNull>
 		)
 	</select>
+	
+	<select id="getPurchasersByMobileNo" resultClass="com.eGSTbill.model.Purchaser"  parameterClass="map">
+		<!-- select
+		purchaserId,companyName,panNumber,gstNumber,address,state,pincode,contactName,mobileNo,emailID,updatedBy,updatedDate from
+		purchaser where mobileNo = #value# -->
+		SELECT c.clientId ,p.mobileNo FROM client_purchaser c,purchaser p WHERE c.clientId=#clientId# AND c.purchaserId = p.purchaserId AND p.mobileNo= #mobileNo# 
+		
+	</select>
 </sqlMap>

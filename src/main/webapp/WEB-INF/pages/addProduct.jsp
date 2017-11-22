@@ -110,6 +110,15 @@
 										type="text" id="uom" name="uom" placeholder="">
 								</div>
 							</div> -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="">Category</label> 
+									<select id="categoryId" name="categoryId" class="form-control">
+									</select>
+									 <input type="hidden" class="form-control" id="categoryName" name="categoryName">
+									  <input type="hidden" class="form-control" id="clientId" name="clientId">
+								</div>
+							</div>
 							<div class="col-md-10">
 								<div id="prodFrmMsg"
 									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
@@ -167,16 +176,31 @@
 	var lstOrders ='${LISTPRODUCTS}';
 	var lstClients ='${LISTCLIENTS}';
 	var sClientId = '${CLIENTID}';
-	console.log(sClientId);
-	console.log(lstClients);
+	var lstCategory = '${LISTCATEGORY}';
+	var sClientId = '${CLIENTID}';
+	
+	var lstCategory = '${CATEGORYLIST}';
+	
+	//console.log(sClientId);
+	
+	//console.log(lstCategory);
+	
+	
+	//console.log(sCategoryId);
+	//console.log(sClientId);
+	//console.log(lstClients);
+	//console.log(lstCategory);
 	//console.log(lstOrders);
 	$(document).ready(function() {
 		showProductData(JSON.parse(lstOrders));
 		
-		/* if(lstClients != undefined && lstClients.length >0){
-			////alert("sClientId=="+sClientId);
+		
+		 if (lstCategory != undefined && lstCategory.length > 0) {
+			showCategoryData(JSON.parse(lstCategory));
 			$('#clientId').val(sClientId);
-		} */
+			$('#categoryId').val("");
+			populateCategorySelect();
+		} 
 	}); 
 	
 	function prodFormValidate() {
@@ -319,9 +343,31 @@
 							.removeClass("has-error");
 				}
 			});
-$.validator.addMethod("alpha", function(value, element) {
+ $.validator.addMethod("alpha", function(value, element) {
 return this.optional(element) || value == value.match(/^[a-zA-Z\s]+$/);
-});
+}); 
+
+function populateCategorySelect() {
+	//alert("in to populate category data"+categoryId);
+	//var clientId = $('#sClientId').val();
+	var categoryId = $('#categoryId').val();
+	//alert("in to populateCategorySelect categoryId"+categoryId);
+	//alert("in to populateCategorySelect"+sClientId);
+	getCatgeoryByclientId(sClientId);
+}
+ function showCategoryData(response) {
+	serviceUnitArrayCategory = {};
+	var html = "<option value=''>-- Select --</option>";
+	if (response != undefined && response.length > 0) {
+		$.each(response, function(i, datObj) {
+			serviceUnitArrayCategory[datObj.categoryId] = datObj;
+			html = html + '<option value="' + datObj.categoryId + '">'
+					+ datObj.categoryName + '</option>';
+		});
+	}
+	$('#categoryId').empty().append(html);
+	//console.log("=========="+serviceUnitArray);
+} 
 	</script>
 </body>
 </html>

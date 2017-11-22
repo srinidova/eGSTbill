@@ -21,7 +21,7 @@ if(session.getAttribute("USER") != null){
 	sMobile = client.getMobile();
 	sAddress = client.getAddress();
 	sGstn = client.getGstn();
-	userName = user.getUserName();
+	userName = client.getCompanyName();
 }
 %>
 <!-- Banner Start-->

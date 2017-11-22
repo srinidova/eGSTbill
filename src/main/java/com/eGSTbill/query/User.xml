@@ -40,4 +40,13 @@
 	   </isNotNull>
 		)
 	</select>
+	<!-- <select id="getUsersByMobileNo" resultClass="com.eGSTbill.model.User"  parameterClass="java.lang.String">
+		select u.mobile,c.clientId,u.userId from user u,client c where c.clientId=#value# 
+	</select> -->
+	<select id="getUsersByMobileNo" resultClass="com.eGSTbill.model.User"  parameterClass="map">
+		<!-- select
+		userId,role,userName,mobile,email,address,updatedBy,updatedOn,companyName,password from
+		user where mobile = #value# -->
+		SELECT c.clientId , u.mobile FROM client_user c,USER u WHERE c.clientId=#clientId# AND c.userId = u.userId AND u.mobile= #mobile# 
+	</select>
 </sqlMap>

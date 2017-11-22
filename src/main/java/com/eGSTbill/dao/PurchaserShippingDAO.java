@@ -12,7 +12,7 @@ public class PurchaserShippingDAO {
 	public String addPurchaserShipping(PurchaserShipping purchaserShipping) {
 		String result = "fail";
 		try {
-			System.out.println("in to BillCartBillDetailsCartDAO");
+			//System.out.println("in to BillCartBillDetailsCartDAO");
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("PurchaserShipping.addPurchaserShipping", purchaserShipping);
 			result = "success";
@@ -27,9 +27,9 @@ public class PurchaserShippingDAO {
 		ArrayList<PurchaserShipping> purchasershipping = new ArrayList<PurchaserShipping>();
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
-			System.out.println("purchaserShipping.getPurchaserId() =="+purchaserShipping.getPurchaserId());
+			//System.out.println("purchaserShipping.getPurchaserId() =="+purchaserShipping.getPurchaserId());
 			purchasershipping = (ArrayList<PurchaserShipping>) session.queryForList("PurchaserShipping.getShippingDetailsBypurchaserId", purchaserShipping.getPurchaserId());
-			System.out.println("purchasershipping.size =="+purchasershipping.size());
+			//System.out.println("purchasershipping.size =="+purchasershipping.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

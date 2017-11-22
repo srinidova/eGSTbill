@@ -171,8 +171,14 @@
 		var lstClients ='${LISTCLIENTS}';
 		var lstPurchasers = '${LISTPURCHASERS}';
 		var sClientId = '${CLIENTID}';
-		console.log(sClientId);
-		console.log(lstPurchasers);
+		
+		
+		
+		//console.log(lstClients);
+		/* console.log(sClientId);
+		console.log(lstPurchasers); */
+		console.log(lstStates);
+		console.log(lstClients);
 		
 		$(document).ready(function() {
 			if(lstStates != undefined && lstStates.length >0){
@@ -283,18 +289,18 @@
 		}
 		function purchaseFormValidate() {
 			if ($("#purchaserForm").valid()) {
-				alert("gstnNo........"+$("#gstnNo").val().substring(0,2));
+				//alert("gstnNo........"+$("#gstnNo").val().substring(0,2));
 				$("#purState").change(function(){ 
 			        var element = $(this).find('option:selected').attr("value"); 
 			    }); 
-				//alert("state code......"+element);
+				////alert("state code......"+element);
 				var purchaseId = $("#purchaserId").val();
 				if (purchaseId != "") {
-					//alert("hello update=========" + purchaseId);
+					////alert("hello update=========" + purchaseId);
 					updatePurchaser(purchaseId);
 					$('#btnPurchaseSave').text("Add");
 				} else {
-					////alert("--------inside else---------");
+					//////alert("--------inside else---------");
 					savePurchaser();
 				}
 			}
@@ -428,7 +434,7 @@
 					|| value == value.match(/^[a-zA-Z\s]+$/);
 		});
 		function savePurchaser() {
-			////alert("inside savePurchaser");
+			//////alert("inside savePurchaser");
 			purchaserData = {};
 			purchaserData["purchaserId"] = $("#purchaserId").val();
 			purchaserData["clientId"] = $("#clientId").val();
@@ -441,8 +447,8 @@
 			purchaserData["contactName"] = $("#contactName").val();
 			purchaserData["mobileNo"] = $("#purchaserMobileNo").val();
 			purchaserData["emailID"] = $("#purchaserEmail").val();
-			////alert("purchase data"+purchaserData)
-			//alert("in to save purchaser ==="+clientId);
+			//////alert("purchase data"+purchaserData)
+			////alert("in to save purchaser ==="+clientId);
 			console.log(clientId);
 			//gstnNumber();
 			 var gstnNo = $("#gstnNo").val();
@@ -491,6 +497,25 @@
 				error : function(e) {
 					$("#btn-save").prop("disabled", false);
 				}
+				/* resJSON = JSON.parse(response);
+				if (response != null) {
+					if (resJSON.status == "ERROR") {
+						
+						$("#purchaseFrmMsg").text(resJSON.message);
+						$("#purchaseFrmMsg").show();
+						$("#purchaseFrmMsg").fadeOut(15000);
+						$("#purchaseFrmMsg").val("");
+				
+					}else{
+						$("#purchaseFrmMsg").text('Purchaser saved Sucessfully');
+						$("#purchaseFrmMsg").show();
+						$("#purchaseFrmMsg").fadeOut(15000);
+						purchaseClear();
+						//resJSON = JSON.parse(response);
+						showPurchaseData(resJSON);
+						}
+					} */
+				
 			});
 		}
 		function showPurchaseData(response) {
@@ -679,11 +704,11 @@
 			function populateGstn(purchaserId) {
 				//alert("in to populateGstn purchaserId"+purchaserId)
 				var purchaserId = $('#purchaserId').val();
-				alert("in to populateGstn purchaserId"+purchaserId)
+				//alert("in to populateGstn purchaserId"+purchaserId)
 				var gstnFull = "";
 				var state = serviceUnitArrayPurchaser[purchaserId].purState;
-				alert("in to populate gstn state"+purState);
-				alert("in to populateGstn serviceUnitArrayPurchaser[purchaserId].state"+serviceUnitArrayPurchaser[purchaserId].purState);
+				//alert("in to populate gstn state"+purState);
+				//alert("in to populateGstn serviceUnitArrayPurchaser[purchaserId].state"+serviceUnitArrayPurchaser[purchaserId].purState);
 				if (purState == serviceUnitArrayPurchaser[purchaserId].purState) {
 					if (gstnFull.length > 0) {
 						gstnFull = gstnFull + " " + purState;

@@ -1,6 +1,8 @@
 package com.eGSTbill.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -8,6 +10,7 @@ import com.eGSTbill.connection.IbatisFactory;
 import com.eGSTbill.model.Client;
 import com.eGSTbill.model.ClientPurchaser;
 import com.eGSTbill.model.Purchaser;
+import com.eGSTbill.model.User;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import freemarker.template.utility.StringUtil;
@@ -100,4 +103,26 @@ public class PurchaserDAO {
 		}
 		return lstPurchasers;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Purchaser> getPurchasersByMobileNo(String sMobileNo,String clientId) {
+		ArrayList<Purchaser> lstPurchasers = new ArrayList<Purchaser>();
+		System.out.println("in to purchaserDAO "+sMobileNo);
+		try {
+			 SqlMapClient session = new IbatisFactory().getSession();
+			 Map<String,String> param = new HashMap<>();
+			 param.put("clientId", clientId);
+			 param.put("mobileNo", sMobileNo);
+			 System.out.println("param-----"+param);
+			 lstPurchasers = (ArrayList<Purchaser>) session.queryForList("Purchaser.getPurchasersByMobileNo",param);
+			 System.out.println("in to get purchaser by mobile number "+lstPurchasers);
+			// System.out.println("in to getUsersByMobileNo      "+lstPurchasers.get(0).getMobileNo());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstPurchasers;
+}
 }

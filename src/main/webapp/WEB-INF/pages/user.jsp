@@ -137,6 +137,8 @@
 	var lstClients ='${LISTCLIENTS}';
 	var sClientId = '${CLIENTID}';
 	
+	console.log(sClientId);
+	
 	$(document).ready(function() {
 		showClientData(JSON.parse(lstOrders));
 		//alert("===ready====");
@@ -146,6 +148,7 @@
 	});
 	
 	function showClientData(response) {
+		//alert("in to clientId "+clientId);
 		serviceUnitArray = {};
 		var html = "<option value=''>-- Select --</option>";
 		if (response != undefined && response.length > 0) {
@@ -163,8 +166,8 @@
 		//console.log("=====pop====="+serviceUnitArray);
 		//alert("in to populateProdData=========="+serviceUnitArray);
 		var clientId = $('#clientId').val();
-		$('#companyName').val(serviceUnitArray[productId].companyName);
-		
+		//$('#companyName').val(serviceUnitArray[clientId].companyName);
+		//getUserByClientId(sClientId);
 	}
 	function addUser(){
 		//alert("in to add User");
@@ -322,6 +325,22 @@
 
 		});
 	}
+	/* function getUserByClientId(clientId) {
+		alert("in to getUserByClientId "+clientId);
+		$.ajax({
+			type : "POST",
+			url : "getUserByClientId.json",
+			data : "clientId=" + clientId,
+			success : function(response) {
+				if (response != null) {
+					showUserData(response);
+				}
+			},
+			error : function(e) {
+			}
+		})
+
+	} */
 	function userFormValidate() {
 		//alert("in to userFormValidation");
 		if ($("#userForm").valid()) {

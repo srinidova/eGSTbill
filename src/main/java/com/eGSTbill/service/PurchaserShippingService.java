@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class PurchaserShippingService {
 
 	public String addPurchaserShipping(PurchaserShipping purchaserShipping) {
-		System.out.println("in to PurchaserShippingService");
+		//System.out.println("in to PurchaserShippingService");
 		PurchaserShippingDAO dao = new PurchaserShippingDAO();
 		return dao.addPurchaserShipping(purchaserShipping);
 	}

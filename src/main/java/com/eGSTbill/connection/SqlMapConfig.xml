@@ -34,5 +34,11 @@
  	   <sqlMap resource="com/eGSTbill/query/ClientProduct.xml" /> 
  	   <sqlMap resource="com/eGSTbill/query/AutoIncrement.xml" />
  	   <sqlMap resource="com/eGSTbill/query/Category.xml" /> 
+ 	   <sqlMap resource="com/eGSTbill/query/ClientCategory.xml" /> 
+ 	    <sqlMap resource="com/eGSTbill/query/ProductCategory.xml" /> 
+ 	     <sqlMap resource="com/eGSTbill/query/Vendor.xml" /> 
+ 	     <sqlMap resource="com/eGSTbill/query/ClientVendor.xml" /> 
+ 	     <sqlMap resource="com/eGSTbill/query/Purchases.xml" /> 
+ 	     <sqlMap resource="com/eGSTbill/query/ClientPurchases.xml" /> 
 
 </sqlMapConfig>

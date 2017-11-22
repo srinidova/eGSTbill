@@ -20,6 +20,7 @@ import com.eGSTbill.service.ClientService;
 import com.eGSTbill.service.ProducService;
 import com.eGSTbill.service.PurchaserService;
 import com.eGSTbill.service.StateService;
+import com.eGSTbill.service.UserService;
 import com.eGSTbill.util.CommonUtils;
 
 import org.json.JSONObject;
@@ -53,7 +54,7 @@ public class PurchaserController {
 			//sJson = ps.listPurchaser();
 			
 			String sClientId = (String) objSession.getAttribute("CLIENTID");
-			//System.out.println("sClientId=="+sClientId);
+			System.out.println("sClientId=="+sClientId);
 			sJson = ps.listPurchasersByClientId(sClientId);
 			
 			if (sJson != null && sJson.length() > 0) {
@@ -79,7 +80,38 @@ public class PurchaserController {
 		String sJson = null;
 		String sPurchaserId = null;
 		String resultAddCliPur = "fail";
+		String result = "fail";
+		//String sJson = null;
 		try {
+			/*String sClientId = (String) objSession.getAttribute("CLIENTID");
+			System.out.println("in to add purchaser "+sClientId);
+		//	System.out.println("in to purcahser controller mobile number exist ");
+			String sMobileNo = purchaser.getMobileNo();
+			System.out.println("in to add purchaser "+sMobileNo);
+			PurchaserService us = new PurchaserService();
+			boolean bMobileExist = us.getPurchasersByMobileNo(sMobileNo,sClientId);
+			System.out.println("in to purcahser controller bMobileExist "+bMobileExist);
+			if(bMobileExist){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", sMobileNo + " already exists. Please choose another Mobile Number");
+				return sJson = json.toString();
+			}*/
+			String sMobileNo = purchaser.getMobileNo();
+			//System.out.println("sMobileNo....."+sMobileNo);
+			PurchaserService us = new PurchaserService();
+			//boolean bMobileExist = us.getUserByMobile(sMobileNo);
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+		//	System.out.println("sMobileNo....."+sMobileNo+"----CLIENT--"+sClientId);
+			boolean bMobileExist = us.getPurchasersByMobileNo(sMobileNo,sClientId);
+			//System.out.println(bMobileExist);
+			if(bMobileExist){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", sMobileNo + " already exists. Please choose another Mobile Number");
+				return sJson = json.toString();
+			}
+			
 			String sCmpnyName = purchaser.getCompanyName();
 			//System.out.println("pannumber==========" + purchaser.getPanNumber());
 
@@ -89,7 +121,7 @@ public class PurchaserController {
 			purchaser.setPurchaserId(sPurchaserId);
 			// purchaser.setUpdatedBy(CommonUtils.ge);.setUpdatedBy(CommonUtils.getDate());
 			purchaser.setUpdatedDate(CommonUtils.getDate());
-			String result = ps.addPurchase(purchaser);
+			 result = ps.addPurchase(purchaser);
 			
 			ClientPurchaser clientPurchaser = new ClientPurchaser();
 			clientPurchaser.setClientId(clientId);

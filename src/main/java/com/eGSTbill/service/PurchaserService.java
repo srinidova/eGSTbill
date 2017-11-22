@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.apache.commons.lang.StringUtils;
 
 import com.eGSTbill.dao.PurchaserDAO;
+import com.eGSTbill.dao.UserDAO;
 import com.eGSTbill.model.Purchaser;
+import com.eGSTbill.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PurchaserService {
@@ -62,5 +64,17 @@ public class PurchaserService {
 			}
 		}
 		return sJson;
+	}
+	
+	public boolean getPurchasersByMobileNo(String sMobileNo,String clientId) {
+		boolean bMobileNoExist = false;
+		ArrayList<Purchaser> lstPurchasers = null;
+		PurchaserDAO dao = new PurchaserDAO();
+		lstPurchasers = dao.getPurchasersByMobileNo(sMobileNo,clientId);
+		System.out.println(lstPurchasers.size());
+		if (lstPurchasers != null && lstPurchasers.size() >= 1) {
+			bMobileNoExist = true;
+		}
+		return bMobileNoExist;
 	}
 }

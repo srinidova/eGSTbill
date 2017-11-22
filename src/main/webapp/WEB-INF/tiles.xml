@@ -42,6 +42,12 @@
 	<definition name="categoryHome" extends="base.definition">
 		<put-attribute name="main" value="/WEB-INF/pages/category.jsp" />
 	</definition>
+	<definition name="vendorHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/vendor.jsp" />
+	</definition>
+	<definition name="purchasesHome" extends="base.definition">
+		<put-attribute name="main" value="/WEB-INF/pages/purchases.jsp" />
+	</definition>
 </tiles-definitions>
 
 

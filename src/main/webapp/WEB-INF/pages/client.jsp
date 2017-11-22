@@ -55,7 +55,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">Mobile </label> <input class="form-control" id="mobile" name="mobile"
+									<label for="">Mobile </label> <input class="form-control" id="mobile" name="mobile" maxlength="10"
 										type="text" placeholder="">
 								</div>
 							</div>
@@ -84,7 +84,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="">Pin</label> <input class="form-control" id="pin" name="pin"
+									<label for="">Pin</label> <input class="form-control" id="pin" name="pin" maxlength="6"
 										type="text" placeholder="">
 								</div>
 							</div>
@@ -192,7 +192,9 @@
 	var lstClients ='${LISTCLIENTS}';
 
 	$(document).ready(function() {
-		
+		if(lstStates != undefined && lstStates.length >0){
+			showStatesData(JSON.parse(lstStates)); 
+		}
 		if(lstClients != undefined && lstClients.length >0){
 			showClientData(JSON.parse(lstClients));
 		}
@@ -301,6 +303,9 @@
 		data["branch"] = $("#branch").val();
 		data["ifsc"] = $("#ifsc").val();
 		data["terms"] = $("terms").val();
+		alert("in to addClient state  ==="+state);
+		/* alert("in to addClient ifsc   "+ifsc);
+		alert("in to addClient terms   "+terms); */
 		//data["logPath"] = $("#logPath").val();
 		/* for (var i = 0; i < $("#logPath")[0].logPath.length; i++)
 			data.append('logPath',  $("#logPath")[0].logPath[i]); */
@@ -308,10 +313,12 @@
 		//data.append("file", $('#file').get(0).files[0]);
 		//console.log(data);
 		
-		var gstn = $("#gstn").val();
+		/* var gstn = $("#gstn").val();
 		
 		var state = $("#state").val();
 		var pan = $("#pan").val();
+		
+		alert("in to client "+state);
 		
 		var state = gstn.substring(0,2);
 		var gstnclistate = state.substring(0,2);
@@ -328,6 +335,37 @@
 		}if((gstnpanNumber == pan)){
 			var gstn = $("#gstn").val();
 		}else {
+			$("#clientFrmMsg").text('Pan Number Not Matched In Gstn');
+			$("#clientFrmMsg").show();
+			$("#clientFrmMsg").fadeOut(15000);
+			return false;
+		} */
+		/* data["gstn"] = gstn;  */
+		
+		var gstn = $("#gstn").val();
+		
+		var state = $("#state").val();
+		
+		var gstnState = gstn.substring(0,2);
+		
+		var gstnClientState = state.substring(0,2);
+		
+		var pan = $("#pan").val();
+		
+		var gstnpanNumber = gstn.substring(2,12);
+		
+		var gstnpan = pan.substring();
+		
+		if((gstnClientState == gstnState)){
+			var gstn = $("#gstn").val();
+		}else{
+			$("#clientFrmMsg").text('State Code Not Matched In Gstn');
+			$("#clientFrmMsg").show();
+			$("#clientFrmMsg").fadeOut(15000);
+			return false;
+		}if((gstnpanNumber == gstnpan)){
+			var gstn = $("#gstn").val();
+		}else{
 			$("#clientFrmMsg").text('Pan Number Not Matched In Gstn');
 			$("#clientFrmMsg").show();
 			$("#clientFrmMsg").fadeOut(15000);
@@ -567,8 +605,7 @@
 					mobile : {
 						required : true,
 						minlength : 10,
-						
-
+						maxlength : 10,
 						number : true
 					},
 					email : {
@@ -582,11 +619,11 @@
 					
 					pin : {
 						required : true,
-
+						maxlength : 6,
 						number : true
 					},
 					terms : {
-						
+						required : true
 					},
 					accountNumber : {
 						required : true,
@@ -646,7 +683,7 @@
 						number : "Please enter numbers Only"
 					},
 					terms :{
-						
+						required : "Please enter Terms"
 					},
 					accountNumber : {
 						required : "Please enter Account Number",

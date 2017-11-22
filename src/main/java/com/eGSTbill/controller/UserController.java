@@ -19,6 +19,7 @@ import com.eGSTbill.model.User;
 import com.eGSTbill.service.ClientService;
 import com.eGSTbill.service.ClientUserService;
 import com.eGSTbill.service.ProducService;
+import com.eGSTbill.service.PurchaserService;
 import com.eGSTbill.service.UserService;
 import com.eGSTbill.util.CommonUtils;
 
@@ -37,7 +38,7 @@ public class UserController {
 			UserService bo = new UserService();
 			//sJson = bo.listusers();
 			String sClientId = (String) objSession.getAttribute("CLIENTID");
-			
+			System.out.println("in to user sClientId  "+sClientId);
 			//System.out.println("sClientId=="+sClientId);
 			sJson = bo.listUsersByClientId(sClientId);
 			if(sJson != null && sJson.length()>0){
@@ -66,8 +67,23 @@ public class UserController {
 		String resultAdd ="fail";
 		String resultClientUser ="fail";
 		String sUserId = null;
+		String sJson = null;
+		//String sMobile = null;
 		//System.out.println("in to addClient controller");
 		try{
+			
+			String sMobileNo = user.getMobile();
+			UserService us = new UserService();
+			//boolean bMobileExist = us.getUserByMobile(sMobileNo);
+			String sClientId = (String) objSession.getAttribute("CLIENTID");
+			boolean bMobileExist = us.getUsersByMobileNo(sMobileNo,sClientId);
+			System.out.println(bMobileExist);
+			if(bMobileExist){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", sMobileNo + " already exists. Please choose another Mobile Number");
+				return sJson = json.toString();
+			}
 			sUserId = CommonUtils.getAutoGenId();
 			
 			user.setUserId(sUserId);
@@ -81,7 +97,7 @@ public class UserController {
 			//if(resultAdd == "success"){
 				ClientUserService cubo = new ClientUserService();
 				clientUser.setUserId(sUserId);
-				clientUser.setClientId(clientId);
+				clientUser.setClientId(sClientId);
 				resultClientUser = cubo.addClientUser(clientUser);
 			//}
 			
@@ -130,6 +146,16 @@ public class UserController {
 		String resultUpdate ="fail";
 		String sJson = null;
 		try{
+			String sMobileNo = user.getMobile();
+			UserService us = new UserService();
+			
+			boolean bMobileExist = us.checkUserByMobileNo(sMobileNo, user.getUserId());
+			if(bMobileExist){
+				JSONObject json = new JSONObject();
+				json.put("status", "ERROR");
+				json.put("message", sMobileNo + " already exists. Please choose another Mobile Number");
+				return sJson = json.toString();
+			}
 			//System.out.println("in to update user");
 			UserService bo = new UserService();
 			user.setUpdatedBy(CommonUtils.getDate());
@@ -152,4 +178,25 @@ public class UserController {
 		}
 		return sJson;
 	}
+	
+	/*@RequestMapping(value = "/getUserByClientId")
+	public @ResponseBody String getUserByClientId(@RequestParam("clientId") String clientId, HttpSession objSession,
+			HttpServletRequest objRequest) {
+		System.out.println("in to getUserByClientId");
+		String sJson = null;
+		try {
+
+			System.out.println(" sClientId============" + clientId);
+			UserService us = new UserService();
+
+			sJson = us.listUsersByClientId(clientId);
+			System.out.println(" final result in getUserByClientId========" + sJson);
+
+		} catch (Exception e) {
+			//System.out.println("Exception in ProductController in getUserByClientId()");
+			e.printStackTrace();
+
+		}
+		return sJson;
+	}*/
 }

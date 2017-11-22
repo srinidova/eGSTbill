@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Vendor">
+	<insert id="addVendor" parameterClass="com.eGSTbill.model.Vendor">
+		insert into
+		vendor(vendorId,companyName,pan,gstn,address,state,pincode,contactPerson,mobile,email,updatedBy,updatedDate)
+		values(#vendorId#,#companyName#,#pan#,#gstn#,#address#,#state#,#pincode#,#contactPerson#,#mobile#,#email#,#updatedBy#,#updatedDate#)
+	</insert>
+	<select id="listVendors" resultClass="com.eGSTbill.model.Vendor">
+		select
+		vendorId,companyName,pan,gstn,address,state,pincode,contactPerson,mobile,email,updatedBy,updatedDate from
+		vendor
+	</select>
+	<delete id="deleteVendor" parameterClass="com.eGSTbill.model.Vendor">
+		delete from vendor where
+		vendorId = #vendorId#
+	</delete>
+	<!-- <update id="updateVendor" parameterClass="com.eGSTbill.model.Vendor">
+		update vendor set companyName
+		= #companyName#, pan = #pan#, gstn = #gstn#, address = #address#, state
+		= #state#, pincode = #pincode#, contactPerson = #contactPerson#, mobile = #mobile#, email = #email#, updatedBy = #updatedBy#, updatedDate = #updatedDate# 
+		where
+		vendorId = #vendorId#
+	</update> -->
+	
+	<update id="updateVendor" parameterClass="com.eGSTbill.model.Vendor">
+		update vendor set companyName
+		= #companyName#, pan = #pan#, gstn = #gstn#, address = #address#, state
+		= #state#, pincode = #pincode#, contactPerson = #contactPerson#, mobile = #mobile#, email = #email#, updatedBy = #updatedBy#, updatedDate = #updatedDate#
+		where
+		vendorId = #vendorId#
+	</update>
+	
+	<select id="getVendorsByMobileNo" resultClass="com.eGSTbill.model.Vendor"  parameterClass="map">
+		
+		<!-- select c.clientId , v.mobile from client_vendor c, vendor v where c.clientId=#clientId# and v.vendorId = #vendorId# and v.mobile =#mobile# -->
+		select c.clientId , v.mobile from client_vendor c, vendor v where c.clientId=#clientId# and v.vendorId = c.vendorId and v.mobile =#mobile#
+	</select>
+</sqlMap>

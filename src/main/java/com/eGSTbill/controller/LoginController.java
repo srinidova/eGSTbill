@@ -76,7 +76,9 @@ public class LoginController {
 						//System.out.println("b. in to login controller===" + user.getPassword());
 
 						String sUsrRole = user.getRole();
+						//System.out.println("in to login controller sUsrRole  "+sUsrRole);
 						objSession.setAttribute("LOGINROLE", sUsrRole);
+						
 
 						ClientService cs = new ClientService();
 						String sUserId = user.getUserId();
@@ -86,6 +88,7 @@ public class LoginController {
 						objSession.setAttribute("CLIENTINFO", sClient);
 						
 						String sClientId = client.getClientId();
+						//System.out.println("in to login controller sClientId     "+sClientId);
 						objSession.setAttribute("CLIENTID", sClientId);
 
 						user.setClientId(sClientId);

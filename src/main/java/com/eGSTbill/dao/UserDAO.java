@@ -1,7 +1,10 @@
 package com.eGSTbill.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 
 import com.eGSTbill.connection.IbatisFactory;
@@ -112,16 +115,63 @@ public class UserDAO {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<User> listUsersByClientId(String sClientId) {
+	public ArrayList<User> listUsersByClientId(String clientId) {
 		ArrayList<User> lstUsers = new ArrayList<User>();
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			ClientUser cu = new ClientUser();
 			////System.out.println("sClientId=="+sClientId);
-			if (StringUtils.isNotEmpty(sClientId)) {
-				cu.setClientId(sClientId);
+			if (StringUtils.isNotEmpty(clientId)) {
+				cu.setClientId(clientId);
 			}
 			lstUsers = (ArrayList<User>) session.queryForList("User.listUsersByClientId", cu);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstUsers;
+	}
+	
+	/*@SuppressWarnings("unchecked")
+	public User getUsersByMobileNo(String sMobileNo) {
+		User lstUsers = new User();
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+			lstUsers =  (User) session.queryForList("User.getUsersByMobileNo", sMobileNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstUsers;
+	}*/
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<User> getUsersByMobileNo(String sMobileNo) {
+		ArrayList<User> lstUsers = new ArrayList<User>();
+		try {
+			SqlMapClient session = new IbatisFactory().getSession();
+			lstUsers = (ArrayList<User>) session.queryForList("User.getUsersByMobileNo",sMobileNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return lstUsers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<User> getUsersByMobileNo(String sMobileNo,String clientId) {
+		ArrayList<User> lstUsers = new ArrayList<User>();
+		try {
+			 SqlMapClient session = new IbatisFactory().getSession();
+			 Map<String,String> param = new HashMap<>();
+			 param.put("clientId", clientId);
+			 param.put("mobile", sMobileNo);
+			 lstUsers = (ArrayList<User>) session.queryForList("User.getUsersByMobileNo",param);
+			 System.out.println("in to getUsersByMobileNo "+lstUsers);
+			 //System.out.println("in to getUsersByMobileNo      "+lstUsers.get(0).getMobile());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -80,12 +80,12 @@ public class ProducService {
 		ArrayList<Product> lstProducts = null;
 		ProductDAO dao = new ProductDAO();
 		lstProducts = dao.listProductsByClientId(sClientId);
-		////System.out.println("lstProducts size==========="+lstProducts.size());
+		//////System.out.println("lstProducts size==========="+lstProducts.size());
 		if (lstProducts == null || lstProducts.size() > 0) {
 			objectMapper = new ObjectMapper();
 			try {
 				sJson = objectMapper.writeValueAsString(lstProducts);
-				//System.out.println("result String list======"+sJson);
+				////System.out.println("result String list======"+sJson);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

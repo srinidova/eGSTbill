@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eGSTbill.model.Category;
 import com.eGSTbill.model.Client;
+import com.eGSTbill.model.ClientCategory;
 import com.eGSTbill.model.Product;
 import com.eGSTbill.service.CategoryService;
+import com.eGSTbill.service.ClientCategoryService;
 import com.eGSTbill.service.ClientService;
 import com.eGSTbill.service.ProducService;
 import com.eGSTbill.util.CommonUtils;
@@ -34,11 +36,13 @@ public class CategoryController {
 		String sJson = null;
 		try {
 			CategoryService bo = new CategoryService();
-			sJsonCategory = bo.listCategory();
-			if(sJsonCategory != null && sJsonCategory.length()>0){
-				objSession.setAttribute("LISTCATEGORY", sJsonCategory);
+			sJson = bo.listCategory();
+			System.out.println("in to category home sJson "+sJson);
+			if(sJson != null && sJson.length()>0){
+				objSession.setAttribute("LISTCATEGORY", sJson);
 				
 			}
+			
 
 		} catch (Exception e) {
 			System.out.println("Exception in CategoryController in categoryHome()");
@@ -55,10 +59,13 @@ public class CategoryController {
 			HttpServletRequest objRequest ) {
 		String resultAdd = "fail";
 		String sJson = null;
+		String sCategoryId = null;
+		String clientCategoryAdd = null;
+		//String Category = null;
 		System.out.println("in to saveCategory controller");
 		try {
-			
-			category.setCategoryId(CommonUtils.getAutoGenId());
+			sCategoryId = CommonUtils.getAutoGenId();
+			category.setCategoryId(sCategoryId);
 			category.setUpdatedBy(CommonUtils.getDate());
 			category.setUpdatedOn(CommonUtils.getDate());
 			
@@ -72,22 +79,39 @@ public class CategoryController {
 					json.put("message", "Error while add client");
 					return sJson = json.toString();
 				}
-			}else{
+				bo = new CategoryService();
 				sJson = bo.listCategory();
-				System.out.println(" sJson ========" + sJson);
 			}
-
+			HttpSession session = objRequest.getSession();
+			String clientId = (String) session.getAttribute("CLIENTID");
+			System.out.println("  clientId    "+clientId);
+			
+			ClientCategory clientCategory = new ClientCategory();
+			clientCategory.setCategoryId(sCategoryId);
+			clientCategory.setClientId(clientId);
+			
+			ClientCategoryService ccs = new ClientCategoryService();
+			clientCategoryAdd = ccs.addClientCategory(clientCategory);
+			System.out.println("in to clientcategory "+clientCategoryAdd);
+			
+			//String sCategory = category.getCategoryId();
+			objSession.setAttribute("CATEGORY", sCategoryId);
+			
+			System.out.println("in to category categoryId"+sCategoryId);
+			
+			
+			
 		} catch (Exception e) {
 			System.out.println("Exception in ClientController in addClient()");
 			e.printStackTrace();
 		}
-		return resultAdd;
+		return sJson;
 
 	}
 	
 
 	@RequestMapping(value = "/deleteCategory")
-	public String deleteCategory(@RequestParam("categoryId") String categoryId, HttpSession objSession, HttpServletRequest objRequest){
+	public @ResponseBody String deleteCategory(@RequestParam("categoryId") String categoryId, HttpSession objSession, HttpServletRequest objRequest){
 		String result = "fail";
 		String sJson = null;
 		System.out.println("in to category delete");
@@ -101,18 +125,17 @@ public class CategoryController {
 				JSONObject json = new JSONObject();
 				json.put("Status", "ERROR");
 				json.put("message", "Error While delete Category");
-			}else{
-				sJson = bo.listCategory();
+				return sJson = json.toString();
 			}
-			
+			sJson = bo.listCategory();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return result;
+		return sJson;
 	}
 	
 	@RequestMapping(value = "/updateCategory")
-	public String updateCategory(@ModelAttribute Category category, HttpSession objSession, HttpServletRequest objRequest ){
+	public @ResponseBody String updateCategory(@ModelAttribute Category category, HttpSession objSession, HttpServletRequest objRequest ){
 		String resultUpdate = "fail";
 		String sJson = null;
 		
@@ -127,9 +150,10 @@ public class CategoryController {
 				json.put("Status", "ERROR");
 				json.put("message", "Error While Update Category");
 				return sJson = json.toString();
-			}else{
-				sJson = bo.updateCategory(category);
 			}
+			
+			bo = new CategoryService();
+			sJson = bo.listCategory();
 			
 		}catch(Exception e){
 			e.printStackTrace();

@@ -144,7 +144,7 @@ public class NewBillController {
 				billCart.setBillCartId(sBillCartId);
 				billCart.setBillNo(autoIncrement.getIncrementId());
 				
-				System.out.println("autoIncrement.getIncrementId()"+autoIncrement.getIncrementId());
+				////System.out.println("autoIncrement.getIncrementId()"+autoIncrement.getIncrementId());
 
 				resAddBilCart = bilCartServ.addBillCart(billCart);
 				objSession.setAttribute("sessBillCartId", sBillCartId);
@@ -153,7 +153,7 @@ public class NewBillController {
 			//String sProdName = product.getProductName();
 			//String sProdId = product.getProductId();
 			BillDetailsCart existBilDetCart = bilDetCartServ.isProductBilled(product, sBillCartId);
-			//System.out.println("existBilDetCart==="+existBilDetCart);
+			//////System.out.println("existBilDetCart==="+existBilDetCart);
 			if(existBilDetCart == null){
 				resAddDetCart = bilDetCartServ.billProduct(product, sBillCartId);
 			}else{
@@ -185,7 +185,7 @@ public class NewBillController {
 			objSession.setAttribute("sessBillCartId", null);*/
 
 		} catch (Exception e) {
-			//System.out.println("Exception in NewBillController in addBillDetailsCart()");
+			//////System.out.println("Exception in NewBillController in addBillDetailsCart()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -225,7 +225,7 @@ public class NewBillController {
 			}
 
 		} catch (Exception e) {
-			//System.out.println("Exception in NewBillController in deleteBillDetailsCart()");
+			//////System.out.println("Exception in NewBillController in deleteBillDetailsCart()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -241,15 +241,15 @@ public class NewBillController {
 		BillCart billCart = null;
 		String sBilDetCartId = null;
 		String sBillCartId = null;
-		// //System.out.println("0. in to updateBillDetailsCart");
+		// //////System.out.println("0. in to updateBillDetailsCart");
 		try {
 			sBillCartId = (String) objSession.getAttribute("sessBillCartId");
-			// //System.out.println("0. From addBillDetailsCart
+			// //////System.out.println("0. From addBillDetailsCart
 			// sBillCartId=="+sBillCartId);
 
 			sBilDetCartId = data.getString("billDetailsCartId");
 			product = new Product();
-			// //System.out.println("1. in to
+			// //////System.out.println("1. in to
 			// updateBillDetailsCart===="+data.toString());
 			product.setProductId(data.getString("productId"));
 			product.setProductName(data.getString("productName"));
@@ -268,12 +268,12 @@ public class NewBillController {
 				json.put("message", "Error while update BillDetailsCart");
 				return sJson = json.toString();
 			}
-			// //System.out.println("2. in to updateBillDetailsCart
+			// //////System.out.println("2. in to updateBillDetailsCart
 			// sBillCartId===="+sBillCartId);
 
 			BillCartService bilCartServ = new BillCartService();
 			billCart = bilCartServ.updatedBillCart(sBillCartId);
-			// //System.out.println("4. in to updateBillDetailsCart
+			// ////System.out.println("4. in to updateBillDetailsCart
 			// billCart===="+billCart);
 			ArrayList<BillCart> lstBillCartReturn = new ArrayList<BillCart>();
 			lstBillCartReturn.add(billCart);
@@ -282,10 +282,10 @@ public class NewBillController {
 				ObjectMapper objMapper = new ObjectMapper();
 				sJson = objMapper.writeValueAsString(lstBillCartReturn);
 			}
-			// //System.out.println("5. From addBillDetailsCart sJson=="+sJson);
+			// ////System.out.println("5. From addBillDetailsCart sJson=="+sJson);
 
 		} catch (Exception e) {
-			//System.out.println("Exception in NewBillController in updateBillDetailsCart()");
+			////System.out.println("Exception in NewBillController in updateBillDetailsCart()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -297,11 +297,11 @@ public class NewBillController {
 		ArrayList<BillCart> lstBillCart = null;
 		ObjectMapper objectMapper=null;
 		String sJson=null;
-		System.out.println("in to generateBill");
+		//System.out.println("in to generateBill");
 		try {
 			
 		} catch (Exception e) {
-			//System.out.println("Exception in NewBillController in newBillHome()");
+			////System.out.println("Exception in NewBillController in newBillHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -329,7 +329,7 @@ public class NewBillController {
 			//sJson = bo.listProducts();
 				
 		}catch(Exception e){
-			//System.out.println("Exception in ProductController in deleteProduct()");
+			////System.out.println("Exception in ProductController in deleteProduct()");
 			e.printStackTrace();		}
 		return sJson;
 	}

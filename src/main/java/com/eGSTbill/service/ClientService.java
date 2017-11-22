@@ -57,4 +57,26 @@ public class ClientService {
 
 		return client;
 	}
+	public boolean getProductByName(String sProductName) {
+		boolean bProductExist = false;
+		ArrayList<Product> lstProducts = null;
+		ProductDAO dao = new ProductDAO();
+		lstProducts = dao.getProductByName(sProductName);
+		if (lstProducts == null || lstProducts.size() > 0) {
+			bProductExist = true;
+		}
+		return bProductExist;
+	}
+	
+	
+	public boolean getClientByMobileNo(String sMobile){
+		boolean bMobileExist = false;
+		ArrayList<Client> lstClients = null;
+		ClientDAO dao = new ClientDAO();
+		lstClients = dao.getClientByMobileNo(sMobile);
+		if(lstClients == null || lstClients.size()>0){
+			bMobileExist = true;
+		}
+		return bMobileExist;
+	}
 }

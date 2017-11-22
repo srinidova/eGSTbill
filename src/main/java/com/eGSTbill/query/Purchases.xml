@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Purchases">
+	<insert id="addPurchases" parameterClass="com.eGSTbill.model.Purchases">
+		insert into
+		purchases(productId,purchasesId,productName,quantity,rate,totalAmount,updatedBy,updatedDate)
+		values(#productId#,#purchasesId#,#productName#,#quantity#,#rate#,#totalAmount#,#updatedBy#,#updatedDate#)
+	</insert>
+	<select id="listPurchases" resultClass="com.eGSTbill.model.Purchases">
+	select 
+	productId,purchasesId,productName,quantity,rate,totalAmount,updatedBy,updatedDate from purchases
+	</select>
+	<delete id="deletePurchases" parameterClass="com.eGSTbill.model.Purchases">
+	delete from purchases where purchasesId = #purchasesId#
+	</delete>
+	<update id="updatePurchases" parameterClass="com.eGSTbill.model.Purchases">
+	update purchases set productId
+		= #productId#, productName = #productName#, quantity = #quantity#, rate = #rate#, totalAmount = #totalAmount#,updatedBy
+		= #updatedBy#, updatedDate = #updatedDate#
+		where
+		purchasesId = #purchasesId#
+	</update>
+</sqlMap>

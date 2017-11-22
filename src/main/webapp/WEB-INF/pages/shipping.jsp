@@ -72,10 +72,10 @@
 								<div class="buttons">
 									<ul>
 										<li>
-											<button class="btn btn-primary" id="btnClientSave" onClick="shippingFormValidate();">Add</button>
+											<button class="btn btn-primary" id="btnShippingSave" onClick="shippingFormValidate();">Add</button>
 										</li>
 										<li>
-											<button class="btn btn-primary" name="clear" value="clear" onClick="clientClear();">clear</button>
+											<button class="btn btn-primary" name="clear" value="clear" onClick="shippingClear();">clear</button>
 										</li>
 									</ul>
 								</div>
@@ -345,7 +345,10 @@
 			}
 	}
 	}
-	
+	function shippingClear(){
+		$("#shippingForm")[0].reset();
+		$('#btnShippingSave').text("Add");
+	}
 	$("#shippingForm")
 	.validate(
 			{
@@ -425,7 +428,7 @@
 
 	function getShippingsBypurchaserId() {
 		var purchaserId = $('#purchaserId').val();
-		////alert("1. purchaserId===="+purchaserId);
+		//alert("1. purchaserId===="+purchaserId);
 		$.ajax({
 			type : "POST",
 			url : "getShippingsBypurchaserId.htm",

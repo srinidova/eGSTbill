@@ -77,4 +77,18 @@ public class ClientDAO {
 		}
 		return lstClients;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Client> getClientByMobileNo(String sMobile){
+		ArrayList<Client> lstClients = new ArrayList<Client>();
+		try{
+			SqlMapClient session = new IbatisFactory().getSession();
+			lstClients = (ArrayList<Client>) session.queryForList("Client.getClientByMobileNo",sMobile);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return lstClients;
+	}
 }

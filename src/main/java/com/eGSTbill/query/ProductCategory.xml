@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ProductCategory">
+	<insert id="addProductCategory" parameterClass="com.eGSTbill.model.ProductCategory">
+		insert into
+		product_category(productId,categoryId)
+		values(#productId#,#categoryId#)
+	</insert>
+	
+	
+	<select id="getCategoryByclientId"  parameterClass="com.eGSTbill.model.ClientCategory" resultClass="com.eGSTbill.model.Category">
+		select categoryId,categoryName,description,updatedBy,updatedOn from category 
+		where categoryId in (select categoryId from client_category where clientId is not null
+		<isNotNull property="clientId">
+		    AND clientId  = #clientId#
+	   </isNotNull>
+		)
+
+	</select>
+</sqlMap>

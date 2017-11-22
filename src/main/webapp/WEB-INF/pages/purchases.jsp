@@ -68,9 +68,9 @@ if(session.getAttribute("USER") != null){
 				<!-- ADD SECTION START -->
 				<div class="new_bill">
 					<div class="col-md-12">
-						<form id="billForm" onsubmit="return false;">
+						<form id="purchasesForm" onsubmit="return false;">
 							<fieldset>
-								<legend>New Bill</legend>
+								<legend>Purchases</legend>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="">Product Name</label> <select id="productId"
@@ -78,8 +78,8 @@ if(session.getAttribute("USER") != null){
 											onchange="populateProdData();">
 										</select> <input type="hidden" class="form-control" id="productName"
 											name="productName"> <input type="hidden"
-											class="form-control" id="billDetailsCartId"
-											name="billDetailsCartId"> <input type="hidden"
+											class="form-control" id="purchasesId"
+											name="purchasesId"> <input type="hidden"
 											id="billCartId" name="billCartId">
 											<input type="hidden"
 											id="clientId" name="clientId">
@@ -94,35 +94,12 @@ if(session.getAttribute("USER") != null){
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="">Rate</label> <input class="form-control"
-											id="salePrice" name="salePrice" type="text" placeholder="">
+											id="rate" name="rate" type="text" placeholder="">
 									</div>
 								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="">CGST</label> <input class="form-control"
-											id="cgst" name="cgst" type="text" placeholder="">
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="">SGST</label> <input class="form-control"
-											id="sgst" name="sgst" type="text" placeholder="">
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="">IGST</label> <input class="form-control"
-											id="igst" name="igst" type="text" placeholder="">
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="">Discount</label> <input class="form-control"
-											id="discount" name="discount" type="text" placeholder="">
-									</div>
-								</div>
+								
 								<div class="col-md-10">
-									<div id="addBillMsg"
+									<div id="purchasesMsg"
 										style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
 										Sucessfully</div>
 								</div>
@@ -131,7 +108,7 @@ if(session.getAttribute("USER") != null){
 										<ul>
 											<li>
 												<button class="btn btn-primary" id="btnProdSave"
-													onClick="billFormValidate();">Add</button>
+													onClick="purchasesFormValidate();">Add</button>
 											</li>
 											<li>
 												<button type="button" class="btn btn-primary" name="clear"
@@ -155,19 +132,19 @@ if(session.getAttribute("USER") != null){
 							<div class="invoice_table">
                 <div class="invoice">
                   <div class="col-md-5">
-                    <h3>TIN : 36053303269</h3>
+                   <!--  <h3>TIN : 36053303269</h3> -->
                   </div>
                   <div class="col-md-4">
-                    <h3>INVOICE</h3>
+                    <h3>PURCHASES INVOICE</h3>
                   </div>
                 </div>
                 <div class="col-md-9" id= "image">
-                  <div class="i_logo" ><img src="images/1.jpg"  class="img-responsive" alt=""></div>
+                  <!-- <div class="i_logo" ><img src="images/1.jpg"  class="img-responsive" alt=""></div> -->
                 </div>
                 <div class="col-md-3">
                   <div class="i_address">
-                    <h5>Mobile No :  <%= clientMobile %> </h5>
-                    <p><%= clientAddress %></p>
+                    <%-- <h5>Mobile No :  <%= clientMobile %> </h5>
+                    <p><%= clientAddress %></p> --%>
                   </div>
                 </div>
               </div>
@@ -182,25 +159,14 @@ if(session.getAttribute("USER") != null){
 												<th>Against invoice :</th>
 											</tr> -->
 											<tr>
-												<th >Bill No :<span id="billNo">
+												<!-- <th >Bill No :<span id="billNo">
 												</span></th>
 												<th>Date Of invoice :<span ></span>
 												<input type="text" name="billDate" id="billDate">
-											 <!--  <div class="col-md-5">
-					<div class="form-group">
-						<label for="date&Time To">Date Of invoice : </label> <span class="errMsg" id="errDateAndTimeTo"></span>
-						<div class='input-group date' id="programTimeTo">
-							<input type='text' class="form-control" id="billDate"
-								name="billDate" maxlength="30"  /> 
-								<span class="input-group-addon">
-								<span class="glyphicon glyphicon-calendar"></span>
-							</span>
-						</div>
-					</div>
-				</div>   -->
-				</th>
-											<!-- </tr>
-											<tr>
+											
+				</th> -->
+											</tr>
+											<!-- <tr>
 												<th>State :
 													<table style="float: right; width: 25%;">
 														<tr>
@@ -215,13 +181,13 @@ if(session.getAttribute("USER") != null){
 													<form class="form-inline" id="purchaserForm">
 														<div class="form-group ">
 															<label for="email">Bill to Party</label> <select
-																id="purchaserId" class="form-control party_select_box"
-																onchange="populatePurchaserData();">
+																id="vendorId" class="form-control party_select_box"
+																onchange="populateVendorData();">
 															</select>
 														</div>
 													</form>
 												</th>
-												<th style="background: #e8e8e8; color: #000 !important;" id="shiptoparty">
+												<!-- <th style="background: #e8e8e8; color: #000 !important;" id="shiptoparty">
 													<form class="form-inline">
 														<div class="form-group ">
 															<label for="email"> Ship to Party</label> <select
@@ -231,23 +197,23 @@ if(session.getAttribute("USER") != null){
 															</select>
 														</div>
 													</form>
-												</th>
+												</th> -->
 											</tr>
 											<tr>
 												<th>Name :<span id="disCompanyName"></span></th>
-												<th>Name :<span id="disShippingName"></span></th>
+												<!-- <th>Name :<span id="disShippingName"></span></th> -->
 											</tr>
 											<tr>
 												<td style="height: 60px; width: 50%;"><b>Address :
 														<span id="disPurchaserAddress"></span>
 												</b></td>
-												<td style="height: 60px; width: 50%;"><b>Address :<span
+												<!-- <td style="height: 60px; width: 50%;"><b>Address :<span
 														id="disShippingAddress"></span>
-												</b></td>
+												</b></td> -->
 											</tr>
 											<tr>
 												<th>GSTIN :<span id="disPurchaserGSTN"></span></th>
-												<th>GSTIN :</th>
+												<!-- <th>GSTIN :</th> -->
 											</tr>
 											<tr>
 												<th>State :<span id="disPurchaserState"></span>
@@ -257,13 +223,13 @@ if(session.getAttribute("USER") != null){
 														</tr>
 													</table>
 												</th>
-												<th>State : <span id="disShippingState"></span>
+												<!-- <th>State : <span id="disShippingState"></span>
 													<table style="float: right; width: 25%;">
 														<tr>
 															<th>Code : <span id="disShippingGstnCode"></span></th>
 														</tr>
 													</table>
-												</th>
+												</th> -->
 											</tr>
 										</thead>
 									</table>
@@ -276,21 +242,24 @@ if(session.getAttribute("USER") != null){
 											<tr style="background: #28a8e0; color: #fff;">
 												<th class="text-center" id="billNo">S.No</th>
 												<th class="text-center">Product Description</th>
-												<th class="text-center">HSN Code</th>
-												<th class="text-center">UOM</th>
+												<!-- <th class="text-center">HSN Code</th>
+												<th class="text-center">UOM</th> -->
 												<th class="text-center">Qty</th>
 												<th class="text-center">Rate</th>
-												<th class="text-center">Amount</th>
-												<th class="text-center">Discount</th>
+												<th class="text-center">Total Amount</th>
+												<!-- <th class="text-center">Amount</th> -->
+												<!-- <th class="text-center">Discount</th>
 												<th class="text-center">Taxable Value</th>
 												<th colspan="2" style="text-align: center;" id="cGST">CGST</th>
 												<th colspan="2" style="text-align: center;" id="sGST">SGST</th>
 												 <th colspan="2" style="text-align: center;" id="iGST">IGST</th> 
-												<th class="text-center">Total</th>
+												<th class="text-center">Total</th> -->
 												<th class="text-center" id="action">Action</th>
 											</tr>
 										</thead>
-										<tr>
+										<tbody id="purchasesListData">
+										</tbody>
+										<!-- <tr>
 											<th style="border: none !important;"></th>
 											<th style="border: none !important;"></th>
 											<th style="border: none !important;"></th>
@@ -313,25 +282,25 @@ if(session.getAttribute("USER") != null){
 												<th
 												style="border-bottom: none !important; background: #1d76bb; color: #fff;" id="igstamount">Amount</th> 
 											<th style="border: none !important;"></th>
-										</tr>
+										</tr> -->
 										<tbody id="billListData">
 										</tbody>
 										<tr>
-											<th colspan="4" style="text-align: center;">Total</th>
-											<th style="text-align: right;"><div id="totalQuantity"></div></th>
+											<!-- <th colspan="4" style="text-align: center;">Total</th> -->
+											<!-- <th style="text-align: right;"><div id="totalQuantity"></div></th>
 											<th style="text-align: right;"></th>
 											<th style="text-align: right;"><div id="totalAmount"></div></th>
-											<th style="text-align: right;"><div id="totalDiscount"></div></th>
-											<th style="text-align: right;"><div id="taxValue"></div></th>
+											<th style="text-align: right;"><div id="totalDiscount"></div></th> -->
+											<!-- <th style="text-align: right;"><div id="taxValue"></div></th>
 											<th style="text-align: right;" id="hideCgst"></th>
 											<th style="text-align: right;" ><div id="totalCgst"></div></th>
 											<th style="text-align: right;" id="hideSgst"></th>
 											<th style="text-align: right;" ><div id="totalSgst"></div></th>
 											<th style="text-align: right;" id="hideIgst"></th> 
-											<th style="text-align: right;" ><div id="totalIgst"></div></th>
-											<th style="text-align: right;"><div id="grandTotal"></div></th>
+											<th style="text-align: right;" ><div id="totalIgst"></div></th> -->
+											<!-- <th style="text-align: right;"><div id="grandTotal"></div></th> -->
 										</tr>
-										<tr>
+										<%-- <tr>
 											<th colspan="9" style="text-align: center;"><div id="wordsAmount"></div>
 												</th>
 											<th colspan="4" style="text-align: left;">Total Amount
@@ -373,33 +342,33 @@ if(session.getAttribute("USER") != null){
 												Amount after Tax</th>
 											<th style="text-align: right; border: none !important;"><div
 													id="totalAfterTax"></div></th>
-										</tr>
+										</tr> --%>
 										</thead>
 									</table>
 								</div>
 							</div>
 							<div class="invoice_table_footer">
-                <div class="col-md-8">
+                <!-- <div class="col-md-8">
                   <div class="f_matter">
                     <h4>WHETHER TAX IS PAYBLE ON REVERSE CHARGE BASIS YES / NO </br>
                       E.& O.E</h4>
                     <p> All Disputes Subject To Nagari Jurisdiction.</br>
                       Interest will be charged @ 24% Per Annum will be charged after 30 days</p>
                   </div>
-                </div>
-                <div class="col-md-4">
+                </div> -->
+                <%-- <div class="col-md-4">
                   <div class="f_address">
                     <h4><span>For</span> <%= clientCompany %></h4>
                     <p>Proprietor</p>
                   </div>
-                </div>
+                </div> --%>
               </div>
-							<div class="col-md-12">
+							<!-- <div class="col-md-12">
 								<div class="shipment" id="shipment">
 									<a href="javascript:void()"
 										onClick="$('.shipment_new_bill').toggle()">Shipment</a>
 								</div>
-							</div>
+							</div> -->
 
 							<div class="shipment_new_bill"
 								style="margin-top: 3em; display: none;">
@@ -467,12 +436,12 @@ if(session.getAttribute("USER") != null){
 								<div class="buttons" style="margin-top: 1em;">
 									<ul>
 										<li>
-											<button class="btn btn-primary " id="bill" onclick="printBill();">Bill</button>
+											<button class="btn btn-primary " id="bill" onclick="printBill();">Save</button>
 											
 										</li>
-										<li>
+										<!-- <li>
 											<button class="btn btn-primary" id="consignment">Consignment</button>
-										</li>
+										</li> -->
 										<li>
 											<button class="btn btn-primary" id="cancel">Cancel</button>
 										</li>
@@ -495,8 +464,13 @@ if(session.getAttribute("USER") != null){
 		var lstIncrement = '${INCREMENTID}';
 		var CLIENTINFO = '${sessionScope.CLIENTINFO}';
 		
+		var lstPurchases = '${LISTPURCHASES}';
+		var lstVendors = '${LISTVENDORS}'
+		//console.log(lstPurchases);
+		
 		 var clientInfo = JSON.parse(CLIENTINFO)
-		 console.log(clientInfo);
+		// console.log(clientInfo);
+		 console.log(lstVendors);
 		
 		serviceUnitArrayShipping = {};
 
@@ -504,7 +478,12 @@ if(session.getAttribute("USER") != null){
 			if (lstOrders != undefined && lstOrders.length > 0) {
 				showProductData(JSON.parse(lstOrders));
 			}
-			showPurchaserData(JSON.parse(lstPurchasers));
+			//showPurchaserData(JSON.parse(lstPurchasers));
+			showVendorData(JSON.parse(lstVendors));
+			
+			if(lstPurchases != undefined && lstPurchases.length >0){
+				showPurchasesdata(JSON.parse(lstPurchases));
+			}
 			 var dateNewFormat, onlyDate, today = new Date();
 
 	          dateNewFormat = (1 + today.getMonth())+ '-' + today.getFullYear();
@@ -552,7 +531,7 @@ if(session.getAttribute("USER") != null){
 
 		function populateProdData(productId) {
 			var productId = $('#productId').val();
-			alert("in to populateproduct data"+productId);
+			//alert("in to populate product data "+productId);
 			$('#productName').val(serviceUnitArray[productId].productName);
 			$('#salePrice').val(serviceUnitArray[productId].salePrice);
 			$('#cgst').val(serviceUnitArray[productId].cGST);
@@ -562,31 +541,24 @@ if(session.getAttribute("USER") != null){
 			////alert(serviceUnitArray[productId].productName);
 		}
 
-		function billFormValidate() {
-			if ($("#billForm").valid()) {
-				var billDetailsCartId = $("#billDetailsCartId").val();
-				if (billDetailsCartId != "") {
-					updateBillDetailsCart();
+		function purchasesFormValidate() {
+			if ($("#purchasesForm").valid()) {
+				var purchasesId = $("#purchasesId").val();
+				if (purchasesId != "") {
+					updatePurchases();
 				} else {
-					billProduct();
+					addPurchases();
 				}
 			}
 		}
-		
-		
-		function billProduct() {
+		function addPurchases(){
 			data = {};
 			data["productId"] = $("#productId").val();
+			data["purchasesId"] = $("#purchasesId").val();
 			data["productName"] = $("#productName").val();
 			data["quantity"] = $("#quantity").val();
-			data["salePrice"] = $("#salePrice").val();
-			data["cGST"] = $("#cgst").val();
-			data["sGST"] = $("#sgst").val();
-			data["iGST"] = $("#igst").val();
-			data["discount"] = $("#discount").val();
-			data["uom"] = serviceUnitArray[$("#productId").val()].uom;
-			data["hsnCode"] = serviceUnitArray[$("#productId").val()].hsnCode;
-			$.ajax({
+			data["rate"] = $("#rate").val();
+			/* $.ajax({
 				type : "POST",
 				url : "addBillDetailsCart.htm",
 				data : data,
@@ -602,176 +574,234 @@ if(session.getAttribute("USER") != null){
 				},
 				error : function(e) {
 				}
+			}); */
+			$.ajax({
+				type :"post",
+				url :"addPurchases.htm",
+				data : data,
+				success : function(response){
+					 $("#purchasesMsg").text("Purchases Saved Successfully");
+					$("#purchasesMsg").show();
+					$("#purchasesMsg").fadeOut(5000);
+					listPurchases();
+					showPurchasesdata(); 
+					/* resJSON = JSON.parse(response);
+					if (response != null) {
+						if (resJSON.status == "ERROR") {
+							$("#purchasesMsg").text(resJSON.message);
+							$("#purchasesMsg").show();
+							$("#purchasesMsg").fadeOut(15000);
+							$("#purchasesMsg").val("");
+						} else {
+							$("#purchasesMsg").text('Vendor saved Sucessfully');
+							$("#purchasesMsg").show();
+							$("#purchasesMsg").fadeOut(15000);
+							
+							showPurchasesdata();
+						}
+
+					} */
+				}
+			});
+ 		}
+		
+		function listPurchases(){
+			$.ajax({
+				type :"post",
+				url :"listPurchases.htm",
+				data : data,
+				success : function(response){
+					resJSON = JSON.parse(response);
+					showPurchasesdata(resJSON)
+				},
+				error : function(e) {
+					$("#btn-save").prop("disabled", false);
+				}
+			})
+		}
+		
+		
+		function deletePurchases(purchasesId){
+		//	alert("in to delete purchases");
+			$.ajax({
+				type : "post",
+				url : "deletePurchases.htm",
+				data : "purchasesId="+ purchasesId,
+				success : function(response){
+					if(response != null){
+						$("#purchasesMsg").text("Purchases Deleted Successfully");
+						$("#purchasesMsg").show();
+						$("#purchasesMsg").fadeOut(5000);
+						listPurchases();
+						showPurchasesdata(response);
+				}
+				},
+				
 			});
 		}
+		function editPurchases(purchasesId){
+			$('#btnProdSave').text("Update");
+			$('#purchasesId').val(purchasesId);
+			$('#productId').val(serviceUnitArrayPurchases[purchasesId].productId);
+			$('#productName').val(serviceUnitArrayPurchases[purchasesId].productName);
+			$('#quantity').val(serviceUnitArrayPurchases[purchasesId].quantity);
+			$('#rate').val(serviceUnitArrayPurchases[purchasesId].rate);
+		}
+		
 
-		function showBilldata(response) {
-			console.log(response);
-			console.log(billDate);
-			var lstBillDetCart = response[0].lstBillDetCart;
-			serviceUnitArrayBill = {};
+		function showPurchasesdata(response) {
+			////alert("in to show client data");
+			serviceUnitArrayPurchases = {};
 			var html = '';
-			if (lstBillDetCart != undefined && lstBillDetCart.length > 0) {
+			if (response != undefined && response.length > 0) {
 				$
 						.each(
-								lstBillDetCart,
+								response,
 								function(i, datObj) {
-									serviceUnitArrayBill[datObj.billDetailsCartId] = datObj;
+									serviceUnitArrayPurchases[datObj.purchasesId] = datObj;
 									var j = i + 1;
 									html = html
 											+ '<tr>'
-											+ '<td style="text-align: left;">'
+											+ '<td class="text-center">'
 											+ j
 											+ '</td>'
-											+ '<td style="text-align: left;">'
+											+ '<td class="text-center">'
 											+ datObj.productName
 											+ '</td>'
-											+ '<td style="text-align: left;">'
-											+ datObj.hsnCode
-											+ '</td>'
-											+ '<td style="text-align: left;">'
-											+ datObj.uom
-											+ '</td>'
-											+ '<td style="text-align: right;">'
+											+ '<td class="text-center">'
 											+ datObj.quantity
 											+ '</td>'
-											+ '<td style="text-align: right;">'
+											+ '<td class="text-center">'
 											+ datObj.rate
 											+ '</td>'
 											+ '<td class="text-center">'
-											+ datObj.amount
+											+ datObj.totalAmount
 											+ '</td>'
-											+ '<td style="text-align: right;">'
-											+ datObj.discount
-											+ '</td>'
-											+ '<td style="text-align: right;">'
-											+ datObj.taxableValue
-											+ '</td>'
-											+ '<td style="text-align: right;" id="cGSTRate">'
-											+ datObj.cgstRate
-											+ '</td>'
-											+ '<td style="text-align: right;" id="cGSTAmount">'
-											+ datObj.cgstAmount
-											+ '</td>'
-											+ '<td style="text-align: right;" id="sGSTRate">'
-											+ datObj.sgstRate
-											+ '</td>'
-											+ '<td style="text-align: right;" id="sGSTAmount">'
-											+ datObj.sgstAmount
-											+ '</td>'
-											+ '<td style="text-align: right;" id="iGSTRate">'
-											+ datObj.igstRate
-											+ '</td>'
-											+ '<td style="text-align: right;" id="iGSTAmount">'
-											+ datObj.igstAmount
-											+ '</td>'
-											+ '<td style="text-align: right;">'
-											+ datObj.total
-											+ '</td>'
-											+ '<td style="text-align: right;" name="dynActions" id="actions">'
+											+ '<td class="text-center">'
 											+ '<a id="'
-											+ datObj.billDetailsCartId
-											+ '" class="btn btn-info btn-xs" onclick="editBillDetailsCart(this.id)">'
-											+ '<span class="glyphicon glyphicon-edit" id="editAction"></span>'
+											+ datObj.purchasesId
+											+ '" class="btn btn-info btn-xs" onclick="editPurchases(this.id)">'
+											+ '<span class="glyphicon glyphicon-edit"></span>'
 											+ '</a>'
 											+ '<a id="'
-											+ datObj.billDetailsCartId
-											+ '" class="btn btn-danger btn-xs" onclick="deleteBillDetailsCart(this.id)">'
-											+ '<span class="glyphicon glyphicon-remove" id="deleteAction"></span>'
+											+ datObj.purchasesId
+											+ '" class="btn btn-danger btn-xs" onclick="deletePurchases(this.id)">'
+											+ '<span class="glyphicon glyphicon-remove"></span>'
 											+ '</a>' + '</td>' + '</tr>'
 								});
 			}
-			$('#billListData').empty().append(html);
-			$('#billCartId').val(response[0].billCartId);
-			$('#totalQuantity').text(response[0].totalQuantity);
-			$('#totalAmount').text(response[0].totalAmount);
-			$('#totalDiscount').text(response[0].totalDiscount);
-			$('#taxValue').text(response[0].taxValue);
-			$('#totalCgst').text(response[0].totalCgst);
-			$('#totalSgst').text(response[0].totalSgst);
-			$('#totalIgst').text(response[0].totalIgst);
-			$('#grandTotal').text(response[0].grandTotal);
-			$('#totalBeforeTax').text(response[0].totalBeforeTax);
-			$('#totalCgstAdd').text(response[0].totalCgst);
-			$('#totalSgstAdd').text(response[0].totalSgst);
-			$('#totalTax').text(response[0].totalTax);
-			$('#totalAfterTax').text(response[0].totalAfterTax);
-			$('#billNo').text(response[0].billNo);
-			//$('#billDate').text(response[0].billDate);
-			var amtWords = number2text(response[0].grandTotal);
-			$('#wordsAmount').text(amtWords);
-			
+			//$('#clientListData').empty().append(html);
+			document.getElementById("purchasesListData").innerHTML = html;
 		}
+		
+		
+		
 
-		function editBillDetailsCart(billDetailsCartId) {
-			$('#btnProdSave').text("Update");
-			$('#billDetailsCartId').val(billDetailsCartId);
-			$('#productId').val(
-					serviceUnitArrayBill[billDetailsCartId].productId);
-			$('#productName').val(
-					serviceUnitArrayBill[billDetailsCartId].productName);
-			$('#quantity')
-					.val(serviceUnitArrayBill[billDetailsCartId].quantity);
-			$('#salePrice').val(serviceUnitArrayBill[billDetailsCartId].rate);
-			$('#cgst').val(serviceUnitArrayBill[billDetailsCartId].cgstRate);
-			$('#sgst').val(serviceUnitArrayBill[billDetailsCartId].sgstRate);
-			$('#igst').val(serviceUnitArrayBill[billDetailsCartId].igstRate);
-			$('#discount')
-					.val(serviceUnitArrayBill[billDetailsCartId].discount);
-		}
-		function deleteBillDetailsCart(id) {
-			var count = 0;
+		
+		
+		function updatePurchases(){
+			data = {};
+			data["productId"] = $("#productId").val();
+			data["purchasesId"] = $("#purchasesId").val();
+			data["productName"] = $("#productName").val();
+			data["quantity"] = $("#quantity").val();
+			data["rate"] = $("#rate").val();
+			var purchasesId = $("#purchasesId").val();
 			$.ajax({
-				type : "POST",
-				url : "deleteBillDetailsCart.json",
-				data : "billDetailsCartId=" + id,
-				dataType : 'json',
-				success : function(response) {
+				type : "post",
+				url : "updatePurchases.htm",
+				data : data,
+				time : 1000,
+				success : function(response){
+					$("#purchasesId").val("");
+					data = {};
+					resJSON = JSON.parse(response);
 					if (response != null) {
-						$("#addBillMsg").text("Deleted sucessfully");
-						$("#addBillMsg").show();
-						$("#addBillMsg").fadeOut(5000);
-						showBilldata(response);
+						if (resJSON.status == "ERROR") {
+							$("#purchasesMsg").text(resJSON.message);
+							$("#purchasesMsg").show();
+							$("#purchasesMsg").fadeOut(15000);
+						} else {
+							$("#purchasesMsg").text('Updated Sucessfully');
+							$("#purchasesMsg").show();
+							$("#purchasesMsg").fadeOut(15000);
+							listPurchases();
+						}
 					}
 				},
 				error : function(e) {
+					$("#btn-save").prop("disabled", false);
 				}
 			});
 		}
-		function updateBillDetailsCart() {
-			data = {};
-			data["productId"] = $("#productId").val();
-			data["billDetailsCartId"] = $("#billDetailsCartId").val();
-			data["productName"] = $("#productName").val();
-			data["quantity"] = $("#quantity").val();
-			data["salePrice"] = $("#salePrice").val();
-			data["cGST"] = $("#cgst").val();
-			data["sGST"] = $("#sgst").val();
-			data["discount"] = $("#discount").val();
-
-			$.ajax({
-				type : "POST",
-				url : "updateBillDetailsCart.htm",
-				data : "jsondata= " + JSON.stringify(data),
-				time : 1000,
-				dataType : 'json',
-				success : function(response) {
-					$("#billDetailsCartId").val("");
-					data = {};
-					newBillClear();
-					$('#billListData').empty();
-					$("#addBillMsg").text('Updated Sucessfully');
-					$("#addBillMsg").show();
-					$("#addBillMsg").fadeOut(5000);
-					showBilldata(response);
-				},
-				error : function(e) {
+		function showVendorData(response){
+			serviceUnitArrayVendor = {};
+			var html = "<option value=''>-- Select --</option>";
+			if (response != undefined && response.length > 0) {
+				$.each(response, function(i, datObj) {
+					serviceUnitArrayVendor[datObj.vendorId] = datObj;
+					html = html + '<option value="' + datObj.vendorId + '">'
+							+ datObj.companyName + '</option>';
+				});
+			}
+			$('#vendorId').empty().append(html);
+		}
+		
+		function populateVendorData(vendorId){
+			var vendorId = $("#vendorId").val();
+			var addressFull = "";
+			var contactPerson = serviceUnitArrayVendor[vendorId].contactPerson;
+			if(contactPerson.length > 0){
+				if(addressFull.length > 0){
+					addressFull = addressFull + ", " + contactPerson;
+				}else{
+					addressFull = addressFull + " " + contactPerson;
 				}
-
-			});
+			}
+			var address = serviceUnitArrayVendor[vendorId].address
+			if(address.length > 0){
+				if(addressFull.length >0){
+					addressFull = address + " , "+address;
+				}else{
+					addressFull = addressFull + " " + address;
+				}
+			}
+			var mobile = serviceUnitArrayVendor[vendorId].mobile;
+			if(mobile.length >0){
+				if(addressFull .length >0){
+					addressFull = address + " ,mobile:"+mobile;
+				}else{
+					addressFull = addressFull + " "+mobile;
+				}
+			}
+			var email = serviceUnitArrayVendor[vendorId].email;
+			if(email .length >0){
+				if(addressFull . length>0){
+					addressFull = address + ",email:"+email;
+				}else{
+					addressFull = addressFull+" "+email;
+				}
+			}
+			var pincode = serviceUnitArrayVendor[vendorId].pincode;
+			if(pincode.length>0){
+				if(addressFull.length>0){
+					addressFull = address +" -"+pincode;
+				}else{
+					addressFull = address + " "+pincode;
+				}
+			}
+			$('#disCompanyName').text(
+					serviceUnitArrayVendor[vendorId].companyName);
+			$('#disPurchaserAddress').text(addressFull);
+			$('#disPurchaserCode').text(
+					serviceUnitArrayVendor[vendorId].state);
+			$('#disPurchaserGSTN').text(
+					serviceUnitArrayVendor[vendorId].gstn);
+			$('#disPurchaserState').text(
+					serviceUnitArrayVendor[vendorId].state);
 		}
 
-		function showPurchaserData(response) {
+		/* function showPurchaserData(response) {
 			serviceUnitArrayPurchaser = {};
 			var html = "<option value=''>-- Select --</option>";
 			if (response != undefined && response.length > 0) {
@@ -907,7 +937,7 @@ if(session.getAttribute("USER") != null){
 				$("#addIGST").show();
 			}
 			
-		}
+		} */
 
 		 function getShippingData(purchaserId) {
 			data = {};
@@ -932,70 +962,14 @@ if(session.getAttribute("USER") != null){
 			});
 		} 
 
-		function showShippingData(response) {
-			var html = "<option value=''>-- Select --</option>";
-			if (response != undefined && response.length > 0) {
-				$.each(response, function(i, datObj) {
-					serviceUnitArrayShipping[datObj.shippingId] = datObj;
-					html = html + '<option value="' + datObj.shippingId + '">'
-							+ datObj.name + '</option>';
-				});
-			}
-			$('#shippingId').empty().append(html);
-		}
+		
 
-		function populateShippingData(purchaserId) {
-			var shippingId = $('#shippingId').val();
-			//alert("shippingId     "+shippingId);
-			console.log(shippingId);
-			var purchaserId = $('#purchaserId').val();
-			var addressFull = "";
-			var address = serviceUnitArrayShipping[shippingId].address;
-			if (address.length > 0) {
-				if (addressFull.length > 0) {
-					addressFull = addressFull + ", " + address;
-				} else {
-					addressFull = addressFull + " " + address;
-				}
-			}
-			var pincode = serviceUnitArrayShipping[shippingId].pin;
-			if (pincode.length > 0) {
-				if (addressFull.length > 0) {
-					addressFull = addressFull + "- " + pincode;
-				} else {
-					addressFull = addressFull + " " + pincode;
-				}
-			}
-			$('#disShippingName').text(
-					serviceUnitArrayShipping[shippingId].name);
-			$('#disShippingAddress').text(addressFull);
-			$('#disShippingState').text(
-					serviceUnitArrayShipping[shippingId].state);
-			$('#disShippingGstnCode').text(
-					serviceUnitArrayShipping[shippingId].gstnCode);
-			getShippingData(purchaserId);
-
-		}
 		
 		
-		function getShippingByPurchaserId() {
-			var purchaserId = $('#purchaserId').val();
-			$.ajax({
-				type : "POST",
-				url : "getShippingsBypurchaserId.json",
-				data : "purchaserId=" + purchaserId,
-				success : function(response) {
-					if (response != null) {
-						showShippingData(response);
-					}
-				},
-				error : function(e) {
-				}
-			})
-
-		}
 		
-		$("#billForm")
+		
+		
+		$("#purchasesForm")
 				.validate(
 						{
 							rules : {
@@ -1010,26 +984,12 @@ if(session.getAttribute("USER") != null){
 
 									number : true
 								},
-								salePrice : {
+								rate : {
 									required : true,
 
 									number : true
 								},
-								sgst : {
-									required : true,
-
-									number : true
-								},
-								cgst : {
-									required : true,
-
-									number : true
-								},
-								discount : {
-									required : true,
-
-									number : true
-								},
+								
 
 							},
 							messages : {
@@ -1043,22 +1003,11 @@ if(session.getAttribute("USER") != null){
 									required : "Please enter Quantity",
 									number : "Please enter numbers Only"
 								},
-								salePrice : {
+								rate : {
 									required : "Please enter Rate",
 									number : "Please enter numbers Only"
 								},
-								cgst : {
-									required : "Please enter CGST",
-									number : "Please enter numbers Only"
-								},
-								sgst : {
-									required : "Please enter SGST",
-									number : "Please enter numbers Only"
-								},
-								discount : {
-									required : "Please enter Discount",
-									number : "Please enter numbers Only"
-								},
+								
 							},
 							errorElement : "em",
 							errorPlacement : function(error, element) {
@@ -1087,7 +1036,7 @@ if(session.getAttribute("USER") != null){
 		});
 
 		function newBillClear() {
-			$("#billForm")[0].reset();
+			$("#purchasesForm")[0].reset();
 			$('#btnProdSave').text("Add");
 		}
 		function generateBill(){
@@ -1109,7 +1058,7 @@ if(session.getAttribute("USER") != null){
 
 			});
 		}
-		function printBill(){
+		 function printBill(){
 			
 			console.log($('#purchaserId').val());
 			console.log($('#shippingId').val());
@@ -1156,7 +1105,7 @@ if(session.getAttribute("USER") != null){
 			
 			 window.print();
 
-		}
+		} 
 		
 	</script>
 </body>

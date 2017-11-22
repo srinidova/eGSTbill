@@ -42,7 +42,7 @@
 								</div>
 							</div>							
 							<div class="col-md-10">
-								<div id="purchaseFrmMsg"
+								<div id="unbilledFrmMsg"
 									style="display: none; margin-bottom: -20px; margin-top: 1px; text-align: right; font-weight: bold;">Save
 									Sucessfully</div>
 							</div>
@@ -59,7 +59,7 @@
 										</li>
 										<li>
 											<button type="button" class="btn btn-primary" name="clear"
-												value="clear" onClick="purchaseClear();">Clear</button>
+												value="clear" onClick="unbilledClear();">Clear</button>
 										</li>
 									</ul>
 								</div>
@@ -82,18 +82,18 @@
 										<thead>
 											<tr>
 												<th class="text-center">Bill No</th>
-												<th class="text-center">totalQuantity</th>
-												<th class="text-center">totalAmount</th>
-												<th class="text-center">totalDiscount</th>
-												<th class="text-center">taxValue</th>
-												<th class="text-center">totalCgst</th>
-												<th class="text-center">totalSgst</th>
-												<th class="text-center">totalIgst</th>
-												<th class="text-center">grandTotal</th>
-												<th class="text-center">totalBeforeTax</th>
-												<th class="text-center">totalTax</th>
-												<th class="text-center">totalAfterTax</th>
-												<th class="text-center">billDate</th>
+												<th class="text-center">TotalQuantity</th>
+												<th class="text-center">TotalAmount</th>
+												<th class="text-center">TotalDiscount</th>
+												<th class="text-center">TaxValue</th>
+												<th class="text-center">TotalCgst</th>
+												<th class="text-center">TotalSgst</th>
+												<th class="text-center">TotalIgst</th>
+												<th class="text-center">GrandTotal</th>
+												<th class="text-center">TotalBeforeTax</th>
+												<th class="text-center">TotalTax</th>
+												<th class="text-center">TotalAfterTax</th>
+												<th class="text-center">BillDate</th>
 												<th class="text-center">Action</th>
 											</tr>
 										</thead>
@@ -214,6 +214,10 @@
 				$("#btn-save").prop("disabled", false);
 			}
 		});
+	}
+	function unbilledClear(){
+		$("#searchBillno").val("");
+		$("#searchBillDate").val("");
 	}
 	</script>
 </body>

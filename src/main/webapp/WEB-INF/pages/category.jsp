@@ -24,7 +24,7 @@
 		<div class="container">
 			<div class="row">
 				<!-- ADD SECTION START -->
-				<form id="categoryForm">
+				<form id="categoryForm" onsubmit="return false">
 				<fieldset>
 							<legend>Category</legend>
 							
@@ -39,9 +39,9 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Description</label> 
-									<!-- <input class="form-control" type="text" id="description" name="description" placeholder="">  -->
-									<textarea class="form-control" rows="5" id="description"
-						name="description" maxlength="250"></textarea>
+									 <input class="form-control" type="text" id="description" name="description" placeholder="">  
+									<!-- <textarea class="form-control" rows="5" id="description"
+						name="description" maxlength="250"></textarea> -->
 								</div>
 							</div>
 							
@@ -55,10 +55,10 @@
 								<div class="buttons">
 									<ul>
 										<li>
-											<button class="btn btn-primary" id="btnClientSave" onClick="categoryFormValidation();">Add</button>
+											<button class="btn btn-primary" id="btnCatgeorySave" onClick="categoryFormValidation();">Add</button>
 										</li>
 										<li>
-											<button class="btn btn-primary" name="clear" value="clear" onClick="clientClear();">clear</button>
+											<button class="btn btn-primary" name="clear" value="clear" onClick="categoryClear();">clear</button>
 										</li>
 									</ul>
 								</div>
@@ -71,7 +71,7 @@
 				<div class="new_bill">
 					<div class="col-md-12">
 						<fieldset>
-							<legend>List Products</legend>
+							<legend>List Category</legend>
 							<div class="col-md-12">
 								<div class="table-responsive">
 									<table class=" table table-responsive table-bordered ">
@@ -105,19 +105,10 @@
 			showCategoryData(JSON.parse(lstCategory)); 
 		}
 		
-		if(lstClients != undefined && lstClients.length >0){
-			showClientData(JSON.parse(lstClients));
-		}
-		
-		$('#state').click(function(e) {
-	    	sortDropDownListByText("#state");
-	    });
-
 	}); 
 	function categoryFormValidation(){
-		alert("in to categoryFormValidation");
+		//alert("in to categoryFormValidation");
 		if ($("#categoryForm").valid()) {
-			//alert("in to shipping validate");
 			var categoryId = $("#categoryId").val();
 			if (categoryId != "") {
 				updateCategory();
@@ -145,7 +136,7 @@
 				},
 				messages : {
 
-					category : {
+					categoryName : {
 						required : "Please enter category",
 						minlength : "Your Name must consist of at least 2 characters",
 						alpha : "only characters"
@@ -186,12 +177,11 @@ return this.optional(element)
 });
 
 function saveCategory(){
-	alert("in to saveCategory");
+	//alert("in to saveCategory");
 	data = {};
 	data["categoryId"] = $("#categoryId").val(); 
 	data["description"] = $("#description").val();
 	data["categoryName"] = $("#categoryName").val();
-	alert("in to saveCategory");
 	$.ajax({
 		type : "POST",
 		url : "saveCategory.htm",
@@ -208,7 +198,8 @@ function saveCategory(){
 					$("#categoryFrmMsg").text('Category saved Sucessfully');
 					$("#categoryFrmMsg").show();
 					$("#categoryFrmMsg").fadeOut(15000);
-					showCategoryData(response);
+					categoryClear();
+					showCategoryData(resJSON);
 				}
 
 			}
@@ -283,8 +274,9 @@ function updateCategory(){
 					$("#categoryFrmMsg").text(resJSON.message);
 					$("#categoryFrmMsg").show();
 					$("#categoryFrmMsg").fadeOut(15000);
+					showCategoryData(resJSON);
 				} else {
-					$("#categoryFrmMsg").text('Updated Sucessfully');
+					$("#categoryFrmMsg").text('Category Updated Sucessfully');
 					$("#categoryFrmMsg").show();
 					$("#categoryFrmMsg").fadeOut(15000);
 					showCategoryData(resJSON);
@@ -299,7 +291,8 @@ function updateCategory(){
 	});
 	
 }
-function deleteCategory(id){
+/* function deleteCategory(id){
+	alert("in to delete category "+id);
 	var count = 0;
 	$.ajax({
 		type : "POST",
@@ -317,6 +310,29 @@ function deleteCategory(id){
 		}
 	});
 	
+} */
+
+function deleteCategory(categoryId) {
+	var count = 0;
+	$.ajax({
+		type : "POST",
+		url : "deleteCategory.json",
+		data : "categoryId=" + categoryId,
+		success : function(response) {
+			if (response != null) {
+				$("#categoryFrmMsg").text("Category deleted sucessfully");
+				$("#categoryFrmMsg").show();
+				$("#categoryFrmMsg").fadeOut(15000);
+				showCategoryData(response);
+			}
+		},
+		error : function(e) {
+		}
+	});
+}
+function categoryClear(){
+	$("#categoryForm")[0].reset();
+	$('#btnCatgeorySave').text("Add");
 }
 	</script>
 </body>

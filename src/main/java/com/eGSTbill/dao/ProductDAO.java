@@ -69,7 +69,7 @@ public class ProductDAO {
 
 	public String updateProduct(Product newProduct) {
 		String result = "fail";
-		//System.out.println("in to update product");
+		////System.out.println("in to update product");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("Product.updateProduct", newProduct);
@@ -86,7 +86,7 @@ public class ProductDAO {
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			ClientProduct cp = new ClientProduct();
-			////System.out.println("sClientId=="+sClientId);
+			//////System.out.println("sClientId=="+sClientId);
 			if (StringUtils.isNotEmpty(sClientId)) {
 				cp.setClientId(sClientId);
 			}

@@ -27,7 +27,7 @@ public class AutoIncrementDAO {
 	}
 	public String updateBillNo(AutoIncrement autoIncrement) {
 		String result = "fail";
-		System.out.println("in to update AutoIncrementDAO dao----");
+		//System.out.println("in to update AutoIncrementDAO dao----");
 		try {
 			SqlMapClient session = new IbatisFactory().getSession();
 			session.insert("AutoIncrement.updateBillNo", autoIncrement);

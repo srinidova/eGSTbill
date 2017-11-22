@@ -99,6 +99,7 @@ function saveProduct() {
 	data["sGST"] = $("#sgst").val();
 	data["iGST"] = $("#igst").val();
 	data["productType"] = $("#productType").val();
+	data["categoryId"] = $("#categoryId").val();
 	$.ajax({
 		type : "POST",
 		url : "addProduct.htm",
@@ -191,3 +192,20 @@ function updateProduct() {
 	})
 
 }
+	
+	function getCatgeoryByclientId(sClientId){
+		 $('#sClientId').val();
+		 $('#categoryId').val();
+		$.ajax({
+			type : "POST",
+			url : "getCatgeoryByclientId.json",
+			data : "sClientId=" + sClientId,
+			success : function(response) {
+				if (response != null) {
+					showCategoryData(response);
+				}
+			},
+			error : function(e) {
+			}
+		})
+	}
