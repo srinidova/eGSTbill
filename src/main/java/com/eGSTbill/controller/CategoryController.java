@@ -30,14 +30,14 @@ public class CategoryController {
 	@RequestMapping(value = "/categoryHome")
 	public String categoryHome(HttpServletResponse objResponce, HttpSession objSession, HttpServletRequest objRequest)
 			throws IOException {
-		System.out.println("From categoryHome");
+		//System.out.println("From categoryHome");
 		objResponce.setCharacterEncoding("UTF-8");
 		String sJsonCategory = null;
 		String sJson = null;
 		try {
 			CategoryService bo = new CategoryService();
 			sJson = bo.listCategory();
-			System.out.println("in to category home sJson "+sJson);
+			//System.out.println("in to category home sJson "+sJson);
 			if(sJson != null && sJson.length()>0){
 				objSession.setAttribute("LISTCATEGORY", sJson);
 				
@@ -45,7 +45,7 @@ public class CategoryController {
 			
 
 		} catch (Exception e) {
-			System.out.println("Exception in CategoryController in categoryHome()");
+			//System.out.println("Exception in CategoryController in categoryHome()");
 			e.printStackTrace();
 		} finally {
 
@@ -62,7 +62,7 @@ public class CategoryController {
 		String sCategoryId = null;
 		String clientCategoryAdd = null;
 		//String Category = null;
-		System.out.println("in to saveCategory controller");
+		//System.out.println("in to saveCategory controller");
 		try {
 			sCategoryId = CommonUtils.getAutoGenId();
 			category.setCategoryId(sCategoryId);
@@ -84,7 +84,7 @@ public class CategoryController {
 			}
 			HttpSession session = objRequest.getSession();
 			String clientId = (String) session.getAttribute("CLIENTID");
-			System.out.println("  clientId    "+clientId);
+			//System.out.println("  clientId    "+clientId);
 			
 			ClientCategory clientCategory = new ClientCategory();
 			clientCategory.setCategoryId(sCategoryId);
@@ -92,17 +92,17 @@ public class CategoryController {
 			
 			ClientCategoryService ccs = new ClientCategoryService();
 			clientCategoryAdd = ccs.addClientCategory(clientCategory);
-			System.out.println("in to clientcategory "+clientCategoryAdd);
+			//System.out.println("in to clientcategory "+clientCategoryAdd);
 			
 			//String sCategory = category.getCategoryId();
 			objSession.setAttribute("CATEGORY", sCategoryId);
 			
-			System.out.println("in to category categoryId"+sCategoryId);
+		//	System.out.println("in to category categoryId"+sCategoryId);
 			
 			
 			
 		} catch (Exception e) {
-			System.out.println("Exception in ClientController in addClient()");
+			//System.out.println("Exception in ClientController in addClient()");
 			e.printStackTrace();
 		}
 		return sJson;
@@ -114,7 +114,7 @@ public class CategoryController {
 	public @ResponseBody String deleteCategory(@RequestParam("categoryId") String categoryId, HttpSession objSession, HttpServletRequest objRequest){
 		String result = "fail";
 		String sJson = null;
-		System.out.println("in to category delete");
+		//System.out.println("in to category delete");
 		try{
 			Category category = new Category();
 			category.setCategoryId(categoryId);
@@ -139,7 +139,7 @@ public class CategoryController {
 		String resultUpdate = "fail";
 		String sJson = null;
 		
-		System.out.println("in to update category");
+		//System.out.println("in to update category");
 		try{
 			CategoryService bo = new CategoryService();
 			category.setUpdatedBy(CommonUtils.getDate());

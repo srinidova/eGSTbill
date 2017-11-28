@@ -94,6 +94,8 @@ public class ProductController {
 			product.setUpdatedBy(CommonUtils.getDate());
 			product.setUpdatedDate(CommonUtils.getDate());
 			resultAdd = bo.addProduct(product);
+			
+		//	System.out.println("in to add product resultAdd ----"+resultAdd);
 			if (StringUtils.isNotEmpty(resultAdd)) {
 				if(resultAdd.equals("fail")){
 					JSONObject json = new JSONObject();

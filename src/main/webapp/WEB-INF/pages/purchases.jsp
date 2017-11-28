@@ -68,7 +68,7 @@ if(session.getAttribute("USER") != null){
 				<!-- ADD SECTION START -->
 				<div class="new_bill">
 					<div class="col-md-12">
-						<form id="purchasesForm" onsubmit="return false;">
+						<form id="purchasesForm">
 							<fieldset>
 								<legend>Purchases</legend>
 								<div class="col-md-4">
@@ -79,10 +79,7 @@ if(session.getAttribute("USER") != null){
 										</select> <input type="hidden" class="form-control" id="productName"
 											name="productName"> <input type="hidden"
 											class="form-control" id="purchasesId"
-											name="purchasesId"> <input type="hidden"
-											id="billCartId" name="billCartId">
-											<input type="hidden"
-											id="clientId" name="clientId">
+											name="purchasesId"> 
 									</div>
 								</div>
 								<div class="col-md-4">
@@ -632,7 +629,7 @@ if(session.getAttribute("USER") != null){
 						$("#purchasesMsg").text("Purchases Deleted Successfully");
 						$("#purchasesMsg").show();
 						$("#purchasesMsg").fadeOut(5000);
-						listPurchases();
+						//listPurchases();
 						showPurchasesdata(response);
 				}
 				},

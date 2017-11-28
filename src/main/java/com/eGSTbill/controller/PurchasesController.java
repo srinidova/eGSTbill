@@ -166,7 +166,7 @@ public class PurchasesController {
 			PurchasesService ps = new PurchasesService();
 			result = ps.deletePurchases(purchases);
 			
-			
+			System.out.println("in to delete purchases result----------"+result);
 			
 			
 			if(result.equals("fail")){
@@ -201,6 +201,9 @@ public class PurchasesController {
 			purchases.setTotalAmount(calculateAmount);
 			
 			result = ps.updatePurchases(purchases);
+			
+			System.out.println("in to update purchases result --------"+result);
+			
 			/*if(result.equals("fail")){
 				JSONObject json = new JSONObject();
 				json.put("status", "ERROR");

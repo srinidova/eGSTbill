@@ -38,7 +38,7 @@ public class UserController {
 			UserService bo = new UserService();
 			//sJson = bo.listusers();
 			String sClientId = (String) objSession.getAttribute("CLIENTID");
-			System.out.println("in to user sClientId  "+sClientId);
+			//System.out.println("in to user sClientId  "+sClientId);
 			//System.out.println("sClientId=="+sClientId);
 			sJson = bo.listUsersByClientId(sClientId);
 			if(sJson != null && sJson.length()>0){

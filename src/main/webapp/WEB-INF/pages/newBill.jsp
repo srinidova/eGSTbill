@@ -496,7 +496,8 @@ if(session.getAttribute("USER") != null){
 		var CLIENTINFO = '${sessionScope.CLIENTINFO}';
 		
 		 var clientInfo = JSON.parse(CLIENTINFO)
-		 console.log(clientInfo);
+		// console.log(clientInfo);
+		 console.log(clientInfo.state);
 		
 		serviceUnitArrayShipping = {};
 
@@ -787,6 +788,7 @@ if(session.getAttribute("USER") != null){
 		function populatePurchaserData(purchaserId) {
 			var purchaserId = $('#purchaserId').val();
 			var addressFull = "";
+			alert("in to populate purchaser state  "+serviceUnitArrayPurchaser[purchaserId].state);
 			var contactName = serviceUnitArrayPurchaser[purchaserId].contactName;
 			if (contactName.length > 0) {
 				if (addressFull.length > 0) {
@@ -841,6 +843,8 @@ if(session.getAttribute("USER") != null){
 					serviceUnitArrayPurchaser[purchaserId].state);
 			getShippingByPurchaserId();
  
+			alert("in to populate purchaser client state  "+clientInfo.state);
+			
 			if(clientInfo.state == serviceUnitArrayPurchaser[purchaserId].state){
 				
 				
